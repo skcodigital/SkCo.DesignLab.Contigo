@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, signal } from '@angular/core';
 import { Icono } from '@features/asesoria-pro/components/icono/icono';
 import { TEXTOS, TEXTOS_OPCIONES_ACUERDO } from '../../../constants/textos';
+import { nombreContrato } from '../../../data/contratos.mock';
 import { HOY } from '../../../data/conversaciones.mock';
 import { ProximoPaso } from '../../../interfaces/conversacion';
 import { ConversacionesStore } from '../../../state/conversaciones.store';
@@ -35,7 +36,7 @@ export class AcuerdoProximos {
   // La señal de Dali Oportunidades no trae el monto estimado: «En riesgo» queda en «—»
   protected readonly enRiesgo = TEXTOS_OPCIONES_ACUERDO.enRiesgoSinSenal;
   protected readonly desea = computed(() => pesos(this.st().monto));
-  protected readonly nombreContrato = computed(() => this.v().c.nom);
+  protected readonly nombreContrato = computed(() => nombreContrato(this.v().c));
   protected readonly sigue = computed(() => {
     const s = this.sale();
     return s == null ? TEXTOS_OPCIONES_ACUERDO.enRiesgoSinSenal : pesos(this.v().c.saldo - s);

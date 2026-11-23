@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, viewChildren } from '@angular/core';
 import { Icono } from '@features/asesoria-pro/components/icono/icono';
 import { TEXTOS, TEXTOS_OPCIONES_ACUERDO } from '../../../constants/textos';
-import { URL_ESPECIFICADO, URL_GUIA_TRANSACCIONES } from '../../../data/contratos.mock';
+import { etiquetaContrato, URL_ESPECIFICADO, URL_GUIA_TRANSACCIONES } from '../../../data/contratos.mock';
 import { Tramite } from '../../../interfaces/conversacion';
 import { ConversacionesStore } from '../../../state/conversaciones.store';
 import { esRetiro, lineaCredito } from '../../../utils/acuerdo';
@@ -42,7 +42,7 @@ export class AcuerdoTramite {
     const v = this.v();
     if (this.ret()) {
       const rec = this.st().dec === 'retiro' ? v.k.R : v.kt.R;
-      return TEXTOS_OPCIONES_ACUERDO.lineaRetiro(v.c.nom, v.c.num, pesos(rec));
+      return TEXTOS_OPCIONES_ACUERDO.lineaRetiro(etiquetaContrato(v.c), pesos(rec));
     }
     return TEXTOS_OPCIONES_ACUERDO.lineaCredito(lineaCredito(cred(this.st())));
   });

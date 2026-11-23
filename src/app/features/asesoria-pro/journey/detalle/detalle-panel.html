@@ -6,7 +6,7 @@
       <span>Contrato</span>
       <select (change)="elegirContrato($event)">
         @for (c of contratos; track c.id) {
-          <option [value]="c.id" [selected]="c.id === det().ct">{{ c.nom }} · {{ c.num }}</option>
+          <option [value]="c.id" [selected]="c.id === det().ct">{{ etiqueta(c) }}</option>
         }
       </select>
     </label>

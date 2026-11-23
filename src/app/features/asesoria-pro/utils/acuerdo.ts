@@ -1,6 +1,7 @@
 import { DEC_NOM, PROXIMOS_PASOS, TEXTOS } from '../constants/textos';
 import { Cajas, Credito } from '../interfaces/calculo';
 import { Decision, EstadoConversacion } from '../interfaces/conversacion';
+import { nombreContrato } from '../data/contratos.mock';
 import { elegibles } from './calculos';
 import { deIso, fLarga, pesos } from './formato';
 
@@ -30,9 +31,9 @@ export function detalleDecision(d: Decision, st: St, v: Cajas, cr: Credito): str
   const c = v.c;
   switch (d) {
     case 'retiro':
-      return 'Recibe ' + pesos(v.k.R) + ' de ' + c.nom;
+      return 'Recibe ' + pesos(v.k.R) + ' de ' + nombreContrato(c);
     case 'total':
-      return 'Recibe ' + pesos(v.kt.R) + ' de ' + c.nom;
+      return 'Recibe ' + pesos(v.kt.R) + ' de ' + nombreContrato(c);
     case 'combo':
       return v.cb ? 'Recibe ' + pesos(v.cb.recibe) : '';
     case 'credito':

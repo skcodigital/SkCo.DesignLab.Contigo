@@ -11,7 +11,7 @@ import {
   viewChildren,
 } from '@angular/core';
 import { Icono } from '../../components/icono/icono';
-import { CONTRATOS, contratoPorId } from '../../data/contratos.mock';
+import { CONTRATOS, contratoPorId, etiquetaContrato } from '../../data/contratos.mock';
 import { DetalleAbierto, JourneyUiStore, TabDetalle } from '../journey-ui.store';
 import { TabAportes } from './tab-aportes/tab-aportes';
 import { TabCalculo } from './tab-calculo/tab-calculo';
@@ -51,6 +51,7 @@ export class DetallePanel {
   protected readonly ui = inject(JourneyUiStore);
 
   protected readonly contratos = CONTRATOS;
+  protected readonly etiqueta = etiquetaContrato;
   protected readonly pestanas = PESTANAS;
   protected readonly det = computed(() => this.ui.detalle() ?? POR_DEFECTO);
   protected readonly contrato = computed(() => contratoPorId(this.det().ct));

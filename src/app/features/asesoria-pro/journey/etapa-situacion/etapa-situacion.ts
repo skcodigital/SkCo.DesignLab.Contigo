@@ -1,4 +1,15 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import {
+  afterNextRender,
+  afterRenderEffect,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  DestroyRef,
+  ElementRef,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { Icono } from '../../components/icono/icono';
 import { TEXTOS } from '../../constants/textos';
 import { CONTRATOS, TRAMOS } from '../../data/contratos.mock';
@@ -46,6 +57,18 @@ export class EtapaSituacion {
   protected readonly textoDescuentos = TEXTO_DESCUENTOS;
   /** Distribución por tramos plegada por defecto; al abrirla se ve en todas las fichas a la vez. */
   protected readonly verDist = signal(false);
+
+  // ---- Carrusel de fichas ----
+  private readonly pista = viewChild<ElementRef<HTMLElement>>('pista');
+  protected readonly puedeIzq = signal(false);
+  protected readonly puedeDer = signal(false);
+  private readonly rango = signal<[number, number]>([1, 1]);
+  protected readonly hayMas = computed(() => this.puedeIzq() || this.puedeDer());
+  protected readonly posicion = computed(() => {
+    const [a, b] = this.rango();
+    const n = this.fichas().length;
+    return (a === b ? `${a}` : `${a}–${b}`) + ` de ${n} contratos`;
+  });
   protected readonly st = this.store.st;
   protected readonly ro = computed(() => soloLectura(this.st()));
   protected readonly ver = computed(() => etapa1Completa(this.st()) || this.ro());
@@ -117,6 +140,48 @@ export class EtapaSituacion {
 
   protected marcar(id: string): void {
     this.store.marcarContrato(id);
+  }
+
+  constructor() {
+    // Recalcula flechas y contador al pintar las fichas y cuando cambia el ancho
+    afterRenderEffect(() => {
+      this.fichas();
+      this.medir();
+    });
+    afterNextRender(() => {
+      const el = this.pista()?.nativeElement;
+      if (!el || typeof ResizeObserver === 'undefined') return;
+      const ro = new ResizeObserver(() => this.medir());
+      ro.observe(el);
+      this.destroyRef.onDestroy(() => ro.disconnect());
+    });
+  }
+
+  private readonly destroyRef = inject(DestroyRef);
+
+  /** Paso del carrusel: ancho de una ficha más el espacio entre fichas. */
+  private paso(el: HTMLElement): number {
+    const f = el.firstElementChild as HTMLElement | null;
+    return f ? f.offsetWidth + parseFloat(getComputedStyle(el).columnGap || '12') : el.clientWidth;
+  }
+
+  protected medir(): void {
+    const el = this.pista()?.nativeElement;
+    if (!el) return;
+    this.puedeIzq.set(el.scrollLeft > 2);
+    this.puedeDer.set(el.scrollLeft + el.clientWidth < el.scrollWidth - 2);
+    const p = this.paso(el);
+    const n = el.childElementCount;
+    const primera = Math.min(n, Math.round(el.scrollLeft / p) + 1);
+    const visibles = Math.max(1, Math.floor((el.clientWidth + 2) / p));
+    this.rango.set([primera, Math.min(n, primera + visibles - 1)]);
+  }
+
+  protected mover(dir: 1 | -1): void {
+    const el = this.pista()?.nativeElement;
+    if (!el) return;
+    const suave = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    el.scrollBy({ left: dir * this.paso(el), behavior: suave ? 'smooth' : 'auto' });
   }
 
   protected alternarDist(e: Event): void {

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { Icono } from '../../components/icono/icono';
 import { DEC_CAT, MOTIVO, NOM_CAJA, PARTES, TEXTOS } from '../../constants/textos';
+import { nombreContrato } from '../../data/contratos.mock';
 import { Etapa, EstadoConversacion } from '../../interfaces/conversacion';
 import { ConversacionesStore } from '../../state/conversaciones.store';
 import { combo, cred, ctSel, enAlcance, retiro } from '../../utils/calculos';
@@ -23,7 +24,7 @@ function filasSituacion(st: EstadoConversacion): Fila[] {
   const c = ctSel(st);
   const k = st.ctConf ? retiro(st, c) : null;
   const f: Fila[] = [
-    ['Contrato', st.ctConf ? c.nom : null],
+    ['Contrato', st.ctConf ? nombreContrato(c) : null],
     ['Recibe', k ? pesos(k.R) : null, true],
     ['Se descuenta del contrato', k ? pesos(k.D) : null],
   ];

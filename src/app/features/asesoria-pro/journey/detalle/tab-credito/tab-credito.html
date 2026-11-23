@@ -55,7 +55,7 @@
     <p class="jw-cr-sug"><svg ncIcono="escudo"></svg><span><b>Contratos sugeridos</b><br />Producto de respaldo: Fondo Voluntario de Pensión Skandia Multifund*</span></p>
     @for (x of respaldo().bloq; track x.c.id) {
       <div class="jw-cr-ct">
-        <div><b>{{ x.c.nom }}</b><small>{{ x.c.prod }} · Contrato: {{ x.c.num }}</small></div>
+        <div><b>{{ nombre(x.c) }}</b><small>{{ x.c.prod }} · Contrato: {{ x.c.num }}</small></div>
         <dl>
           <div><dt>Saldo a bloquear</dt><dd>{{ pesos(x.b) }}</dd></div>
           <div><dt>** Disponible para bloquear</dt><dd>{{ pesos(x.disp) }}</dd></div>

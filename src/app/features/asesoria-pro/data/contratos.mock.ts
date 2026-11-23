@@ -48,6 +48,22 @@ export const CONTRATOS: readonly Contrato[] = [
     anios: [[2015, 3404283], [2016, 13362956]],
     imp: 0, rentTxt: '8,61',
   },
+  {
+    // Ejemplo de 4.º contrato (ficticio) sin nombre personalizado: en pantalla se muestra «Contrato 100007845517».
+    // Cifras coherentes entre sí: ex+sr+cc+sc = saldo; gan = rendSaldo+rendRet; rcTodo = cc × rc.
+    id: 'cuarto', nom: '', num: '100007845517', prod: 'Skandia Multifund',
+    saldo: 95400000, disp: 88950000, rcTodo: 2537600, desde: '9 de ago de 2017',
+    gan: 21640000, retirado: 25000000, rendSaldo: 15900000, capRet: 19260000, rendRet: 5740000,
+    ex: 12300000, sr: 30100000, cc: 48800000, sc: 4200000,
+    rr: 0.018, rc: 0.052,
+    port: [
+      { nombre: 'FPV Acciones Global / FPV_GloAcciones', saldo: 41200000, participacion: '43,2 %', rentabilidad: null },
+      { nombre: 'FVP Skandia PRO / FVP_SKPRO', saldo: 32000000, participacion: '33,5 %', rentabilidad: null },
+      { nombre: 'FPV Strategist Liquidez Col / FPV_ColLiquidez', saldo: 22200000, participacion: '23,3 %', rentabilidad: null },
+    ],
+    anios: [[2017, 30000000], [2019, 25500000], [2022, 24000000]],
+    imp: 0.21, rentTxt: '11,42',
+  },
 ];
 
 export const TRAMOS: readonly Tramo[] = [
@@ -90,6 +106,16 @@ export const URL_ESPECIFICADO =
   'https://www.skandia.co/documents/39464/1536444/Solicitud-de-retiros-parciales-especificados-Fondo-Voluntario-de-Pension-Skandia-Multifund.pdf/129a497d-78ff-c3fe-c491-d08daf52dca5?version=3.0&t=1757703266312';
 export const URL_GUIA_TRANSACCIONES = 'https://www.skandia.co/guia-transacciones-canales-y-servicios';
 export const URL_ADMISIBILIDAD = 'https://www.skandia.co/creditos/admisibilidad-de-portafolios';
+
+/** Nombre para mostrar: el personalizado o, si el contrato no tiene, «Contrato {número}». */
+export function nombreContrato(c: Contrato): string {
+  return c.nom || 'Contrato ' + c.num;
+}
+
+/** «Nombre · número», o solo «Contrato {número}» si no tiene nombre personalizado. */
+export function etiquetaContrato(c: Contrato): string {
+  return c.nom ? c.nom + ' · ' + c.num : 'Contrato ' + c.num;
+}
 
 export function contratoPorId(id: string): Contrato {
   return CONTRATOS.find((c) => c.id === id) ?? CONTRATOS[0];

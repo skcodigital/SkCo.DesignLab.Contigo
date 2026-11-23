@@ -15,6 +15,7 @@ import {
 import { UiStore } from '@core/state/ui.store';
 import { Icono } from '../components/icono/icono';
 import { ESTADO_CONV, PARTES, TEXTOS } from '../constants/textos';
+import { etiquetaContrato } from '../data/contratos.mock';
 import { CLIENTE } from '../data/conversaciones.mock';
 import { Etapa } from '../interfaces/conversacion';
 import { ConversacionesStore } from '../state/conversaciones.store';
@@ -82,7 +83,7 @@ export class Journey {
   protected readonly montoTxt = computed(() => pesos(this.st().monto));
   protected readonly contratoTxt = computed(() => {
     const c = ctSel(this.st());
-    return c.nom + ' · ' + c.num;
+    return etiquetaContrato(c);
   });
 
   protected readonly cierreAviso = computed(() => {

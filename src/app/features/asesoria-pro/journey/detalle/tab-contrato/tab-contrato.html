@@ -1,5 +1,5 @@
 @let c = contrato();
-<p class="jw-det-tit"><b>{{ c.nom }} · {{ c.num }}</b><span>{{ c.prod }}</span></p>
+<p class="jw-det-tit"><b>{{ etiqueta(c) }}</b><span>{{ c.prod }}</span></p>
 <div class="jw-kpis">
   <div><small>Saldo</small><b>{{ pesos(c.saldo) }}</b><span>en su contrato</span></div>
   <div>

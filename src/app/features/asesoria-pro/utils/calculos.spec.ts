@@ -84,7 +84,8 @@ describe('calculos', () => {
   it('ordena las fichas: primero las que cubren, con el menor descuento', () => {
     const orden = ordenFichas(st({ monto: 150000000 }));
     expect(orden.filter((f) => f.k.cubre).map((f) => f.c.id)).toEqual(['ahorro', 'pension']);
-    expect(orden[2].c.id).toBe('finca');
+    // Las que no alcanzan van después, de mayor a menor disponible
+    expect(orden.slice(2).map((f) => f.c.id)).toEqual(['cuarto', 'finca']);
     expect(ctId(st({ monto: 150000000 }))).toBe('ahorro');
   });
 

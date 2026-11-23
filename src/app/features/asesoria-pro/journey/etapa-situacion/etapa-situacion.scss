@@ -108,3 +108,26 @@ $v: ':host-context(#jm-velo)';
 .jw-barra i{transition:filter .15s}
 .jw-barra i:hover{filter:brightness(1.25)}
 @media (prefers-reduced-motion:reduce){.jw-dist svg,.jw-barra i{transition:none}}
+
+// ===== Carrusel de fichas de contrato =====
+// Las fichas van en una fila con desplazamiento horizontal y ajuste por ficha; se asoma la siguiente para
+// sugerir que hay más. Escritorio ≈3,2 fichas, tableta ≈2,2, móvil ≈1,15.
+.jw-cts{display:flex;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding:0 2px;padding:2px;margin:-2px;scrollbar-width:none}
+.jw-cts::-webkit-scrollbar{display:none}
+.jw-cts>.jw-ct{flex:0 0 calc((100% - 3 * 12px) / 3.2);min-width:240px;scroll-snap-align:start}
+@media (max-width:1180px) and (min-width:901px){.jw-cts>.jw-ct{flex-basis:calc((100% - 2 * 12px) / 2.2)}}
+@media (max-width:900px){.jw-cts>.jw-ct{flex-basis:calc((100% - 12px) / 1.15)}}
+// Contador y flechas, alineados a la derecha sobre las fichas
+.jw-car-nav{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin:-4px 0 -2px}
+.jw-car-pos{margin-right:4px;font-size:12px;line-height:16px;color:var(--sk-color-text-2)}
+.jw-car-btn{display:grid;place-items:center;width:32px;height:32px;padding:0;border:1px solid var(--sk-color-primary);border-radius:50%;background:transparent;color:var(--sk-color-primary-dark);cursor:pointer;transition:background-color .15s}
+.jw-car-btn svg{width:18px;height:18px}
+.jw-car-btn .jw-car-izq{transform:rotate(180deg)}
+.jw-car-btn:hover:not(:disabled){background:var(--sk-color-brand-light)}
+.jw-car-btn:disabled{border-color:var(--sk-color-border-2);color:var(--sk-color-placeholder);cursor:default}
+.jw-car-btn:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:2px}
+:host-context(#jm-velo) .jw-car-pos{color:var(--tx2)}
+:host-context(#jm-velo) .jw-car-btn{border-color:var(--lk);color:var(--lk)}
+:host-context(#jm-velo) .jw-car-btn:hover:not(:disabled){background:var(--sel)}
+:host-context(#jm-velo) .jw-car-btn:disabled{border-color:var(--bd2);color:var(--sk-color-mission-text-3);opacity:.5}
+@media (prefers-reduced-motion:reduce){.jw-car-btn{transition:none}}

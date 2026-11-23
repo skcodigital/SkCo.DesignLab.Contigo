@@ -174,7 +174,7 @@ export const TEXTOS_OPCIONES_ACUERDO = {
   hasta: (v: string) => `hasta ${v}`,
   rango: (a: string, b: string) => `${a} a ${b}`,
   faltan: 'No alcanza: faltan ',
-  lineaRetiro: (nom: string, num: string, recibe: string) => `${nom} · ${num} · recibe ${recibe}`,
+  lineaRetiro: (etiqueta: string, recibe: string) => `${etiqueta} · recibe ${recibe}`,
   lineaCredito: (linea: string) => `Crédito Impulso · ${linea}`,
   enRiesgoSinSenal: '—',
   tramites: { portal: 'Tramitar por el portal', especificado: 'Retiro especificado', credito: 'Solicitar el crédito' },

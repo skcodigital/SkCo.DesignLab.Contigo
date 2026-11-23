@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { Icono } from '../../../components/icono/icono';
 import { TASA_TXT } from '../../../constants/textos';
-import { TASA_CREDITO, TOPE_CREDITO, URL_ADMISIBILIDAD } from '../../../data/contratos.mock';
+import { nombreContrato, TASA_CREDITO, TOPE_CREDITO, URL_ADMISIBILIDAD } from '../../../data/contratos.mock';
 import { HOY } from '../../../data/conversaciones.mock';
 import { ConversacionesStore } from '../../../state/conversaciones.store';
 import { bloqueosCredito, creditoPanel, simCredito } from '../../../utils/calculos';
@@ -20,6 +20,7 @@ export class TabCredito {
   private readonly store = inject(ConversacionesStore);
 
   protected readonly pesos = pesos;
+  protected readonly nombre = nombreContrato;
   protected readonly fLarga = fLarga;
   protected readonly tasa = TASA_TXT;
   protected readonly tope = TOPE_CREDITO;

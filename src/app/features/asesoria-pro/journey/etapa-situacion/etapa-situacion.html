@@ -12,7 +12,16 @@
       <p class="jw-ayuda">{{ notaPension() }}</p>
     </div>
   }
-  <div class="jw-cts" role="radiogroup" aria-label="Contratos que se pueden retirar">
+  <!-- Carrusel: el contrato más conveniente va primero (menor descuento entre los que cubren); flechas y contador
+       solo si hay más fichas de las que caben -->
+  @if (hayMas()) {
+    <div class="jw-car-nav">
+      <span class="jw-car-pos" aria-live="polite">{{ posicion() }}</span>
+      <button type="button" class="jw-car-btn jw-ro-ok" aria-controls="jw-cts" aria-label="Contratos anteriores" [disabled]="!puedeIzq()" (click)="mover(-1)"><svg ncIcono="chev" class="jw-car-izq"></svg></button>
+      <button type="button" class="jw-car-btn jw-ro-ok" aria-controls="jw-cts" aria-label="Más contratos" [disabled]="!puedeDer()" (click)="mover(1)"><svg ncIcono="chev"></svg></button>
+    </div>
+  }
+  <div #pista id="jw-cts" class="jw-cts" role="radiogroup" aria-label="Contratos que se pueden retirar" (scroll)="medir()">
     @for (f of fichas(); track f.c.id) {
       <!-- Anatomía (Isa, 2026-11-23): Nombre | # contrato · saldo disponible · tags · barra de distribución ·
            Recibe · Descuentos (tooltip) · Valor total del retiro -->

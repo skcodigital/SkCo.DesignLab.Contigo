@@ -1,3 +1,4 @@
+import { etiquetaContrato } from '../data/contratos.mock';
 import { CLIENTE, HOY } from '../data/conversaciones.mock';
 import { ADV_USTED, DEC_CAT, ETAPAS_BD, MOTIVO, PROXIMOS_PASOS, RX_TXT, TIPO_CREDITO } from '../constants/textos';
 import { Cajas, Credito, Retiro } from '../interfaces/calculo';
@@ -67,7 +68,7 @@ export function textoCliente(st: St): string {
     if (st.motivo === 'vivienda') cond.push('Retiro para compra de vivienda');
     if (cond.length) add('Condición especial', cond.join(', '));
   }
-  if (st.ctConf) add('Contrato elegido', c.nom + ' · ' + c.num + ' (' + pesos(c.saldo) + ')');
+  if (st.ctConf) add('Contrato elegido', etiquetaContrato(c) + ' (' + pesos(c.saldo) + ')');
   if (st.visitadas.includes(3) && st.monto > 0) {
     const rg = regla(st, v, cr);
     if (rg) add('Lectura de las cifras', rg);
