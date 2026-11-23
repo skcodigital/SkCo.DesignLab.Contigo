@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Contigo · Design Lab</title>
+  <script>
+    // GitHub Pages sirve este único 404.html para cualquier ruta que no existe como archivo
+    // (p. ej. /SkCo.DesignLab.Contigo/laboratory/ficha?tab=copiloto). Cada ambiente es una SPA en su
+    // propia carpeta: se guarda la ruta pedida y se abre el index.html del ambiente correcto, que la
+    // restaura antes de que arranque Angular (ver el script de src/index.html).
+    (function () {
+      // Ambientes publicados en subcarpeta. Mantener alineado con la matriz de deploy-pages.yml.
+      var AMBIENTES = ['laboratory'];
+      var partes = location.pathname.split('/');
+      var base = '/' + partes[1] + '/';
+      var seg = (partes[2] || '').toLowerCase();
+      for (var i = 0; i < AMBIENTES.length; i++) {
+        if (seg === AMBIENTES[i]) {
+          base += partes[2] + '/';
+          break;
+        }
+      }
+      try {
+        sessionStorage.setItem('nc-ruta-404', location.pathname + location.search + location.hash);
+      } catch (e) {
+        // Sin sessionStorage se abre el inicio del ambiente.
+      }
+      location.replace(base);
+    })();
+  </script>
+</head>
+<body></body>
+</html>

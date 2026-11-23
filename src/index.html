@@ -4,6 +4,21 @@
   <meta charset="utf-8">
   <title>Contigo · Design Lab</title>
   <base href="/">
+  <script>
+    // GitHub Pages: deploy/404.html guarda la ruta profunda pedida y abre este index.html.
+    // Se restaura antes de que arranque Angular, solo si pertenece a este ambiente (su base href).
+    (function () {
+      try {
+        var ruta = sessionStorage.getItem('nc-ruta-404');
+        if (!ruta) return;
+        sessionStorage.removeItem('nc-ruta-404');
+        var base = document.querySelector('base').getAttribute('href');
+        if (ruta.toLowerCase().indexOf(base.toLowerCase()) === 0) history.replaceState(null, '', ruta);
+      } catch (e) {
+        // Sin sessionStorage la app abre en la raíz del ambiente.
+      }
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
