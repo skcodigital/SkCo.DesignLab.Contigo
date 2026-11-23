@@ -1,0 +1,58 @@
+# Despliega el Design Lab en GitHub Pages: https://skcodigital.github.io/SkCo.DesignLab.Contigo/
+# Requisito (una vez): Settings → Pages → Build and deployment → Source: «GitHub Actions».
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Un solo despliegue a la vez; no se cancela uno en curso para no dejar el sitio a medias.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Tests
+        run: npx ng test --watch=false
+
+      - name: Build
+        run: npm run build:pages
+
+      # SPA en Pages: las rutas profundas (/ficha, /radiografia?…) no existen como archivos;
+      # Pages sirve 404.html, que es la misma app y el router resuelve la ruta.
+      - name: SPA fallback
+        run: cp dist/SkCo.DesignLab.Contigo/browser/index.html dist/SkCo.DesignLab.Contigo/browser/404.html
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/SkCo.DesignLab.Contigo/browser
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

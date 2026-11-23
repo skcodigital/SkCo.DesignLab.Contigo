@@ -13,7 +13,7 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
     </div>
     <div class="crumbs">
       <button class="back" aria-label="Volver al buscador" (click)="inicio.emit()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12H4"/><path d="m10 6-6 6 6 6"/></svg></button>
-      <nav class="crumbs-path" aria-label="Ruta"><a href="/inicio" (click)="irInicio($event)">Inicio</a> / <span class="crumbs-current">{{ empresa() }}</span></nav>
+      <nav class="crumbs-path" aria-label="Ruta"><a href="inicio" (click)="irInicio($event)">Inicio</a> / <span class="crumbs-current">{{ empresa() }}</span></nav>
     </div>
   `,
   styleUrl: './migas.scss',
