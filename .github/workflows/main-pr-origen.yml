@@ -1,0 +1,41 @@
+# main solo recibe PRs desde `laboratory` o desde ramas `hotfix/…` de este mismo repositorio.
+#
+# Para que bloquee el merge (un check en rojo por sí solo no lo impide):
+#   Settings → Rules → Rulesets (o Branches → Branch protection) sobre `main`:
+#     - Require a pull request before merging (sin push directo a main).
+#     - Require status checks to pass → agregar «Rama de origen permitida».
+name: Origen de PR a main
+
+on:
+  pull_request:
+    branches: [main]
+    # edited: también se valida si un PR existente se redirige a main.
+    types: [opened, reopened, synchronize, edited]
+
+permissions: {}
+
+jobs:
+  origen:
+    name: Rama de origen permitida
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validar rama de origen
+        # Los valores del PR van por variables de entorno, nunca interpolados en el script.
+        env:
+          ORIGEN: ${{ github.head_ref }}
+          REPO_ORIGEN: ${{ github.event.pull_request.head.repo.full_name }}
+          REPO: ${{ github.repository }}
+        run: |
+          if [ "$REPO_ORIGEN" != "$REPO" ]; then
+            echo "::error::Los PRs a main deben salir de una rama de $REPO (este viene de $REPO_ORIGEN)."
+            exit 1
+          fi
+          case "$ORIGEN" in
+            laboratory|hotfix/?*)
+              echo "Rama de origen permitida: $ORIGEN"
+              ;;
+            *)
+              echo "::error::main solo acepta PRs desde 'laboratory' o desde ramas 'hotfix/…' (este viene de '$ORIGEN')."
+              exit 1
+              ;;
+          esac

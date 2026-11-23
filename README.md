@@ -30,6 +30,11 @@ Para sumar un ambiente: agregarlo a la matriz del workflow (`branch` + `dir`), a
 
 Build local con el base href de Pages: `npm run build:pages` (raíz). Las imágenes que se usan desde SCSS se referencian con ruta relativa al archivo (p. ej. `features/login/assets/`) para que el build las empaquete y respeten el base href; las de `public/assets` se usan desde los templates con rutas relativas (`assets/…`), nunca con `/assets/…`.
 
+## Flujo de ramas
+
+- `laboratory` (predeterminada): aquí llega el trabajo del día a día.
+- `main`: solo recibe PRs desde `laboratory` o desde ramas `hotfix/…` de este repo. Lo valida `.github/workflows/main-pr-origen.yml` (check «Rama de origen permitida»), que debe estar marcado como obligatorio en la protección de `main`.
+
 ## Rutas (antes enlaces directos `?p=…`)
 
 | Ruta | Vista | Antes |
