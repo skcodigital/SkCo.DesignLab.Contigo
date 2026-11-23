@@ -17,7 +17,6 @@ import { MSeccion } from '@features/ficha-cliente/components/m-seccion/m-seccion
 import { RetirosEnCurso } from '@features/ficha-cliente/components/retiros-en-curso/retiros-en-curso';
 import { MQ_FICHA_MOVIL } from '@features/ficha-cliente/constants/pestanas';
 import { CLIENTE_OSCAR } from '@features/ficha-cliente/data/cliente.mock';
-import { PRODUCTO_POTENCIALIZAR } from '@features/ficha-cliente/data/productos.mock';
 import { RETIROS_EN_CURSO } from '@features/ficha-cliente/data/retiros.mock';
 import { FichaStore } from '@features/ficha-cliente/state/ficha.store';
 
@@ -44,7 +43,6 @@ export class FichaLayout {
   private readonly movil = injectMediaQuery(MQ_FICHA_MOVIL);
 
   protected readonly cliente = CLIENTE_OSCAR;
-  protected readonly producto = PRODUCTO_POTENCIALIZAR;
   protected readonly retiros = RETIROS_EN_CURSO;
 
   protected readonly productoAbierto = computed(() => this.ui.activo('vista-producto'));

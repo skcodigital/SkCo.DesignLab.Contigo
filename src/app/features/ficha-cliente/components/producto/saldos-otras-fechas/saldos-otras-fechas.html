@@ -1,0 +1,35 @@
+<div #caja class="pf-saf pf-ctrl" [class.fic]="fic()" role="group" aria-labelledby="pf-saf-tit">
+  <div class="pf-saf-t">
+    <b id="pf-saf-tit">Saldos a otras fechas <span class="pf-tag-nuevo">Nuevo</span></b>
+    <span>Consulta los saldos y la composición en otra fecha</span>
+  </div>
+  <div class="pf-saf-ctrl">
+    <span class="pf-saf-lbl">Consultar saldos al</span>
+    <nc-fecha-corte
+      [seleccion]="fecha()"
+      [texto]="fechaTexto()"
+      [hoy]="hoy()"
+      [minima]="minima()"
+      (elegir)="elegirFecha.emit($event)"
+      (alternado)="usar.emit()"
+    />
+    <div class="pf-radios" role="radiogroup" aria-label="Estado de los saldos">
+      <label class="pf-radio"
+        ><input type="radio" name="pf-estado" value="proceso" [checked]="estado() === 'proceso'" (change)="alEstado('proceso')" /><span
+          >En proceso</span
+        ></label
+      >
+      <label class="pf-radio"
+        ><input type="radio" name="pf-estado" value="efectivo" [checked]="estado() === 'efectivo'" (change)="alEstado('efectivo')" /><span
+          >Efectivo</span
+        ></label
+      >
+    </div>
+    <!-- 2026-11-20: los atajos se omiten por ahora (UX) -->
+    <div class="pf-atajos" role="group" aria-label="Fechas rápidas" hidden>
+      @for (a of atajos(); track a.id) {
+        <button type="button" class="pf-atajo" [attr.aria-pressed]="a.activo" (click)="alAtajo(a.id)">{{ a.etiqueta }}</button>
+      }
+    </div>
+  </div>
+</div>

@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, ElementRef, input, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, ElementRef, input, signal, viewChild } from '@angular/core';
 import { DetalleProducto } from '@features/ficha-cliente/interfaces/productos';
+import { etiquetaRendimientos, gradienteRendimientos } from '@features/ficha-cliente/utils/composicion';
 
 /** Tarjetas del producto: saldo principal, evolución histórica y beneficio de permanencia (+ puntos del carrusel). */
 @Component({
@@ -12,7 +13,10 @@ export class ProductoTarjetas {
   readonly producto = input.required<DetalleProducto>();
 
   private readonly carrusel = viewChild.required<ElementRef<HTMLElement>>('carrusel');
-  protected readonly puntos = [0, 1, 2] as const;
+  /** Un punto por tarjeta (el FIC no tiene la de beneficio de permanencia). */
+  protected readonly puntos = computed(() => (this.producto().beneficio ? [0, 1, 2] : [0, 1]));
+  protected readonly donaGradiente = computed(() => gradienteRendimientos(this.producto().pctRendimientos));
+  protected readonly donaEtiqueta = computed(() => etiquetaRendimientos(this.producto().pctRendimientos));
   protected readonly activa = signal(0);
 
   /** Carrusel (móvil): el punto activo es la tarjeta más cercana al centro. */

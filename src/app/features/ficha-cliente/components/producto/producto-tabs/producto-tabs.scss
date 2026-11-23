@@ -57,6 +57,168 @@
 .pf-tab.on svg {
   stroke: #fff;
 }
+// Globo de novedad sobre el tab Composición y saldos: sutil, se apaga al usar la función o al cerrarlo
+.pf-tabs-w {
+  position: relative;
+}
+.pf-globo {
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0 2px 0 0;
+  border-radius: 8px;
+  background: var(--sk-color-text);
+  color: #fff;
+  font-family: var(--sk-font-body);
+  font-size: 12px;
+  line-height: 20px;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  animation: pfGlobo 0.35s ease-out both;
+}
+.pf-globo::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: var(--pf-globo-x, 50%);
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--sk-color-text);
+}
+.pf-globo-ir {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 28px;
+  padding: 4px 4px 4px 10px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.pf-globo-ico {
+  flex: none;
+  margin-right: 2px;
+  color: var(--sk-color-primary);
+}
+.pf-globo-ir b {
+  font-weight: 700;
+  color: var(--sk-color-primary);
+}
+.pf-globo-x {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.pf-globo-x:hover,
+.pf-globo-ir:hover b {
+  text-decoration: underline;
+}
+.pf-globo-x:hover {
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.12);
+}
+.pf-globo-ir:focus-visible,
+.pf-globo-x:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 1px;
+  border-radius: 6px;
+}
+@keyframes pfGlobo {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pf-globo {
+    animation: none;
+  }
+}
+:host-context(.m-pf-sec) .pf-globo {
+  display: none !important;
+}
+.pf-tab-col,
+.pf-tab-l1 {
+  display: contents;
+}
+.pf-tab-tag,
+.pf-tab-sub {
+  display: none;
+}
+// Móvil: sin globo flotante; la novedad va dentro de la fila (tag Nuevo + línea con megáfono)
+@media (max-width: 600px) {
+  .pf-globo {
+    display: none !important;
+  }
+  .pf-tab.pf-tab-con-nov,
+  :host-context(.vista-producto) .pf-tab.pf-tab-con-nov {
+    height: auto;
+    min-height: 72px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  .pf-tab-con-nov .pf-tab-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    min-width: 0;
+    text-align: left;
+  }
+  .pf-tab-con-nov .pf-tab-l1 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .pf-tab-con-nov .pf-tab-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 8px;
+    border-radius: 8px;
+    background: var(--sk-color-info-light);
+    color: var(--sk-color-info);
+    font-family: var(--sk-font-heading);
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 700;
+  }
+  .pf-tab-con-nov .pf-tab-sub {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--sk-font-body);
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 400;
+    color: var(--sk-color-text-2);
+    white-space: normal;
+  }
+  .pf-tab-con-nov .pf-tab-sub b {
+    font-weight: 700;
+    color: var(--sk-color-text);
+  }
+  .pf-tab-con-nov .pf-tab-sub svg.pf-globo-ico {
+    width: 14px;
+    height: 14px;
+    stroke: var(--sk-color-primary);
+    margin: 0;
+  }
+}
 .pf-tab:focus-visible {
   outline: 2px solid var(--sk-color-info);
   outline-offset: -2px;

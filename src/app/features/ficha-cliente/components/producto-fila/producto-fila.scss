@@ -66,6 +66,7 @@
 }
 // Hover del producto: toda la fila es clicable
 .prod.prod-click {
+  align-self: stretch;
   cursor: pointer;
   margin-left: 16px;
   padding: 14px 12px 12px 10px;

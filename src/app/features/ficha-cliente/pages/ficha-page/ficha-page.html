@@ -16,7 +16,7 @@
   }
   @case ('productos') {
     <section class="panel" id="p-productos" data-panel-id="productos">
-      <nc-productos-panel [categorias]="categorias" [oculto]="store.saldosOcultos()" (abrirProducto)="abrirProducto()" />
+      <nc-productos-panel [categorias]="categorias" [oculto]="store.saldosOcultos()" (abrirProducto)="abrirProducto($event)" />
     </section>
   }
   @default {

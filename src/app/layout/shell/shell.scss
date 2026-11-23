@@ -40,6 +40,11 @@ footer {
   visibility: hidden;
 }
 
+:host-context(.pv-embed) main {
+  // Dentro del teléfono de la vista previa queda espacio para el botón flotante de retiros.
+  padding-bottom: 84px;
+}
+
 :host-context(.modo-mision) footer {
   color: var(--sk-color-mission-text);
 }

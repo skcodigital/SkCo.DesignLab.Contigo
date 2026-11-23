@@ -27,6 +27,20 @@
 .pf-caja.pf-vacio p {
   margin: 0;
 }
+// Con 8 columnas la tabla de Composición necesita más espacio (solo en escritorio ancho)
+@media (min-width: 1101px) {
+  .pf-panel[data-pf-panel='composicion'] .pf-caja {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+// Móvil: Composición se reordena (switch, saldos a otras fechas, dona, indicadores, tabla)
+@media (max-width: 600px) {
+  .pf-panel[data-pf-panel='composicion'] .pf-caja {
+    display: flex;
+    flex-direction: column;
+  }
+}
 @media (max-width: 600px) {
   .v-producto {
     margin-top: 20px;

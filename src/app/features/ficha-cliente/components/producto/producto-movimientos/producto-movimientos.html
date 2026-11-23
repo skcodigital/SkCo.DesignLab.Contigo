@@ -1,0 +1,39 @@
+<div class="pf-mov-h">
+  <h3>Movimientos</h3>
+  <label class="pf-mov-pag"
+    ><span class="sr">Movimientos por página</span
+    ><select>
+      <option>10</option>
+      <option>20</option>
+      <option>50</option>
+    </select></label
+  >
+</div>
+<div class="pf-tabla-wrap">
+  <table class="pf-tabla pf-mov">
+    <thead>
+      <tr>
+        <th scope="col">Detalles</th>
+        <th scope="col">Tipo</th>
+        <th scope="col">Fecha</th>
+        <th scope="col">Valor bruto</th>
+        <th scope="col">Valor neto</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (m of movimientos(); track $index) {
+        <tr>
+          <td>
+            <button type="button" class="pf-desc" [attr.aria-label]="'Ver detalle: ' + m.tipo + ' del ' + m.fecha">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00C73D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></svg>
+            </button>
+          </td>
+          <td>{{ m.tipo }}</td>
+          <td>{{ m.fecha }}</td>
+          <td>{{ m.bruto }}</td>
+          <td>{{ m.neto }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

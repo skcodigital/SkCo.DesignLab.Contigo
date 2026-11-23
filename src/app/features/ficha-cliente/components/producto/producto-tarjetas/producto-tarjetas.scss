@@ -151,6 +151,10 @@
 .pf-lbl {
   margin: 20px 0 8px;
 }
+// FIC: dos tarjetas arriba
+.pf-cards.pf-cards-2 {
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+}
 @include pf-dos;
 @include trend;
 .pf-big .trend {

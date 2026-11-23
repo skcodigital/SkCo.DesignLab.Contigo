@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { ProductoFila } from '@features/ficha-cliente/components/producto-fila/producto-fila';
-import { CategoriaProductos } from '@features/ficha-cliente/interfaces/productos';
+import { CategoriaProductos, TipoProducto } from '@features/ficha-cliente/interfaces/productos';
 
 /**
  * Contenido de la pestaña Productos: categorías en acordeón con sus contratos, Monitor Contigo y,
@@ -16,5 +16,5 @@ import { CategoriaProductos } from '@features/ficha-cliente/interfaces/productos
 export class ProductosPanel {
   readonly categorias = input.required<readonly CategoriaProductos[]>();
   readonly oculto = input(false);
-  readonly abrirProducto = output<void>();
+  readonly abrirProducto = output<TipoProducto>();
 }

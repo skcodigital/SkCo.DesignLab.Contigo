@@ -45,4 +45,5 @@ docs/          prototipo original de referencia y brief de conversión
 - **Píxel-fiel**: se conservan los estilos del prototipo, repartidos por componente; los colores que coinciden con un token usan `var(--sk-*)` (`src/styles/_tokens.scss`). No usa sk-components.
 - **Modos de página** (modo misión, journey abierto, vista de producto, menú móvil…): el prototipo los ponía como clases de `<body>`. Aquí viven en `UiStore` y la raíz los refleja en `<body>`, así los componentes reaccionan con `:host-context(.modo-mision)` sin acoplarse.
 - **Sin backend**: los datos son los de ejemplo del prototipo, tipados en `features/*/data/*.mock.ts`.
-- **Fuera de alcance**: vista teléfono (`#movil`), grabador de pruebas (`?prueba=`), sección Recursos y el selector flotante de vista de la radiografía (los roles llegan por `?rol=`).
+- **Vista previa Escritorio / Móvil** (control del prototipo, abajo al centro): «Móvil» muestra la página actual dentro de un teléfono de 375px (la misma app en un iframe con `?embed=1`); la URL de afuera sigue al teléfono con `#movil`, y un enlace con `#movil` abre directo en móvil. Se oculta en pantallas ≤768px.
+- **Fuera de alcance**: grabador de pruebas (`?prueba=`), sección Recursos y el selector flotante de vista de la radiografía (los roles llegan por `?rol=`).

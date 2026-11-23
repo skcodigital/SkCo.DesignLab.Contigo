@@ -1,41 +1,53 @@
-<div class="pf-aviso" role="note">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z" /><path d="M21.21 15.89A10 10 0 1 1 8 2.83" /></svg>
-  <p>Consulta los saldos y la composición de portafolios en una fecha determinada (<b>Saldos a la fecha</b>).</p>
-</div>
-
-<div class="pf-barra">
-  <div class="pf-seg" role="tablist" aria-label="Tipo de composición">
-    <button type="button" role="tab" [attr.aria-selected]="segmento() === 'actual'" (click)="elegirSegmento.emit('actual')">Composición</button>
-    <button type="button" role="tab" [attr.aria-selected]="segmento() === 'standing'" (click)="elegirSegmento.emit('standing')">Standing allocation</button>
-  </div>
-  @if (segmento() === 'actual') {
-    <div class="pf-ctrl">
-      <nc-fecha-corte [seleccion]="fechaCorte()" [texto]="fechaCorteTexto()" [hoy]="hoy()" [minima]="minima()" (elegir)="alElegirFecha($event)" />
-      <div class="pf-radios" role="radiogroup" aria-label="Estado de los saldos">
-        <label class="pf-radio"
-          ><input type="radio" name="pf-estado" value="proceso" [checked]="estado() === 'proceso'" (change)="estado.set('proceso')" /><span
-            >En proceso</span
-          ></label
-        >
-        <label class="pf-radio"
-          ><input type="radio" name="pf-estado" value="efectivo" [checked]="estado() === 'efectivo'" (change)="estado.set('efectivo')" /><span
-            >Efectivo</span
-          ></label
-        >
-      </div>
+@let v = vista();
+<!-- FIC: sin switch de composición -->
+@if (v.tipo !== 'fic') {
+  <div class="pf-barra">
+    <div class="pf-seg" role="tablist" aria-label="Tipo de composición">
+      <button type="button" role="tab" [attr.aria-selected]="v.segmento === 'actual'" (click)="elegirSegmento.emit('actual')">Composición</button>
+      <button type="button" role="tab" [attr.aria-selected]="v.segmento === 'standing'" (click)="elegirSegmento.emit('standing')">Standing allocation</button>
     </div>
-  }
-</div>
+    @if (v.segmento === 'actual') {
+      <!-- 2026-11-20: la etiqueta del corte se omite por ahora (UX) -->
+      <p class="pf-corte" aria-live="polite">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>
+        <span>Saldos <b>{{ estadoCorte() }}</b> con corte al <b>{{ v.fechaTexto }}</b></span>
+      </p>
+    }
+  </div>
+}
 
-@if (segmento() === 'actual') {
+@if (v.segmento === 'actual') {
+  <nc-saldos-otras-fechas
+    [fecha]="v.fecha"
+    [fechaTexto]="v.fechaTexto"
+    [estado]="v.estado"
+    [hoy]="hoy()"
+    [minima]="minima()"
+    [fic]="v.tipo === 'fic'"
+    (elegirFecha)="alElegirFecha($event)"
+    (elegirEstado)="elegirEstado.emit($event)"
+    (usar)="usarNovedad.emit()"
+  />
+
+  <div class="pf-ind-h">
+    <h3>Indicadores por portafolio</h3>
+    <span class="pf-copiar-w">
+      <button type="button" class="pf-copiar" [class.ok]="copiada()" aria-label="Copiar tabla" aria-describedby="pf-copiar-tt" (click)="copiar()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="14" height="14" rx="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></svg>
+        <span class="pf-copiar-tx">Copiar tabla</span>
+      </button>
+      <span class="pf-copiar-tt" role="tooltip" id="pf-copiar-tt">{{ textoCopiar() }}</span>
+    </span>
+  </div>
+
   <div class="pf-comp">
     <div
       class="pf-donut pf-donut-comp"
       role="img"
       [class.actualiza]="animacion() === 1"
       [class.actualiza-2]="animacion() === 2"
-      [style.background]="gradiente()"
-      [attr.aria-label]="etiquetaDona()"
+      [style.background]="v.gradiente"
+      [attr.aria-label]="v.etiquetaDona"
     ></div>
     <div class="pf-tabla-wrap">
       <table class="pf-tabla" [class.actualiza]="animacion() === 1" [class.actualiza-2]="animacion() === 2">
@@ -45,31 +57,53 @@
             <th scope="col" class="pf-izq">Portafolio</th>
             <th scope="col">No. unidades</th>
             <th scope="col">Valor unidad</th>
-            <th scope="col">Saldo</th>
             <th scope="col">Rendimientos</th>
             <th scope="col">Rendimientos E.A.</th>
+            <th scope="col"><span class="pf-disp-h">Disponible</span></th>
+            <th scope="col">Saldo</th>
           </tr>
         </thead>
         <tbody>
-          @for (f of filasVista(); track f.nombre) {
-            <tr>
+          @for (f of v.filas; track f.nombre) {
+            <tr [class.pf-no]="!f.disponible">
               <td>
                 <button type="button" class="pf-desc" [attr.aria-label]="'Descargar ficha técnica de ' + f.nombre">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00C73D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12" /><path d="m7 10 5 5 5-5" /><path d="M5 21h14" /></svg>
                 </button>
               </td>
-              <td class="pf-izq"><i [style.background]="f.color"></i><b>{{ f.porcentaje }} %</b> {{ f.nombre }}</td>
+              <td class="pf-izq"><i [style.background]="f.color"></i><b>{{ f.participacion }}</b> {{ f.nombre }}</td>
               <td>{{ f.unidades }}</td>
               <td>{{ f.valorUnidad }}</td>
-              <td>{{ f.saldo }}</td>
               <td>{{ f.rendimientos }}</td>
               <td>{{ f.ea }}</td>
+              <td class="pf-disp">{{ f.disponibleTexto }}</td>
+              <td class="pf-col-saldo">{{ f.saldo }}</td>
             </tr>
           }
         </tbody>
+        <!-- FIC: un solo portafolio, el total sobra -->
+        @if (v.tipo !== 'fic') {
+          <tfoot>
+            <tr class="pf-total">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <th scope="row" class="pf-total-lbl">Total</th>
+              <td class="pf-col-saldo">{{ v.total }}</td>
+            </tr>
+          </tfoot>
+        }
       </table>
     </div>
   </div>
 } @else {
-  <div class="pf-vacio"></div>
+  <div class="pf-std">
+    <div class="pf-donut pf-donut-std" role="img" [attr.aria-label]="standing.etiqueta"></div>
+    <ul class="pf-std-ley">
+      <li><i></i><b>{{ standing.porcentaje }}</b> {{ standing.portafolio }}</li>
+    </ul>
+  </div>
 }

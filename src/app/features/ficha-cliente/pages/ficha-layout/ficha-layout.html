@@ -2,7 +2,7 @@
 
 <nc-ficha-cabecera
   [cliente]="cliente"
-  [contrato]="'#' + producto.contrato"
+  [contrato]="'#' + store.producto().contrato"
   [productoAbierto]="productoAbierto()"
   (inicio)="irInicio()"
   (cerrarProducto)="cerrarProducto()"
@@ -12,7 +12,7 @@
 <nc-m-seccion
   [nivel]="nivel()"
   [pestana]="store.etiquetaPestana()"
-  [producto]="producto.nombre"
+  [producto]="store.nombreProducto()"
   [seccionProducto]="store.etiquetaPestanaProducto()"
   (subir)="subirA($event)"
 />

@@ -28,6 +28,8 @@ export class FechaCorte {
   readonly hoy = input.required<Date>();
   readonly minima = input.required<Date>();
   readonly elegir = output<Date>();
+  /** El asesor abrió o cerró el calendario (cuenta como usar "Saldos a otras fechas"). */
+  readonly alternado = output<void>();
 
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly injector = inject(Injector);
@@ -44,9 +46,15 @@ export class FechaCorte {
   protected readonly vacios = computed(() => Array.from({ length: this.mes().vacios }, (_, i) => i));
   protected readonly minimaTexto = computed(() => formatoFechaCorta(this.minima()));
 
+  /** Foco en el botón sin mover la página (lo usa el aviso de novedad). */
+  enfocar(): void {
+    this.boton().nativeElement.focus({ preventScroll: true });
+  }
+
   protected alternar(): void {
     if (this.abierto()) this.cerrar(false);
     else this.abrir();
+    this.alternado.emit();
   }
 
   protected navegar(meses: number): void {

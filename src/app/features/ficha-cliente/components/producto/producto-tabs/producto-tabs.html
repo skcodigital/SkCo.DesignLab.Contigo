@@ -1,37 +1,79 @@
-<div class="pf-tabs" role="tablist" aria-label="Secciones del producto">
-  @for (p of pestanas; track p.id) {
-    <button
-      type="button"
-      class="pf-tab"
-      role="tab"
-      [class.on]="p.id === activa()"
-      [attr.aria-selected]="p.id === activa()"
-      [attr.data-pf]="p.id"
-      (click)="elegir.emit(p.id)"
-    >
-      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        @switch (p.id) {
-          @case ('comportamiento') {
-            <path d="M3 3v18h18" /><path d="m7 14 4-4 3 3 6-6" />
+<ng-template #icoNovedad>
+  <svg class="pf-globo-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 11 18-5v12L3 14v-3z" /><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" /></svg>
+</ng-template>
+
+<div class="pf-tabs-w" #envoltura>
+  <div class="pf-tabs" role="tablist" aria-label="Secciones del producto" (scroll)="ubicarGlobo()">
+    @for (p of pestanas(); track p.id) {
+      <button
+        #tab
+        type="button"
+        class="pf-tab"
+        role="tab"
+        [class.on]="p.id === activa()"
+        [class.pf-tab-con-nov]="p.id === 'composicion' && novedad()"
+        [attr.aria-selected]="p.id === activa()"
+        [attr.data-pf]="p.id"
+        (click)="elegir.emit(p.id)"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          @switch (p.id) {
+            @case ('comportamiento') {
+              <path d="M3 3v18h18" /><path d="m7 14 4-4 3 3 6-6" />
+            }
+            @case ('composicion') {
+              <path d="M21.2 15.9A10 10 0 1 1 8 2.8" /><path d="M22 12A10 10 0 0 0 12 2v10z" />
+            }
+            @case ('movimientos') {
+              <path d="M21 12a9 9 0 0 0-15-6.7L3 8" /><path d="M3 3v5h5" /><path d="M3 12a9 9 0 0 0 15 6.7l3-2.7" /><path d="M16 16h5v5" />
+            }
+            @case ('retenciones') {
+              <circle cx="12" cy="12" r="10" /><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" /><path d="M12 18V6" />
+            }
+            @case ('detalles') {
+              <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9l-.8-1.2A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" /><path d="M8 13h.01M12 13h.01M16 13h.01" />
+            }
+            @case ('cuentas') {
+              <rect x="2" y="5" width="20" height="14" rx="2" /><path d="M2 10h20" /><path d="M6 15h4" />
+            }
+            @case ('actividad') {
+              <circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" />
+            }
           }
-          @case ('composicion') {
-            <path d="M21.2 15.9A10 10 0 1 1 8 2.8" /><path d="M22 12A10 10 0 0 0 12 2v10z" />
-          }
-          @case ('movimientos') {
-            <path d="M21 12a9 9 0 0 0-15-6.7L3 8" /><path d="M3 3v5h5" /><path d="M3 12a9 9 0 0 0 15 6.7l3-2.7" /><path d="M16 16h5v5" />
-          }
-          @case ('detalles') {
-            <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9l-.8-1.2A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" /><path d="M8 13h.01M12 13h.01M16 13h.01" />
-          }
-          @case ('cuentas') {
-            <rect x="2" y="5" width="20" height="14" rx="2" /><path d="M2 10h20" /><path d="M6 15h4" />
-          }
-          @case ('actividad') {
-            <circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" />
-          }
+        </svg>
+        @if (p.id === 'composicion') {
+          <!-- Móvil: la novedad va dentro de la fila (tag Nuevo + línea con megáfono) -->
+          <span class="pf-tab-col"
+            ><span class="pf-tab-l1"><span class="pf-tab-tx">{{ p.etiqueta }}</span><span class="pf-tab-tag">Nuevo</span></span
+            ><span class="pf-tab-sub"
+              ><ng-container [ngTemplateOutlet]="icoNovedad" /><span>Ahora: <b>Saldos a otras fechas</b></span></span
+            ></span
+          >
+        } @else {
+          {{ p.etiqueta }}
         }
-      </svg>
-      {{ p.etiqueta }}
-    </button>
+      </button>
+    }
+  </div>
+
+  @if (novedad()) {
+    @let pos = posicion();
+    <div
+      #globo
+      class="pf-globo"
+      role="status"
+      [class.pf-globo-m]="pos?.movil"
+      [style.visibility]="pos ? null : 'hidden'"
+      [style.left.px]="pos?.left"
+      [style.top.px]="pos?.top"
+      [style.--pf-globo-x]="pos ? pos.flecha + 'px' : null"
+    >
+      <button type="button" class="pf-globo-ir" (click)="irANovedad.emit()">
+        <ng-container [ngTemplateOutlet]="icoNovedad" />Ahora en Contigo: <b>Saldos a otras fechas</b>
+      </button>
+      <button type="button" class="pf-globo-x" aria-label="Cerrar aviso" (click)="cerrarNovedad.emit()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+      </button>
+    </div>
   }
 </div>

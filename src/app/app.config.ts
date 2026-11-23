@@ -4,6 +4,7 @@ import {
   provideZonelessChangeDetection,
 } from '@angular/core';
 import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
+import { provideVistaPrevia } from '@core/vista-previa/vista-previa';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -18,5 +19,7 @@ export const appConfig: ApplicationConfig = {
       // El prototipo volvía arriba en cada cambio de vista.
       withInMemoryScrolling({ scrollPositionRestoration: 'top' }),
     ),
+    // Vista previa Escritorio/Móvil del prototipo: dentro del teléfono avisa la página a la ventana de afuera.
+    provideVistaPrevia(),
   ],
 };

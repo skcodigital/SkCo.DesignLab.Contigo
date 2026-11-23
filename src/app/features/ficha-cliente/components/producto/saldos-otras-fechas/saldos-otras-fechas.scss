@@ -1,0 +1,205 @@
+// La caja es un hijo directo de la caja gris de Composición (en móvil se reordena).
+:host {
+  display: contents;
+}
+
+// Saldos a otras fechas: barra de filtro neutra (no alerta), blanca con la sombra de las tarjetas
+.pf-saf {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin: 24px 0 0;
+  padding: 16px 24px;
+  border: 0;
+  border-radius: 16px;
+  background: var(--sk-color-surface);
+  box-shadow: 0 0 4px 0 rgba(61, 75, 92, 0.15);
+  font-family: var(--sk-font-body);
+  color: var(--sk-color-text);
+}
+.pf-saf-t {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.pf-saf-t b {
+  font-family: var(--sk-font-heading);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+}
+.pf-saf-t b {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+// Tag tipo "Beta": feedback info
+.pf-saf-t b .pf-tag-nuevo {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 8px;
+  background: var(--sk-color-info-light);
+  color: var(--sk-color-info);
+  font-family: var(--sk-font-heading);
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 700;
+}
+.pf-saf-t span {
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--sk-color-text-2);
+}
+.pf-saf-ctrl {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+}
+.pf-saf-lbl {
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 700;
+}
+.pf-atajos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.pf-atajos[hidden] {
+  display: none;
+}
+.pf-atajo {
+  padding: 4px 12px;
+  border: 1px solid var(--sk-color-border);
+  border-radius: 9999px;
+  background: #fff;
+  font-family: var(--sk-font-body);
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--sk-color-text);
+  cursor: pointer;
+}
+.pf-atajo:hover {
+  border-color: var(--sk-color-primary);
+  color: var(--sk-color-primary);
+}
+.pf-atajo[aria-pressed='true'] {
+  background: var(--sk-color-primary);
+  border-color: var(--sk-color-primary);
+  color: #fff;
+}
+.pf-atajo:focus-visible {
+  outline: 2px solid var(--sk-color-info);
+  outline-offset: 2px;
+}
+@media (hover: none) {
+  .pf-atajo:hover {
+    border-color: var(--sk-color-border);
+    color: var(--sk-color-text);
+  }
+  .pf-atajo[aria-pressed='true']:hover {
+    border-color: var(--sk-color-primary);
+    color: #fff;
+  }
+}
+@media (max-width: 600px) {
+  .pf-saf {
+    padding: 16px;
+  }
+  .pf-saf-ctrl {
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+// Móvil: va después del switch Composición / Standing allocation
+@media (max-width: 600px) {
+  .pf-saf {
+    order: 2;
+  }
+}
+
+// La caja también es la barra de controles de la fecha (`.pf-ctrl`); en el prototipo estas reglas van después
+.pf-ctrl {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+}
+.pf-radios {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.pf-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: var(--sk-font-body);
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--sk-color-text);
+}
+.pf-radio input {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid var(--sk-color-text-3);
+  border-radius: 50%;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.pf-radio input::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--sk-color-primary);
+  transform: scale(0);
+  transition: transform 0.15s;
+}
+.pf-radio input:checked {
+  border-color: var(--sk-color-primary);
+}
+.pf-radio input:checked::before {
+  transform: scale(1);
+}
+.pf-radio:hover input {
+  border-color: var(--sk-color-primary);
+}
+.pf-radio input:focus-visible {
+  outline: 2px solid var(--sk-color-info);
+  outline-offset: 2px;
+}
+@media (max-width: 600px) {
+  .pf-ctrl {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+}
+
+// FIC: sin switch arriba, no deja hueco
+.pf-saf.fic {
+  margin-top: 0;
+}
+
+// Táctil: los estados hover no se quedan pegados
+@media (hover: none) {
+  .pf-radio:hover input:not(:checked) {
+    border-color: var(--sk-color-text-3);
+  }
+}

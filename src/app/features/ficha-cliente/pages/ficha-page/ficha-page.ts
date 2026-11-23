@@ -20,6 +20,7 @@ import { MQ_FICHA_MOVIL } from '@features/ficha-cliente/constants/pestanas';
 import { CATEGORIAS_PRODUCTOS } from '@features/ficha-cliente/data/productos.mock';
 import { SALDOS_OSCAR } from '@features/ficha-cliente/data/saldos.mock';
 import { PestanaFichaId } from '@features/ficha-cliente/interfaces/pestanas';
+import { TipoProducto } from '@features/ficha-cliente/interfaces/productos';
 import { FichaStore } from '@features/ficha-cliente/state/ficha.store';
 import { normalizarPestana } from '@features/ficha-cliente/utils/pestanas';
 
@@ -80,7 +81,8 @@ export class FichaPage implements OnInit {
     }
   }
 
-  protected abrirProducto(): void {
-    void this.router.navigate(['/', RUTAS.ficha, RUTAS.producto]);
+  /** El Multifund es `/ficha/producto`; el FIC, `/ficha/producto?tipo=fic`. */
+  protected abrirProducto(tipo: TipoProducto): void {
+    void this.router.navigate(['/', RUTAS.ficha, RUTAS.producto], tipo === 'mf' ? {} : { queryParams: { tipo } });
   }
 }

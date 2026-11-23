@@ -2,9 +2,19 @@
 <div class="prod prod-click" (click)="alFila($event)">
   <div class="t">
     <button type="button" class="prod-abrir" [attr.aria-label]="etiquetaAbrir()" (click)="alBoton($event)">
-      <span class="ed">{{ p.edicion }}</span><span class="nom">{{ p.nombre }}</span>
+      @if (p.edicion) {
+        <span class="ed">{{ p.edicion }}</span>
+      }
+      <span class="nom"
+        >{{ p.nombre }}
+        @if (p.emoji) {
+          <span aria-hidden="true">{{ p.emoji }}</span>
+        }
+      </span>
       <span class="n"><span class="n-sep">| </span>{{ p.contrato }}</span></button
-    ><span class="prod-tag">{{ p.tag }}</span>
+    >@if (p.tag) {
+      <span class="prod-tag">{{ p.tag }}</span>
+    }
     <button type="button" class="prod-abrir prod-chev" aria-label="Ver ficha del producto" (click)="alBoton($event)">
       <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="#00C73D" stroke-width="1.6" style="margin-left: 8px"><path d="M3 1.5L6.5 5 3 8.5" /></svg>
     </button>

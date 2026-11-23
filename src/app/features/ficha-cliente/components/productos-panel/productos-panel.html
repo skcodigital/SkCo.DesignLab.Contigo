@@ -24,8 +24,8 @@
           }
         </svg>
       </div>
-      @for (prod of cat.productos; track prod.contrato) {
-        <nc-producto-fila [producto]="prod" [oculto]="oculto()" (abrir)="abrirProducto.emit()" />
+      @for (prod of cat.productos; track prod.tipo) {
+        <nc-producto-fila [producto]="prod" [oculto]="oculto()" (abrir)="abrirProducto.emit($event)" />
       }
     </div>
   }

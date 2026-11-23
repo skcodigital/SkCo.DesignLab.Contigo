@@ -6,6 +6,30 @@ export const TEXTOS_FICHA = {
   mascaraMonto: '$ ••••••',
   composicion: {
     donaPrefijo: 'Composición al ',
+    disponible: ' (disponible)',
+    noDisponible: ' (no disponible)',
+    si: 'Sí',
+    no: 'No',
+    total: 'Total',
+    enProceso: 'en proceso',
+    enEfectivo: 'en efectivo',
+    copiaTitulo: 'Composición del contrato #',
+    columnasCopia: [
+      'Portafolio',
+      'Participación',
+      'No. unidades',
+      'Valor unidad',
+      'Rendimientos',
+      'Rendimientos E.A.',
+      'Disponible',
+      'Saldo',
+    ],
+  },
+  copiar: {
+    boton: 'Copiar tabla',
+    copiada: '¡Copiada!',
+    aviso: 'Copiaste la tabla. Puedes pegarla en Excel o en un correo.',
+    error: 'No se pudo copiar la tabla. Inténtalo de nuevo.',
   },
   calendario: {
     meses: [
@@ -25,5 +49,6 @@ export const TEXTOS_FICHA = {
   },
   producto: {
     verFicha: (nombre: string, contrato: string) => `Ver ficha del producto ${nombre}, contrato ${contrato}`,
+    fichaDe: (nombre: string) => `Ficha del producto ${nombre}`,
   },
 } as const;

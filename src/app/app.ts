@@ -1,14 +1,21 @@
 import { ChangeDetectionStrategy, Component, DOCUMENT, effect, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ModoPagina, UiStore } from '@core/state/ui.store';
+import { EN_TELEFONO } from '@core/vista-previa/vista-previa';
+import { VistaPrevia } from '@layout/vista-previa/vista-previa';
 
 @Component({
   selector: 'nc-root',
-  imports: [RouterOutlet],
-  template: '<router-outlet />',
+  imports: [RouterOutlet, VistaPrevia],
+  // El control Escritorio/Móvil no se pinta dentro del propio teléfono.
+  template: `<router-outlet />
+    @if (!enTelefono) {
+      <nc-vista-previa />
+    }`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
+  protected readonly enTelefono = inject(EN_TELEFONO);
   private readonly ui = inject(UiStore);
   private readonly body = inject(DOCUMENT).body;
   private aplicados = new Set<ModoPagina>();

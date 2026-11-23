@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { construirMes, diasEntre, formatoFechaCorta, formatoFechaLarga, mismoDia, sumarMeses } from './fechas';
+import { construirMes, diasEntre, fechasAtajo, formatoFechaCorta, formatoFechaLarga, mismoDia, sumarMeses } from './fechas';
 
 const HOY = new Date(2026, 10, 12);
 const MIN = new Date(2025, 10, 12);
@@ -36,5 +36,14 @@ describe('construirMes', () => {
     expect(mes.dias[11].deshabilitado).toBe(false);
     expect(mes.puedeAnterior).toBe(false);
     expect(mes.puedeSiguiente).toBe(true);
+  });
+});
+
+describe('fechasAtajo', () => {
+  it('último corte, fin de mes anterior y fin de año anterior', () => {
+    const a = fechasAtajo(HOY);
+    expect(formatoFechaCorta(a.corte)).toBe('12/11/2026');
+    expect(formatoFechaCorta(a.mes)).toBe('31/10/2026');
+    expect(formatoFechaCorta(a.anio)).toBe('31/12/2025');
   });
 });

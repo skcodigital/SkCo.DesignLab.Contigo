@@ -13,9 +13,10 @@ export const PESTANAS_FICHA: readonly PestanaFicha[] = [
 ];
 
 export const PESTANAS_PRODUCTO: readonly PestanaProducto[] = [
-  { id: 'comportamiento', etiqueta: 'Comportamiento' },
+  { id: 'comportamiento', etiqueta: 'Comportamiento', solo: 'mf' },
   { id: 'composicion', etiqueta: 'Composición y saldos' },
   { id: 'movimientos', etiqueta: 'Movimientos' },
+  { id: 'retenciones', etiqueta: 'Retenciones', solo: 'fic' },
   { id: 'detalles', etiqueta: 'Detalles' },
   { id: 'cuentas', etiqueta: 'Cuentas y débito' },
   { id: 'actividad', etiqueta: 'Actividad' },

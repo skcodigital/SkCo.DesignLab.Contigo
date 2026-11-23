@@ -61,3 +61,14 @@ export function construirMes(vista: Date, seleccion: Date, hoy: Date, minima: Da
     puedeSiguiente: !(y > hoy.getFullYear() || (y === hoy.getFullYear() && m >= hoy.getMonth())),
   };
 }
+
+export type AtajoFecha = 'corte' | 'mes' | 'anio';
+
+/** Fechas rápidas de "Saldos a otras fechas": último corte, fin de mes anterior y fin de año anterior. */
+export function fechasAtajo(hoy: Date): Readonly<Record<AtajoFecha, Date>> {
+  return {
+    corte: new Date(hoy),
+    mes: new Date(hoy.getFullYear(), hoy.getMonth(), 0),
+    anio: new Date(hoy.getFullYear() - 1, 11, 31),
+  };
+}

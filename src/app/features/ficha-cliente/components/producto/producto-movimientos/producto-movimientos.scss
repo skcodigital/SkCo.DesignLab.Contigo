@@ -1,0 +1,112 @@
+:host {
+  display: block;
+}
+
+.pf-tabla-wrap {
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+}
+.pf-tabla {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 8px 10px;
+  font-family: var(--sk-font-body);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  color: var(--sk-color-text);
+}
+.pf-tabla th {
+  font-weight: 700;
+  background: #fff;
+  border-radius: 4px;
+  padding: 8px 10px;
+  white-space: nowrap;
+}
+.pf-tabla td {
+  font-weight: 400;
+  background: #fff;
+  border-radius: 4px;
+  padding: 8px 10px;
+  text-align: center;
+  white-space: nowrap;
+}
+.pf-tabla th:first-child,
+.pf-tabla td:first-child {
+  background: transparent;
+  padding-left: 0;
+  padding-right: 0;
+}
+.pf-desc {
+  border: 0;
+  background: none;
+  padding: 2px;
+  cursor: pointer;
+  display: flex;
+  border-radius: 4px;
+}
+.pf-desc:focus-visible {
+  outline: 2px solid var(--sk-color-info);
+}
+@media (min-width: 1101px) {
+  .pf-tabla {
+    border-spacing: 4px 10px;
+  }
+  .pf-tabla th,
+  .pf-tabla td {
+    padding: 8px 8px;
+  }
+}
+
+// FIC: pestaña Movimientos con tabla
+.pf-mov-h {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+.pf-mov-h h3 {
+  margin: 0;
+  font-family: var(--sk-font-heading);
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 500;
+  color: var(--sk-color-text);
+}
+.pf-mov-pag select {
+  height: 40px;
+  padding: 0 32px 0 12px;
+  border: 1px solid var(--sk-color-mission-text);
+  border-radius: 8px;
+  background: #fff;
+  font-family: var(--sk-font-body);
+  font-size: 14px;
+  color: var(--sk-color-text);
+}
+.pf-tabla.pf-mov {
+  min-width: 560px;
+}
+.pf-tabla.pf-mov th,
+.pf-tabla.pf-mov td {
+  text-align: center;
+}
+.pf-tabla.pf-mov td:first-child {
+  background: #fff;
+  padding: 8px 10px;
+}
+.pf-tabla.pf-mov .pf-desc {
+  margin: 0 auto;
+}
+
+// Móvil: pantalla de la sección (sin contenedor general)
+@media (max-width: 600px) {
+  :host-context(.m-pf-sec) .pf-tabla th,
+  :host-context(.m-pf-sec) .pf-tabla td:not(:first-child) {
+    background: var(--sk-color-surface-3);
+  }
+  :host-context(.m-pf-sec) .pf-tabla th:first-child {
+    background: transparent;
+  }
+}

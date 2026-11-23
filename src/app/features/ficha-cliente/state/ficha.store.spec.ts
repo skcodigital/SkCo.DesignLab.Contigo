@@ -2,12 +2,13 @@ import { describe, expect, it } from 'vitest';
 import { FichaStore } from './ficha.store';
 
 describe('FichaStore', () => {
-  it('arranca en Productos, con saldos visibles y la sección Composición del producto', () => {
+  it('arranca en Productos, con saldos visibles y el Multifund en Composición y saldos', () => {
     const s = new FichaStore();
     expect(s.pestana()).toBe('productos');
     expect(s.panel()).toBe('productos');
     expect(s.enMision()).toBe(false);
     expect(s.saldosOcultos()).toBe(false);
+    expect(s.producto().tipo).toBe('mf');
     expect(s.pestanaProducto()).toBe('composicion');
     expect(s.etiquetaPestanaProducto()).toBe('Composición y saldos');
   });
@@ -26,6 +27,18 @@ describe('FichaStore', () => {
     const s = new FichaStore();
     s.abrirPestana('documentos');
     expect(s.panel()).toBe('otros');
+  });
+
+  it('abrir el FIC vuelve a Composición y saldos y habilita Movimientos', () => {
+    const s = new FichaStore();
+    s.abrirSeccionProducto('detalles');
+    s.abrirProducto('fic');
+    expect(s.pestanaProducto()).toBe('composicion');
+    expect(s.nombreProducto()).toBe('Viaje ✈️');
+    s.abrirSeccionProducto('movimientos');
+    expect(s.panelProducto()).toBe('movimientos');
+    s.abrirSeccionProducto('cuentas');
+    expect(s.etiquetaPestanaProducto()).toBe('Cuentas');
   });
 
   it('alterna ojo y ampliar', () => {

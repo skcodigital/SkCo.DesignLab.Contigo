@@ -1,10 +1,7 @@
-@use '../../../styles/comunes' as *;
-
+// Los bloques son hijos directos de la caja gris de Composición (en móvil se reordenan con `order`).
 :host {
-  display: block;
+  display: contents;
 }
-
-@include pf-aviso;
 
 .pf-seg {
   display: inline-flex;
@@ -119,77 +116,237 @@
   outline: 2px solid var(--sk-color-info);
 }
 
-// Fecha de corte (calendario) de Composición
+// Etiqueta del corte (2026-11-20: se omite por ahora)
+.pf-corte {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background: #fff;
+  font-family: var(--sk-font-body);
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--sk-color-text);
+}
+.pf-corte svg {
+  color: var(--sk-color-primary);
+  flex: none;
+}
+.pf-corte {
+  display: none !important;
+}
+// Columna Disponible: los portafolios no disponibles para retiro van en rojo (feedback error del DS)
+.pf-tabla tr.pf-no td:not(:first-child),
+.pf-tabla tr.pf-no td.pf-izq b {
+  color: #e03430;
+}
+.pf-tabla td.pf-disp {
+  font-weight: 600;
+}
+// Con 8 columnas la tabla necesita más espacio: dona más pequeña y celdas más compactas (solo en escritorio ancho)
+@media (min-width: 1101px) {
+  .pf-comp {
+    gap: 24px;
+  }
+  .pf-donut-comp {
+    flex: none;
+    width: 168px;
+    height: 168px;
+    -webkit-mask: radial-gradient(circle, transparent 47px, #000 48px);
+    mask: radial-gradient(circle, transparent 47px, #000 48px);
+  }
+  .pf-tabla {
+    border-spacing: 4px 10px;
+  }
+  .pf-tabla th,
+  .pf-tabla td {
+    padding: 8px 8px;
+  }
+}
+// Fila Total y botón Copiar tabla
+.pf-tabla tfoot th,
+.pf-tabla tfoot td {
+  font-weight: 700;
+}
+.pf-tabla tfoot th.pf-izq {
+  background: transparent;
+  padding-left: 0;
+  font-family: var(--sk-font-heading);
+  font-size: 14px;
+}
+.pf-tabla tfoot td {
+  background: transparent;
+}
+.pf-tabla tfoot td.pf-col-saldo {
+  background: var(--sk-color-brand-light);
+  color: var(--sk-color-text);
+  font-family: var(--sk-font-heading);
+  font-size: 13px;
+}
+.pf-tabla td.pf-col-saldo {
+  font-weight: 600;
+}
+:host-context(.m-pf-sec) .pf-tabla tfoot td:not(.pf-col-saldo) {
+  background: transparent;
+}
+.pf-barra {
+  position: relative;
+}
+.pf-copiar-w {
+  position: relative;
+  display: flex;
+  margin-left: auto;
+}
+// Solo ícono, sin fondo
+.pf-copiar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 16px;
+  background: transparent;
+  color: var(--sk-color-primary);
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+.pf-copiar:hover {
+  background: var(--sk-color-brand-light);
+}
+.pf-copiar.ok {
+  background: var(--sk-color-brand-light);
+}
+.pf-copiar:focus-visible {
+  outline: 2px solid var(--sk-color-info);
+  outline-offset: 2px;
+}
+.pf-copiar-tt {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  right: 0;
+  z-index: 30;
+  width: max-content;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: var(--sk-color-text-5);
+  color: #fff;
+  font-family: var(--sk-font-body);
+  font-size: 14px;
+  line-height: 22px;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.15s,
+    visibility 0.15s;
+}
+.pf-copiar-w:hover .pf-copiar-tt,
+.pf-copiar:focus-visible + .pf-copiar-tt,
+.pf-copiar.ok + .pf-copiar-tt {
+  opacity: 1;
+  visibility: visible;
+}
+@media (hover: none) {
+  .pf-copiar:hover {
+    background: transparent;
+  }
+  .pf-copiar-w:hover .pf-copiar-tt {
+    opacity: 0;
+    visibility: hidden;
+  }
+  .pf-copiar.ok + .pf-copiar-tt {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+.pf-copiar-tx {
+  display: none;
+}
+// Encabezado de la tabla: título + copiar
+.pf-ind-h {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 32px;
+}
+.pf-ind-h h3 {
+  margin: 0;
+  font-family: var(--sk-font-heading);
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: 500;
+  color: var(--sk-color-text);
+}
+.pf-ind-h + .pf-comp {
+  margin-top: 16px;
+}
+@media (max-width: 600px) {
+  .pf-ind-h h3 {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+  }
+}
+// Total: "Total" en la columna Disponible y la suma debajo de Saldo
+.pf-tabla tfoot th.pf-total-lbl {
+  background: transparent;
+  text-align: center;
+  font-family: var(--sk-font-heading);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--sk-color-text);
+}
+:host-context(.m-pf-sec) .pf-tabla tfoot td:not(.pf-col-saldo):not(.pf-izq),
+:host-context(.m-pf-sec) .pf-tabla tfoot th.pf-total-lbl {
+  background: transparent;
+}
+:host-context(.m-pf-sec) .pf-tabla tfoot td.pf-col-saldo {
+  background: var(--sk-color-brand-light);
+}
+// Móvil: switch a todo el ancho; Copiar tabla baja, con texto, justo encima de la tabla
+@media (max-width: 600px) {
+  .pf-barra {
+    display: contents;
+  }
+  .pf-seg {
+    order: 1;
+  }
+  .pf-comp {
+    display: contents;
+  }
+  .pf-donut-comp {
+    order: 3;
+    align-self: center;
+    margin-top: 24px;
+  }
+  .pf-ind-h {
+    order: 4;
+    margin: 24px 0 0;
+  }
+  .pf-tabla-wrap {
+    order: 5;
+  }
+  .pf-copiar-tt {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pf-copiar,
+  .pf-copiar-tt {
+    transition: none;
+  }
+}
+
 .pf-barra {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-}
-.pf-ctrl {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 24px;
-}
-.pf-radios {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-.pf-radio {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  font-family: var(--sk-font-body);
-  font-size: 14px;
-  line-height: 22px;
-  color: var(--sk-color-text);
-}
-.pf-radio input {
-  appearance: none;
-  -webkit-appearance: none;
-  margin: 0;
-  width: 20px;
-  height: 20px;
-  border: 1.5px solid var(--sk-color-text-3);
-  border-radius: 50%;
-  background: #fff;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  transition: border-color 0.15s;
-}
-.pf-radio input::before {
-  content: '';
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--sk-color-primary);
-  transform: scale(0);
-  transition: transform 0.15s;
-}
-.pf-radio input:checked {
-  border-color: var(--sk-color-primary);
-}
-.pf-radio input:checked::before {
-  transform: scale(1);
-}
-.pf-radio:hover input {
-  border-color: var(--sk-color-primary);
-}
-.pf-radio input:focus-visible {
-  outline: 2px solid var(--sk-color-info);
-  outline-offset: 2px;
-}
-@media (max-width: 600px) {
-  .pf-ctrl {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-  }
 }
 
 // La tabla y la dona se refrescan al cambiar la fecha de corte
@@ -229,6 +386,59 @@
   .pf-barra {
     flex-direction: column;
     align-items: stretch;
+  }
+}
+
+// Standing allocation: solo la dona y la leyenda
+.pf-std {
+  display: flex;
+  align-items: center;
+  gap: 56px;
+  margin-top: 32px;
+  padding: 8px 0 16px;
+}
+.pf-donut-std {
+  width: 200px;
+  height: 200px;
+  background: var(--sk-charts-c05);
+  -webkit-mask: radial-gradient(circle, transparent 56px, #000 57px);
+  mask: radial-gradient(circle, transparent 56px, #000 57px);
+}
+.pf-std-ley {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--sk-font-body);
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--sk-color-text);
+}
+.pf-std-ley li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pf-std-ley i {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--sk-charts-c05);
+}
+.pf-std-ley b {
+  font-weight: 700;
+}
+@media (max-width: 600px) {
+  .pf-std {
+    order: 7;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 24px;
+  }
+  .pf-donut-std {
+    width: 180px;
+    height: 180px;
+    -webkit-mask: radial-gradient(circle, transparent 50px, #000 51px);
+    mask: radial-gradient(circle, transparent 50px, #000 51px);
   }
 }
 
@@ -278,9 +488,6 @@
 
 // Táctil: los estados hover no se quedan pegados
 @media (hover: none) {
-  .pf-radio:hover input:not(:checked) {
-    border-color: var(--sk-color-text-3);
-  }
   .pf-seg button:not([aria-selected='true']):hover {
     color: var(--sk-color-text-3);
   }
