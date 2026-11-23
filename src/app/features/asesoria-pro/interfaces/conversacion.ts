@@ -43,7 +43,7 @@ export interface MensajeCierre {
   ok?: boolean;
 }
 
-/** Estado completo de una conversación «Acompañamiento en el retiro» (el `st` del prototipo). */
+/** Estado completo de una conversación «Acompañamiento al retirar» (el `st` del prototipo). */
 export interface EstadoConversacion {
   etapa: Etapa;
   visitadas: readonly Etapa[];

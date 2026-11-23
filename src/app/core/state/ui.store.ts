@@ -9,7 +9,7 @@ export type ModoPagina =
   | 'modo-mision' // Asesoría Pro abierta: ficha, header y menú en oscuro "espacial"
   | 'saldos-recogidos' // Asesoría Pro: sección de saldos recogida
   | 'cop-cargando' // Loading introductorio de Asesoría Pro
-  | 'jw-abierto' // Journey "Acompañamiento en el retiro" abierto
+  | 'jw-abierto' // Journey "Acompañamiento al retirar" abierto
   | 'pp-md-abierta' // Modal "Descartar misión" abierta
   | 'vista-producto' // Ficha de producto abierta (dentro de la ficha del cliente)
   | 'm-detalle' // Móvil: una pestaña de la ficha abierta como pantalla aparte

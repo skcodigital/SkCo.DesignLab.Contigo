@@ -8,7 +8,7 @@ $v: ':host-context(#jm-velo)';
 @media (max-width:1180px) and (min-width:901px){.jw-ops3{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:900px){.jw-ops3{grid-template-columns:1fr}}
 
-#{$v} .jw-info{display:flex;gap:8px;align-items:flex-start;margin:0 0 12px;padding:10px 14px;border:1px solid rgba(0,153,222,.3);border-radius:10px;background:rgba(0,153,222,.1);font-size:14px;font-weight:600;color:var(--sk-color-line)}
+#{$v} .jw-info{display:flex;gap:8px;align-items:flex-start;margin:0 0 12px;padding:10px 14px;border:1px solid rgba(0,153,222,.3);border-radius:10px;background:rgba(0,153,222,.1);font-size:14px;font-weight:600;color:var(--sk-color-mission-text)}
 #{$v} .jw-info svg{flex:none;margin-top:3px;color:var(--sk-color-info)}
 #{$v} .jw-ops3{grid-template-columns:repeat(3,minmax(0,1fr))}
 @media (max-width:1180px){#{$v} .jw-ops3{grid-template-columns:repeat(2,minmax(0,1fr))}}

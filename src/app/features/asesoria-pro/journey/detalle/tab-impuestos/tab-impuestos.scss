@@ -16,11 +16,11 @@ $v: ':host-context(#jm-velo)';
 #{$v} .jw-imp-lista>div{display:flex;justify-content:space-between;gap:12px;font-size:13px}
 #{$v} .jw-imp-lista dt{color:var(--tx2)}
 #{$v} .jw-imp-lista dt small{display:block;font-size:11px;color:var(--tx3)}
-#{$v} .jw-imp-lista dd{margin:0;font-weight:600;color:var(--sk-color-line);white-space:nowrap}
+#{$v} .jw-imp-lista dd{margin:0;font-weight:600;color:var(--sk-color-mission-text);white-space:nowrap}
 #{$v} .jw-imp-lista .tot{padding-top:8px;border-top:1px solid var(--bd)}
 #{$v} .jw-imp-lista .tot dt{font-weight:700;color:var(--vd)}
 #{$v} .jw-imp-lista .tot dd{font-size:14px;font-weight:700;color:var(--vd)}
-#{$v} .jw-imp-lista .atenuado{opacity:.5}
+#{$v} .jw-imp-lista .atenuado{opacity:.75}
 #{$v} .jw-imp-lista .elegido dt,#{$v} .jw-imp-lista .elegido dd{font-weight:700;color:#fff}
 #{$v} .jw-imp-res{display:flex;flex-direction:column;gap:8px;padding:12px 14px;border:1px solid var(--warnb);border-radius:12px;background:var(--warn)}
 #{$v} .jw-imp-res p{margin:0}

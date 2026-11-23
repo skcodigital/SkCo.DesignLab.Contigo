@@ -36,7 +36,7 @@ export const estadoDe = (cv: Conversacion): EstadoConv =>
 const PESO_HISTORIAL: Readonly<Record<EstadoConv, number>> = { 'en-curso': 0, 'cerrada-seguimiento': 1, finalizada: 2 };
 
 /**
- * Conversaciones «Acompañamiento en el retiro» de la sesión (misión, catálogo e historial) y la que está abierta.
+ * Conversaciones «Acompañamiento al retirar» de la sesión (misión, catálogo e historial) y la que está abierta.
  * Vive en root para que la pestaña Planeación Pro conserve las conversaciones al cambiar de pestaña, como el prototipo.
  * Cero I/O: todo es estado-cliente; los cálculos están en `utils/`.
  */

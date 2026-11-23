@@ -27,14 +27,14 @@ $v: ':host-context(#jm-velo)';
 // Oscuro suave
 #{$v} .jw-res{background:var(--sf);border-color:var(--bd);box-shadow:0 1px 2px rgba(0,0,0,.25)}
 #{$v} .jw-res-t,#{$v} .jw-res-h{color:var(--tx)}
-#{$v} .jw-res dd{color:var(--sk-color-line)}
+#{$v} .jw-res dd{color:var(--sk-color-mission-text)}
 #{$v} .jw-res dt,#{$v} .jw-res dd.vacio,#{$v} .jw-res-sec.pend .jw-res-h{color:var(--tx3)}
-#{$v} .jw-res dd.verde{color:var(--vd)}
+#{$v} .jw-res dd.verde{color:var(--sk-color-primary)}
 #{$v} .jw-res-ed{color:var(--lk)}
 #{$v} .jw-res-ed:hover{background:rgba(255,255,255,.08)}
 #{$v} .jw-res-sec{border-color:var(--bd)}
 #{$v} .jw-res-n{background:transparent;border-color:#5a5a5a;color:var(--tx3)}
-#{$v} .jw-res-sec.ok .jw-res-n{background:var(--sel);border-color:var(--lk);color:var(--vd)}
+#{$v} .jw-res-sec.ok .jw-res-n{background:var(--sel);border-color:var(--lk);color:var(--sk-color-primary)}
 #{$v} .jw-res-sec.on .jw-res-n{background:var(--lk);border-color:var(--lk);color:#1b1b1b}
 #{$v} .jw-res{scrollbar-color:#5a5a5a transparent}
 #{$v} .jw-res-nom{padding:0;border:0;background:none;font:inherit;color:inherit;cursor:pointer;text-align:left}

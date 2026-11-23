@@ -52,7 +52,7 @@ describe('acuerdo y texto para el cliente', () => {
 
   it('resumen para el cliente con motivo, contrato, preferencia y etapas', () => {
     const txt = textoCliente(base);
-    expect(txt.split('\n')[0]).toBe('Acompañamiento en el retiro · Óscar Camilo Hernández Ramírez');
+    expect(txt.split('\n')[0]).toBe('Acompañamiento al retirar · Óscar Camilo Hernández Ramírez');
     expect(txt).toContain('Motivo: Necesidad de liquidez');
     expect(txt).toContain('Contrato elegido: Mi ahorro · 100007012618 ($211.306.589)');
     expect(txt).toContain('Opción que prefiere: Retiro por $150.000.000: se descuentan $157.195.585 del contrato');

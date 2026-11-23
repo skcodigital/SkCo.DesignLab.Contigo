@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { Icono } from '../../components/icono/icono';
 import { TEXTOS } from '../../constants/textos';
 import { CONTRATOS, TRAMOS } from '../../data/contratos.mock';
@@ -6,16 +6,29 @@ import { TipoTramo } from '../../interfaces/contrato';
 import { SiNo } from '../../interfaces/conversacion';
 import { ConversacionesStore } from '../../state/conversaciones.store';
 import { esp, ordenFichas } from '../../utils/calculos';
-import { pesos } from '../../utils/formato';
-import { etapa1Completa, etapa2Completa, habilitada, soloLectura } from '../../utils/validaciones';
+import { millones, pesos } from '../../utils/formato';
+import { etapa1Completa, habilitada, soloLectura } from '../../utils/validaciones';
 import { JourneyUiStore } from '../journey-ui.store';
 
+/** Tramo de la barra: los cuatro de retención más «En portafolios cerrados». */
+type TipoBarra = TipoTramo | 'cerr';
+
+/** Texto provisional del tooltip de «Descuentos» (Isa enviará el definitivo). */
+const TEXTO_DESCUENTOS = 'Incluye las retenciones y el 4×1000 que se descuentan al retirar.';
+
+const CERRADOS = {
+  nombre: 'En portafolios cerrados',
+  descripcion: 'Certificados a término y otros portafolios que no se pueden retirar hasta su vencimiento.',
+};
+
 interface TramoFicha {
-  tipo: TipoTramo;
+  tipo: TipoBarra;
   nombre: string;
   descripcion: string;
   valor: string;
   ancho: string;
+  /** Vale $0: se lista igual y en la barra queda como marca mínima de su color. */
+  cero: boolean;
 }
 
 /** Etapa 2 · Situación: requisitos de pensión y fichas de contrato (del que conviene sacarlo). */
@@ -30,13 +43,23 @@ export class EtapaSituacion {
   private readonly store = inject(ConversacionesStore);
   private readonly ui = inject(JourneyUiStore);
 
+  protected readonly textoDescuentos = TEXTO_DESCUENTOS;
+  /** Distribución por tramos plegada por defecto; al abrirla se ve en todas las fichas a la vez. */
+  protected readonly verDist = signal(false);
   protected readonly st = this.store.st;
   protected readonly ro = computed(() => soloLectura(this.st()));
   protected readonly ver = computed(() => etapa1Completa(this.st()) || this.ro());
 
+  /** Por ahora no se muestra «¿Cumple requisitos de pensión?» (decisión de Isa, 2026-11-23); la lógica queda. */
+  private static readonly PREGUNTAR_PENSION = false;
   protected readonly verPension = computed(() => {
     const st = this.st();
-    return this.ver() && st.motivo !== 'vivienda' && (CONTRATOS.some((c) => c.cc > 0) || !!st.pen);
+    return (
+      EtapaSituacion.PREGUNTAR_PENSION &&
+      this.ver() &&
+      st.motivo !== 'vivienda' &&
+      (CONTRATOS.some((c) => c.cc > 0) || !!st.pen)
+    );
   });
   protected readonly notaPension = computed(() => {
     const pen = this.st().pen;
@@ -53,30 +76,40 @@ export class EtapaSituacion {
     return orden.map((f, ix) => {
       const c = f.c;
       const k = f.k;
+      // Todas las fichas muestran los mismos cinco conceptos, aunque valgan $0 (con condición especial todo es exento)
       const base: [TipoTramo, number][] = e
-        ? [['ex', c.ex + c.sr + c.cc], ['sc', c.sc]]
+        ? [['ex', c.ex + c.sr + c.cc], ['sr', 0], ['cc', 0], ['sc', c.sc]]
         : TRAMOS.map((t) => [t.tipo, c[t.tipo]] as [TipoTramo, number]);
-      const valores = base.filter((t) => t[1] > 0);
-      const tot = valores.reduce((a, t) => a + t[1], 0);
+      // Portafolios cerrados: lo que no es disponible ni está sin certificar (mismo cálculo que la pestaña Contrato)
+      const cerrados = Math.max(0, c.saldo - c.sc - c.disp);
+      const valores: [TipoBarra, number][] = [...base, ['cerr', cerrados] as [TipoBarra, number]];
+      const tot = valores.reduce((a, t) => a + t[1], 0) || 1;
       const tramos: TramoFicha[] = valores.map(([tipo, v]) => {
-        const def = TRAMOS.find((t) => t.tipo === tipo) ?? TRAMOS[0];
+        const def = tipo === 'cerr' ? CERRADOS : (TRAMOS.find((t) => t.tipo === tipo) ?? TRAMOS[0]);
         return {
           tipo, nombre: def.nombre, descripcion: def.descripcion, valor: pesos(v),
-          ancho: Math.max(2, (v / tot) * 100).toFixed(2) + '%',
+          // Con valor, proporcional (mínimo 2 % para que se vea); en $0, el CSS le da una marca fija (.jw-barra-cero)
+          ancho: v > 0.5 ? Math.max(2, (v / tot) * 100).toFixed(2) + '%' : '',
+          cero: v <= 0.5,
         };
       });
       return {
         c, varias, tramos, cubre: k.cubre, marcado: c.id === marcado,
         menor: varias && ix === 0 && k.cubre,
-        recibe: pesos(k.R), descuenta: pesos(k.D), retenciones: pesos(k.D - k.R),
+        // Recibe: el monto de Entender (o lo máximo que alcanza); Total: lo que sale del contrato (el disponible si no alcanza)
+        recibe: pesos(k.R), descuentos: pesos(k.D - k.R), total: pesos(k.D),
         disp: pesos(c.disp),
+        saldo: pesos(c.saldo),
+        // Antigüedad y rendimientos generados desde la apertura (incluye los ya retirados): «16 de mar de 2006» → «mar 2006»
+        desde: c.desde.replace(/^\d+ de /, '').replace(' de ', ' '),
+        generado: millones(c.gan),
+        generadoExacto: pesos(c.gan),
       };
     });
   });
   protected readonly ninguno = computed(() =>
     this.ver() && !ordenFichas(this.st()).some((f) => f.k.cubre) ? TEXTOS.ningunoCubre(pesos(this.st().monto)) : null,
   );
-  protected readonly verContinuar = computed(() => etapa2Completa(this.st()) || this.ro());
 
   protected elegirPension(v: SiNo): void {
     this.store.elegirPension(v);
@@ -86,16 +119,26 @@ export class EtapaSituacion {
     this.store.marcarContrato(id);
   }
 
+  protected alternarDist(e: Event): void {
+    e.preventDefault(); // está dentro del <label> de la ficha: no debe marcar el contrato
+    this.verDist.update((v) => !v);
+  }
+
   protected verDetalle(e: Event, id: string): void {
     e.preventDefault();
     this.ui.abrirDetalle(id, 'contrato');
   }
 
-  protected confirmar(): void {
-    this.store.confirmarContrato();
+  protected atras(): void {
+    this.store.irEtapa(1);
   }
 
-  protected continuar(): void {
-    if (habilitada(this.st(), 3)) this.store.irEtapa(3);
+  /** Continuar: en edición confirma el contrato marcado (y pasa a Opciones); en solo lectura solo avanza. */
+  protected siguiente(): void {
+    if (this.ro()) {
+      if (habilitada(this.st(), 3)) this.store.irEtapa(3);
+      return;
+    }
+    this.store.confirmarContrato();
   }
 }

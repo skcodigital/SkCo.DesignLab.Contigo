@@ -16,9 +16,10 @@ $v: ':host-context(#jm-velo)';
 .jw-op[aria-pressed="true"]{border-color:var(--sk-color-primary);background:var(--sk-color-brand-light)}
 .jw-op:focus-visible,.jw-chips button:focus-visible,.jw-btn:focus-visible,.jw-link:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:2px}
 .jw-chips{display:flex;flex-wrap:wrap;gap:8px}
-.jw-chips button{padding:8px 16px;border:1px solid var(--sk-color-border);border-radius:9999px;background:#fff;font-family:var(--sk-font-body);font-size:14px;color:var(--sk-color-text);cursor:pointer}
+// Chips con el mismo estilo que los filtros de «Otras conversaciones disponibles» (cop-otras)
+.jw-chips button{padding:6px 14px;border:1px solid var(--sk-color-border);border-radius:9999px;background:var(--sk-color-surface-2);font-family:var(--sk-font-body);font-size:13px;color:var(--sk-color-text);cursor:pointer}
 .jw-chips button:hover{border-color:var(--sk-color-primary)}
-.jw-chips button[aria-pressed="true"]{background:var(--sk-color-brand-light);border-color:var(--sk-color-primary);color:var(--sk-color-primary-dark);font-weight:600}
+.jw-chips button[aria-pressed="true"]{background:var(--sk-color-graphite-2);border-color:var(--sk-color-graphite-2);color:#fff}
 .jw-fila{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .jw-campo{display:flex;align-items:center;gap:6px;width:240px;height:40px;padding:0 12px;border:1px solid var(--sk-color-border);border-radius:8px;background:#fff;font-size:15px;color:var(--sk-color-text)}
 .jw-campo:focus-within{border-color:var(--sk-color-primary);box-shadow:0 0 0 3px rgba(0,199,61,.12)}
@@ -36,12 +37,17 @@ $v: ':host-context(#jm-velo)';
 .jw-btn--sec{background:#fff;color:var(--sk-color-primary-strong-2)}
 .jw-btn--sec:hover{background:var(--sk-color-brand-light)}
 .jw-pie{display:flex;justify-content:center;padding-top:4px}
+// Pie de navegación: Atrás (secundario) a la izquierda, Continuar (principal) a la derecha
+.jw-pie--nav{justify-content:space-between;gap:12px}
+.jw-pie--nav .jw-btn--sec{border-color:currentColor}
+.jw-atras-ico{transform:rotate(180deg)}
 .jw-proximo{margin:0;padding:16px;border-radius:10px;background:var(--sk-color-surface-2);font-size:14px;color:var(--sk-color-text-2)}
 .jw-aviso{margin:0;padding:10px 14px;border:1px solid #f1d9ae;border-radius:10px;background:#fffaf1;font-size:14px;line-height:22px;color:var(--sk-color-text)}
-.jw-tg{display:inline-flex;align-items:center;gap:4px;padding:1px 8px;border-radius:9999px;font-size:11px;font-weight:700;line-height:18px}
+// Tags con la anatomía de sk-tag (DS): radio sm 4px, peso 600, 12px; relleno = estado, borde = clasificación
+.jw-tg{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border:1px solid transparent;border-radius:4px;font-size:12px;font-weight:600;line-height:16px;white-space:nowrap}
 .jw-tg--ok{background:var(--sk-color-primary-soft);color:var(--sk-color-primary-dark)}
-.jw-tg--menor{border:1px solid var(--sk-color-primary);color:var(--sk-color-primary-dark);background:#fff}
-.jw-tg--no{background:var(--sk-color-warning-light);color:#9a5c00}
+.jw-tg--menor{border-color:var(--sk-color-primary);color:var(--sk-color-primary-dark);background:transparent}
+.jw-tg--no{background:var(--sk-color-warning-light);color:color-mix(in srgb,var(--sk-color-warning),black 45%)}
 .jw-nota{display:flex;gap:8px;padding:10px 12px;border-radius:8px;background:var(--sk-color-surface-3);font-size:13px;line-height:20px;color:var(--sk-color-ink-2)}
 .jw-nota--alerta{border:1px solid #f1d9ae;background:#fffaf1}
 .jw-check{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--sk-color-text);cursor:pointer}
@@ -63,25 +69,24 @@ $v: ':host-context(#jm-velo)';
 #{$v} .jw-hecho,#{$v} .jw-proximo,#{$v} .jw-nota{background:rgba(255,255,255,.06);border-color:var(--bd);color:var(--tx2)}
 #{$v} .jw-aviso,#{$v} .jw-nota--alerta{background:var(--warn);border-color:var(--warnb);color:var(--tx2)}
 #{$v} .jw-h,#{$v} .jw-qt,#{$v} .jw-op b,#{$v} .jw-hecho b{color:var(--tx)}
-#{$v} .jw-check,#{$v} .jw-aviso b{color:var(--sk-color-line)}
+#{$v} .jw-check,#{$v} .jw-aviso b{color:var(--sk-color-mission-text)}
 #{$v} .jw-ayuda,#{$v} .jw-op span{color:var(--tx3)}
 #{$v} .jw-eb{color:var(--vd)}
 #{$v} .jw-link{color:var(--lk)}
 #{$v} .jw-tg--ok{background:rgba(0,199,61,.16);color:var(--vd)}
 #{$v} .jw-tg--menor{background:transparent;border-color:var(--lk);color:var(--vd)}
 #{$v} .jw-tg--no{background:rgba(232,155,0,.16);color:var(--sk-color-warning)}
-#{$v} .jw-chips button{background:transparent;border-color:var(--bd2);color:var(--sk-color-mission-text)}
-#{$v} .jw-chips button:hover{border-color:var(--lk)}
-#{$v} .jw-chips button[aria-pressed="true"]{background:var(--sel);border-color:var(--lk);color:var(--vd)}
+#{$v} .jw-chips button{background:var(--sk-color-graphite);border-color:rgba(255,255,255,.18);color:#ffffff;font-weight:600}
+#{$v} .jw-chips button:hover{border-color:var(--sk-color-primary)}
+#{$v} .jw-chips button[aria-pressed="true"]{background:var(--sk-color-primary);border-color:var(--sk-color-primary);color:var(--sk-color-mission-bg)}
 #{$v} .jw-campo,#{$v} .jw-dest .jw-campo{background:rgba(255,255,255,.05);border-color:var(--bd2);color:var(--tx)}
 #{$v} .jw-campo input{color:var(--tx)}
 #{$v} .jw-campo input::placeholder{color:var(--tx3)}
 #{$v} .jw-btn:disabled{background:var(--sk-color-text-4);border-color:var(--sk-color-text-4);color:var(--tx3)}
 #{$v} .jw-btn--sec{background:transparent;color:var(--lk)}
 #{$v} .jw-btn--sec:hover{background:var(--sel)}
-@media (hover:none){#{$v} .jw-op:hover,#{$v} .jw-chips button:hover{border-color:var(--bd)}#{$v} .jw-chips button[aria-pressed="true"]:hover{border-color:var(--lk)}}
+@media (hover:none){#{$v} .jw-op:hover{border-color:var(--bd)}#{$v} .jw-chips button:hover{border-color:rgba(255,255,255,.18)}#{$v} .jw-chips button[aria-pressed="true"]:hover{border-color:var(--sk-color-primary)}}
 #{$v} .jw-btn:not(.jw-btn--sec):not(:disabled):not(.jw-cerrado){color:var(--sk-color-mission-bg)}
-#{$v} .jw-chips button[aria-pressed="true"]::before{content:"✓";margin-right:6px;font-weight:700}
 #{$v} .jw-aviso{display:flex;gap:8px;align-items:flex-start}
 #{$v} .jw-aviso svg{flex:none;margin-top:3px;color:var(--sk-color-warning)}
 #{$v} .jw-nodisp{display:flex;gap:6px;align-items:flex-start;margin:0;font-size:12px;color:var(--tx3)}
@@ -94,7 +99,7 @@ $v: ':host-context(#jm-velo)';
 #{$v} .jw-seg button[aria-pressed="true"]{background:var(--sk-color-primary);border-color:var(--sk-color-primary);color:var(--sk-color-mission-bg);font-weight:600}
 #{$v} .jw-a5-campo span{display:inline-flex;align-items:center;gap:6px;color:var(--sk-color-border-4)}
 #{$v} .jw-a5-campo input,#{$v} .jw-a5-campo textarea{background:rgba(255,255,255,.05);border-color:var(--bd2);color:#fff;color-scheme:dark}
-#{$v} .jw-a5-campo textarea::placeholder{color:var(--sk-color-mission-text-2)}
+#{$v} .jw-a5-campo textarea::placeholder{color:var(--sk-color-mission-text-3)}
 #{$v} .jw-hecho--imp{margin:0}
 
 // ---- Solo lectura: controles atenuados (los enlaces, el panel y «Continuar a…» siguen activos) ----

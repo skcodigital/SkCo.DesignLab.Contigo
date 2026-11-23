@@ -12,7 +12,7 @@
 
   @if (motivoAbierto()) {
     <div class="jw-q">
-      <p #pregunta class="jw-qt" tabindex="-1">¿Qué lo lleva a pensar en retirar?</p>
+      <p class="jw-qt">¿Qué lo lleva a pensar en retirar?</p>
       <div class="jw-chips" role="group" aria-label="Motivo">
         @for (m of motivos; track m) {
           <button type="button" [attr.aria-pressed]="st().motivo === m" (click)="elegirMotivo(m)">{{ nombreMotivo[m] }}</button>
@@ -31,37 +31,6 @@
   @if (motivoHecho(); as motivo) {
     <div class="jw-hecho">
       <span>Motivo: <b>{{ motivo }}</b></span>
-      @if (!ro()) {
-        <button type="button" class="jw-link" (click)="cambiar('motivo')"><svg ncIcono="lapiz"></svg>Cambiar</button>
-      }
-    </div>
-  }
-
-  @if (cuandoAbierto()) {
-    <div class="jw-q">
-      <p #pregunta class="jw-qt" tabindex="-1">¿Para cuándo lo necesita?</p>
-      <p class="jw-ayuda">Con la fecha se sabe qué aportes dejan de tener retención antes de que la necesite.</p>
-      <div class="jw-chips" role="group" aria-label="Para cuándo">
-        @for (c of cuandos; track c[0]) {
-          <button type="button" [attr.aria-pressed]="cuandoMarcado() === c[0]" (click)="elegirCuando(c[0])">{{ c[1] }}</button>
-        }
-      </div>
-      @if (st().eligeFecha) {
-        <div class="jw-fila">
-          <span class="jw-campo jw-campo--fecha">
-            <input #fechaInput type="date" id="jw-fecha" [min]="fechaMin" aria-label="Fecha en que lo necesita" [value]="fecha()" (input)="leerFecha($event)" />
-          </span>
-          <button type="button" class="jw-btn" [disabled]="!fecha()" (click)="confirmarFecha()">Continuar</button>
-        </div>
-      }
-    </div>
-  }
-  @if (cuandoHecho(); as cuando) {
-    <div class="jw-hecho">
-      <span>Para cuándo: <b>{{ cuando }}</b></span>
-      @if (!ro()) {
-        <button type="button" class="jw-link" (click)="cambiar('cuando')"><svg ncIcono="lapiz"></svg>Cambiar</button>
-      }
     </div>
   }
 
@@ -70,9 +39,7 @@
     <p class="jw-nota-i"><svg ncIcono="info"></svg>{{ textos.viviendaSinRetencion }}</p>
   }
 
-  @if (verPie()) {
-    <div class="jw-pie">
-      <button type="button" class="jw-btn" (click)="continuar()">Continuar a Situación <svg ncIcono="flecha"></svg></button>
-    </div>
-  }
+  <div class="jw-pie">
+    <button type="button" class="jw-btn" [disabled]="!puedeContinuar()" (click)="continuar()">Continuar a Situación <svg ncIcono="flecha"></svg></button>
+  </div>
 </section>

@@ -27,10 +27,13 @@
               @if (enCurso()) {
                 <p class="mis-estado">{{ estadoMision() }}</p>
               }
-              <h4 class="mis-t">Este cliente podría retirar su Fondo Voluntario de Pensión.</h4>
-              <p class="mis-d"><strong>Por qué:</strong> Señal de Fligoo: prioridad alta</p>
+              <!-- Mismo título y texto que la misión destacada del dashboard -->
+              <div class="mis-guia">
+                <h4 class="mis-t">{{ textos.guiaTitulo(nombre) }}</h4>
+                <p class="mis-d">{{ textos.guiaTexto }}</p>
+              </div>
               <button class="mis-btn" type="button" (click)="$event.stopPropagation(); abrirMision()">{{ enCurso() ? textos.continuar : textos.iniciar }}</button>
-              <p class="mis-conv">Conversación: <b>Acompañamiento en el retiro</b></p>
+              <p class="mis-conv">Conversación: <b>Acompañamiento al retirar</b></p>
               <!-- Como en Angular: no se descarta una misión iniciada -->
               @if (!enCurso()) {
                 <button class="mis-desc" type="button" aria-haspopup="dialog" (click)="pedirDescarte($event)">Descartar</button>

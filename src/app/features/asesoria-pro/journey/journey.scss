@@ -57,12 +57,13 @@
 #jm-velo .jm-salir{color:var(--sk-color-primary)}
 #jm-velo .jm-salir:hover{background:rgba(255,255,255,.08)}
 #jm-velo .jw-cab{background:transparent;border-bottom:0}
-#jm-velo .jw-p{color:#9a9fa3}
+#jm-velo .jw-p{color:var(--sk-color-mission-text-3)}
 #jm-velo .jw-p.ok{color:var(--sk-color-mission-text)}
 #jm-velo .jw-p.on{color:#fff}
 #jm-velo .jw-n{background-color:var(--sk-color-text-4);background-clip:padding-box}
 #jm-velo .jw-pasos li:not(:last-child) .jw-n{border-right-color:transparent}
-#jm-velo .jw-p.on .jw-n,#jm-velo .jw-p.ok .jw-n{background-color:var(--sk-color-lime)}
+// Stepper principal en verde brand (#00C73D)
+#jm-velo .jw-p.on .jw-n,#jm-velo .jw-p.ok .jw-n{background-color:var(--sk-color-primary)}
 #jm-velo .jw-cont{color:#fff}
 
 // Los pasos no quedan fijos: todo el journey hace scroll; solo "Regresar" queda arriba y el resumen acompaña
@@ -81,7 +82,7 @@
 .jw-n{width:auto;height:8px;border:0;border-radius:0;background:var(--sk-color-border-3);font-size:0;line-height:0;color:transparent;box-sizing:content-box}
 .jw-pasos li:first-child .jw-n{border-radius:8px 0 0 8px}
 .jw-pasos li:last-child .jw-n{border-radius:0 4px 4px 0}
-.jw-p.on .jw-n,.jw-p.ok .jw-n{background:var(--sk-color-lime);border-color:#fff}
+.jw-p.on .jw-n,.jw-p.ok .jw-n{background:var(--sk-color-primary);border-color:#fff}
 .jw-p.on{color:var(--sk-color-text);font-weight:700}
 .jw-p.ok{color:var(--sk-color-text);font-weight:400}
 .jw-p:focus-visible{outline-offset:4px}
@@ -125,7 +126,7 @@
 @media (prefers-reduced-motion:reduce){.jm-velo,.jy-modal{animation:none}}
 
 // ===== Journey en oscuro suave: superficies grafito del modo misión =====
-#jm-velo{--sf:#363636;--sf2:rgba(255,255,255,.04);--bd:rgba(255,255,255,.10);--bd2:rgba(255,255,255,.18);--tx:#ffffff;--tx2:var(--sk-color-border-4);--tx3:var(--sk-color-mission-text-2);--vd:var(--sk-color-lime);--lk:var(--sk-color-primary);--sel:rgba(0,199,61,.12);--warn:rgba(232,155,0,.10);--warnb:rgba(232,155,0,.32)}
+#jm-velo{--sf:#363636;--sf2:rgba(255,255,255,.04);--bd:rgba(255,255,255,.10);--bd2:rgba(255,255,255,.18);--tx:#ffffff;--tx2:var(--sk-color-border-4);--tx3:var(--sk-color-mission-text-3);--vd:var(--sk-color-lime);--lk:var(--sk-color-primary);--sel:rgba(0,199,61,.12);--warn:rgba(232,155,0,.10);--warnb:rgba(232,155,0,.32)}
 #jm-velo .jw-chip svg{color:var(--tx3)}
 #jm-velo .jw-chip{background:transparent;border-color:var(--bd2);color:var(--sk-color-mission-text)}
 #jm-velo .jw-chip:hover{border-color:var(--lk)}
@@ -147,3 +148,8 @@
 #jm-velo .jw-toast b{display:block;font-weight:600;color:#fff}
 #jm-velo .jw-toast p{margin:2px 0 0}
 #jm-velo .jw-toast-x{flex:none;width:24px;height:24px;padding:0;border:0;border-radius:6px;background:none;font-size:18px;line-height:1;color:var(--tx3);cursor:pointer}
+
+// Título bajo el encabezado: centrado y con aire antes de los pasos
+.jw-intro{margin:8px 0 16px;font-family:var(--sk-font-heading);font-size:20px;line-height:28px;font-weight:700;text-align:center;text-wrap:balance;color:var(--sk-color-text)}
+@media (max-width:900px){.jw-intro{margin:4px 0 12px;font-size:17px;line-height:24px}}
+#jm-velo .jw-intro{color:#ffffff}

@@ -5,7 +5,6 @@ import { Etapa, EstadoConversacion } from '../../interfaces/conversacion';
 import { ConversacionesStore } from '../../state/conversaciones.store';
 import { combo, cred, ctSel, enAlcance, retiro } from '../../utils/calculos';
 import { deIso, fLarga, pesos } from '../../utils/formato';
-import { cuandoTxt } from '../../utils/texto-cliente';
 import { completa, ETAPAS, habilitada, soloLectura } from '../../utils/validaciones';
 
 /** Fila del resumen: etiqueta, valor (null = «Por definir») y si va en verde. */
@@ -17,7 +16,6 @@ function filasEntender(st: EstadoConversacion): Fila[] {
     ['Desea retirar', st.monto > 0 ? pesos(st.monto) : null, true],
     ['Motivo', st.motivo ? MOTIVO[st.motivo] : null],
   ];
-  if (enAlcance(st.motivo) && st.cuando) f.push(['Para cuándo', cuandoTxt(st)]);
   return f;
 }
 

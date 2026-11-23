@@ -5,6 +5,7 @@
       <h2 id="jm-tit" class="jm-tit">{{ titulo }}</h2>
     </header>
     <div class="jw-cab">
+      <h3 class="jw-intro">{{ intro }}</h3>
       <ol class="jw-pasos" aria-label="Progreso de la conversación">
         @for (p of pasos(); track p.n) {
           <li [class.hecho]="p.ok">

@@ -6,7 +6,8 @@ $v: ':host-context(#jm-velo)';
 :host{display:contents}
 .jw-o3{display:flex;flex-direction:column;gap:8px;padding:14px;border:1px solid var(--sk-color-border-2);border-radius:12px;background:#fff;transition:border-color .15s,background-color .15s,opacity .15s}
 .jw-o3.elegida{border-color:var(--sk-color-primary);background:var(--sk-color-brand-light);box-shadow:0 0 0 1px var(--sk-color-primary) inset}
-.jw-o3.off .jw-o3-cuerpo{opacity:.45}
+// Opción no disponible: atenuada pero legible (AA); antes .45 quedaba en 3,6:1
+.jw-o3.off .jw-o3-cuerpo{opacity:.75}
 .jw-o3 h4{margin:0;font-family:var(--sk-font-heading);font-size:16px;font-weight:700;color:var(--sk-color-text)}
 .jw-o3 dl{margin:0;display:flex;flex-direction:column;gap:6px}
 .jw-o3-cuerpo{display:flex;flex-direction:column;gap:8px;flex:1}
@@ -23,7 +24,7 @@ $v: ':host-context(#jm-velo)';
 #{$v} .jw-o3{background:var(--sf2);border-color:var(--bd);box-shadow:none}
 #{$v} .jw-o3.elegida{background:var(--sel);border-color:var(--lk);box-shadow:0 0 0 1px var(--lk) inset}
 #{$v} .jw-o3 h4,#{$v} .jw-o3 .tot dt{color:var(--tx)}
-#{$v} .jw-o3 dd{color:var(--sk-color-line)}
+#{$v} .jw-o3 dd{color:var(--sk-color-mission-text)}
 #{$v} .jw-o3 dt{color:var(--tx2)}
 #{$v} .jw-o3 dt small,#{$v} .jw-o3-nota{color:var(--tx3)}
 #{$v} .jw-o3 .tot.verde dd{color:var(--vd)}

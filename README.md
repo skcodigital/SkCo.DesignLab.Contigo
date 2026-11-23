@@ -58,7 +58,7 @@ src/app/
     login/         login y restablecer contraseña
     dashboard/     Planeación Pro (semana) y Logros del mes
     ficha-cliente/ ficha del cliente, productos, ficha del producto, retiros en curso
-    asesoria-pro/  pestaña Planeación Pro en modo misión + journey «Acompañamiento en el retiro»
+    asesoria-pro/  pestaña Planeación Pro en modo misión + journey «Acompañamiento al retirar»
     radiografia/   radiografía de empresa (con y sin plan de ahorro corporativo)
 src/styles/    _tokens.scss (tokens --sk-*) y _base.scss (reset, utilidades, modo misión)
 docs/          prototipo original de referencia y brief de conversión

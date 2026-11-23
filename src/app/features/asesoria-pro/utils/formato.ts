@@ -54,3 +54,8 @@ const MESES_CORTOS = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 's
 export function fechaCorta(d: Date): string {
   return d.getDate() + ' ' + MESES_CORTOS[d.getMonth()];
 }
+
+/** Millones abreviados para líneas secundarias: 118175577 → «$118,2 M». */
+export function millones(n: number): string {
+  return '$' + (n / 1e6).toLocaleString('es-CO', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' M';
+}

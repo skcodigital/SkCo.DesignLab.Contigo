@@ -27,7 +27,7 @@ $v: ':host-context(#jm-velo)';
 }
 // Oscuro suave
 #{$v} .jw-det-t{color:var(--tx)}
-#{$v} .jw-det-b{color:var(--sk-color-line)}
+#{$v} .jw-det-b{color:var(--sk-color-mission-text)}
 #{$v} .jw-det-tabs button{color:var(--tx2)}
 #{$v} .jw-det-sel{color:var(--tx3)}
 #{$v} .jw-det-tabs button[aria-selected="true"]{color:var(--vd)}
@@ -37,6 +37,6 @@ $v: ':host-context(#jm-velo)';
 #{$v} .jw-det-sel select option{background:var(--sk-color-graphite);color:#fff}
 #{$v} .jw-det-tabs{border-color:var(--bd)}
 #{$v} .jw-det-b{scrollbar-color:#5a5a5a transparent}
-#{$v} .jw-det{background:#333333;box-shadow:-8px 0 24px rgba(0,0,0,.45);color:var(--sk-color-line)}
+#{$v} .jw-det{background:#333333;box-shadow:-8px 0 24px rgba(0,0,0,.45);color:var(--sk-color-mission-text)}
 #{$v} .jw-velo-det{background:rgba(5,10,18,.55)}
 #{$v} .jw-det-x{background:transparent}

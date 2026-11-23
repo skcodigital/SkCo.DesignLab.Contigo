@@ -50,7 +50,7 @@ export function regla(st: St, v: Cajas, cr: Credito): string | null {
 
 /** Resumen de la conversación para el cliente (texto plano, una línea por dato). */
 export function textoCliente(st: St): string {
-  const L = ['Acompañamiento en el retiro · ' + CLIENTE.nombre];
+  const L = ['Acompañamiento al retirar · ' + CLIENTE.nombre];
   const add = (l: string, x: string): void => {
     L.push(l + ': ' + x);
   };
@@ -61,7 +61,7 @@ export function textoCliente(st: St): string {
     add('Motivo', st.otro.trim() ? MOTIVO[st.motivo] + ': ' + st.otro.trim() : MOTIVO[st.motivo] + ' (fuera de alcance)');
   } else if (st.motivo) {
     add('Motivo', MOTIVO[st.motivo]);
-    add('Necesidad', st.monto > 0 ? 'Recibir ' + pesos(st.monto) + (st.cuando ? ' ' + cuandoTxt(st) : '') : 'Liquidez (sin monto)');
+    add('Necesidad', st.monto > 0 ? 'Recibir ' + pesos(st.monto) : 'Liquidez (sin monto)');
     const cond: string[] = [];
     if (st.pen === 'si') cond.push('Cumple requisitos de pensión');
     if (st.motivo === 'vivienda') cond.push('Retiro para compra de vivienda');

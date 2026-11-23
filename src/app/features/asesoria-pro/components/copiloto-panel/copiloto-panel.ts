@@ -24,7 +24,7 @@ type Fase = 'cerrado' | 'cargando' | 'abierto';
 
 /**
  * Pestaña «Planeación Pro» (`copiloto`) de la ficha en modo misión: misión de Óscar (señal de Dali Oportunidades),
- * otras conversaciones, historial y el journey «Acompañamiento en el retiro».
+ * otras conversaciones, historial y el journey «Acompañamiento al retirar».
  */
 @Component({
   selector: 'nc-copiloto-panel',

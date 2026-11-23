@@ -33,3 +33,11 @@ button.jy:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:2p
 :host-context(.panel-cop) .cop-otras .jy.jy-prox{opacity:.55;cursor:default}
 :host-context(.panel-cop) .cop-otras .jy.jy-prox:hover{transform:none;border-color:var(--sk-color-text-4);box-shadow:none}
 :host-context(.panel-cop) .jy-badge{background:rgba(255,255,255,.08);color:var(--sk-color-border-4)}
+
+// Aviso «Muy pronto…»: mismo estilo punteado que «No hay recomendaciones para este cliente hoy»
+.cop-otras-h+.cop-otras,.cop-otras-h+.cop-pronto{margin-top:12px}
+.cop-otras+.cop-pronto{margin-top:12px}
+.cop-pronto{display:flex;align-items:center;gap:12px;margin:0;padding:20px;border:1px dashed var(--sk-color-border-3);border-radius:12px;background:var(--sk-color-surface-2);font-size:15px;color:var(--sk-color-text-2)}
+.cop-pronto svg{color:var(--sk-color-text-3);flex:none}
+:host-context(.panel-cop) .cop-pronto{background:transparent;border-color:var(--sk-color-text-4);color:var(--sk-color-border-4);font-size:14px}
+:host-context(.panel-cop) .cop-pronto svg{color:var(--sk-color-mission-text-2)}

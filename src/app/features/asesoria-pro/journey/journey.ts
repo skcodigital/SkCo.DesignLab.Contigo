@@ -30,7 +30,7 @@ import { JourneyUiStore } from './journey-ui.store';
 import { Resumen } from './resumen/resumen';
 
 /**
- * Journey «Acompañamiento en el retiro» (v5, cuatro partes) a pantalla del área de contenido: conserva header y menú
+ * Journey «Acompañamiento al retirar» (v5, cuatro partes) a pantalla del área de contenido: conserva header y menú
  * lateral. Al abrir pone `jw-abierto` y bloquea el scroll de la página; al cerrar emite los segundos que estuvo abierto.
  */
 @Component({
@@ -56,6 +56,8 @@ export class Journey {
 
   protected readonly textos = TEXTOS;
   protected readonly titulo = `${TEXTOS.tituloJourney} · ${CLIENTE.nombre}`;
+  /** Título centrado bajo el encabezado «Regresar · Acompañamiento al retirar · …», encima de los pasos. */
+  protected readonly intro = TEXTOS.introJourney;
   protected readonly st = this.store.st;
   protected readonly ro = computed(() => soloLectura(this.st()));
   private readonly etapa = computed(() => this.st().etapa);

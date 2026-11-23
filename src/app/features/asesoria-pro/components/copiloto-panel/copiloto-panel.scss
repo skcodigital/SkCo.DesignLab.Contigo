@@ -25,10 +25,12 @@
 .mis-conv{margin:-4px 0 0;font-size:12px;color:var(--sk-color-text-2)}
 // Una sola misión: ocupa todo el ancho; texto a la izquierda, acción a la derecha
 .mis:only-child{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:40px;row-gap:10px;align-items:center}
-.mis:only-child>.mis-cat,.mis:only-child>.mis-t,.mis:only-child>.mis-d{grid-column:1;justify-self:start}
-.mis:only-child>.mis-d{max-width:70ch}
-.mis:only-child>.mis-btn{grid-column:2;grid-row:1/4;align-self:center;justify-self:end;margin-top:0}
-.mis:only-child>.mis-desc{grid-column:2;grid-row:4;justify-self:end;align-self:end}
+.mis:only-child>.mis-cat,.mis:only-child>.mis-guia{grid-column:1;justify-self:start}
+.mis:only-child>.mis-guia{max-width:80ch}
+.mis:only-child>.mis-btn{grid-column:2;grid-row:1/3;align-self:center;justify-self:end;margin-top:0}
+.mis:only-child>.mis-desc{grid-column:2;grid-row:3;justify-self:end;align-self:end}
+// Título y texto de la misión (mismos que la misión destacada del dashboard), sin contenedor
+.mis-guia{display:flex;flex-direction:column;gap:4px}
 .mis-desc{padding:6px 12px;border:0;border-radius:9999px;background:transparent;color:var(--sk-color-primary);font-family:var(--sk-font-heading);font-size:14px;font-weight:700;cursor:pointer}
 .mis-desc:hover{background:rgba(0,199,61,.1)}
 .mis-desc:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:2px}
@@ -36,7 +38,7 @@
 .mis-descartada b{color:#fff}
 .mis-descartada button{padding:6px 12px;border:0;border-radius:9999px;background:transparent;color:var(--sk-color-primary);font-family:var(--sk-font-heading);font-size:14px;font-weight:700;cursor:pointer}
 .cop-mis+.mis-descartada{margin:0 0 24px}
-.mis:only-child>.mis-conv{grid-column:1;grid-row:4;justify-self:start;margin:4px 0 0}
+.mis:only-child>.mis-conv{grid-column:1;grid-row:3;justify-self:start;margin:4px 0 0}
 @media (max-width:960px){.mis:only-child{display:flex;align-items:flex-start}}
 .panel-cop .mis-conv{font-family:var(--sk-font-body);letter-spacing:0;color:var(--sk-color-mission-text-3)}
 .panel-cop .mis-conv b{color:#ffffff;font-weight:500}
@@ -70,7 +72,7 @@
 .panel-cop .mis-cat{background:transparent;border:1px solid rgba(0,240,224,.4);color:#00F0E0;font-family:var(--sk-font-body);font-weight:600;letter-spacing:.06em}
 .panel-cop .mis-urg .mis-cat{border-color:rgba(0,199,61,.45);color:var(--sk-color-lime);display:inline-flex;align-items:center;gap:8px}
 .panel-cop .mis-urg .mis-cat::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--sk-color-primary);box-shadow:0 0 8px var(--sk-color-lime);animation:copBlink 1.6s ease-in-out 3}
-.panel-cop .mis-t{color:#ffffff;font-size:18px}
+.panel-cop .mis-t{color:#ffffff;font-size:16px;line-height:24px}
 .panel-cop .mis-d{color:var(--sk-color-mission-text)}
 .panel-cop .mis-d strong{color:#ffffff}
 .panel-cop .mis-btn{color:var(--sk-color-mission-bg);box-shadow:none}
@@ -117,8 +119,8 @@
 .panel-cop .mis-estado{margin:-4px 0 0;font-size:12px;color:var(--sk-color-lime)}
 // Con «En curso · n de m etapas» la tarjeta suma una fila: el pie y Descartar bajan una
 .mis--curso:only-child>.mis-estado{grid-column:1;justify-self:start}
-.mis--curso:only-child>.mis-btn{grid-row:1/5}
-.mis--curso:only-child>.mis-conv,.mis--curso:only-child>.mis-desc{grid-row:5}
+.mis--curso:only-child>.mis-btn{grid-row:1/4}
+.mis--curso:only-child>.mis-conv,.mis--curso:only-child>.mis-desc{grid-row:4}
 
 // ===== Ventana de carga en «modo misión»: velo grafito, no blanco =====
 .cop-intro{background:radial-gradient(90% 60% at 85% 0%,rgba(56,56,56,.9) 0%,rgba(56,56,56,0) 60%),rgba(43,43,43,.96);color:var(--sk-color-mission-text)}

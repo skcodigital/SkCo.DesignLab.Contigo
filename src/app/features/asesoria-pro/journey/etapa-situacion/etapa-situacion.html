@@ -14,6 +14,8 @@
   }
   <div class="jw-cts" role="radiogroup" aria-label="Contratos que se pueden retirar">
     @for (f of fichas(); track f.c.id) {
+      <!-- Anatomía (Isa, 2026-11-23): Nombre | # contrato · saldo disponible · tags · barra de distribución ·
+           Recibe · Descuentos (tooltip) · Valor total del retiro -->
       <label class="jw-ct">
         <span class="jw-ct-top">
           @if (f.varias) {
@@ -21,11 +23,27 @@
           } @else {
             <span></span>
           }
-          <span class="jw-ct-nom" [title]="f.c.nom + ' · ' + f.c.num">{{ f.c.nom }}</span>
-          <span class="jw-ct-num">{{ f.c.num }} · {{ f.c.prod }}</span>
+          <span class="jw-ct-nom">
+            @if (f.c.nom) {
+              <span>{{ f.c.nom }}</span><span class="jw-ct-sep" aria-hidden="true">|</span>
+            }
+            <span class="jw-ct-num">{{ f.c.num }}</span>
+          </span>
+          <!-- Lo generado desde la apertura: dato del contrato, en texto secundario (sin color de éxito, para no sesgar la decisión) -->
+          <span class="jw-ct-gan" [title]="'Rendimientos generados desde la apertura: ' + f.generadoExacto + ' (incluye los ya retirados)'">
+            Desde {{ f.desde }} · ha generado <b>{{ f.generado }}</b> en rendimientos
+          </span>
+        </span>
+        <!-- Saldos a la izquierda; tags en el espacio libre de la derecha -->
+        <div class="jw-ct-saldos">
+          <div class="jw-ct-saldos-c">
+            <p class="jw-ct-disp"><span>Saldo disponible</span><b>{{ f.disp }}</b></p>
+            <!-- Saldo total ≠ disponible: incluye lo sin certificar y lo que está en portafolios cerrados -->
+            <p class="jw-ct-saldo">Saldo total <b>{{ f.saldo }}</b></p>
+          </div>
           <span class="jw-ct-tags">
             @if (f.cubre) {
-              <span class="jw-tg jw-tg--ok">✓ Cubre el monto</span>
+              <span class="jw-tg jw-tg--ok">Cubre</span>
             } @else {
               <span class="jw-tg jw-tg--no">No alcanza</span>
             }
@@ -33,38 +51,48 @@
               <span class="jw-tg jw-tg--menor">Menor descuento</span>
             }
           </span>
-        </span>
-        <p class="jw-ct-disp">Disponible <b>{{ f.disp }}</b></p>
+        </div>
         <span class="jw-barra" aria-hidden="true">
+          <!-- Los cinco conceptos siempre en la barra: los de $0 como una marca mínima de su color -->
           @for (t of f.tramos; track t.tipo) {
-            <i [class]="'c-' + t.tipo" [style.width]="t.ancho"></i>
+            <i [class]="'c-' + t.tipo" [class.jw-barra-cero]="t.cero" [style.width]="t.ancho" [title]="t.nombre + ': ' + t.valor"></i>
           }
         </span>
-        <ul class="jw-ley">
+        <!-- Distribución plegable: se abre en todas las fichas a la vez para comparar contratos -->
+        <button type="button" class="jw-dist" [class.abierta]="verDist()" [attr.aria-expanded]="verDist()" [attr.aria-controls]="'jw-ley-' + f.c.id" (click)="alternarDist($event)">
+          {{ verDist() ? 'Ocultar distribución' : 'Ver distribución' }}<svg ncIcono="chev"></svg>
+        </button>
+        @if (verDist()) {
+        <ul class="jw-ley" [id]="'jw-ley-' + f.c.id">
           @for (t of f.tramos; track t.tipo) {
-            <li [title]="t.descripcion"><span class="jw-cuad" [class]="'jw-cuad c-' + t.tipo"></span>{{ t.nombre }} <b>{{ t.valor }}</b></li>
+            <li [title]="t.descripcion" [class.jw-ley-cero]="t.cero"><span class="jw-cuad" [class]="'jw-cuad c-' + t.tipo"></span>{{ t.nombre }} <b>{{ t.valor }}</b></li>
           }
         </ul>
+        }
         <dl class="jw-ct-res">
-          <div><dt>{{ f.cubre ? 'Recibe' : 'Recibe como máximo' }}</dt><dd>{{ f.recibe }}</dd></div>
-          <div><dt>Se descuenta del contrato</dt><dd>{{ f.descuenta }}</dd></div>
-          <p>Incluye {{ f.retenciones }} de retenciones y 4×1000</p>
+          <div><dt>Recibe</dt><dd>{{ f.recibe }}</dd></div>
+          <div>
+            <dt>
+              Descuentos
+              <span class="jw-tip">
+                <button type="button" class="jw-tip-btn" [attr.aria-describedby]="'jw-tip-' + f.c.id" aria-label="Qué incluyen los descuentos" (click)="$event.preventDefault()"><svg ncIcono="info"></svg></button>
+                <span class="jw-tip-txt" role="tooltip" [id]="'jw-tip-' + f.c.id">{{ textoDescuentos }}</span>
+              </span>
+            </dt>
+            <dd>{{ f.descuentos }}</dd>
+          </div>
+          <div class="jw-ct-tot"><dt>Valor total del retiro</dt><dd>{{ f.total }}</dd></div>
         </dl>
-        <button type="button" class="jw-link jw-ro-ok" [attr.aria-label]="'Ver detalle de ' + f.c.nom" (click)="verDetalle($event, f.c.id)">Ver detalle</button>
+        <button type="button" class="jw-link jw-ro-ok" [attr.aria-label]="'Ver detalle de ' + (f.c.nom || 'contrato ' + f.c.num)" (click)="verDetalle($event, f.c.id)">Ver detalle</button>
       </label>
     }
   </div>
   @if (ninguno(); as txt) {
     <p class="jw-aviso" role="status"><svg ncIcono="info"></svg><span>{{ txt }}</span></p>
   }
-  @if (ver() && !ro()) {
-    <div class="jw-pie">
-      <button type="button" class="jw-btn" (click)="confirmar()">Continuar con este contrato <svg ncIcono="flecha"></svg></button>
-    </div>
-  }
-  @if (verContinuar()) {
-    <div class="jw-pie">
-      <button type="button" class="jw-btn" (click)="continuar()">Continuar a Opciones <svg ncIcono="flecha"></svg></button>
-    </div>
-  }
+  <!-- Un solo pie: Atrás (secundario) y Continuar (principal). Continuar confirma el contrato marcado y pasa a Opciones -->
+  <div class="jw-pie jw-pie--nav">
+    <button type="button" class="jw-btn jw-btn--sec jw-ro-ok" (click)="atras()"><svg ncIcono="flecha" class="jw-atras-ico"></svg>Atrás</button>
+    <button type="button" class="jw-btn jw-ro-ok" [disabled]="!ver()" (click)="siguiente()">Continuar <svg ncIcono="flecha"></svg></button>
+  </div>
 </section>
