@@ -1,10 +1,20 @@
-# Despliega el Design Lab en GitHub Pages: https://skcodigital.github.io/SkCo.DesignLab.Contigo/
-# Requisito (una vez): Settings → Pages → Build and deployment → Source: «GitHub Actions».
+# Despliega el Design Lab en GitHub Pages, un ambiente por rama:
+#   main        → https://skcodigital.github.io/SkCo.DesignLab.Contigo/
+#   laboratory  → https://skcodigital.github.io/SkCo.DesignLab.Contigo/laboratory/
+#
+# Pages publica UN solo sitio por repositorio y cada despliegue lo reemplaza completo; por eso cada
+# corrida (venga de la rama que venga) compila la última versión de TODAS las ramas y arma el sitio.
+#
+# Requisitos (una vez):
+#   - Settings → Pages → Build and deployment → Source: «GitHub Actions».
+#   - Settings → Environments → github-pages → Deployment branches: permitir `main` y `laboratory`.
+#
+# Para agregar un ambiente: sumarlo a la matriz (branch + dir) y al arreglo AMBIENTES de deploy/404.html.
 name: Deploy GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, laboratory]
   workflow_dispatch:
 
 permissions:
@@ -19,9 +29,19 @@ concurrency:
 
 jobs:
   build:
+    name: Build ${{ matrix.branch }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - branch: main
+            dir: ''
+          - branch: laboratory
+            dir: laboratory
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.branch }}
 
       - uses: actions/setup-node@v4
         with:
@@ -34,21 +54,47 @@ jobs:
         run: npx ng test --watch=false
 
       - name: Build
-        run: npm run build:pages
+        env:
+          BASE_HREF: /${{ github.event.repository.name }}/${{ matrix.dir && format('{0}/', matrix.dir) || '' }}
+        run: npx ng build --base-href "$BASE_HREF"
 
-      # SPA en Pages: las rutas profundas (/ficha, /radiografia?…) no existen como archivos;
-      # Pages sirve 404.html, que es la misma app y el router resuelve la ruta.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sitio-${{ matrix.branch }}
+          path: dist/SkCo.DesignLab.Contigo/browser
+          retention-days: 1
+
+  assemble:
+    name: Armar sitio
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: deploy
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: sitio-main
+          path: sitio
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: sitio-laboratory
+          path: sitio/laboratory
+
+      # Un único 404.html para todo el sitio: redirige a la SPA del ambiente según la ruta.
       - name: SPA fallback
-        run: cp dist/SkCo.DesignLab.Contigo/browser/index.html dist/SkCo.DesignLab.Contigo/browser/404.html
+        run: cp deploy/404.html sitio/404.html
 
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/SkCo.DesignLab.Contigo/browser
+          path: sitio
 
   deploy:
-    needs: build
+    needs: assemble
     runs-on: ubuntu-latest
     environment:
       name: github-pages

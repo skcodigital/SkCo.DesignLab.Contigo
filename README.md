@@ -11,13 +11,24 @@ npm run build        # producción en dist/
 npx ng test --watch=false
 ```
 
-## Despliegue (GitHub Pages)
+## Despliegue (GitHub Pages, un ambiente por rama)
 
-Cada push a `main` corre `.github/workflows/deploy-pages.yml`: tests → `npm run build:pages` (base href `/SkCo.DesignLab.Contigo/`) → copia `index.html` a `404.html` (para que las rutas profundas abran la SPA) → publica en https://skcodigital.github.io/SkCo.DesignLab.Contigo/. También se puede lanzar a mano desde Actions (`workflow_dispatch`).
+| Rama | URL |
+|---|---|
+| `main` | https://skcodigital.github.io/SkCo.DesignLab.Contigo/ |
+| `laboratory` | https://skcodigital.github.io/SkCo.DesignLab.Contigo/laboratory/ |
 
-Requisito, una sola vez: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+Pages publica un solo sitio por repositorio y cada despliegue lo reemplaza completo. Por eso `.github/workflows/deploy-pages.yml` (push a `main` o `laboratory`, o a mano con `workflow_dispatch`) compila la última versión de **las dos** ramas, cada una con su base href, corre los tests y arma el sitio: `main` en la raíz y `laboratory` en `/laboratory/`.
 
-Las imágenes que se usan desde SCSS se referencian con ruta relativa al archivo (p. ej. `features/login/assets/`) para que el build las empaquete y respeten el base href; las de `public/assets` se usan desde los templates con rutas relativas (`assets/…`), nunca con `/assets/…`.
+Rutas profundas: Pages sirve un único `404.html` para todo el sitio. `deploy/404.html` guarda la ruta pedida y abre el `index.html` del ambiente correcto, que la restaura antes de arrancar Angular (script en `src/index.html`).
+
+Requisitos, una sola vez:
+- **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+- **Settings → Environments → github-pages → Deployment branches**: permitir `main` y `laboratory` (por defecto solo deja la rama predeterminada).
+
+Para sumar un ambiente: agregarlo a la matriz del workflow (`branch` + `dir`), al paso de ensamblado y al arreglo `AMBIENTES` de `deploy/404.html`.
+
+Build local con el base href de Pages: `npm run build:pages` (raíz). Las imágenes que se usan desde SCSS se referencian con ruta relativa al archivo (p. ej. `features/login/assets/`) para que el build las empaquete y respeten el base href; las de `public/assets` se usan desde los templates con rutas relativas (`assets/…`), nunca con `/assets/…`.
 
 ## Rutas (antes enlaces directos `?p=…`)
 
