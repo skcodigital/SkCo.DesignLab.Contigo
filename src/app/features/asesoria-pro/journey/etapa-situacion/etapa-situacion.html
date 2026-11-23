@@ -1,0 +1,70 @@
+<section class="jw-etapa jw-etapa--ancha" aria-labelledby="jw-t2">
+  <p class="jw-eb">Situación</p>
+  <h3 class="jw-h" id="jw-t2">¿De qué contrato conviene sacarlo?</h3>
+  <!-- Como en Angular: la pregunta de pensión va aquí; no se muestra si el motivo es vivienda -->
+  @if (verPension()) {
+    <div class="jw-pen">
+      <p class="jw-pen-t" id="jw-pen-t"><b>¿Cumple requisitos de pensión?</b></p>
+      <div class="jw-chips" role="group" aria-labelledby="jw-pen-t">
+        <button type="button" [attr.aria-pressed]="st().pen === 'si'" [disabled]="ro()" (click)="elegirPension('si')">Sí</button>
+        <button type="button" [attr.aria-pressed]="st().pen === 'no'" [disabled]="ro()" (click)="elegirPension('no')">No</button>
+      </div>
+      <p class="jw-ayuda">{{ notaPension() }}</p>
+    </div>
+  }
+  <div class="jw-cts" role="radiogroup" aria-label="Contratos que se pueden retirar">
+    @for (f of fichas(); track f.c.id) {
+      <label class="jw-ct">
+        <span class="jw-ct-top">
+          @if (f.varias) {
+            <input type="radio" name="jw-ct" [value]="f.c.id" [checked]="f.marcado" [disabled]="ro()" (change)="marcar(f.c.id)" />
+          } @else {
+            <span></span>
+          }
+          <span class="jw-ct-nom" [title]="f.c.nom + ' · ' + f.c.num">{{ f.c.nom }}</span>
+          <span class="jw-ct-num">{{ f.c.num }} · {{ f.c.prod }}</span>
+          <span class="jw-ct-tags">
+            @if (f.cubre) {
+              <span class="jw-tg jw-tg--ok">✓ Cubre el monto</span>
+            } @else {
+              <span class="jw-tg jw-tg--no">No alcanza</span>
+            }
+            @if (f.menor) {
+              <span class="jw-tg jw-tg--menor">Menor descuento</span>
+            }
+          </span>
+        </span>
+        <p class="jw-ct-disp">Disponible <b>{{ f.disp }}</b></p>
+        <span class="jw-barra" aria-hidden="true">
+          @for (t of f.tramos; track t.tipo) {
+            <i [class]="'c-' + t.tipo" [style.width]="t.ancho"></i>
+          }
+        </span>
+        <ul class="jw-ley">
+          @for (t of f.tramos; track t.tipo) {
+            <li [title]="t.descripcion"><span class="jw-cuad" [class]="'jw-cuad c-' + t.tipo"></span>{{ t.nombre }} <b>{{ t.valor }}</b></li>
+          }
+        </ul>
+        <dl class="jw-ct-res">
+          <div><dt>{{ f.cubre ? 'Recibe' : 'Recibe como máximo' }}</dt><dd>{{ f.recibe }}</dd></div>
+          <div><dt>Se descuenta del contrato</dt><dd>{{ f.descuenta }}</dd></div>
+          <p>Incluye {{ f.retenciones }} de retenciones y 4×1000</p>
+        </dl>
+        <button type="button" class="jw-link jw-ro-ok" [attr.aria-label]="'Ver detalle de ' + f.c.nom" (click)="verDetalle($event, f.c.id)">Ver detalle</button>
+      </label>
+    }
+  </div>
+  @if (ninguno(); as txt) {
+    <p class="jw-aviso" role="status"><svg ncIcono="info"></svg><span>{{ txt }}</span></p>
+  }
+  @if (ver() && !ro()) {
+    <div class="jw-pie">
+      <button type="button" class="jw-btn" (click)="confirmar()">Continuar con este contrato <svg ncIcono="flecha"></svg></button>
+    </div>
+  }
+  @if (verContinuar()) {
+    <div class="jw-pie">
+      <button type="button" class="jw-btn" (click)="continuar()">Continuar a Opciones <svg ncIcono="flecha"></svg></button>
+    </div>
+  }
+</section>

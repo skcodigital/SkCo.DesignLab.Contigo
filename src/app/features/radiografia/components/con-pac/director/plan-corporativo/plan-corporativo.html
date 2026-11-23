@@ -1,0 +1,97 @@
+<div class="block-head block-head--space">
+  <div>
+    <h2 class="block-title" id="pac-title">Plan de Ahorro Corporativo</h2>
+    <p class="card-sub">{{ plan().sub }}</p>
+  </div>
+</div>
+
+<div class="plan-type">
+  <span class="plan-type-label" id="tipo-plan-label">Tipo de plan</span>
+  <div class="segmented" role="radiogroup" aria-labelledby="tipo-plan-label">
+    @for (t of tipos; track t.id) {
+      <label><input type="radio" name="tipo-plan" [value]="t.id" [checked]="tipo() === t.id" (change)="tipo.set(t.id)"><span>{{ t.nombre }}</span></label>
+    }
+  </div>
+</div>
+
+<div class="kpis kpis--panel" aria-live="polite">
+  <article class="kpi">
+    <span class="kpi-label">Aportes 2026</span>
+    <span class="kpi-value--big num">{{ aportes() }}</span>
+    <span class="kpi-sub">Enero a octubre de 2026</span>
+  </article>
+  <article class="kpi">
+    <span class="kpi-label">Venta neta acumulada <span class="tip-wrap"><button class="tip" aria-label="Qué es la venta neta" aria-describedby="tip-ventaneta"><nc-rx-icono nombre="ayuda" /></button><span class="tooltip" role="tooltip" id="tip-ventaneta"><b>Aportes menos retiros</b> del período. Mide cuánto dinero nuevo se quedó en el plan; no incluye rendimientos.</span></span></span>
+    <span class="kpi-value--big num stat-brand">{{ venta() }}</span>
+    <span class="kpi-sub">Enero de 2024 a octubre de 2026</span>
+  </article>
+  <article class="kpi">
+    <span class="kpi-label">AUM actual <span class="tip-wrap"><button class="tip" aria-label="Qué es el AUM" aria-describedby="tip-aum"><nc-rx-icono nombre="ayuda" /></button><span class="tooltip" role="tooltip" id="tip-aum">Saldo administrado del plan al corte: <b>aportes acumulados más rendimientos, menos retiros</b>.</span></span></span>
+    <span class="kpi-value--big num">{{ aum() }}</span>
+    <span class="kpi-sub num">{{ plan().participes }} partícipes · <nc-rx-variacion [direccion]="variacion().direccion" [texto]="variacion().texto" [etiqueta]="variacion().etiqueta" [detalle]="variacion().detalle" /></span>
+  </article>
+  <article class="kpi">
+    <span class="kpi-label">Contratos asociados</span>
+    <span class="kpi-value--big num">{{ contratos() }}</span>
+    <span class="kpi-sub">{{ contratosSub() }}</span>
+    <button class="btn-outline btn-card" (click)="store.irAProductos()">Ver planes</button>
+  </article>
+</div>
+
+<div class="clients-grid">
+  <section class="card block" aria-labelledby="aportes-title">
+    <div class="block-head block-head--space">
+      <h3 class="block-title" id="aportes-title">Aportes y retiros anuales</h3>
+      <div class="legend-inline">
+        <span><i class="sw sw--nuevos"></i>Aportes</span>
+        <span><i class="sw sw--perdidos"></i>Retiros</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <p class="card-sub">Millones de pesos · * 2026 hasta octubre</p>
+      <div class="pairs pairs--money">
+        @for (p of pares(); track p.anio) {
+          <div class="pair" role="img" [attr.aria-label]="p.aria">
+            <div class="pair-bars">
+              <span class="pair-bar pair-bar--nuevos" [style.height.px]="p.altoAportes" [ncRxChartTip]="{ titulo: p.anio, lineas: [tip.aportes + ': ' + p.aportes + ' M'] }"><span>{{ p.aportes }}</span></span>
+              <span class="pair-bar pair-bar--perdidos" [style.height.px]="p.altoRetiros" [ncRxChartTip]="{ titulo: p.anio, lineas: [tip.retiros + ': ' + p.retiros + ' M'] }"><span>{{ p.retiros }}</span></span>
+            </div>
+            <span class="pair-year">{{ p.anio }}<small>{{ p.neta }}</small></span>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="card block" aria-labelledby="aum-title">
+    <div class="block-head block-head--space">
+      <h3 class="block-title" id="aum-title">Evolución del AUM</h3>
+      <div class="legend-inline"><span><i class="sw sw--aum"></i>Saldo administrado</span></div>
+    </div>
+    <div class="card-body">
+      <p class="card-sub">Último año, en millones de pesos</p>
+      @let g = grafica();
+      <svg class="aum-chart" viewBox="0 0 560 220" role="img" [attr.aria-label]="g.aria">
+        @for (y of g.grilla; track $index) {
+          <line x1="30" x2="530" [attr.y1]="y" [attr.y2]="y" class="aum-grid" />
+        }
+        <path [attr.d]="g.area" class="aum-area" />
+        <path [attr.d]="g.linea" class="aum-line" />
+        @for (p of g.puntos; track p.etiqueta) {
+          <circle [attr.cx]="p.x" [attr.cy]="p.y" r="5" class="aum-dot" />
+          <circle [attr.cx]="p.x" [attr.cy]="p.y" r="16" class="aum-hit" [ncRxChartTip]="{ titulo: tip.saldoAdministrado, lineas: [p.etiqueta + ': ' + p.valor + ' M'] }" />
+          <text [attr.x]="p.x" [attr.y]="p.yValor" class="aum-val" text-anchor="middle">{{ p.valor }}</text>
+          <text [attr.x]="p.x" [attr.y]="g.yEje" class="aum-x" text-anchor="middle">{{ p.etiqueta }}</text>
+        }
+      </svg>
+    </div>
+  </section>
+</div>
+
+<div class="sk-alert sk-alert--info" role="note">
+  <span class="sk-alert__icon" aria-hidden="true"><nc-rx-icono /></span>
+  <div class="sk-alert__content">
+    <p class="sk-alert__title">Hallazgo</p>
+    <p class="sk-alert__desc">@for (p of hallazgo(); track $index) {@if (p.b) {<b>{{ p.t }}</b>} @else {<ng-container>{{ p.t }}</ng-container>}}</p>
+  </div>
+</div>

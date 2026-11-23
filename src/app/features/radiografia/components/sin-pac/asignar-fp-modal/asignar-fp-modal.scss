@@ -1,0 +1,38 @@
+@use '../../../styles/rx-base';
+@use '../../../styles/rx-table';
+@use '../../../styles/rx-modal';
+
+/* Más específico que .modal (que va después y la limita a 560 px): toma el ancho que pide la tabla */
+.modal.modal--wide { width: max-content; max-width: 100%; }
+.modal--wide .table-wrap { overflow-x: auto; }
+.table--dueno { font-size: 14px; }
+.table--dueno tbody th, .table--dueno tbody td { padding: 12px 10px; vertical-align: middle; }
+.table--dueno tbody td { text-align: center; }
+.table--dueno tbody td:last-child { text-align: left; white-space: normal; }
+.table--dueno input[type="radio"] { width: 18px; height: 18px; accent-color: var(--sk-color-primary); }
+.table--dueno tr:has(input:checked) { background: var(--sk-color-brand-light); }
+/* Fila elegida (`tr:has(input:checked)` del prototipo) */
+.table--dueno tr.elegido { background: var(--sk-color-brand-light); }
+.prod-mix { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 12.5px; color: var(--sk-color-text); }
+.prod-mix b { font-weight: 700; color: var(--texts-strong); }
+.tag--sm { padding: 1px 7px; font: 600 10.5px/1.5 var(--sk-font-body); white-space: nowrap; }
+
+/* Confirmación */
+.sent { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; padding: 8px 0 0; }
+.sent:focus { outline: none; }
+.sent-icon { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; background: var(--feedback-success-light); color: var(--sk-color-primary); }
+.sent-title { margin: 4px 0 0; font: 700 20px/1.3 var(--sk-font-heading); color: var(--texts-strong); }
+.sent-desc { margin: 0; font-size: 14px; color: var(--sk-color-text); max-width: 440px; }
+.sent-desc b { font-weight: 700; }
+.sent .btn-primary { align-self: stretch; height: 30px; }
+
+/*
+ * Acciones: en el prototipo sin PAC `.modal-actions--end` va antes que `.modal-actions` (grid de dos columnas),
+ * así que gana el grid; los botones conservan `width: auto` porque esa regla va después de su @media.
+ */
+.modal-actions--end { margin-top: 24px; }
+.modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.modal-actions--end .btn-primary, .modal-actions--end .btn-outline { width: auto; padding: 0 28px; }
+@media (max-width: 768px) {
+  .modal-actions { grid-template-columns: minmax(0, 1fr); }
+}

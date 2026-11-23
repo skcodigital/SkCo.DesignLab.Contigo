@@ -1,0 +1,10 @@
+@use '../../styles/controles';
+$v: ':host-context(#jm-velo)';
+
+:host{display:contents}
+.jw-o3-plazo{display:flex;flex-direction:column;gap:6px}
+.jw-o3-plazo p{margin:0;font-size:12px;line-height:17px;color:var(--sk-color-text-3)}
+.jw-o3-plazo .jw-chips button{padding:5px 12px;font-size:13px}
+#{$v} .jw-o3-plazo p{color:var(--tx3)}
+
+@include controles.solo-lectura;

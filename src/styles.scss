@@ -1,0 +1,4 @@
+// Estilos globales: solo tokens y utilidades transversales.
+// Los estilos de cada pantalla viven en el SCSS de su componente.
+@use 'tokens';
+@use 'base';

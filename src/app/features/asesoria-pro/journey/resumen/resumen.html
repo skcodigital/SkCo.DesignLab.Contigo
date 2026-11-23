@@ -1,0 +1,24 @@
+<aside class="jw-res" aria-label="Resumen de la conversación" aria-live="polite">
+  <h2 class="jw-res-t">Resumen</h2>
+  @for (s of secciones(); track s.n) {
+    <section class="jw-res-sec" [class]="'jw-res-sec ' + s.est">
+      <p class="jw-res-h">
+        <span class="jw-res-n">{{ s.ok && !s.on ? '✓' : s.n }}</span>
+        <button type="button" class="jw-res-nom jw-ro-ok" [disabled]="!s.hab" (click)="ir(s.n)">{{ s.nombre }}</button>
+        @if (s.ok && !s.on) {
+          <button type="button" class="jw-res-ed jw-ro-ok" [attr.aria-label]="s.editar" [title]="s.editar" (click)="ir(s.n)"><svg ncIcono="lapiz"></svg></button>
+        }
+      </p>
+      @if (s.filas.length) {
+        <dl>
+          @for (f of s.filas; track f[0]) {
+            <div>
+              <dt>{{ f[0] }}</dt>
+              <dd [class.vacio]="f[1] === null" [class.verde]="f[1] !== null && f[2]">{{ f[1] ?? porDefinir }}</dd>
+            </div>
+          }
+        </dl>
+      }
+    </section>
+  }
+</aside>

@@ -1,0 +1,50 @@
+<div class="pf-fecha">
+  <span class="pf-fecha-lbl sr" id="pf-fecha-lbl">Fecha de corte</span>
+  <button
+    #boton
+    type="button"
+    class="pf-fecha-btn"
+    aria-haspopup="dialog"
+    aria-controls="pf-cal"
+    aria-labelledby="pf-fecha-lbl pf-fecha-val"
+    [attr.aria-expanded]="abierto()"
+    (click)="alternar()"
+  >
+    <span id="pf-fecha-val">{{ texto() }}</span>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00C73D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" /></svg>
+  </button>
+  @if (abierto()) {
+    <div class="pf-cal" id="pf-cal" role="dialog" aria-label="Elegir fecha de corte" (keydown.escape)="alEscape($event)">
+      <div class="pf-cal-h">
+        <button type="button" class="pf-cal-nav" aria-label="Mes anterior" [disabled]="!mes().puedeAnterior" (click)="navegar(-1)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+        </button>
+        <span class="pf-cal-mes" aria-live="polite">{{ mes().titulo }}</span>
+        <button type="button" class="pf-cal-nav" aria-label="Mes siguiente" [disabled]="!mes().puedeSiguiente" (click)="navegar(1)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+        </button>
+      </div>
+      <div class="pf-cal-sem" aria-hidden="true"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
+      <div class="pf-cal-dias" role="grid" #dias>
+        @for (v of vacios(); track v) {
+          <span></span>
+        }
+        @for (d of mes().dias; track d.dia) {
+          <button
+            type="button"
+            [disabled]="d.deshabilitado"
+            [class.hoy]="d.hoy"
+            [attr.aria-selected]="d.seleccionado"
+            [attr.aria-label]="d.etiqueta"
+            (click)="elegirDia(d)"
+          >
+            {{ d.dia }}
+          </button>
+        }
+      </div>
+      <div class="pf-cal-pie">
+        <button type="button" class="pf-cal-hoy" (click)="irAHoy()">Hoy</button><span>Datos disponibles desde el {{ minimaTexto() }}</span>
+      </div>
+    </div>
+  }
+</div>

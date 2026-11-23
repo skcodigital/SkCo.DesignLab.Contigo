@@ -1,0 +1,30 @@
+@let k = kpi();
+<article class="kpi" [id]="idTarjeta" ncRxPlegable #p="ncRxPlegable" [nombre]="k.etiqueta">
+  <button type="button" class="plg-btn" [attr.aria-controls]="idTarjeta" [attr.aria-expanded]="!p.plegado()" [attr.aria-label]="p.etiqueta()" (click)="p.alternar($event)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+  <span class="kpi-label" (click)="p.alCabecera($event)">{{ k.etiqueta }}
+    @if (k.ayuda; as a) {
+      <span class="tip-wrap"><button class="tip" [class.tip--warning]="a.aviso" [attr.aria-label]="a.etiqueta" [attr.aria-describedby]="idTip">
+        @if (a.aviso) {
+          <svg width="20" height="20" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M26.7732 22.918C27.4607 24.1211 26.6014 25.625 25.1834 25.625H6.83573C5.41776 25.625 4.55838 24.1211 5.20291 22.918L14.3982 7.27734C14.7849 6.67578 15.3865 6.375 16.031 6.375C16.6326 6.375 17.2342 6.67578 17.6209 7.27734L26.7732 22.918ZM7.26541 23.5625H24.7537L15.9881 8.65234L7.26541 23.5625ZM16.031 19.5234C16.7615 19.5234 17.3631 20.125 17.3631 20.8555C17.3631 21.5859 16.7615 22.1875 16.031 22.1875C15.2576 22.1875 14.656 21.5859 14.656 20.8555C14.656 20.125 15.2576 19.5234 16.031 19.5234ZM14.9998 12.9062C14.9998 12.3477 15.4295 11.875 16.031 11.875C16.5896 11.875 17.0623 12.3477 17.0623 12.9062V17.0312C17.0623 17.6328 16.5896 18.0625 16.031 18.0625C15.4295 18.0625 14.9998 17.6328 14.9998 17.0312V12.9062Z" fill="currentColor"/></svg>
+        } @else {
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3C16.957 3 21 7.04297 21 12C21 16.9922 16.957 21 12 21C7.00781 21 3 16.9922 3 12C3 7.04297 7.00781 3 12 3ZM12 19.3125C16.0078 19.3125 19.3125 16.043 19.3125 12C19.3125 7.99219 16.0078 4.6875 12 4.6875C7.95703 4.6875 4.6875 7.99219 4.6875 12C4.6875 16.043 7.95703 19.3125 12 19.3125ZM12 14.8125C12.5977 14.8125 13.125 15.3047 13.125 15.9375C13.125 16.5703 12.5977 17.0625 12 17.0625C11.332 17.0625 10.875 16.5703 10.875 15.9375C10.875 15.3047 11.3672 14.8125 12 14.8125ZM13.1602 7.5C14.5664 7.5 15.6562 8.58984 15.6211 9.96094C15.6211 10.8047 15.1641 11.6133 14.4258 12.0703L12.8438 13.0547V13.125C12.8438 13.582 12.457 13.9688 12 13.9688C11.543 13.9688 11.1562 13.582 11.1562 13.125V12.5625C11.1562 12.2812 11.2969 12 11.5781 11.8242L13.582 10.6289C13.8281 10.4883 13.9688 10.2422 13.9688 9.96094C13.9688 9.53906 13.582 9.1875 13.125 9.1875H11.332C10.9102 9.1875 10.5938 9.53906 10.5938 9.96094C10.5938 10.418 10.207 10.8047 9.75 10.8047C9.29297 10.8047 8.90625 10.418 8.90625 9.96094C8.90625 8.58984 9.99609 7.5 11.3672 7.5H13.1602Z" fill="currentColor"/></svg>
+        }
+      </button><span class="tooltip" role="tooltip" [id]="idTip">@for (t of a.partes; track $index) {@if (t.b) {<b>{{ t.t }}</b>} @else {{{ t.t }}}}</span></span>
+    }
+  </span>
+  @if (k.variacion; as v) {
+    <div class="kpi-value-row"><span class="kpi-value--big num">{{ k.valor }}</span><nc-rx-variacion [direccion]="v.direccion" [texto]="v.texto" [etiqueta]="v.etiqueta" [detalle]="v.detalle" /></div>
+  } @else if (k.lista; as l) {
+    <span class="kpi-value--big num"><button type="button" class="link-btn link-btn--kpi" [attr.aria-label]="l.etiqueta" (click)="store.abrirLista(l.clave)">{{ k.valor }}</button></span>
+  } @else {
+    <span class="kpi-value--big num">{{ k.valor }}</span>
+  }
+  <span class="kpi-sub num">{{ k.sub }}</span>
+  @if (k.desglose; as d) {
+    <ul class="kpi-breakdown">
+      @for (r of d; track r.gestion) {
+        <li><i [class]="'sw sw--' + r.gestion"></i><span>{{ r.etiqueta }}<b class="num">{{ r.valor }}</b>{{ r.resto }}</span></li>
+      }
+    </ul>
+  }
+</article>

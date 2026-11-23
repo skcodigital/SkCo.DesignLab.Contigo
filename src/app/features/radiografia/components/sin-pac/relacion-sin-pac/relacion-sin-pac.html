@@ -1,0 +1,34 @@
+<section class="block" aria-labelledby="lineas-title-sp">
+  <div class="block-head block-head--space">
+    <div>
+      <h2 class="block-title" id="lineas-title-sp">Activos administrados por línea de negocio</h2>
+      <p class="card-sub">Lo de tu agencia frente a lo de otras agencias, línea por línea.</p>
+    </div>
+    <div class="legend-inline">
+      <span><i class="sw sw--agencia"></i>Tu agencia (Agencia Norte)</span>
+      <span><i class="sw sw--otras"></i>Otras agencias</span>
+    </div>
+  </div>
+  <div class="lines">
+    @for (l of lineas; track l.nombre) {
+      <div class="line" [class.line--total]="l.total">
+        <div class="line-name"><b>{{ l.nombre }}</b>@if (l.sub) {<small>{{ l.sub }}</small>}<small class="line-clientes">{{ l.clientes }}</small></div>
+        <div class="line-bar" role="img" [attr.aria-label]="l.tramos.aria">
+          <span class="line-seg seg--agencia" [style.width.%]="l.anchoAgencia" [ncRxChartTip]="l.tipAgencia"><span class="line-val">{{ l.valAgencia }}</span></span>
+          @if (l.tipOtras) {
+            <span class="line-seg seg--otras" [style.width.%]="l.anchoOtras" [ncRxChartTip]="l.tipOtras"><span class="line-val"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>{{ l.valOtras }}</span></span>
+          }
+        </div>
+        <div class="line-detail">
+          <span><i class="sw sw--agencia"></i>Tu agencia: <b>{{ l.valAgencia }}</b> · {{ l.pctAgencia }}%</span>
+          @if (l.otras > 0) {
+            <span><i class="sw sw--otras"></i>Otras agencias: <b>{{ l.valOtras }}</b></span>
+          } @else {
+            <span class="line-note">Solo clientes de tu agencia</span>
+          }
+        </div>
+      </div>
+    }
+  </div>
+  <div class="sk-alert sk-alert--info" role="note"><span class="sk-alert__icon" aria-hidden="true"><nc-rx-icono-sp nombre="info" /></span><div class="sk-alert__content"><p class="sk-alert__title">Hallazgo</p><p class="sk-alert__desc">Tu agencia administra el <b>64%</b> de los activos de Skandia en la empresa. Además de lo de sus empleados, la empresa tiene un <b>Fondo de Inversión Colectiva</b> con Skandia ($1.245 M): hoy es la única relación directa con la empresa.</p></div></div>
+</section>

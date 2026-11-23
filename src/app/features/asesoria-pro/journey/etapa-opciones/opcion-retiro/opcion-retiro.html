@@ -1,0 +1,40 @@
+@if (k().R <= 0.5) {
+  <article class="jw-o3">
+    <h4>{{ titulo() }}</h4>
+    <p class="jw-nodisp"><svg ncIcono="off"></svg><span><b>No disponible</b> · Lo disponible para retirar es $0 · Revise el contrato en «Ver detalle»</span></p>
+  </article>
+} @else {
+  <article class="jw-o3" [class.elegida]="st().pref === tipo()">
+    <h4>{{ titulo() }}</h4>
+    <div class="jw-o3-cuerpo">
+      <dl>
+        <div><dt>Se descuenta del contrato</dt><dd>{{ pesos(k().D) }}</dd></div>
+        <div><dt>Retención contingente</dt><dd>{{ pesos(k().rcA) }}</dd></div>
+        <div><dt>Retención sobre rendimientos</dt><dd>{{ pesos(k().rrA) }}</dd></div>
+        <div><dt>4×1000</dt><dd>{{ pesos(k().g) }}</dd></div>
+        @if (k().perm > 0.5) {
+          <div><dt>Cobro por permanencia<small>capital más seguro · estimado</small></dt><dd>{{ pesos(k().perm) }}</dd></div>
+        }
+        <div class="tot verde"><dt>Recibe</dt><dd>{{ pesos(k().R) }}</dd></div>
+        <div>
+          <dt>
+            Posible impuesto en la declaración<small class="jw-imp-nota"
+              ><button type="button" class="jw-dian jw-ro-ok" aria-label="Impuesto de la DIAN: Skandia no lo cobra" title="Este impuesto lo liquida el cliente en su declaración de renta y lo paga a la DIAN. Skandia no lo cobra.">DIAN</button
+              >{{ imp().nota }}
+              @if (imp().accion) {
+                · <button type="button" class="jw-link jw-ro-ok" (click)="ajustar()">{{ imp().accion }}</button>
+              }
+            </small>
+          </dt>
+          <dd>{{ imp().txt }}</dd>
+        </div>
+      </dl>
+      @if (conRx()) {
+        <nc-renta-exenta [k]="k()" />
+      }
+      @if (faltan() > 0.5) {
+        <p class="jw-o3-nota">No alcanza: faltan <b>{{ pesos(faltan()) }}</b></p>
+      }
+    </div>
+  </article>
+}

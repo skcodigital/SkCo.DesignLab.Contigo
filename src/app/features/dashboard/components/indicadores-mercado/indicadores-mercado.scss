@@ -1,0 +1,143 @@
+// .ds-top del prototipo
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.ds-perso {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 80px;
+  padding: 4px 8px;
+  border: 0;
+  border-radius: 50px;
+  background: transparent;
+  font-family: var(--sk-font-heading);
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 700;
+  color: var(--sk-color-primary);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--sk-color-brand-light);
+  }
+}
+
+.ds-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  min-width: 0;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: #ccfdf2;
+  overflow: hidden;
+}
+
+.ds-periodo {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--sk-font-body);
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--sk-color-text);
+}
+
+.ds-tk-vent {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  -webkit-mask: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 24px), transparent);
+  mask: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 24px), transparent);
+}
+
+.ds-tk-pista {
+  display: flex;
+  width: max-content;
+  animation: dsTicker 45s linear infinite;
+}
+
+.ds-tk-copia {
+  display: flex;
+}
+
+.ds-banner:hover .ds-tk-pista,
+.ds-banner:focus-within .ds-tk-pista {
+  animation-play-state: paused;
+}
+
+@keyframes dsTicker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.ds-tk {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: 16px;
+  white-space: nowrap;
+  font-size: 12px;
+  line-height: 20px;
+
+  b {
+    font-weight: 700;
+  }
+}
+
+.ds-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 25px;
+  padding: 2px 6px;
+  border-radius: 100px;
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 400;
+
+  &.up {
+    background: var(--sk-color-brand-light);
+  }
+
+  &.down {
+    background: #fff5f4;
+  }
+
+  img.rot {
+    transform: rotate(180deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-tk-pista {
+    animation: none;
+  }
+  .ds-tk-vent {
+    overflow-x: auto;
+  }
+  .ds-tk-copia {
+    display: none;
+  }
+}
+
+@media (hover: none) {
+  .ds-perso:hover {
+    background: transparent;
+  }
+}

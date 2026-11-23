@@ -1,0 +1,46 @@
+@if (ret() || esCr()) {
+  <div class="jw-bloque5">
+    <p class="jw-qt">{{ titulo() }}</p>
+    @if (alerta(); as txt) {
+      <p class="jw-aviso"><svg ncIcono="alerta"></svg><span>{{ txt }}</span></p>
+    }
+    <p class="jw-a5-linea">{{ linea() }}</p>
+    @if (st().dec === 'combo') {
+      <p class="jw-a5-linea">
+        @if (comboLinea(); as l) {
+          <b>Y solicitar crédito:</b> {{ l }}
+        }
+      </p>
+    }
+    @if (ret() && viv()) {
+      <p class="jw-ayuda">
+        El retiro para vivienda requiere documentos según el tipo (sin financiación, con crédito hipotecario, leasing habitacional o pago de cuota de crédito hipotecario).
+        <a class="jw-link" [href]="urlGuia" target="_blank" rel="noopener noreferrer">Guía de transacciones, canales y servicios</a>
+      </p>
+    }
+    <div class="jw-chips" role="group" [attr.aria-label]="aria()">
+      @for (o of opciones(); track o.v) {
+        <button #tramBtn type="button" [attr.aria-pressed]="st().tram === o.v" [disabled]="ro()" (click)="elegir(o.v)">{{ o.t }}</button>
+      }
+    </div>
+    <p class="jw-ayuda">
+      @if (esCr()) {
+        {{ textos.tramNotaCredito }}
+      } @else if (viv()) {
+        {{ textos.tramNotaVivienda }}
+      } @else if (st().tram === 'especificado') {
+        {{ textos.tramNotaRetiro }} ·
+        <a class="jw-link jw-ro-ok" [href]="urlEspecificado" target="_blank" rel="noopener noreferrer"><svg ncIcono="bajar"></svg>Descargar formato</a>
+      } @else {
+        {{ textos.tramNotaRetiro }}.
+      }
+    </p>
+  </div>
+}
+@if (contador()) {
+  <div class="jw-p4-acc jw-contador">
+    <button type="button" class="jw-btn jw-btn--sec jw-ro-ok" (click)="descargar()"><svg ncIcono="bajar" [tam]="16"></svg>Descargar detalle para el contador</button>
+    <span class="jw-ayuda">en Excel</span>
+    <label class="jw-check"><input type="checkbox" [checked]="st().validar" [disabled]="ro()" (change)="validar($event)" /> Le recomendé validarlo</label>
+  </div>
+}

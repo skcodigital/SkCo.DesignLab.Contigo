@@ -1,0 +1,49 @@
+@let c = contrato();
+<p class="jw-det-tit"><b>{{ c.nom }} · {{ c.num }}</b><span>{{ c.prod }}</span></p>
+<div class="jw-kpis">
+  <div><small>Saldo</small><b>{{ pesos(c.saldo) }}</b><span>en su contrato</span></div>
+  <div>
+    <small>Disponible para retiro</small><b>{{ pesos(c.disp) }}</b>
+    <button type="button" class="jw-link" [attr.aria-expanded]="st().verCalc" (click)="store.alternarDesglose()">{{ textoDesglose() }}</button>
+  </div>
+  <div>
+    <small>Retención contingente</small><b [class.jw-naranja]="!especial()">{{ pesos(especial() ? 0 : c.rcTodo) }}</b>
+    <span>{{ especial() ? 'No aplica: condición especial' : 'Si retirara todo hoy (estimado)' }}</span>
+  </div>
+</div>
+<p class="jw-nota">
+  <svg ncIcono="info"></svg><span><b>Disponible para retiro:</b> es el monto que se puede retirar operativamente. {{ advertencia }}</span>
+</p>
+<div class="jw-caja">
+  <h5><svg ncIcono="sube"></svg> Lo que ha ganado</h5>
+  <p>
+    Desde el {{ c.desde }} ha ganado <span class="jw-verde">{{ pesos(c.gan) }}</span> en rendimientos@if (c.retirado) { y ya retiró <b>{{ pesos(c.retirado) }}</b>.} @else { y no ha hecho retiros.}
+  </p>
+  <div class="jw-trio">
+    <span>Rendimientos en el saldo<b>{{ pesos(c.rendSaldo) }}</b></span>
+    <span>Capital retirado<b>{{ pesos(c.capRet) }}</b></span>
+    <span>Rendimientos retirados<b>{{ pesos(c.rendRet) }}</b></span>
+  </div>
+</div>
+@if (st().verCalc) {
+  <div class="jw-caja jw-desglose">
+    <div class="jw-lista-calc">
+      <div><span>Saldo total</span><b>{{ pesos(c.saldo) }}</b></div>
+      @if (cerrados() > 0.5) {
+        <div title="Certificados a término y otros portafolios que no se pueden retirar hasta su vencimiento.">
+          <span>(-) Saldo en fondos cerrados</span><span>{{ pesos(cerrados()) }}</span>
+        </div>
+      }
+      @if (c.sc) {
+        <div><span>(-) Aportes sin certificar</span><span>{{ pesos(c.sc) }}</span></div>
+      }
+      <div class="tot"><span>Saldo disponible para retiro</span><b class="jw-verde">{{ pesos(c.disp) }}</b></div>
+    </div>
+    <p class="jw-ayuda">Retiro parcial, según Contigo</p>
+  </div>
+}
+@if (c.sc) {
+  <p class="jw-nota jw-nota--alerta">
+    <svg ncIcono="alerta"></svg><span><b>Aportes por certificar ({{ pesos(c.sc) }})</b>: no se pueden retirar hasta que se certifiquen. Los aportes vigentes no traen el detalle de estos aportes.</span>
+  </p>
+}

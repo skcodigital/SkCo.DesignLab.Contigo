@@ -1,0 +1,20 @@
+@use '../../../styles/rx-base';
+@use '../../../styles/rx-modal';
+
+// Alcance de la vista (Ves / No ves)
+.scope-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 40px; }
+.scope-title { margin: 0 0 8px; font: 700 13.5px/1.3 var(--sk-font-body); color: var(--texts-strong); }
+.scope-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.scope-list li { display: flex; align-items: flex-start; gap: 8px; font-size: 13.5px; color: var(--sk-color-text); }
+.scope-list svg { margin-top: 2px; }
+.scope-yes svg { color: var(--sk-color-primary-strong); }
+.scope-no svg { color: var(--sk-color-text-2); }
+.info-scope { margin-bottom: var(--space-3); }
+.info-scope .scope-cols { gap: 16px 32px; }
+.btn-small { width: 100%; height: 30px; }
+@media (max-width: 900px) {
+  .scope-cols { grid-template-columns: minmax(0, 1fr); }
+}
+@media print {
+  :host { display: none !important; }
+}

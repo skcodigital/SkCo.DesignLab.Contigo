@@ -1,0 +1,32 @@
+<div class="jw-velo-det" (click)="cerrar()"></div>
+<section class="jw-det" role="dialog" aria-modal="true" aria-labelledby="jw-det-t" (keydown.escape)="escape($event)">
+  <div class="jw-det-h">
+    <h4 class="jw-det-t" id="jw-det-t">Detalle</h4>
+    <label class="jw-det-sel">
+      <span>Contrato</span>
+      <select (change)="elegirContrato($event)">
+        @for (c of contratos; track c.id) {
+          <option [value]="c.id" [selected]="c.id === det().ct">{{ c.nom }} · {{ c.num }}</option>
+        }
+      </select>
+    </label>
+    <button #cerrarBtn type="button" class="jw-det-x" aria-label="Cerrar el detalle" (click)="cerrar()">
+      <svg ncIcono="cerrar"></svg>
+    </button>
+  </div>
+  <div class="jw-det-tabs" role="tablist" aria-label="Detalle del contrato" (keydown)="navegar($event)">
+    @for (t of pestanas; track t.id) {
+      <button #tabBtn type="button" role="tab" [attr.aria-selected]="t.id === det().tab" (click)="elegirTab(t.id)">{{ t.nombre }}</button>
+    }
+  </div>
+  <div #cuerpo class="jw-det-b" role="tabpanel">
+    @switch (det().tab) {
+      @case ('contrato') { <nc-tab-contrato [contrato]="contrato()" /> }
+      @case ('portafolios') { <nc-tab-portafolios [contrato]="contrato()" /> }
+      @case ('aportes') { <nc-tab-aportes [contrato]="contrato()" /> }
+      @case ('calculo') { <nc-tab-calculo [contrato]="contrato()" /> }
+      @case ('credito') { <nc-tab-credito /> }
+      @case ('impuestos') { <nc-tab-impuestos /> }
+    }
+  </div>
+</section>

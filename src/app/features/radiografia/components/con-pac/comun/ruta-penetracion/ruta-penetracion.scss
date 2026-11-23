@@ -1,0 +1,17 @@
+@use '../../../../styles/rx-base';
+@use '../../../../styles/rx-card';
+@use '../../../../styles/rx-charts';
+
+// Celda de la grilla .resumen-grid del panel.
+:host { display: contents; }
+
+.products { display: flex; flex-direction: column; gap: 12px; }
+.products--route { align-self: stretch; }
+.products--route > .card-body { flex: 1; }
+/* Dentro de la grilla del Resumen la leyenda va en columna */
+.route-foot { flex-direction: column; align-items: flex-start; }
+
+/* Nuevo Contigo · móvil: Ruta de penetración primero y Productos de la empresa después */
+@media (max-width: 768px) {
+  .products--route { order: -1; }
+}

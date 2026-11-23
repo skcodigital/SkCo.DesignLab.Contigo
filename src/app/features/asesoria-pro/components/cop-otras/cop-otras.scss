@@ -1,0 +1,35 @@
+:host{display:block}
+.jy{position:relative;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:8px;align-self:stretch;padding:16px 44px 24px 16px;border:0;border-radius:16px;background:#FFF;box-shadow:0 0 4px 0 rgba(61,75,92,.15);text-align:left;font-family:inherit;color:var(--sk-color-text)}
+button.jy{cursor:pointer;transition:border-color .15s,box-shadow .15s}
+button.jy:hover{box-shadow:0 0 0 1.5px var(--sk-color-primary),0 0 4px 0 rgba(61,75,92,.15)}
+button.jy:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:2px}
+.jy-t{font-size:15px;font-weight:600;display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.jy-chev{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--sk-color-text-2)}
+.jy-badge{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--sk-color-placeholder);background:var(--sk-color-surface-4);border-radius:4px;padding:2px 6px}
+.cop-otras-h{display:flex;align-items:baseline;justify-content:space-between;gap:16px}
+.cop-otras-tit{margin:0;font-family:var(--sk-font-heading);font-weight:700;font-size:18px;color:var(--sk-color-text)}
+.cop-otras-tit{font-size:16px}
+.cop-filtros button:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:2px}
+.cop-filtros{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 14px}
+.cop-filtros button{padding:6px 14px;border:1px solid var(--sk-color-border);border-radius:9999px;background:var(--sk-color-surface-2);font-family:var(--sk-font-body);font-size:13px;color:var(--sk-color-text);cursor:pointer}
+.cop-filtros button[aria-pressed="true"]{background:var(--sk-color-graphite-2);border-color:var(--sk-color-graphite-2);color:#fff}
+.cop-otras{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.cop-otras .jy{padding:14px 40px 14px 16px;border-radius:12px;box-shadow:none;border:1px solid #eee;gap:4px}
+.cop-otras .jy .jy-t{font-family:var(--sk-font-heading);font-weight:700;font-size:14px}
+@media (max-width:960px){.cop-otras{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.cop-otras{grid-template-columns:1fr}}
+@media (max-width:600px){:host-context(.panel-cop) .cop-otras{grid-template-columns:1fr}}
+
+// Estilo espacial de Planeación Pro
+:host-context(.panel-cop) .cop-otras-tit{color:#ffffff}
+:host-context(.panel-cop) .cop-filtros button{background:var(--sk-color-graphite);border-color:rgba(255,255,255,.18);color:#ffffff;font-weight:600}
+:host-context(.panel-cop) .cop-filtros button[aria-pressed="true"]{background:var(--sk-color-primary);border-color:var(--sk-color-primary);color:var(--sk-color-mission-bg)}
+:host-context(.panel-cop) .cop-otras .jy{background:var(--sk-color-graphite);border:1px solid var(--sk-color-text-4);transition:transform .2s,border-color .2s,box-shadow .2s}
+.cop-otras button.jy:active{transform:scale(.98)}
+:host-context(.panel-cop) .cop-otras button.jy:hover{transform:translateY(-3px);border-color:rgba(0,199,61,.55);box-shadow:0 0 22px rgba(0,199,61,.15)}
+:host-context(.panel-cop) .cop-otras button.jy:active{transform:translateY(-1px) scale(.98)}
+:host-context(.panel-cop) .cop-otras .jy .jy-t{color:#ffffff}
+:host-context(.panel-cop) .jy-chev{color:var(--sk-color-border-4)}
+:host-context(.panel-cop) .cop-otras .jy.jy-prox{opacity:.55;cursor:default}
+:host-context(.panel-cop) .cop-otras .jy.jy-prox:hover{transform:none;border-color:var(--sk-color-text-4);box-shadow:none}
+:host-context(.panel-cop) .jy-badge{background:rgba(255,255,255,.08);color:var(--sk-color-border-4)}

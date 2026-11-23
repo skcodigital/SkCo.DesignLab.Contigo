@@ -1,0 +1,14 @@
+@if (conDiagnostico()) {
+  <nc-rx-ruta-encabezado rol="director" />
+}
+@if (vacia()) {
+  <!-- Sin ruta todavía -->
+  <nc-rx-ruta-vacia rol="director" />
+}
+@if (listado()) {
+  <!-- Seguimiento de la ruta de acción: aparece al enviarla -->
+  <nc-rx-ruta-metas rol="director" />
+}
+@if (conDiagnostico()) {
+  <nc-rx-ruta-pasos rol="director" />
+}

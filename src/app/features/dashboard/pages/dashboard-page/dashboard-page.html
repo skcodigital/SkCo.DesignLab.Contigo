@@ -1,0 +1,16 @@
+<section class="dash" id="dash" aria-label="Inicio">
+  <nc-indicadores-mercado />
+  <a href="#" class="ds-aviso" (click)="$event.preventDefault()">
+    <span class="ds-aviso-tag">Interés</span>
+    <b>Mantenimiento programado Portal Clientes y App Skandia</b>
+    <span class="ds-aviso-tx">Será este 30 de diciembre de 00:00 a 06:00 am.<img src="assets/dash/chev-der.svg" width="16" height="16" alt="" /></span>
+  </a>
+  <div class="ds-mods">
+    <section nc-planeacion-semana></section>
+    <button type="button" class="ds-add" (click)="agregarModulo()">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4" /><path d="M12 8v8M8 12h8" /></svg>
+      <span>Arma tu inicio con los módulos que más usas</span><b>Agregar módulo</b>
+    </button>
+  </div>
+  <section nc-logros></section>
+</section>

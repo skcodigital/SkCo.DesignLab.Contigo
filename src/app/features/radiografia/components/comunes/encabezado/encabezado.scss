@@ -1,0 +1,23 @@
+@use '../../../styles/rx-base';
+
+:host { display: block; }
+.page-head { margin-bottom: var(--space-2); }
+.page-head--acciones { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-3); }
+.page-head-main { min-width: 0; }
+.btn-primary.btn-pdf { flex: none; width: auto; display: inline-flex; align-items: center; gap: 8px; padding: 0 28px; }
+@media (max-width: 768px) { .page-head--acciones { flex-direction: column; } .btn-primary.btn-pdf { width: 100%; justify-content: center; } }
+.page-title-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.page-title { margin: 0; font: 700 24px/1.3 var(--sk-font-heading); color: var(--sk-color-text); }
+.page-desc { margin: 8px 0 0; font: 400 16px/1.5 var(--sk-font-body); color: var(--sk-color-text); }
+.page-title-row .tip svg { width: 24px; height: 24px; }
+
+@media (max-width: 768px) {
+  .page-title { font-size: 20px; }
+  .page-desc { font-size: 14px; }
+  /* Sin el título ni su tooltip en celular: el nombre ya está arriba (el h1 queda solo para lectores de pantalla) */
+  .page-title-row .tip { display: none; }
+  .page-title-row .page-title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
+@media print {
+  .btn-pdf, .tip { display: none !important; }
+}

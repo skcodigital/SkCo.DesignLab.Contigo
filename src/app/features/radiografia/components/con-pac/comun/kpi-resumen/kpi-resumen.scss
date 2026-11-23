@@ -1,0 +1,5 @@
+@use '../../../../styles/rx-base';
+@use '../../../../styles/rx-card';
+
+// La tarjeta es la celda de la grilla `.kpis` del panel.
+:host { display: contents; }

@@ -1,0 +1,31 @@
+// La caja de la zona (.lg-zona) la pinta la página: aquí solo el contenido.
+@use '../../styles/login-ui';
+
+.lg-alerta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 1px solid var(--sk-color-danger-strong);
+  border-radius: 12px;
+  background: #fff1f1;
+  color: var(--sk-color-text);
+  font-size: 13px;
+  line-height: 19px;
+}
+
+.lg-alerta > svg {
+  flex: none;
+  color: var(--sk-color-danger-strong);
+}
+
+.lg-alerta b {
+  display: block;
+  font-family: var(--sk-font-heading);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+:host > button[type='submit'] {
+  margin-top: 10px;
+}

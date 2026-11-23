@@ -1,0 +1,38 @@
+<svg class="pp-orbita" viewBox="0 0 240 160" aria-hidden="true">
+  <g class="pp-giro">
+    <ellipse cx="250" cy="34" rx="170" ry="62" fill="none" stroke="rgba(0,199,61,.45)" stroke-dasharray="2 6" />
+    <circle cx="103" cy="65" r="4" fill="#8fe000" />
+  </g>
+</svg>
+<h3 class="pp-nom">
+  <a href="#" class="pp-nom-link" (click)="clicNombre($event)">{{ mision().nombre }}</a><span class="pp-segm">{{ mision().segmento }}</span>
+</h3>
+<p class="pp-dato pp-saldo-l">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" /><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8M12 18V6" /></svg>Saldo disponible para retiro: <b class="pp-money">{{ saldo() }}</b><span class="pp-tt-w pp-ojo-w"><button class="ojo pp-ojo" type="button" [attr.aria-pressed]="oculto()" [attr.aria-label]="ojo().aria" (click)="alternarOjo.emit()"><svg nc-icono-ojo [tachado]="!oculto()"></svg></button><span class="pp-tt" role="tooltip">{{ ojo().tooltip }}</span></span>
+</p>
+@switch (mision().origen) {
+  @case ('acuerdo') {
+    <p class="pp-dato">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" /></svg>{{ mision().origenTexto }}
+    </p>
+  }
+  @case ('lista') {
+    <p class="pp-dato">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>{{ mision().origenTexto }}
+    </p>
+  }
+}
+<div class="pp-guia">
+  <span class="pp-guia-sami"><img src="assets/sami.png" width="22" height="22" alt="" />Sami te sugiere</span>
+  <b class="pp-guia-t">{{ guia() }}</b>
+  <p>
+    Nuestro modelo indica que podría retirar recursos de Multifund en los próximos 60 días. No menciones esta señal; si decide
+    hacerlo, acompaña su decisión con las opciones que mejor se ajusten a sus objetivos.
+  </p>
+</div>
+@if (!lectura()) {
+  <div class="pp-acc">
+    <button type="button" class="pp-ini" (click)="iniciar.emit()">Ir a Planeación Pro</button>
+    <span class="pp-pos-w"><button type="button" class="pp-pos" aria-haspopup="dialog" (click)="descartar.emit()">Descartar</button></span>
+  </div>
+}

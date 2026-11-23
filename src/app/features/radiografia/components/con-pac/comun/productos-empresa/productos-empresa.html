@@ -1,0 +1,51 @@
+<section #seccion class="card products products--slim" [class.products--locked]="bloqueados()" [id]="idSeccion()" [attr.tabindex]="bloqueados() ? null : -1" [attr.aria-labelledby]="idSeccion() + '-title'">
+  <h2 class="block-title" [id]="idSeccion() + '-title'">Productos de la empresa</h2>
+  @if (bloqueados()) {
+    <div class="sk-alert sk-alert--info sk-alert--in-card" role="note"><span class="sk-alert__icon" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 4C22.6094 4 28 9.39062 28 16C28 22.6562 22.6094 28 16 28C9.34375 28 4 22.6562 4 16C4 9.39062 9.34375 4 16 4ZM16 25.75C21.3438 25.75 25.75 21.3906 25.75 16C25.75 10.6562 21.3438 6.25 16 6.25C10.6094 6.25 6.25 10.6562 6.25 16C6.25 21.3906 10.6094 25.75 16 25.75ZM16 18.25C15.3438 18.25 14.875 17.7812 14.875 17.125V11.125C14.875 10.5156 15.3438 10 16 10C16.6094 10 17.125 10.5156 17.125 11.125V17.125C17.125 17.7812 16.6094 18.25 16 18.25ZM16 19.8438C16.7969 19.8438 17.4531 20.5 17.4531 21.2969C17.4531 22.0938 16.7969 22.75 16 22.75C15.1562 22.75 14.5 22.0938 14.5 21.2969C14.5 20.5 15.1562 19.8438 16 19.8438Z" fill="currentColor"/></svg></span><div class="sk-alert__content"><p class="sk-alert__desc">Estos productos los atiende el FP Asignado. Puedes ver cuáles tiene la empresa, pero no ingresar a ellos ni ver sus saldos.</p></div></div>
+  }
+  <div class="acc">
+    @for (g of grupos(); track g.titulo; let i = $index) {
+      <article class="acc-card">
+        @if (bloqueados()) {
+          <div class="acc-head">
+            <ng-container [ngTemplateOutlet]="cabeza" [ngTemplateOutletContext]="{ $implicit: g }" />
+          </div>
+        } @else {
+          @let abierto = abiertos().has(g.titulo);
+          <button class="acc-head" [attr.aria-expanded]="abierto" [attr.aria-controls]="idSeccion() + '-acc-' + i" (click)="alternar(g.titulo)">
+            <ng-container [ngTemplateOutlet]="cabeza" [ngTemplateOutletContext]="{ $implicit: g }" />
+            <span class="acc-chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path [attr.d]="abierto ? 'm15 6-6 6 6 6' : 'm9 6 6 6-6 6'"/></svg></span>
+          </button>
+        }
+        @if (bloqueados() || abiertos().has(g.titulo)) {
+          <div class="acc-body" [id]="idSeccion() + '-acc-' + i">
+            @for (p of g.productos; track p.nombre) {
+              @if (bloqueados()) {
+                <div class="product product--slim product--locked" aria-disabled="true">
+                  <span class="product-row"><span class="product-name">{{ p.nombre }}</span></span>
+                  <span class="product-meta">{{ p.meta }}</span>
+                </div>
+              } @else {
+                <button class="product product--slim">
+                  <span class="product-row"><span class="product-name">{{ p.nombre }}</span><b class="product-amount num">{{ p.monto }}</b><svg class="product-chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></span>
+                  <span class="product-meta">{{ p.meta }}</span>
+                </button>
+              }
+            }
+          </div>
+        }
+      </article>
+    }
+  </div>
+</section>
+
+<ng-template #cabeza let-g>
+  <span class="kpi-icon" [class.kpi-icon--savings]="g.icono === 'savings'" [class.kpi-icon--insure]="g.icono === 'insure'" style="margin:0">
+    @if (g.icono === 'savings') {
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V9M9 19V5M14 19v-7M19 19v-11"/></svg>
+    } @else {
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 2.8v5.4c0 4.2-2.8 7.6-7 9.3-4.2-1.7-7-5.1-7-9.3V5.8z"/></svg>
+    }
+  </span>
+  <span class="acc-title">{{ g.titulo }}</span>
+</ng-template>

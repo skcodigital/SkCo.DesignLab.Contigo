@@ -1,0 +1,78 @@
+<button
+  #boton
+  class="retiros"
+  type="button"
+  aria-haspopup="dialog"
+  aria-controls="rmodal"
+  [class.con-modal]="abierta()"
+  (click)="abrir()"
+>
+  <span class="m-wallet" aria-hidden="true"
+    ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" /><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" /></svg></span
+  ><span class="rt">Retiros en curso ({{ retiros().length }})</span>
+  <span class="camino" aria-hidden="true">
+    <span class="nodo"
+      ><svg viewBox="0 0 60 61" style="height: 13px; width: auto" aria-hidden="true"><path d="M3.32082 56.9184C10.4127 64.0052 22.5328 58.9871 22.5328 48.9536C22.5328 45.9673 21.3465 43.1033 19.2348 40.9916C17.1232 38.8799 14.2592 37.6936 11.2728 37.6936C1.23931 37.6936 -3.7838 49.8239 3.31064 56.9184" fill="#00C73D" /><path d="M52.2388 0H5.71268C0.997463 0 -1.36142 5.69999 1.97206 9.03346L50.9665 58.0279C54.3 61.3614 60 59 60 54.2873V7.76878C60.0003 6.7496 59.7998 5.74034 59.4098 4.79871C59.0199 3.85707 58.4482 3.00152 57.7274 2.28097C57.0066 1.56042 56.1508 0.988996 55.2091 0.599358C54.2673 0.20972 53.258 0.00951191 52.2388 0.0101807M36.5282 22.7414C34.2813 22.7414 31.9479 21.3928 31.9173 18.9245H35.0014C35.0243 19.5632 35.7343 20.1968 36.6326 20.1968C37.3654 20.1713 37.9812 19.8405 37.9812 19.2756C37.9812 18.8023 37.6962 18.5428 36.8947 18.329L35.4518 17.9499C32.1438 17.0516 32.1184 15.3747 32.1438 14.3568C32.1667 12.7257 34.1286 11.2142 36.4468 11.2142C38.6454 11.2142 40.961 12.1837 40.9864 14.8785H37.8845C37.8616 14.0515 37.1517 13.909 36.6326 13.909C35.9252 13.909 35.4518 14.2398 35.4747 14.736C35.4977 15.0668 35.7826 15.3976 36.4443 15.563L38.312 16.0592C40.9839 16.7921 41.3147 18.5657 41.3147 19.2756C41.3147 21.6141 38.854 22.7262 36.5384 22.7262M49.2845 22.4895L45.5973 18.1153V22.4895H42.3351V5.44044H45.5973V14.4714L48.2336 11.4636H52.4068L47.8264 16.334L53.3228 22.5048L49.2845 22.4895Z" fill="#00C73D" /></svg
+    ></span>
+    <span class="linea"
+      ><span class="moneda"
+        ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" x2="12" y1="2" y2="22" /><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg></span
+    ></span>
+    <span class="nodo billetera"
+      ><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" /><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" /></svg
+    ></span>
+  </span>
+  <span class="rl"
+    >Ver detalle
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg
+  ></span>
+</button>
+
+<div class="rmodal" id="rmodal" [class.show]="abierta()" (click)="alVelo($event)">
+  <div class="rdlg" role="dialog" aria-modal="true" aria-labelledby="rmodal-t">
+    <button #botonCerrar class="rclose" type="button" aria-label="Cerrar" (click)="cerrar()">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+    </button>
+    <div class="rdlg-h">
+      <h2 id="rmodal-t">Retiros en curso</h2>
+      <p>Aquí verás los retiros en curso de todos los contratos de tu cliente en Skandia.</p>
+    </div>
+    @for (r of items(); track r.id) {
+      <div class="retiro">
+        <button
+          class="retiro-h"
+          type="button"
+          [attr.aria-expanded]="!colapsado(r.id)"
+          [attr.aria-controls]="r.id"
+          (click)="alternar(r.id)"
+        >
+          <span class="fila"
+            ><span class="cab">{{ r.titulo }}</span
+            ><span class="chev"
+              ><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg></span
+          ></span>
+          <span class="cuando">{{ r.cuando }}</span>
+          <span class="segmentos">
+            @for (on of r.segmentos; track $index) {
+              <span [class.on]="on"></span>
+            }
+          </span>
+          <span class="paso">{{ r.paso }}</span>
+        </button>
+        <div class="retiro-b" [id]="r.id" [hidden]="colapsado(r.id)">
+          <dl class="rdet">
+            @for (d of r.detalle; track d.etiqueta) {
+              <div>
+                <dt>{{ d.etiqueta }}</dt>
+                <dd>{{ d.valor | monto: oculto() }}</dd>
+              </div>
+            }
+          </dl>
+          <a class="rpdf" href="#" (click)="$event.preventDefault()"
+            ><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" x2="12" y1="15" y2="3" /></svg>Descargar PDF</a
+          >
+        </div>
+      </div>
+    }
+  </div>
+</div>

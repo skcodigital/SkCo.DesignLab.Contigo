@@ -1,0 +1,78 @@
+:host {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+  // 2026-11-19: se omite el 1/5 por ahora (Isa)
+  display: none !important;
+}
+
+.pp-prog {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 0;
+  padding: 0 2px;
+  border-radius: 4px;
+  color: var(--sk-color-text-2);
+  font-size: 12px;
+  line-height: 20px;
+  white-space: nowrap;
+  cursor: default;
+  vertical-align: middle;
+
+  b {
+    font-weight: 600;
+    color: var(--sk-color-text);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--sk-color-info);
+    outline-offset: 2px;
+  }
+}
+
+.pp-tt {
+  position: absolute;
+  bottom: calc(100% + 4px);
+  z-index: 30;
+  width: max-content;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: var(--sk-color-text-5);
+  color: var(--sk-color-surface);
+  font-family: var(--sk-font-body);
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s, visibility 0.15s;
+}
+
+.pp-prog-tt {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+
+:host(:hover) .pp-tt,
+:host :focus-visible + .pp-tt,
+:host(.ver) .pp-prog-tt {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (hover: none) {
+  .pp-prog:focus + .pp-prog-tt {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pp-tt {
+    transition: none;
+  }
+}

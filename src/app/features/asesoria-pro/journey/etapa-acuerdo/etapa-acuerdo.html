@@ -1,0 +1,40 @@
+<section class="jw-etapa jw-etapa--ancha" aria-labelledby="jw-t4">
+  <p class="jw-eb">Acuerdo</p>
+  <h3 #titulo class="jw-h" id="jw-t4" tabindex="-1">¿Qué decidió el cliente?</h3>
+  @if (destacada(); as d) {
+    <div class="jw-dest jw-destacada"><b>{{ d.valor }}</b><span>{{ d.texto }}</span></div>
+  }
+  <div class="jw-dec" role="group" aria-labelledby="jw-t4">
+    @for (o of decisiones(); track o.d) {
+      <button #decBtn type="button" class="jw-op" [attr.aria-pressed]="st().dec === o.d" [disabled]="o.deshabilitada" (click)="elegir(o.d)">
+        @if (o.preferida) {
+          <span class="jw-tg jw-tg--menor">Preferida</span>
+        }
+        <b>{{ o.nombre }}</b><span>{{ o.detalle }}</span>
+      </button>
+    }
+  </div>
+  @if (conDecision()) {
+    <div class="jw-a5">
+      <nc-acuerdo-tramite />
+      <nc-acuerdo-proximos />
+      @if (st().msg; as m) {
+        <p class="jw-proximo jw-a5-msg" [class.ok]="!!m.ok" aria-live="polite">{{ m.t }}</p>
+      }
+      <div class="jw-pie jw-pie5">
+        @if (!ro()) {
+          <button type="button" class="jw-btn jw-btn--sec" (click)="cambiarDecision()"><svg ncIcono="lapiz" [tam]="16" [grosor]="2.2"></svg>Cambiar decisión</button>
+        }
+        <button type="button" class="jw-btn jw-btn--sec jw-ro-ok" (click)="enviar()"><svg ncIcono="enviar"></svg>Enviar resumen al cliente</button>
+        <button #cierre type="button" class="jw-btn" [class.jw-cerrado]="ro()" [disabled]="ro()" (click)="registrarCierre()">
+          @if (ro()) {
+            <svg ncIcono="ok"></svg>
+          } @else {
+            <svg ncIcono="clip"></svg>
+          }
+          {{ textoCierre() }}
+        </button>
+      </div>
+    </div>
+  }
+</section>

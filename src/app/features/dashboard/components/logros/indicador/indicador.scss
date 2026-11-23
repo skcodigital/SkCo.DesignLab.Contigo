@@ -1,0 +1,176 @@
+// .ds-ind del prototipo (el contenedor y su padding los pone la grilla de Logros)
+:host {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--sk-color-surface);
+  border-radius: 16px;
+  filter: drop-shadow(0 0 2px rgba(61, 75, 92, 0.15));
+  transition: opacity 0.2s;
+}
+
+:host(:has(.ds-tt:hover)),
+:host(:has(.ds-tt-btn:focus-visible)) {
+  z-index: 5;
+}
+
+.ds-ind-tx {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+
+  span {
+    font-size: 14px;
+    line-height: 22px;
+  }
+}
+
+.ds-ind-tx b,
+.ds-ind-var b {
+  font-family: var(--sk-font-heading);
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 700;
+}
+
+.ds-ind-var {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  b {
+    font-family: var(--sk-font-body);
+  }
+}
+
+.actualiza b {
+  animation: pfActualiza 0.35s ease;
+}
+
+@keyframes pfActualiza {
+  from {
+    opacity: 0.25;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Saldo oculto: "$ ••••••" en lugar del valor
+:host(.oculto) .ds-money {
+  position: relative;
+  visibility: hidden;
+  white-space: nowrap;
+
+  &::after {
+    content: '$ ••••••';
+    visibility: visible;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+
+// Flecha de variación + tooltip (Figma · Plain Tooltip 43713:44247)
+.ds-tend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 100px;
+  background: transparent;
+}
+
+.ds-tt {
+  position: relative;
+}
+
+// Fondo de la flecha según su color (como las tarjetas de saldos de la ficha): verde sube, rojo baja o sube en contra
+.ds-tt-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  padding: 0;
+  border: 0;
+  border-radius: 100px;
+  background: #fdecec;
+  cursor: help;
+
+  &.a-favor {
+    background: var(--sk-color-brand-active);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--sk-color-info);
+    outline-offset: 1px;
+  }
+}
+
+.ds-tt-box {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  width: max-content;
+  max-width: 132px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: var(--sk-color-text-5);
+  color: var(--sk-color-surface);
+  font-family: var(--sk-font-body);
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  text-align: left;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s, visibility 0.15s;
+}
+
+.ds-tt:hover .ds-tt-box,
+.ds-tt-btn:focus-visible + .ds-tt-box {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (max-width: 600px) {
+  .ds-tt-box {
+    left: auto;
+    right: -4px;
+    transform: none;
+  }
+  // Versión pequeña de los indicadores (Figma Portal Contigo · 32880:88748)
+  .ds-ind-var {
+    display: none;
+  }
+  .ds-ind-tx > span {
+    line-height: 22px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (hover: none) {
+  .ds-tt-btn:focus + .ds-tt-box {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-tt-box {
+    transition: none;
+  }
+  .actualiza b {
+    animation: none;
+  }
+}

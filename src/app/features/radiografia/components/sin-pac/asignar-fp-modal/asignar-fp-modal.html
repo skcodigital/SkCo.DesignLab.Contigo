@@ -1,0 +1,49 @@
+<div class="overlay" ncRxDialogo (cerrar)="store.cerrarAsignarFp()">
+  <div class="modal modal--wide" role="dialog" aria-modal="true" aria-labelledby="dueno-title" aria-describedby="dueno-desc">
+    @if (!asignado()) {
+      <div>
+        <div class="modal-head">
+          <h2 class="modal-title" id="dueno-title">Asignar un FP a la empresa</h2>
+          <button class="modal-close" aria-label="Cerrar" (click)="store.cerrarAsignarFp()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+        </div>
+        <p class="modal-desc" id="dueno-desc">Elige al asesor que será el FP Asignado de <b>Empresa XYZ S.A.S.</b> y tendrá la misión de abrir el Plan de Ahorro Corporativo a través de Recursos Humanos. Estos son los asesores que tienen clientes en la empresa.</p>
+        <div class="table-wrap">
+          <table class="table table--dueno">
+            <thead>
+              <tr>
+                <th scope="col"><span class="th">Elegir</span></th>
+                <th scope="col"><span class="th">Asesor</span></th>
+                <th scope="col"><span class="th">Clientes</span></th>
+                <th scope="col"><span class="th">AUM</span></th>
+                <th scope="col"><span class="th">Productos por cliente</span></th>
+                <th scope="col"><span class="th">Productos de sus clientes</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (c of candidatos; track c.valor) {
+                <tr [class.elegido]="elegido() === c.valor">
+                  <td class="c"><input type="radio" name="dueno-nuevo" [value]="c.valor" [checked]="elegido() === c.valor" [attr.aria-label]="c.etiqueta" (change)="elegido.set(c.valor)"></td>
+                  <th scope="row"><span class="who"><span><b>{{ c.nombre }}@if (c.masRelacion) { <span class="tag tag--success tag--sm">Más relación</span>}</b>@if (c.cargo) {<small>{{ c.cargo }}</small>}</span></span></th>
+                  <td class="c num">{{ c.clientes }}</td><td class="c num">{{ c.aum }}</td><td class="c num">{{ c.productosPorCliente }}</td>
+                  <td><ul class="prod-mix">@for (p of c.productos; track p[0]) {<li>{{ p[0] }} <b class="num">{{ p[1] }}</b></li>}</ul></td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        <div class="sk-alert sk-alert--info sk-alert--in-card" role="note"><span class="sk-alert__icon" aria-hidden="true"><nc-rx-icono-sp nombre="info" /></span><div class="sk-alert__content"><p class="sk-alert__desc">El asesor que elijas recibe la asignación a su correo y como notificación en Contigo. Actualizaremos la radiografía con esta nueva asignación.</p></div></div>
+        <div class="modal-actions modal-actions--end">
+          <button type="button" class="btn-outline" (click)="store.cerrarAsignarFp()">Cancelar</button>
+          <button type="button" class="btn-primary" [disabled]="!elegido()" (click)="confirmar()">Asignar como FP</button>
+        </div>
+      </div>
+    } @else {
+      <div #listo class="sent" tabindex="-1">
+        <span class="sent-icon" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>
+        <h2 class="sent-title">FP asignado a la empresa</h2>
+        <p class="sent-desc"><b>{{ asignado() }}</b> es ahora el FP Asignado de Empresa XYZ S.A.S. Su misión es abrir el plan a través de Recursos Humanos de la empresa. Lo recibió a su correo y como notificación en Contigo.</p>
+        <button type="button" class="btn-primary" (click)="store.cerrarAsignarFp()">Entendido</button>
+      </div>
+    }
+  </div>
+</div>

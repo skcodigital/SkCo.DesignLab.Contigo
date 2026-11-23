@@ -1,0 +1,23 @@
+<div class="jw-rx" [class.jw-rx--pide]="pide()" role="group" aria-label="¿Se usaron como renta exenta?">
+  <span class="jw-rx-t">¿Se usaron como renta exenta?</span>
+  <button type="button" class="jw-i jw-ro-ok" aria-label="Qué aportes toca el retiro" [attr.aria-expanded]="st().rxInfo" (click)="alternarInfo()">
+    <svg ncIcono="info"></svg>
+  </button>
+  <span class="jw-chips jw-chips--xs">
+    @for (o of opciones; track o[0]) {
+      <button type="button" [attr.aria-pressed]="st().rx === o[0]" [disabled]="ro()" (click)="responder(o[0])">{{ o[1] }}</button>
+    }
+  </span>
+  @if (st().rxInfo) {
+    <p class="jw-pop" role="note">{{ anios() }}</p>
+  }
+</div>
+<p class="jw-adv" [class.abierta]="st().lm">
+  <svg ncIcono="balanza"></svg>
+  @if (st().lm) {
+    <span>{{ advAntes }}<span class="jw-glosa" [title]="glosa">renta exenta</span>{{ advDespues }}{{ advResto }}</span>
+  } @else {
+    <span>{{ advCorta }}</span>
+    <button type="button" class="jw-link jw-ro-ok" (click)="leerMas()">Leer más</button>
+  }
+</p>

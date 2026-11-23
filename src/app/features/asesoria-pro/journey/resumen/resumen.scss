@@ -1,0 +1,43 @@
+// El host no genera caja: el <aside> es el ítem de la cuadrícula del lienzo (necesario para que sea sticky).
+$v: ':host-context(#jm-velo)';
+
+:host{display:contents}
+.jw-res{position:sticky;top:0;max-height:calc(100vh - 290px);overflow-y:auto;scrollbar-width:thin;display:flex;flex-direction:column;padding:16px;border:1px solid var(--sk-color-border-2);border-radius:16px;background:#fff}
+.jw-res-t{margin:0 0 6px;font-family:var(--sk-font-heading);font-size:15px;font-weight:700;color:var(--sk-color-text)}
+.jw-res-sec{display:flex;flex-direction:column;gap:6px;padding:10px 0;border-top:1px solid var(--sk-color-surface-5)}
+.jw-res-sec:first-of-type{border-top:0}
+.jw-res-h{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--sk-color-text)}
+.jw-res-n{flex:none;width:20px;height:20px;border-radius:50%;border:1.5px solid #cfcfcf;display:grid;place-items:center;font-size:11px;color:var(--sk-color-text-3);background:#fff}
+.jw-res-sec.ok .jw-res-n{border-color:var(--sk-color-primary);background:var(--sk-color-brand-light);color:var(--sk-color-primary-strong-2)}
+.jw-res-sec.on .jw-res-n{border-color:var(--sk-color-primary);background:var(--sk-color-primary);color:#fff}
+.jw-res-sec.pend .jw-res-h{color:var(--sk-color-placeholder)}
+.jw-res-ed{display:grid;place-items:center;width:26px;height:26px;margin:-4px 0;padding:0;border:0;border-radius:6px;background:none;color:var(--sk-color-primary-strong-2);cursor:pointer}
+.jw-res-ed:hover{background:var(--sk-color-brand-light)}
+.jw-res-ed:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:1px}
+@media (hover:none){.jw-res-ed:hover{background:none}}
+.jw-res dl{margin:0;display:flex;flex-direction:column;gap:4px;padding-left:28px}
+.jw-res dl div{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.jw-res dt{font-size:12px;line-height:16px;color:var(--sk-color-text-3)}
+.jw-res dd{margin:0;font-size:13px;line-height:20px;font-weight:600;color:var(--sk-color-text);text-align:right}
+.jw-res dd.verde{font-family:var(--sk-font-heading);font-size:14px;font-weight:700;color:var(--sk-color-primary-dark)}
+.jw-res dd.vacio{font-weight:400;color:var(--sk-color-placeholder)}
+#{$v} .jw-res{top:16px;max-height:calc(100vh - var(--jw-top,80px) - 32px)}
+@media (max-width:900px){.jw-res{display:none}}
+
+// Oscuro suave
+#{$v} .jw-res{background:var(--sf);border-color:var(--bd);box-shadow:0 1px 2px rgba(0,0,0,.25)}
+#{$v} .jw-res-t,#{$v} .jw-res-h{color:var(--tx)}
+#{$v} .jw-res dd{color:var(--sk-color-line)}
+#{$v} .jw-res dt,#{$v} .jw-res dd.vacio,#{$v} .jw-res-sec.pend .jw-res-h{color:var(--tx3)}
+#{$v} .jw-res dd.verde{color:var(--vd)}
+#{$v} .jw-res-ed{color:var(--lk)}
+#{$v} .jw-res-ed:hover{background:rgba(255,255,255,.08)}
+#{$v} .jw-res-sec{border-color:var(--bd)}
+#{$v} .jw-res-n{background:transparent;border-color:#5a5a5a;color:var(--tx3)}
+#{$v} .jw-res-sec.ok .jw-res-n{background:var(--sel);border-color:var(--lk);color:var(--vd)}
+#{$v} .jw-res-sec.on .jw-res-n{background:var(--lk);border-color:var(--lk);color:#1b1b1b}
+#{$v} .jw-res{scrollbar-color:#5a5a5a transparent}
+#{$v} .jw-res-nom{padding:0;border:0;background:none;font:inherit;color:inherit;cursor:pointer;text-align:left}
+#{$v} .jw-res-nom:disabled{cursor:default}
+#{$v} .jw-res-nom:not(:disabled):hover{text-decoration:underline}
+#{$v} .jw-res-h .jw-res-ed{margin-left:auto}

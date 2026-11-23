@@ -1,0 +1,249 @@
+@use '../../../styles/comunes' as *;
+
+:host {
+  display: block;
+}
+
+@include prod-tag;
+
+.pf-cards {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+}
+.pf-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 0 4px 0 rgba(61, 75, 92, 0.15);
+  padding: 24px 24px 20px;
+  font-family: var(--sk-font-body);
+  color: var(--sk-color-text);
+  display: flex;
+  flex-direction: column;
+}
+.pf-principal {
+  position: relative;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(135deg, #00c73d, #8fe000) border-box;
+}
+.pf-tit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.pf-tit h2,
+.pf-h {
+  font-family: var(--sk-font-heading);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--sk-color-text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+.pf-saldo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 20px;
+}
+.pf-saldo-izq {
+  border-left: 2px solid var(--sk-color-primary);
+  padding-left: 12px;
+}
+.pf-big {
+  font-family: var(--sk-font-heading);
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--sk-color-text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+}
+.pf-retiro {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--sk-color-info);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: underline;
+}
+.pf-meta {
+  margin: 8px 0 0;
+  font-size: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  white-space: nowrap;
+}
+.pf-meta i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--sk-color-border);
+}
+@include pf-pipeline;
+.pf-admin {
+  margin: auto 0 0;
+  padding-top: 20px;
+  text-align: center;
+  font-size: 14px;
+}
+.pf-ayuda {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--sk-color-primary);
+  color: #fff;
+  font-family: var(--sk-font-body);
+  font-size: 12px;
+  font-weight: 700;
+  align-items: center;
+  justify-content: center;
+}
+.pf-evo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+}
+.pf-dato {
+  border-left: 2px solid var(--sk-charts-c02);
+  padding-left: 16px;
+}
+.pf-dato-a {
+  border-left-color: var(--sk-charts-c01);
+  margin-bottom: 24px;
+}
+.pf-dato span,
+.pf-lbl {
+  font-size: 14px;
+}
+.pf-dato .pf-big {
+  margin-top: 6px;
+}
+.pf-num {
+  font-family: var(--sk-font-heading);
+  font-size: 18px;
+  font-weight: 700;
+  margin: 6px 0 0;
+}
+.pf-donut {
+  border-radius: 50%;
+  flex: none;
+}
+.pf-donut-evo {
+  width: 130px;
+  height: 130px;
+  background: conic-gradient(var(--sk-charts-c01) 0 10%, var(--sk-charts-c02) 10% 100%);
+  -webkit-mask: radial-gradient(circle, transparent 42px, #000 43px);
+  mask: radial-gradient(circle, transparent 42px, #000 43px);
+}
+.pf-lbl {
+  margin: 20px 0 8px;
+}
+@include pf-dos;
+@include trend;
+.pf-big .trend {
+  background: var(--sk-color-primary-soft);
+}
+
+@media (max-width: 1100px) {
+  .pf-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+  .pf-principal {
+    grid-column: 1/-1;
+  }
+}
+@media (max-width: 600px) {
+  .pf-cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .pf-card {
+    padding: 20px 16px;
+  }
+  .pf-saldo {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .pf-pipeline {
+    align-self: stretch;
+  }
+  .pf-big {
+    font-size: 24px;
+  }
+  .pf-donut-evo {
+    width: 96px;
+    height: 96px;
+    -webkit-mask: radial-gradient(circle, transparent 30px, #000 31px);
+    mask: radial-gradient(circle, transparent 30px, #000 31px);
+  }
+}
+
+// Móvil: tarjetas del producto en carrusel
+.pf-dots {
+  display: none;
+}
+@media (max-width: 600px) {
+  .pf-cards {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    margin: 0 -16px;
+    padding: 4px 16px 8px;
+  }
+  .pf-cards::-webkit-scrollbar {
+    display: none;
+  }
+  .pf-cards > .pf-card {
+    flex: 0 0 calc(100% - 20px);
+    scroll-snap-align: center;
+  }
+  .pf-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .pf-dots i {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--sk-color-border);
+    transition: background-color 0.2s;
+  }
+  .pf-dots i.on {
+    background: var(--sk-color-primary);
+  }
+  :host-context(.m-pf-sec) .pf-cards,
+  :host-context(.m-pf-sec) .pf-dots {
+    display: none !important;
+  }
+  .pf-principal .pf-pipeline {
+    width: 100%;
+    align-self: stretch;
+    font-size: 14px;
+    padding: 8px 18px;
+  }
+  // Contrato homologado con Portal Clientes: en móvil las tarjetas se reemplazan por el contrato
+  :host-context(.vista-producto) .pf-cards,
+  :host-context(.vista-producto) .pf-dots {
+    display: none !important;
+  }
+}
+
+@include pf-pipeline-tactil;
+@include tip-box-angosto;

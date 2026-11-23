@@ -1,0 +1,25 @@
+<div class="ds-com-h">
+  <div>
+    <h3>Tus comisiones</h3>
+    <b class="ds-money">{{ totalTexto() }}</b>
+  </div>
+  <a href="#" class="ds-link" (click)="$event.preventDefault()">Ir a comisiones</a>
+</div>
+<div class="ds-graf">
+  <svg class="ds-linea" viewBox="0 0 400 120" preserveAspectRatio="none" role="img" aria-label="Comisiones de enero a diciembre: la más baja en octubre y la más alta en diciembre">
+    <polyline [attr.points]="linea()" fill="none" stroke="#A1DD70" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round" />
+  </svg>
+  <div class="ds-pts">
+    @for (p of puntos(); track p.mes; let primero = $first, ultimo = $last) {
+      <button type="button" class="ds-pt" [class.izq]="primero" [class.der]="ultimo" [style.left.%]="p.left" [style.top.%]="p.top" [attr.aria-label]="p.aria">
+        <span class="ds-pt-tt" aria-hidden="true"><b>{{ p.mes }}</b><span class="ds-money">{{ p.valorTexto }}</span></span>
+      </button>
+    }
+  </div>
+</div>
+<div class="ds-meses">
+  @for (p of puntos(); track p.mes) {
+    <span>{{ p.corto }}</span>
+  }
+</div>
+<div class="ds-escala"><span>K: Miles</span><span>M: Millones</span></div>

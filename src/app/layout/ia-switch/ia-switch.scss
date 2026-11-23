@@ -1,0 +1,132 @@
+// El host no crea caja: el .ia-sw participa directo del flex del header / side-top.
+:host {
+  display: contents;
+}
+
+.ia-sw {
+  display: flex;
+  flex: none;
+  height: 44px;
+  border: 1px solid var(--sk-color-border-2);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--sk-color-surface);
+
+  button {
+    width: 58px;
+    height: 100%;
+    border: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.18s;
+
+    &:focus-visible {
+      outline: 2px solid var(--sk-color-primary);
+      outline-offset: -3px;
+    }
+  }
+}
+
+.ia-sami {
+  background: var(--sk-color-surface);
+  overflow: visible;
+
+  &:hover {
+    background: var(--sk-color-primary-tint);
+  }
+}
+
+.ia-gpt {
+  background: var(--sk-color-primary);
+
+  &:hover {
+    background: var(--sk-color-primary-hover);
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.ia-sami-img {
+  width: 38px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.18));
+  animation: samiCabeza 4s ease-in-out infinite;
+  transform-origin: 50% 80%;
+}
+
+.ia-sami:hover .ia-sami-img {
+  animation: samiHola 0.9s ease-in-out;
+}
+
+// Flota suave y cada ciclo inclina la cabeza como saludando
+@keyframes samiCabeza {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+  20% {
+    transform: translateY(-2px) rotate(0);
+  }
+  40% {
+    transform: translateY(0) rotate(0);
+  }
+  48% {
+    transform: translateY(-1px) rotate(-7deg);
+  }
+  56% {
+    transform: translateY(-1px) rotate(5deg);
+  }
+  64% {
+    transform: translateY(0) rotate(0);
+  }
+}
+
+@keyframes samiHola {
+  0%,
+  100% {
+    transform: rotate(0) scale(1);
+  }
+  25% {
+    transform: rotate(-10deg) scale(1.08);
+  }
+  50% {
+    transform: rotate(8deg) scale(1.08);
+  }
+  75% {
+    transform: rotate(-4deg) scale(1.04);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ia-sami-img {
+    animation: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .ia-sw {
+    height: 40px;
+
+    button {
+      width: 48px;
+    }
+  }
+  .ia-sami-img {
+    width: 32px;
+  }
+  .ia-gpt svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+:host-context(.modo-mision) .ia-sw {
+  border-color: rgba(255, 255, 255, 0.18);
+}

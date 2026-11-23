@@ -1,0 +1,61 @@
+<nc-rx-migas [empresa]="empresa()" (volver)="volverMovil()" (inicio)="irInicio()" />
+
+<nc-rx-encabezado [empresa]="empresa()" [vista]="store.vista()" (info)="store.abrirInfo()" (pdf)="descargarPdf()" />
+
+<nc-rx-identidad [vista]="store.vista()" [plan]="store.plan()" [fpAsignado]="store.fpAsignado()" />
+
+@if (tarjetasPosicion) {
+  <nc-rx-tarjetas-posicion />
+}
+
+@if (store.sinPac()) {
+  <!-- Aviso general de la empresa, antes de las pestañas -->
+  <div class="sk-alert sk-alert--info sk-alert--antes-tabs" role="note"><span class="sk-alert__icon" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 4C22.6094 4 28 9.39062 28 16C28 22.6562 22.6094 28 16 28C9.34375 28 4 22.6562 4 16C4 9.39062 9.34375 4 16 4ZM16 25.75C21.3438 25.75 25.75 21.3906 25.75 16C25.75 10.6562 21.3438 6.25 16 6.25C10.6094 6.25 6.25 10.6562 6.25 16C6.25 21.3906 10.6094 25.75 16 25.75ZM16 18.25C15.3438 18.25 14.875 17.7812 14.875 17.125V11.125C14.875 10.5156 15.3438 10 16 10C16.6094 10 17.125 10.5156 17.125 11.125V17.125C17.125 17.7812 16.6094 18.25 16 18.25ZM16 19.8438C16.7969 19.8438 17.4531 20.5 17.4531 21.2969C17.4531 22.0938 16.7969 22.75 16 22.75C15.1562 22.75 14.5 22.0938 14.5 21.2969C14.5 20.5 15.1562 19.8438 16 19.8438Z" fill="currentColor"/></svg></span><div class="sk-alert__content"><p class="sk-alert__desc">Hemos identificado a estos clientes como parte de la empresa a través de sus productos de <b>pensión obligatoria o cesantías</b>. Es posible que existan más clientes en otros productos de ahorro, inversión y seguros. Estos clientes no hacen parte de un Plan Corporativo.</p></div></div>
+}
+
+<nc-rx-pestanas
+  [tabs]="store.tabsVisibles()"
+  [activa]="store.tab()"
+  [vista]="store.vista()"
+  [plan]="store.plan()"
+  (seleccionar)="seleccionarTab($event)"
+/>
+
+@for (p of paneles(); track p.id) {
+  <section class="panel" role="tabpanel" [id]="'panel-' + p.id" [attr.aria-labelledby]="'tab-' + p.id" [attr.data-titulo]="p.titulo">
+    <nc-rx-panel-radiografia [plan]="store.plan()" [vista]="store.vista()" [tab]="p.id" />
+  </section>
+}
+
+
+<footer class="footer">
+  <div class="footer-links">
+    <a class="footer-link" href="#" (click)="$event.preventDefault()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.5L3 21l2-5.3A8.5 8.5 0 1 1 21 11.5z"/></svg>Centro de ayuda</a>
+    <a class="footer-link" href="#" (click)="$event.preventDefault()">Términos y condiciones</a>
+    <a class="footer-link" href="#" (click)="$event.preventDefault()">Accesibilidad</a>
+    <a class="footer-link" href="#" (click)="$event.preventDefault()">Mapa del sitio</a>
+    <a class="footer-link" href="#" (click)="$event.preventDefault()">Onboarding</a>
+  </div>
+  <span class="footer-copy">2026 © Skandia</span>
+</footer>
+
+@if (store.infoAbierta()) {
+  <nc-rx-info-vista [vista]="store.vista()" [plan]="store.plan()" (cerrar)="store.cerrarInfo()" />
+}
+@if (store.lista()) {
+  <nc-rx-lista-clientes />
+}
+@if (store.planModalAbierta()) {
+  <nc-rx-crear-ruta-modal />
+}
+@if (store.metaEditando()) {
+  <nc-rx-editar-meta-modal />
+}
+@if (store.metaDescartando()) {
+  <nc-rx-descartar-meta-modal />
+}
+@if (store.asignarFpAbierta()) {
+  <nc-rx-asignar-fp-modal />
+}
+
+<nc-rx-chart-tip />

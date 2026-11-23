@@ -1,0 +1,69 @@
+<div #velo class="jm-velo" id="jm-velo" [class.jw-solo]="ro()" [style.--jw-top]="top()" (click)="clicVelo($event)">
+  <div #modal class="jy-modal" role="dialog" aria-modal="true" aria-labelledby="jm-tit">
+    <header class="jm-top">
+      <button #salir type="button" class="jm-salir" (click)="cerrarJourney()"><svg ncIcono="regresar"></svg>Regresar</button>
+      <h2 id="jm-tit" class="jm-tit">{{ titulo }}</h2>
+    </header>
+    <div class="jw-cab">
+      <ol class="jw-pasos" aria-label="Progreso de la conversación">
+        @for (p of pasos(); track p.n) {
+          <li [class.hecho]="p.ok">
+            <button type="button" class="jw-p" [class.on]="p.on" [class.ok]="p.ok && !p.on" [disabled]="p.deshabilitado" [attr.aria-current]="p.on ? 'step' : null" (click)="irEtapa(p.n)">
+              <span class="jw-n">{{ p.n }}</span><span class="jw-pt">{{ p.nombre }}</span><span class="jw-sr">{{ p.sr }}</span>
+            </button>
+          </li>
+        }
+      </ol>
+      <p class="jw-cont" aria-hidden="true">{{ parteActual() }}</p>
+      @if (st().cerrado) {
+        <p class="jw-estado-conv"><svg ncIcono="candado"></svg><span>{{ estadoConv() }}</span></p>
+      }
+      @if (ctxMonto() || st().ctConf) {
+        <div class="jw-ctx">
+          @if (ctxMonto()) {
+            <button type="button" class="jw-chip" (click)="editarMonto()">Desea retirar <b>{{ montoTxt() }}</b><svg ncIcono="lapiz"></svg></button>
+          }
+          @if (st().ctConf) {
+            <button type="button" class="jw-chip" (click)="irEtapa(2)">Contrato: <b>{{ contratoTxt() }}</b><svg ncIcono="lapiz"></svg></button>
+          }
+        </div>
+      }
+    </div>
+    <div class="jw-cuerpo">
+      <div #scroll class="jw-scroll">
+        <div class="jw-lienzo">
+          <nc-jw-resumen />
+          <div class="jw-etapas">
+            @if (cierreAviso(); as a) {
+              <p class="jw-cierre-aviso" role="status">
+                @if (a.resultado !== null) {
+                  {{ textos.cierreFinalizado }}<b>{{ a.resultado }}</b>{{ textos.cierreCoincide }}
+                } @else {
+                  {{ a.texto }}
+                }
+              </p>
+            }
+            @switch (st().etapa) {
+              @case (1) { <nc-etapa-entender /> }
+              @case (2) { <nc-etapa-situacion /> }
+              @case (3) { <nc-etapa-opciones /> }
+              @case (4) { <nc-etapa-acuerdo /> }
+            }
+          </div>
+        </div>
+      </div>
+      @if (ui.detalle()) {
+        <nc-detalle-panel />
+      }
+      <div class="jw-toasts" aria-live="polite">
+        @for (t of ui.toasts(); track t.id) {
+          <div class="jw-toast" [class]="'jw-toast jw-toast--' + t.tipo" [attr.role]="t.tipo === 'error' ? 'alert' : 'status'">
+            <svg [ncIcono]="t.tipo === 'exito' ? 'ok' : t.tipo === 'error' ? 'alerta' : 'info'"></svg>
+            <div><b>{{ t.titulo }}</b><p>{{ t.desc }}</p></div>
+            <button type="button" class="jw-toast-x" aria-label="Cerrar el aviso" (click)="ui.quitarToast(t.id)">×</button>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

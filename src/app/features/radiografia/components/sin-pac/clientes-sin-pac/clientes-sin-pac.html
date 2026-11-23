@@ -1,0 +1,136 @@
+<section class="card block" aria-labelledby="oport-title-sp">
+  <h2 class="block-title block-title--space" id="oport-title-sp">La oportunidad</h2>
+  <div class="oport">
+    <div class="oport-stats">
+      <div class="stat">
+        <span class="kpi-label">Empleados <span class="tip-wrap"><button class="tip tip--warning" aria-label="Atención: el dato de empleados está desactualizado" aria-describedby="tip-emp-sp"><nc-rx-icono-sp nombre="aviso" /></button><span class="tooltip" role="tooltip" id="tip-emp-sp">Número de empleados de la empresa. El dato está actualizado <b>solo hasta octubre de 2025</b>.</span></span></span>
+        <span class="kpi-value--big num">120</span>
+      </div>
+      <div class="stat">
+        <span class="kpi-label">Clientes Skandia</span>
+        <span class="kpi-value--big num stat-brand"><button type="button" class="link-btn link-btn--kpi" aria-label="Ver los 11 clientes de Skandia en la empresa" (click)="store.abrirLista('clientes')">11</button></span>
+      </div>
+      <div class="stat">
+        <span class="kpi-label">Sin relación</span>
+        <span class="kpi-value--big num stat-muted">109</span>
+      </div>
+    </div>
+
+    <div class="oport-bar">
+      <div class="oport-bar-head">
+        <span class="kpi-label">Clientes activos</span>
+        <span class="kpi-value--big num stat-brand">9,2%</span>
+      </div>
+      <div class="stack" role="img" aria-label="De 120 empleados: 7 clientes de tu agencia, 4 de otras agencias y 109 sin relación con Skandia.">
+        @for (t of oportunidad; track t.clase) {
+          <span [class]="'stack-seg ' + t.clase" [style.width.%]="t.ancho" [ncRxChartTip]="t.tip">@if (t.texto) {<span class="stack-val stack-val--muted">{{ t.texto }}</span>}</span>
+        }
+      </div>
+      <div class="legend-inline">
+        <span><i class="sw sw--agencia"></i>Tu agencia · 7</span>
+        <span><i class="sw sw--otras"></i>Otras agencias · 4</span>
+        <span><i class="sw sw--vacio"></i>Sin relación · 109</span>
+      </div>
+      <div class="history num">
+        <span>Clientes activos 2024: <b>7,5%</b></span>
+        <span>2025: <b>8,3%</b></span>
+        <span>2026: <b>9,2%</b></span>
+        <nc-rx-variacion direccion="up" texto="+0,9 pts" titulo="Puntos porcentuales con respecto a octubre de 2025" etiqueta="Subió 0,9 puntos frente a octubre de 2025. Semáforo verde. Hoy 9,2%; en octubre de 2025, 8,3%." detalle="Hoy 9,2% · oct 2025: 8,3%" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="clients-grid">
+  <section class="card block" aria-labelledby="evol-title-sp">
+    <div class="block-head block-head--space">
+      <h2 class="block-title" id="evol-title-sp">Evolución de clientes</h2>
+      <span class="tag tag--warning"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>El neto se desacelera</span>
+    </div>
+    <div class="card-body">
+      <div class="card-head">
+        <p class="card-sub">Clientes nuevos y perdidos por año, Agencia Norte</p>
+        <div class="legend-inline">
+          <span><i class="sw sw--nuevos"></i>Nuevos</span>
+          <span><i class="sw sw--perdidos"></i>Perdidos</span>
+        </div>
+      </div>
+      <div class="pairs">
+        @for (p of evolucion; track p.anio) {
+          <div class="pair" role="img" [attr.aria-label]="p.aria">
+            <div class="pair-bars"><span class="pair-bar pair-bar--nuevos" [style.height.px]="p.altoNuevos" [ncRxChartTip]="p.tipNuevos"><span>{{ p.nuevos }}</span></span><span class="pair-bar pair-bar--perdidos" [style.height.px]="p.altoPerdidos" [ncRxChartTip]="p.tipPerdidos"><span>{{ p.perdidos }}</span></span></div>
+            <span class="pair-year">{{ p.anio }}<small [class]="p.neto.clase">{{ p.neto.texto }}</small></span>
+          </div>
+        }
+      </div>
+      <div class="sk-alert sk-alert--info sk-alert--in-card" role="note"><span class="sk-alert__icon" aria-hidden="true"><nc-rx-icono-sp nombre="info" /></span><div class="sk-alert__content"><p class="sk-alert__desc">En 2026, <b>tu agencia ganó 1 cliente y perdió 1.</b> La empresa va en 0 a octubre de 2026.</p><button class="link-btn" (click)="store.abrirLista('perdidos')">Ver los clientes perdidos <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button></div></div>
+    </div>
+  </section>
+
+  <section class="card block" aria-labelledby="prod-title-sp">
+    <div class="block-head block-head--space">
+      <h2 class="block-title" id="prod-title-sp">Productos por cliente</h2>
+      <span class="block-meta"><b class="num">36,4%</b> con 2 o más</span>
+    </div>
+    <div class="card-body">
+      <div class="card-head">
+        <p class="card-sub">Base: 11 clientes de la empresa</p>
+      </div>
+      <div class="stack stack--prod" role="img" aria-label="1 producto 64%, 2 productos 27%, 3 productos 9%.">
+        @for (g of productos; track g.color) {
+          <span [class]="'stack-seg ' + g.color" [style.width.%]="g.pct" [ncRxChartTip]="g.tip">@if (g.pct >= 10) {<span class="stack-val">{{ g.pct }}%</span>}</span>
+        }
+      </div>
+      <ul class="prod-list">
+        @for (g of productos; track g.color; let i = $index) {
+          <li>
+            <i [class]="'sw ' + g.color"></i>
+            @if (i === 0) {
+              <button class="link-btn link-btn--row" aria-label="1 producto (1P): ver los clientes monoproducto de tu agencia" (click)="store.abrirLista('monoproducto')">{{ g.nombre }}</button>
+            } @else {
+              <span>{{ g.nombre }}</span>
+            }
+            <b class="num">{{ g.n }}</b><span class="num pct">{{ g.pct }}%</span>
+          </li>
+        }
+      </ul>
+      <div class="sk-alert sk-alert--info sk-alert--in-card" role="note"><span class="sk-alert__icon" aria-hidden="true"><nc-rx-icono-sp nombre="info" /></span><div class="sk-alert__content"><p class="sk-alert__desc"><b>7 clientes monoproducto</b> son la vía rápida: ya confían en Skandia, les falta el segundo producto. 4 son de tu agencia; los otros 3 los atienden otras agencias.</p><button class="link-btn" (click)="store.abrirLista('monoproducto')">Ver los clientes monoproducto <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button></div></div>
+    </div>
+  </section>
+</div>
+
+<div class="clients-grid segmentos">
+  <section class="card block" aria-labelledby="seg-title-sp">
+    <h2 class="block-title block-title--space" id="seg-title-sp">Clientes por segmento</h2>
+    <p class="card-sub">Los 11 clientes de Skandia en la empresa, según su segmento</p>
+    <div class="segmentos-body">
+      <svg class="donut" viewBox="0 0 180 180" role="img" [attr.aria-label]="ariaDona">
+        <g transform="rotate(-90 90 90)">
+          @for (s of segmentos; track s.nombre) {
+            <circle class="donut-seg" cx="90" cy="90" r="70" [attr.stroke]="s.color" [attr.stroke-dasharray]="s.arco.dasharray" [attr.stroke-dashoffset]="s.arco.offset" [ncRxChartTip]="s.tip"/>
+          }
+        </g>
+        <text x="90" y="86" text-anchor="middle" class="donut-total">{{ total }}</text>
+        <text x="90" y="106" text-anchor="middle" class="donut-label">clientes</text>
+      </svg>
+      <ul class="prod-list segmentos-list">
+        @for (s of segmentos; track s.nombre) {
+          <li><i class="sw" [style.background]="s.color"></i><span>{{ s.nombre }}</span><b class="num">{{ s.n }}</b><span class="num pct">{{ s.pct }}%</span></li>
+        }
+      </ul>
+    </div>
+  </section>
+  <section class="card block" aria-labelledby="edad-title-sp">
+    <h2 class="block-title block-title--space" id="edad-title-sp">Clientes por rango de edad</h2>
+    <p class="card-sub">Los 11 clientes de Skandia en la empresa, por edad</p>
+    <div class="bars bars--edad">
+      @for (e of edades; track e.rango) {
+        <div class="bar-col">
+          <span class="bar-total num">{{ e.n }}</span>
+          <div class="bar" role="img" [attr.aria-label]="e.aria"><span class="seg seg--edad" [style.height.px]="e.alto" [ncRxChartTip]="e.tip"></span></div>
+          <span class="bar-year">{{ e.rango }}</span>
+        </div>
+      }
+    </div>
+  </section>
+</div>

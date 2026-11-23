@@ -1,0 +1,26 @@
+<h3>Distribución de tus clientes totales</h3>
+<div class="ds-dist-b">
+  <div class="ds-dona-w">
+    <div
+      class="ds-dona"
+      role="img"
+      tabindex="0"
+      [attr.aria-label]="aria()"
+      [style.background]="fondo()"
+      (mousemove)="moverPuntero($event)"
+      (mouseleave)="ocultar()"
+      (click)="clic($event)"
+      (focus)="porTeclado(0)"
+      (blur)="ocultar()"
+      (keydown)="tecla($event)"
+    ></div>
+    <span class="ds-dona-tt" aria-hidden="true" [hidden]="!tooltip()" [style.left.px]="tooltip()?.x" [style.top.px]="tooltip()?.y">
+      <b>{{ activo()?.nombre }}</b><span>{{ textoTooltip() }}</span>
+    </span>
+  </div>
+  <ul class="ds-ley">
+    @for (s of segmentos(); track s.nombre; let i = $index) {
+      <li [class.on]="tooltip()?.indice === i"><i [style.background]="s.color"></i><b>{{ s.porcentaje }}%</b> {{ s.nombre }}</li>
+    }
+  </ul>
+</div>

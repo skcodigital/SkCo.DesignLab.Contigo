@@ -1,0 +1,57 @@
+@let r = relacion();
+<section class="block" [attr.aria-labelledby]="'lineas-title' + sufijo()">
+  <div class="block-head" [class.block-head--space]="r.leyenda.length > 0">
+    <div>
+      <h2 class="block-title" [id]="'lineas-title' + sufijo()">{{ r.titulo }}</h2>
+      <p class="card-sub">{{ r.sub }}</p>
+    </div>
+    @if (r.leyenda.length) {
+      <div class="legend-inline">
+        @for (l of r.leyenda; track l.texto) {
+          <span><i [class]="'sw sw--' + l.gestion"></i>{{ l.texto }}</span>
+        }
+      </div>
+    }
+  </div>
+  <div class="lines">
+    @for (l of lineas(); track l.nombre) {
+      <div class="line" [class.line--total]="l.total">
+        <div class="line-name"><b>{{ l.nombre }}</b>@for (s of l.subtitulos; track s) {<small>{{ s }}</small>}@if (l.clientes) {<small class="line-clientes">{{ l.clientes }}</small>}</div>
+        <div class="line-bar" role="img" [attr.aria-label]="l.aria">
+          @for (t of l.tramos; track t.gestion) {
+            <span [class]="'line-seg seg--' + t.gestion" [style.width.%]="t.ancho" [ncRxChartTip]="t.tip">
+              @if (t.valor) {
+                <span class="line-val">
+                  @switch (t.candado) {
+                    @case ('decorativo') {
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+                    }
+                    @case ('agregado') {
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-label="Agregado, sin detalle"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+                    }
+                  }
+                  {{ t.valor }}
+                </span>
+              }
+            </span>
+          }
+        </div>
+        <div class="line-detail">
+          @for (d of l.detalle; track d.gestion) {
+            <span><i [class]="'sw sw--' + d.gestion"></i>{{ d.etiqueta }}<b>{{ d.valor }}</b>{{ d.resto }}</span>
+          }
+          @if (l.nota) {
+            <span class="line-note">{{ l.nota }}</span>
+          }
+        </div>
+      </div>
+    }
+  </div>
+  <div class="sk-alert sk-alert--info" role="note">
+    <span class="sk-alert__icon" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 4C22.6094 4 28 9.39062 28 16C28 22.6562 22.6094 28 16 28C9.34375 28 4 22.6562 4 16C4 9.39062 9.34375 4 16 4ZM16 25.75C21.3438 25.75 25.75 21.3906 25.75 16C25.75 10.6562 21.3438 6.25 16 6.25C10.6094 6.25 6.25 10.6562 6.25 16C6.25 21.3906 10.6094 25.75 16 25.75ZM16 18.25C15.3438 18.25 14.875 17.7812 14.875 17.125V11.125C14.875 10.5156 15.3438 10 16 10C16.6094 10 17.125 10.5156 17.125 11.125V17.125C17.125 17.7812 16.6094 18.25 16 18.25ZM16 19.8438C16.7969 19.8438 17.4531 20.5 17.4531 21.2969C17.4531 22.0938 16.7969 22.75 16 22.75C15.1562 22.75 14.5 22.0938 14.5 21.2969C14.5 20.5 15.1562 19.8438 16 19.8438Z" fill="currentColor"/></svg></span>
+    <div class="sk-alert__content">
+      <p class="sk-alert__title">Hallazgo</p>
+      <p class="sk-alert__desc">@for (t of r.hallazgo; track $index) {@if (t.b) {<b>{{ t.t }}</b>} @else {{{ t.t }}}}</p>
+    </div>
+  </div>
+</section>

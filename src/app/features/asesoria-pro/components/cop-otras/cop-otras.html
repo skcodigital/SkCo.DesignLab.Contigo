@@ -1,0 +1,15 @@
+<div class="cop-otras-h"><h3 class="cop-otras-tit">Otras conversaciones disponibles</h3></div>
+<div class="cop-filtros" role="group" aria-label="Filtrar conversaciones">
+  @for (f of filtros; track f[0]) {
+    <button type="button" [attr.aria-pressed]="filtro() === f[0]" (click)="filtro.set(f[0])">{{ f[1] }}</button>
+  }
+</div>
+<div class="cop-otras">
+  @for (j of lista(); track j.nombre) {
+    @if (j.retiro) {
+      <button class="jy" type="button" (click)="abrirRetiro.emit()"><span class="jy-t">{{ j.nombre }}</span><svg ncIcono="chev" class="jy-chev"></svg></button>
+    } @else {
+      <button class="jy jy-prox" type="button" disabled aria-disabled="true"><span class="jy-t">{{ j.nombre }} <span class="jy-badge">Próximamente</span></span></button>
+    }
+  }
+</div>

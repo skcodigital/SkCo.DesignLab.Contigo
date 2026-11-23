@@ -1,0 +1,158 @@
+// Gráficas del prototipo (barras, pares, apiladas, dona, líneas de negocio, AUM, ruta de penetración).
+.route { position: relative; padding-top: 26px; }
+.route-bar { display: flex; height: 16px; border-radius: var(--radius-pill); overflow: hidden; background: var(--sk-color-surface-3); box-shadow: inset 0 0 0 1px var(--sk-color-border-3); }
+.route-seg { height: 100%; }
+.route-mark { position: absolute; top: 0; bottom: -6px; display: flex; flex-direction: column; align-items: center; transform: translateX(-50%); }
+.route-mark-label { font: 700 12px/1 var(--sk-font-body); white-space: nowrap; margin-bottom: 6px; }
+.route-mark-line { flex: 1; width: 2px; border-radius: 2px; }
+/* Hoy: etiqueta a la izquierda de su línea; Meta: a la derecha. Así no se pisan. */
+.route-mark--hoy { align-items: flex-end; transform: translateX(calc(-100% + 1px)); }
+.route-mark--meta { align-items: flex-start; transform: translateX(-1px); }
+.route-mark--hoy .route-mark-label { color: var(--texts-strong); }
+.route-mark--hoy .route-mark-line { background: var(--texts-strong); }
+.route-mark--meta .route-mark-label { color: var(--sk-color-primary-strong); }
+.route-mark--meta .route-mark-line { background: var(--sk-color-primary-strong); }
+.route-scale { position: relative; height: 16px; margin-top: 8px; font-size: 12px; color: var(--sk-color-text-2); }
+.route-scale span { position: absolute; top: 0; transform: translateX(-50%); white-space: nowrap; }
+.route-scale span:first-child { transform: none; }
+.route-scale span:last-child { transform: translateX(-100%); }
+.route-foot { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); flex-wrap: wrap; margin: 18px 0 16px; padding-top: 14px; border-top: 1px solid var(--sk-color-border-3); }
+.route-goal { font-size: 13.5px; color: var(--sk-color-text); }
+.route-goal b { font-weight: 700; color: var(--texts-strong); }
+.ruta-simple { display: flex; flex-direction: column; gap: 14px; }
+.ruta-nums { display: flex; align-items: baseline; justify-content: space-between; font-size: 14px; color: var(--sk-color-text-2); }
+.ruta-big { font: 700 28px/1 var(--sk-font-heading); color: var(--sk-color-primary); margin-right: 4px; }
+.ruta-goal-num { color: var(--sk-color-text); }
+.ruta-goal-num b { font: 700 18px/1 var(--sk-font-heading); color: var(--texts-strong); }
+.ruta-track { position: relative; height: 12px; border-radius: var(--radius-pill); background: var(--sk-color-border-3); }
+.ruta-fill { position: absolute; inset: 0 auto 0 0; border-radius: var(--radius-pill); background: var(--sk-color-primary); }
+.ruta-target { position: absolute; top: -5px; bottom: -5px; width: 3px; border-radius: 2px; background: var(--texts-strong); transform: translateX(-50%); }
+.ruta-text { margin: 0; font-size: 13.5px; line-height: 1.5; color: var(--sk-color-text); }
+.ruta-text b { font-weight: 700; }
+.bars { display: flex; justify-content: space-around; align-items: flex-end; gap: var(--space-3); height: 250px; padding-top: 10px; border-bottom: 1px solid var(--sk-color-border); }
+.bars { margin-bottom: 32px; }
+.bar-col { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; width: 96px; }
+.bar { display: flex; flex-direction: column; width: 72px; border-radius: 6px 6px 0 0; overflow: hidden; }
+.seg { display: grid; place-items: center; }
+.seg--dueno { background: var(--gestion-dueno); }
+.seg--agencia { background: var(--gestion-agencia); }
+.seg--otras { background: var(--gestion-otras); }
+.seg-val { font: 700 12px/1 var(--sk-font-body); color: var(--texts-strong); }
+.bar-total { font: 700 15px/1 var(--sk-font-body); color: var(--texts-strong); }
+/* El año va debajo de la línea base, fuera del flujo, para que las barras se apoyen en la línea */
+.bar-year { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: 10px; white-space: nowrap; font: 700 14px/1 var(--sk-font-body); color: var(--sk-color-text); }
+.stack { position: relative; display: flex; height: 32px; border-radius: 8px; overflow: hidden; }
+/* Contorno por encima de los segmentos: si va en el contenedor, el tramo blanco lo tapa y la barra parece cortada */
+.stack::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px var(--sk-color-border); pointer-events: none; }
+.stack-seg { display: flex; align-items: center; min-width: 0; padding: 0 8px; }
+.stack-empty { background: var(--sk-color-surface); }
+.stack-val { font: 700 12px/1 var(--sk-font-body); color: var(--texts-strong); white-space: nowrap; }
+.stack-val--muted { font-weight: 400; color: var(--sk-color-text-2); }
+.stack-val--light { color: var(--sk-color-surface); }
+.history { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 13.5px; color: var(--sk-color-text); }
+.pairs { display: flex; justify-content: space-around; align-items: flex-end; height: 220px; padding-top: 10px; border-bottom: 1px solid var(--sk-color-border); }
+.pair { position: relative; display: flex; flex-direction: column; align-items: center; }
+.pair-bars { display: flex; align-items: flex-end; gap: 6px; height: 180px; }
+.pair-bar { width: 40px; border-radius: 6px 6px 0 0; display: flex; justify-content: center; }
+.pair-bar span { margin-top: -20px; font: 700 13px/1 var(--sk-font-body); color: var(--texts-strong); }
+.pair-bar--nuevos { background: var(--charts-c18); }
+.pair-bar--perdidos { background: var(--sk-charts-c04); }
+/* El año va debajo de la línea base, fuera del flujo, para que las barras se apoyen en la línea */
+.pair-year { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: 10px; white-space: nowrap; font: 700 14px/1 var(--sk-font-body); color: var(--sk-color-text); text-align: center; }
+.pair-year small { display: block; margin-top: 6px; font: 600 12.5px/1 var(--sk-font-body); color: var(--sk-color-primary-strong); }
+
+/* Años y neto cuelgan bajo el eje: el gráfico reserva su espacio para que nada se monte encima */
+.card .pairs { margin-bottom: 76px; }
+.stack--prod { margin-top: 4px; }
+.p1 { background: var(--sk-charts-c03); }
+.p2 { background: var(--sk-charts-c05); }
+.p3 { background: var(--charts-c08); }
+.p4 { background: var(--charts-c12); }
+.prod-list { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-direction: column; }
+.prod-list li { display: grid; grid-template-columns: 14px minmax(0, 1fr) 60px 50px; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--sk-color-border-3); font-size: 14px; color: var(--sk-color-text); }
+.prod-list li:last-child { border-bottom: 0; }
+.prod-list .sw { width: 10px; height: 10px; border-radius: 50%; }
+.prod-list b { text-align: right; font-weight: 700; color: var(--texts-strong); }
+.prod-list .pct { text-align: right; color: var(--sk-color-text-2); }
+.segmentos { margin-top: var(--space-3); }
+/* Misma altura que la dona: la zona de barras mide lo mismo (220 px) y los años van debajo */
+.bars--edad { gap: var(--space-2); margin-top: 8px; height: 220px; }
+.seg--edad { background: var(--sk-charts-c03); }
+.segmentos-body { display: flex; align-items: center; gap: var(--space-4); margin-top: 8px; }
+.donut { width: 220px; height: 220px; flex: none; }
+.donut-seg { fill: none; stroke-width: 28; }
+.donut-seg:hover { stroke-width: 32; }
+.donut-total { font: 700 26px/1 var(--sk-font-heading); fill: var(--texts-strong); }
+.donut-label { font: 400 13px/1 var(--sk-font-body); fill: var(--sk-color-text-2); }
+.segmentos-list { flex: 1; min-width: 0; max-width: 520px; margin: 0; }
+@media (max-width: 768px) { .segmentos-body { flex-direction: column; align-items: stretch; } .donut { align-self: center; } }
+.lines { display: flex; flex-direction: column; margin-top: 8px; }
+.line { display: grid; grid-template-columns: 200px minmax(0, 1fr) 270px; align-items: center; gap: var(--space-3); padding: 16px 0; border-bottom: 1px solid var(--sk-color-border-3); }
+.line:last-child { border-bottom: 0; }
+.line--total { padding-bottom: 20px; border-bottom: 1px solid var(--sk-color-border); }
+.line-name b { display: block; font: 700 14.5px/1.3 var(--sk-font-body); color: var(--texts-strong); }
+.line-name small { display: block; font-size: 12.5px; color: var(--sk-color-text-2); }
+.line-bar { display: flex; height: 28px; border-radius: 8px; overflow: hidden; background: var(--sk-color-surface-3); }
+.line--total .line-bar { height: 34px; }
+.line-seg { display: flex; align-items: center; min-width: 0; padding: 0 10px; }
+.line-val { display: inline-flex; align-items: center; gap: 5px; font: 700 12px/1 var(--sk-font-body); color: var(--texts-strong); white-space: nowrap; }
+.line-detail { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--sk-color-text); }
+.line-detail span { display: flex; align-items: center; gap: 6px; }
+.line-detail b { font-weight: 700; }
+.line-detail .sw { width: 8px; height: 8px; border-radius: 50%; }
+.line-note { color: var(--sk-color-text-2); padding-left: 14px; }
+.aum-chart { display: block; width: 100%; height: auto; margin-top: 16px; overflow: visible; }
+.sw--aum { background: var(--sk-charts-c03); }
+.aum-grid { stroke: var(--sk-color-border-3); stroke-width: 1; }
+.aum-area { fill: rgba(96, 169, 166, 0.15); }
+.aum-line { fill: none; stroke: var(--sk-charts-c03); stroke-width: 3; stroke-linejoin: round; }
+.aum-dot { fill: var(--sk-color-surface); stroke: var(--sk-charts-c03); stroke-width: 3; }
+.aum-val { font: 700 12px var(--sk-font-body); fill: var(--texts-strong); }
+.aum-x { font: 400 12px var(--sk-font-body); fill: var(--sk-color-text-2); }
+.lin-list { list-style: none; margin: var(--space-2) 0 0; padding: 0; display: grid; gap: 12px; }
+.lin-list li { display: grid; grid-template-columns: 190px minmax(0, 1fr) 110px; align-items: center; gap: 12px; font: 400 14px/20px var(--sk-font-body); color: var(--sk-color-text); }
+.lin-track { height: 14px; border-radius: 7px; background: var(--sk-color-surface-3); overflow: hidden; }
+.lin-fill { display: block; height: 100%; border-radius: 7px; background: var(--sk-charts-c01); }
+.lin-num { text-align: right; font-weight: 600; color: var(--texts-strong); }
+.lin-num small { font-weight: 400; color: var(--sk-color-text-2); }
+.pairs--money .pair-bar { width: 52px; }
+.pairs--money .pair-bar span { font-size: 12px; }
+.line-name .line-clientes { display: block; margin-top: 2px; font: 600 12.5px/1.3 var(--sk-font-body); color: var(--sk-color-text); }
+@media (max-width: 1180px) {
+  .line { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+}
+@media (max-width: 768px) {
+  .lin-list li { grid-template-columns: minmax(0, 1fr) auto; }
+  .lin-track { grid-column: 1 / -1; grid-row: 2; }
+}
+.seg-bar { display: flex; align-items: center; gap: 8px; min-width: 140px; }
+.seg-bar-track { flex: 1; height: 8px; border-radius: 999px; background: var(--sk-color-border-3); overflow: hidden; }
+.seg-bar-fill { display: block; height: 100%; border-radius: inherit; background: var(--sk-color-primary); }
+.seg-bar-fill--warning { background: var(--sk-color-warning-strong); }
+.seg-bar-val { font: 700 13px/1 var(--sk-font-body); color: var(--texts-strong); min-width: 34px; text-align: right; }
+.seg-nota { margin: 12px 0 8px; font-size: 13px; color: var(--sk-color-text-2); }
+.pair-year small.neto-neg { color: var(--feedback-error-dark) !important; }
+.pair-year small.neto-cero { color: var(--sk-color-text-2) !important; }
+.sw--nuevos { background: var(--charts-c18); }
+.sw--perdidos { background: var(--sk-charts-c04); }
+
+@media (max-width: 768px) {
+  .route-scale span:nth-child(2), .route-scale span:nth-child(4) { display: none; }
+  .route-mark-label { font-size: 11px; }
+  .bars, .pairs { gap: 8px; }
+  .bar-col { width: auto; }
+  .bar { width: 56px; }
+  .pair-bar { width: 32px; }
+  .pairs--money .pair-bar { width: 40px; }
+  .prod-list li { grid-template-columns: 12px minmax(0, 1fr) 44px 40px; }
+  .line-bar { height: 24px; }
+}
+@media (max-width: 480px) {
+  .bars { height: 230px; }
+}
+/* Móvil: la gráfica del AUM se escala a ~0,6; se agranda el texto del SVG para que se lea (~11-12 px reales) */
+@media (max-width: 768px) {
+  .aum-chart .aum-val { font-size: 20px; }
+  .aum-chart .aum-x { font-size: 19px; }
+  .aum-chart .aum-dot { stroke-width: 4; }
+}

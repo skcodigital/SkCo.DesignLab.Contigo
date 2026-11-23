@@ -1,0 +1,44 @@
+// El host no crea caja: el `margin-left:auto` del botón empuja dentro del flex del padre.
+:host {
+  display: contents;
+}
+
+.bell {
+  margin-left: auto;
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--sk-color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  border: 0;
+  cursor: pointer;
+
+  b {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    min-width: 16px;
+    height: 16px;
+    background: var(--sk-color-danger);
+    color: var(--sk-color-surface);
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid var(--sk-color-surface);
+    font-family: var(--sk-font-body);
+  }
+}
+
+@media (max-width: 768px) {
+  .bell {
+    width: 42px;
+    height: 42px;
+  }
+}

@@ -1,0 +1,34 @@
+<section class="identity" aria-label="Datos de la empresa">
+  @if (vista() === 'director') {
+    <span class="chip chip--info">Vista gerencial</span>
+  }
+  @if (sinPac()) {
+    <span class="chip chip--warning"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>Sin Plan de Ahorro Corporativo</span>
+  }
+  @if (vista() === 'dueno') {
+    <span class="chip chip--info">Vista del FP Asignado</span>
+  }
+  @if (vista() === 'fp') {
+    <span class="chip chip--info">Filtrada a tus clientes</span>
+  }
+  <span class="identity-item">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V5.5A1.5 1.5 0 0 1 5.5 4h7A1.5 1.5 0 0 1 14 5.5V21"/><path d="M14 10h4.5A1.5 1.5 0 0 1 20 11.5V21"/><path d="M2.5 21h19"/><path d="M7 8h4M7 12h4M7 16h4"/></svg>
+    <span class="num">{{ nit() }}</span>
+  </span>
+  @if (vista() !== 'fp') {
+    <span class="identity-item">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M2.8 19c.6-3.4 3-5.2 6.2-5.2s5.6 1.8 6.2 5.2"/><path d="M16.5 6.2a3 3 0 0 1 0 5.6M18 13.9c2.2.5 3.5 2.1 3.9 5.1"/></svg>
+      <span class="num">{{ empleados() }}</span>
+    </span>
+  }
+  @if (vista() === 'director') {
+    <span class="identity-item">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.4"/><path d="M5 19.5c.7-3.6 3.3-5.5 7-5.5s6.3 1.9 7 5.5"/></svg>
+      <span>{{ responsable() }}</span>
+    </span>
+  }
+  <span class="identity-item">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+    <span>{{ vista() === 'fp' ? 'Agencia Centro' : 'Agencia Norte' }}</span>
+  </span>
+</section>

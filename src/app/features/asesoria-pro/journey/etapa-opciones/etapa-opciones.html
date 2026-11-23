@@ -1,0 +1,59 @@
+<section class="jw-etapa jw-etapa--ancha" aria-labelledby="jw-t3">
+  <p class="jw-eb">Opciones</p>
+  <h3 class="jw-h" id="jw-t3">¿Qué puede hacer?</h3>
+  @if (falta()) {
+    <div class="jw-dest jw-nodisp">
+      <svg ncIcono="off"></svg><span><b>No disponible</b> · Falta el monto que necesita · Respóndalo en «Entender»</span>
+    </div>
+  } @else {
+    <div>
+      @if (alcanza(); as txt) {
+        <p class="jw-info" role="status"><svg ncIcono="info"></svg><span>{{ txt }}</span></p>
+      }
+      <div class="jw-ops3">
+        @for (t of v().list; track t) {
+          @switch (t) {
+            @case ('credito') {
+              <nc-opcion-credito [cr]="cr()" />
+            }
+            @case ('combo') {
+              @if (v().cb; as cb) {
+                <nc-opcion-combo [cb]="cb" [conRx]="rxEn() === 'combo' && conRx()" />
+              }
+            }
+            @default {
+              <nc-opcion-retiro [tipo]="t" [k]="t === 'retiro' ? v().k : v().kt" [conRx]="rxEn() === t && conRx()" />
+            }
+          }
+        }
+        @if (!v().viv) {
+          <nc-opcion-no-retira [k]="v().k" />
+        }
+      </div>
+      <p class="jw-ayuda">{{ anticipo() }}</p>
+      <div class="jw-pref">
+        <p class="jw-qt" id="jw-pref-t">¿Cuál prefiere el cliente?</p>
+        <div class="jw-chips" role="group" aria-labelledby="jw-pref-t">
+          @for (t of elegibles(); track t) {
+            <button type="button" [attr.aria-pressed]="st().pref === t" [disabled]="(t === 'credito' && st().noRepone) || ro()" (click)="elegirPreferencia(t)">
+              {{ nomCaja[t] }}
+            </button>
+          }
+        </div>
+      </div>
+      <div class="jw-links3">
+        <button type="button" class="jw-link jw-ro-ok" (click)="verCalculo()"><svg ncIcono="panel"></svg>Ver cálculo</button>
+        @if (verCredito()) {
+          <button type="button" class="jw-link jw-ro-ok" (click)="verDetalleCredito()"><svg ncIcono="panel"></svg>Ver detalle del crédito</button>
+        }
+      </div>
+    </div>
+    @if (pie()) {
+      <div class="jw-pie">
+        <button type="button" class="jw-btn jw-ro-ok" (click)="continuar()">
+          Continuar a Acuerdo <svg ncIcono="flecha"></svg>
+        </button>
+      </div>
+    }
+  }
+</section>

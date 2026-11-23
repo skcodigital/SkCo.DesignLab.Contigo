@@ -1,0 +1,44 @@
+@if (multiples()) {
+  <button class="lg-flecha prev" type="button" aria-label="Anterior" (click)="anterior()">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+  </button>
+  <button class="lg-flecha next" type="button" aria-label="Siguiente" (click)="siguiente()">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+  </button>
+}
+<div class="lg-hero">
+  <div class="lg-slides">
+    @for (s of slides(); track $index) {
+      <article
+        class="lg-slide"
+        [class.on]="$index === indice()"
+        role="group"
+        aria-roledescription="diapositiva"
+        [attr.aria-label]="etiqueta($index)"
+        [attr.aria-hidden]="$index === indice() ? null : 'true'"
+      >
+        <p class="lg-eyebrow">{{ s.eyebrow }}</p>
+        <h2>{{ s.titulo.antes }}<span>{{ s.titulo.resaltado }}</span>{{ s.titulo.despues }}</h2>
+        <p class="lg-txt">{{ s.texto }}</p>
+        <ul class="lg-chips">
+          @for (c of s.chips; track c.texto) {
+            <li><nc-chip-icono [nombre]="c.icono" />{{ c.texto }}</li>
+          }
+        </ul>
+      </article>
+    }
+  </div>
+  @if (multiples()) {
+    <div class="lg-puntos" role="tablist" aria-label="Elegir diapositiva">
+      @for (s of slides(); track $index) {
+        <button
+          type="button"
+          role="tab"
+          [attr.aria-selected]="$index === indice()"
+          [attr.aria-label]="'Diapositiva ' + ($index + 1)"
+          (click)="elegir($index)"
+        ></button>
+      }
+    </div>
+  }
+</div>

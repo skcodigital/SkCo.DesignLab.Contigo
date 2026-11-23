@@ -1,0 +1,28 @@
+<img src="assets/sami-grande.png" alt="" width="56" height="56" [class.salta]="saltaA()" [class.salta-b]="saltaB()" />
+<div class="lg-mini-txt">
+  <div class="lg-mini-slides">
+    @for (n of novedades; track $index) {
+      <div
+        class="lg-mini-s"
+        [class.on]="$index === indice()"
+        role="group"
+        aria-roledescription="diapositiva"
+        [attr.aria-label]="etiqueta($index)"
+        [attr.aria-hidden]="$index === indice() ? null : 'true'"
+      >
+        <p class="lg-mini-eb">{{ n.eyebrow }}</p>
+        <p class="lg-mini-t">{{ n.titulo.antes }}<span>{{ n.titulo.resaltado }}</span>{{ n.titulo.despues }}</p>
+      </div>
+    }
+  </div>
+  <div class="lg-mini-puntos">
+    @for (n of novedades; track $index) {
+      <button
+        type="button"
+        [attr.aria-label]="'Novedad ' + ($index + 1)"
+        [attr.aria-current]="$index === indice() ? 'true' : null"
+        (click)="elegir($index)"
+      ></button>
+    }
+  </div>
+</div>

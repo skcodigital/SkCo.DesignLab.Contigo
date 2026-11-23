@@ -1,0 +1,40 @@
+<div class="clients-grid">
+  <section class="card block" aria-labelledby="evol-title-fp">
+    <div class="block-head block-head--space">
+      <h2 class="block-title" id="evol-title-fp">Evolución de tus clientes en la empresa</h2>
+    </div>
+    <div class="card-body">
+      <div class="card-head">
+        <p class="card-sub">Clientes nuevos y perdidos por año</p>
+        <div class="legend-inline"><span><i class="sw sw--nuevos"></i>Nuevos</span><span><i class="sw sw--perdidos"></i>Perdidos</span></div>
+      </div>
+      <nc-rx-pares-clientes [anios]="evolucion" [minimo]="0" />
+      <div class="sk-alert sk-alert--info sk-alert--in-card" role="note"><span class="sk-alert__icon" aria-hidden="true"><nc-rx-icono /></span><div class="sk-alert__content"><p class="sk-alert__desc">Acumulado: 3 nuevos, 1 perdido, neto +2. * 2026 hasta octubre.</p><button class="link-btn" (click)="store.abrirLista('perdidos')">Ver los clientes perdidos <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button></div></div>
+    </div>
+  </section>
+
+  <section class="card block" aria-labelledby="prod-title-fp">
+    <div class="block-head block-head--space">
+      <h2 class="block-title" id="prod-title-fp">Productos por cliente</h2>
+      <span class="block-meta"><b class="num">50,0%</b> con 2 o más</span>
+    </div>
+    <div class="card-body">
+      <div class="card-head"><p class="card-sub">Base: tus 2 clientes en la empresa</p></div>
+      <nc-rx-productos-cliente [conteos]="productos" [total]="total" [aria1p]="aria1p" etiqueta="1 producto 50%, 2 productos 50%." />
+      <div class="sk-alert sk-alert--info sk-alert--in-card" role="note"><span class="sk-alert__icon" aria-hidden="true"><nc-rx-icono /></span><div class="sk-alert__content"><p class="sk-alert__desc"><b>Mariana Quintero</b> tiene un solo producto con Skandia. Ya confía en ti: es la vía más rápida al segundo producto.</p><button class="link-btn" (click)="store.abrirLista('monoproducto')">Ver los clientes monoproducto <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button></div></div>
+    </div>
+  </section>
+</div>
+
+<div class="clients-grid segmentos">
+  <section class="card block" aria-labelledby="seg-title-fp">
+    <h2 class="block-title block-title--space" id="seg-title-fp">Clientes por segmento</h2>
+    <p class="card-sub">Tus 2 clientes en la empresa, según su segmento</p>
+    <nc-rx-dona-segmentos [valores]="segmentos" [total]="total" />
+  </section>
+  <section class="card block" aria-labelledby="edad-title-fp">
+    <h2 class="block-title block-title--space" id="edad-title-fp">Clientes por rango de edad</h2>
+    <p class="card-sub">Tus 2 clientes en la empresa, por edad</p>
+    <nc-rx-barras-edad [valores]="edad" [total]="total" />
+  </section>
+</div>

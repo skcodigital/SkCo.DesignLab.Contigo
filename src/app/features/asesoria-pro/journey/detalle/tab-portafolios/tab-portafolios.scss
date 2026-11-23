@@ -1,0 +1,10 @@
+@use '../../styles/controles';
+@use '../../styles/datos';
+
+$v: ':host-context(#jm-velo)';
+
+:host{display:contents}
+.jw-sale{display:inline-block;margin-left:6px;padding:0 7px;border-radius:9999px;background:var(--sk-color-primary-soft);color:var(--sk-color-primary-dark);font-size:11px;font-weight:600}
+#{$v} .jw-sale{background:rgba(0,199,61,.16);color:var(--vd)}
+#{$v} .jw-port-h{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}
+#{$v} .jw-port-h p{margin:0}

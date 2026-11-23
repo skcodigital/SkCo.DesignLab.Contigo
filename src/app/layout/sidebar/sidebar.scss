@@ -1,0 +1,404 @@
+// Riel lateral, drawer de submenús y velo (escritorio); menú a todo el ancho en móvil (≤768px).
+
+.side {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--sk-rail-width);
+  border-right: 1px solid var(--sk-color-line);
+  background: var(--sk-color-surface);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0 24px;
+  z-index: 5;
+  transition: background-color 0.45s ease, color 0.45s ease, border-color 0.45s ease, box-shadow 0.45s ease;
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    align-items: center;
+  }
+
+  .item {
+    position: relative;
+    width: 100px;
+    padding: 10px 4px 8px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--sk-color-ink);
+    text-align: center;
+    cursor: pointer;
+    border: 0;
+    background: none;
+    font-family: var(--sk-font-body);
+    line-height: 1.2;
+    text-decoration: none;
+
+    &:hover {
+      background: var(--sk-color-surface-3);
+    }
+
+    .ico {
+      stroke: var(--sk-color-ink);
+      width: 22px;
+      height: 22px;
+      stroke-width: 1.8;
+    }
+
+    .ico-fill {
+      stroke: none;
+      fill: var(--sk-color-ink);
+      width: 20px;
+      height: 20px;
+      margin: 1px 0;
+    }
+
+    // Íconos de librería (32×32) que el prototipo agrandaba con estilo en línea
+    .ico.ico-26 {
+      width: 26px;
+      height: 26px;
+      margin: -2px 0;
+    }
+
+    &.on,
+    &.open {
+      background: var(--sk-color-surface-4);
+      color: var(--sk-color-primary);
+      font-weight: 500;
+    }
+
+    &.on .ico {
+      stroke: var(--sk-color-primary);
+      fill: var(--sk-color-primary-soft);
+    }
+
+    &.open .ico {
+      stroke: var(--sk-color-primary);
+    }
+
+    &.on .ico.ico-fill,
+    &.open .ico.ico-fill {
+      fill: var(--sk-color-primary);
+      stroke: none;
+    }
+  }
+
+  .bottom {
+    margin-top: auto;
+  }
+}
+
+.side-top {
+  display: contents;
+}
+
+.burger {
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--sk-color-surface-3);
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-bottom: 22px;
+
+  .ico {
+    stroke: #333;
+  }
+}
+
+// Con el drawer abierto, «Inicio» deja de verse activo y la hamburguesa (X) se pinta verde
+.side.dr-open {
+  .item.on:not(.open) {
+    background: none;
+    color: var(--sk-color-ink);
+    font-weight: 400;
+
+    .ico {
+      stroke: var(--sk-color-ink);
+      fill: none;
+    }
+
+    .ico.ico-fill {
+      fill: var(--sk-color-ink);
+    }
+  }
+
+  .burger .ico {
+    stroke: var(--sk-color-primary);
+    stroke-width: 2.2;
+  }
+}
+
+.drawer {
+  font-family: var(--sk-font-body);
+  position: fixed;
+  left: var(--sk-rail-width);
+  top: 0;
+  bottom: 0;
+  width: 312px;
+  background: var(--sk-color-surface);
+  border-right: 1px solid var(--sk-color-line);
+  box-shadow: 8px 0 24px rgba(0, 0, 0, 0.06);
+  padding: 14px 12px 28px;
+  z-index: 6;
+  display: none;
+  flex-direction: column;
+  transition: background-color 0.45s ease, color 0.45s ease, border-color 0.45s ease, box-shadow 0.45s ease;
+
+  &.show {
+    display: flex;
+  }
+}
+
+.dr-sec {
+  display: block;
+
+  h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--sk-color-primary);
+    background: var(--sk-color-surface-3);
+    border-radius: 10px;
+    padding: 14px 12px;
+    margin-bottom: 10px;
+  }
+
+  a {
+    display: block;
+    padding: 16px 14px;
+    border-radius: 8px;
+    font-size: 16px;
+    color: var(--sk-color-ink);
+    text-decoration: none;
+
+    &:hover {
+      background: var(--sk-color-primary-soft);
+    }
+  }
+}
+
+.dr-foot {
+  margin-top: auto;
+  background: var(--sk-color-surface-3);
+  border-radius: 8px;
+  padding: 12px 10px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--sk-color-ink);
+}
+
+.veil {
+  position: fixed;
+  left: var(--sk-rail-width);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 4;
+  display: none;
+
+  &.show {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .side,
+  .drawer {
+    transition: none;
+  }
+}
+
+// ===== Modo misión =====
+:host-context(.modo-mision) {
+  .side {
+    background: var(--sk-color-graphite);
+    border-right-color: var(--sk-color-text-4);
+
+    .burger {
+      background: var(--sk-color-text-5);
+    }
+
+    .burger .ico {
+      stroke: var(--sk-color-surface);
+    }
+
+    .item {
+      color: var(--sk-color-mission-text);
+
+      .ico {
+        stroke: var(--sk-color-mission-text);
+      }
+
+      .ico-fill {
+        fill: var(--sk-color-mission-text);
+      }
+
+      &:hover {
+        background: var(--sk-color-text-5);
+      }
+
+      &.on {
+        background: rgba(0, 199, 61, 0.12);
+        color: var(--sk-color-lime);
+
+        .ico {
+          stroke: var(--sk-color-lime);
+          fill: none;
+        }
+      }
+    }
+  }
+
+  .drawer {
+    background: var(--sk-color-graphite);
+    border-right-color: var(--sk-color-text-4);
+  }
+
+  .dr-sec h3,
+  .dr-foot {
+    background: var(--sk-color-text-5);
+  }
+
+  .dr-sec a {
+    color: var(--sk-color-surface);
+  }
+
+  .veil {
+    background: rgba(5, 10, 18, 0.6);
+  }
+}
+
+// ===== Móvil: menú a todo el ancho, como Portal Clientes =====
+@media (max-width: 768px) {
+  .side {
+    width: 100%;
+    right: 0;
+    border-right: 0;
+    align-items: stretch;
+    padding: 0 0 24px;
+    overflow-y: auto;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+
+    &.abierto {
+      transform: none;
+    }
+
+    ul {
+      gap: 4px;
+      padding: 0 12px;
+      align-items: stretch;
+    }
+
+    .item {
+      width: 100%;
+      flex-direction: row;
+      justify-content: flex-start;
+      gap: 20px;
+      padding: 18px 16px;
+      font-size: 18px;
+      text-align: left;
+      border-radius: 10px;
+
+      .ico,
+      .ico.ico-26 {
+        width: 26px;
+        height: 26px;
+        flex: none;
+      }
+
+      &.on,
+      &.open {
+        background: var(--sk-color-surface-2);
+        font-weight: 400;
+      }
+
+      &:hover {
+        background: var(--sk-color-surface-2);
+      }
+    }
+
+    .bottom {
+      margin: 4px 12px 0;
+      width: auto;
+    }
+
+    .dr-foot {
+      display: block;
+      margin: 24px 16px 0;
+      flex: none;
+    }
+  }
+
+  .veil,
+  .drawer {
+    display: none !important;
+  }
+
+  .side-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 68px;
+    padding: 0 16px;
+    border-bottom: 1px solid var(--sk-color-surface-4);
+    margin-bottom: 16px;
+    flex: none;
+
+    .burger {
+      width: 48px;
+      height: 48px;
+      margin: 0;
+      border-radius: 10px;
+
+      .ico {
+        stroke: var(--sk-color-primary);
+        width: 26px;
+        height: 26px;
+      }
+    }
+  }
+
+  // En el prototipo la regla móvil (verde) ganaba también en modo misión
+  :host-context(.modo-mision) .side-top .burger .ico {
+    stroke: var(--sk-color-primary);
+  }
+
+  .m-sub {
+    display: none;
+    padding: 8px 0 4px;
+
+    a {
+      display: block;
+      padding: 14px 16px;
+      font-family: var(--sk-font-body);
+      font-size: 15px;
+      color: var(--sk-color-ink);
+      text-decoration: none;
+      border-radius: 8px;
+
+      &:hover {
+        background: var(--sk-color-primary-soft);
+      }
+    }
+  }
+
+  li.m-open .m-sub {
+    display: block;
+  }
+}

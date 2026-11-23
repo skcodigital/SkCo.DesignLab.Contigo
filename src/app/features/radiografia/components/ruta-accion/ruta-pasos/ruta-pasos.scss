@@ -1,0 +1,40 @@
+@use '../../../styles/rx-base';
+@use '../../../styles/rx-card';
+@use '../../../styles/rx-forms';
+
+:host { display: block; }
+
+// Ruta comercial: cajitas por etapa
+.route-cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-2); margin-top: var(--space-1); }
+.step { display: flex; flex-direction: column; gap: 10px; }
+.step-head { display: flex; align-items: center; gap: 10px; font: 700 14px/22px var(--sk-font-heading); color: var(--sk-color-primary-strong); }
+.step-num { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--sk-color-primary); color: var(--sk-color-surface); font: 700 13px/1 var(--sk-font-body); }
+.step-num--warning { background: var(--sk-color-warning-strong); color: var(--texts-strong); }
+.step-num--warning + * , .step-head:has(.step-num--warning) { color: var(--texts-strong); }
+.step-title { margin: 0; font: 700 16px/1.35 var(--sk-font-heading); color: var(--texts-strong); }
+.step-desc { margin: 0; font-size: 13.5px; line-height: 1.5; color: var(--sk-color-text); }
+.step-who { margin: 0; display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 12.5px; color: var(--sk-color-text); }
+.step-who span { display: inline-flex; align-items: center; gap: 6px; }
+.step-who .sw { width: 8px; height: 8px; border-radius: 50%; }
+.step-who svg { color: var(--sk-color-text-2); }
+.step-goal { margin: auto 0 0; padding: 10px 12px; border-radius: 8px; background: var(--sk-color-surface-3); font-size: 13.5px; color: var(--sk-color-text); }
+.step-goal b { font-weight: 700; color: var(--texts-strong); }
+.step-check { display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: var(--sk-color-text); cursor: pointer; }
+.goal-check, .step-check { gap: 8px; font: 400 14px/20px var(--sk-font-body); color: var(--sk-color-text); }
+
+// Cajitas de la ruta creada: cumplimiento por meta
+.step-acts { display: flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--sk-color-border-3); }
+.step-prog { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+.step-prog-head { display: flex; justify-content: space-between; font: 600 12.5px/1.3 var(--sk-font-body); color: var(--sk-color-text); }
+.step-prog-head b { font-weight: 700; color: var(--texts-strong); }
+.step-prog .seg-bar-track { flex: none; display: block; height: 12px; border-radius: 999px; background: var(--sk-color-border-3); overflow: hidden; }
+.step-prog .seg-bar-fill { display: block; height: 100%; border-radius: inherit; background: var(--sk-color-primary); }
+.step-prog-meta { font-size: 12px; color: var(--sk-color-text-2); }
+.step.is-lograda { box-shadow: inset 0 0 0 1px var(--sk-color-primary); }
+
+@media (max-width: 1180px) {
+  .route-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 768px) {
+  .route-cards { grid-template-columns: minmax(0, 1fr); }
+}

@@ -1,0 +1,78 @@
+<section class="jw-etapa" aria-labelledby="jw-t1">
+  <p class="jw-eb">Entender</p>
+  <h3 class="jw-h" id="jw-t1"><label for="jw-monto">¿Cuánto desea retirar tu cliente?</label></h3>
+  <!-- Como en Angular: la señal de Dali Oportunidades todavía no trae el estimado, así que no se muestra -->
+  <div class="jw-dest">
+    <span class="jw-campo jw-campo--grande">
+      <span aria-hidden="true">$</span>
+      <input #monto id="jw-monto" inputmode="numeric" autocomplete="off" placeholder="0" aria-label="¿Cuánto desea retirar tu cliente?"
+        [value]="montoTxt()" [disabled]="ro()" (input)="escribirMonto($event)" (blur)="guardarMonto()" (keydown.enter)="teclaMonto($event)" />
+    </span>
+  </div>
+
+  @if (motivoAbierto()) {
+    <div class="jw-q">
+      <p #pregunta class="jw-qt" tabindex="-1">¿Qué lo lleva a pensar en retirar?</p>
+      <div class="jw-chips" role="group" aria-label="Motivo">
+        @for (m of motivos; track m) {
+          <button type="button" [attr.aria-pressed]="st().motivo === m" (click)="elegirMotivo(m)">{{ nombreMotivo[m] }}</button>
+        }
+      </div>
+      @if (textoFuera(); as fuera) {
+        <div class="jw-fuera">
+          <p class="jw-fuera-txt"><svg ncIcono="info"></svg><span>{{ fuera }}</span></p>
+          <textarea class="jw-area" rows="2" maxlength="300" placeholder="¿Qué motivo mencionó el cliente?" aria-label="Motivo que mencionó el cliente"
+            [value]="st().otro" (input)="anotarFuera($event)"></textarea>
+          <button type="button" class="jw-btn jw-btn--sec" (click)="cerrarFuera()"><svg ncIcono="prohibido"></svg>Cerrar como fuera de alcance</button>
+        </div>
+      }
+    </div>
+  }
+  @if (motivoHecho(); as motivo) {
+    <div class="jw-hecho">
+      <span>Motivo: <b>{{ motivo }}</b></span>
+      @if (!ro()) {
+        <button type="button" class="jw-link" (click)="cambiar('motivo')"><svg ncIcono="lapiz"></svg>Cambiar</button>
+      }
+    </div>
+  }
+
+  @if (cuandoAbierto()) {
+    <div class="jw-q">
+      <p #pregunta class="jw-qt" tabindex="-1">¿Para cuándo lo necesita?</p>
+      <p class="jw-ayuda">Con la fecha se sabe qué aportes dejan de tener retención antes de que la necesite.</p>
+      <div class="jw-chips" role="group" aria-label="Para cuándo">
+        @for (c of cuandos; track c[0]) {
+          <button type="button" [attr.aria-pressed]="cuandoMarcado() === c[0]" (click)="elegirCuando(c[0])">{{ c[1] }}</button>
+        }
+      </div>
+      @if (st().eligeFecha) {
+        <div class="jw-fila">
+          <span class="jw-campo jw-campo--fecha">
+            <input #fechaInput type="date" id="jw-fecha" [min]="fechaMin" aria-label="Fecha en que lo necesita" [value]="fecha()" (input)="leerFecha($event)" />
+          </span>
+          <button type="button" class="jw-btn" [disabled]="!fecha()" (click)="confirmarFecha()">Continuar</button>
+        </div>
+      }
+    </div>
+  }
+  @if (cuandoHecho(); as cuando) {
+    <div class="jw-hecho">
+      <span>Para cuándo: <b>{{ cuando }}</b></span>
+      @if (!ro()) {
+        <button type="button" class="jw-link" (click)="cambiar('cuando')"><svg ncIcono="lapiz"></svg>Cambiar</button>
+      }
+    </div>
+  }
+
+  <!-- En Angular la condición especial ya no se pregunta aquí: vivienda sale del motivo y la pensión va en Situación -->
+  @if (verVivienda()) {
+    <p class="jw-nota-i"><svg ncIcono="info"></svg>{{ textos.viviendaSinRetencion }}</p>
+  }
+
+  @if (verPie()) {
+    <div class="jw-pie">
+      <button type="button" class="jw-btn" (click)="continuar()">Continuar a Situación <svg ncIcono="flecha"></svg></button>
+    </div>
+  }
+</section>

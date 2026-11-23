@@ -1,0 +1,94 @@
+export type Etapa = 1 | 2 | 3 | 4;
+export type Motivo = 'liquidez' | 'vivienda' | 'objetivo' | 'rendimientos' | 'otro';
+export type Cuando = 'esta-semana' | 'este-mes' | 'en-meses';
+/** Chip marcado en «¿Para cuándo lo necesita?» (incluye «Con fecha»). */
+export type OpcionCuando = Cuando | 'fecha';
+export type PreguntaEntender = 'motivo' | 'cuando';
+export type SiNo = 'si' | 'no';
+export type RespuestaRx = 'si' | 'no' | 'nosabe';
+export type Preferencia = 'retiro' | 'total' | 'credito' | 'combo';
+export type Decision = Preferencia | 'noretira' | 'pensara' | 'fuera';
+export type Tramite = 'portal' | 'especificado' | 'credito';
+export type EstadoConv = 'en-curso' | 'cerrada-seguimiento' | 'finalizada';
+export type MetodoImpuesto = 'preguntas' | 'tarifa';
+export type VistaAportes = 'resumen' | 'tabla';
+export type PeriodoRent = 'inicio' | '12' | '6' | '3';
+export type OrigenConv = 'mision' | 'catalogo' | 'historial';
+export type ProximoPaso = 'resumen' | 'seguimiento';
+
+export interface EstadoImpuestos {
+  metodo: MetodoImpuesto;
+  /** Pregunta actual (1–4); 5 = todas respondidas. */
+  paso: number;
+  ingreso: number;
+  benef: RespuestaRx | null;
+  otros: number | null;
+  otrosTmp: number;
+  dep: SiNo | null;
+  tarifa: string;
+}
+
+/** Simulador del crédito en el panel de detalle (parte del crédito de la caja). */
+export interface SimCredito {
+  para: number;
+  monto: number;
+  fecha: string;
+  abono: boolean;
+  fAbono: string;
+  vAbono: number;
+}
+
+export interface MensajeCierre {
+  t: string;
+  ok?: boolean;
+}
+
+/** Estado completo de una conversación «Acompañamiento en el retiro» (el `st` del prototipo). */
+export interface EstadoConversacion {
+  etapa: Etapa;
+  visitadas: readonly Etapa[];
+  monto: number;
+  motivo: Motivo | null;
+  otro: string;
+  cuando: Cuando | null;
+  fecha: string;
+  fechaTipo: 'fecha' | 'meses' | null;
+  abierta: PreguntaEntender | null;
+  eligeFecha: boolean;
+  pen: SiNo | null;
+  ctMarc: string | null;
+  ctConf: string | null;
+  pref: Preferencia | null;
+  plazo: number | null;
+  noRepone: boolean;
+  rx: RespuestaRx | null;
+  rxInfo: boolean;
+  lm: boolean;
+  dec: Decision | null;
+  tram: Tramite | null;
+  np: Readonly<Record<ProximoPaso, boolean>>;
+  fseg: string;
+  notas: string;
+  validar: boolean;
+  msg: MensajeCierre | null;
+  cerrado: boolean;
+  fuera: boolean;
+  estado: EstadoConv;
+  resultado: string | null;
+  segHasta: string;
+  enviado: boolean;
+  segundos: number;
+  imp: EstadoImpuestos;
+  cr: SimCredito | null;
+  apVista: VistaAportes;
+  rentPer: PeriodoRent;
+  verCalc: boolean;
+}
+
+export interface Conversacion {
+  id: number;
+  origen: OrigenConv;
+  estado: EstadoConv;
+  creada: Date;
+  st: EstadoConversacion;
+}

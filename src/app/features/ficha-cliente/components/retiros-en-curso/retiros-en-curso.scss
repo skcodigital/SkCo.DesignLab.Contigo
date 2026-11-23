@@ -1,0 +1,460 @@
+// Retiros en curso — valores exactos de Portal Clientes (Dashboard portafolios y contratos, 30-oct)
+:host {
+  display: block;
+}
+
+.retiros {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 24px 0 0;
+  padding: 8px 28px;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  background: var(--sk-color-brand-light);
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--sk-font-body), sans-serif;
+  transition: border-color 150ms ease;
+}
+.retiros:hover {
+  border-color: var(--sk-color-primary);
+}
+.retiros:focus-visible {
+  outline: 2px solid var(--sk-color-info);
+  outline-offset: 2px;
+}
+.retiros .rt {
+  flex: 0 1 auto;
+  min-width: 0;
+  font-family: var(--sk-font-heading), sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--sk-color-text);
+}
+.camino {
+  flex: 0 0 200px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.camino .nodo {
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.camino .nodo.billetera {
+  color: var(--sk-color-primary);
+}
+.camino .linea {
+  position: relative;
+  flex: 1;
+  height: 2px;
+  background-image: linear-gradient(90deg, #5cd5ff 55%, transparent 45%);
+  background-size: 10px 2px;
+  background-repeat: repeat-x;
+  animation: skCaminoFlujo 0.9s linear infinite;
+}
+.camino .moneda {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--sk-color-primary);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  animation: skDineroLatido 2s ease-in-out infinite;
+}
+@keyframes skDineroLatido {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 0 0 rgba(0, 199, 61, 0.45);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.12);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 0 10px rgba(0, 199, 61, 0);
+  }
+}
+@keyframes skCaminoFlujo {
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: 10px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .camino .linea,
+  .camino .moneda {
+    animation: none;
+  }
+}
+.retiros .rl {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--sk-font-heading), sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--sk-color-info);
+  white-space: nowrap;
+}
+
+.rmodal {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.94);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 70;
+}
+.rmodal.show {
+  display: flex;
+}
+.rdlg {
+  animation: skModalIn 0.25s ease-out;
+  position: relative;
+  width: 1080px;
+  max-width: 100%;
+  max-height: calc(100vh - 48px);
+  overflow: auto;
+  box-sizing: border-box;
+  padding: 32px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 0 30px 0 rgba(61, 75, 92, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: var(--sk-font-body), sans-serif;
+}
+@keyframes skModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rclose {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  display: flex;
+  border: 0;
+  background: none;
+  padding: 4px;
+  cursor: pointer;
+  color: var(--sk-color-primary);
+}
+.rdlg-h {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-right: 40px;
+}
+.rdlg-h h2 {
+  margin: 0;
+  font-family: var(--sk-font-heading), sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--sk-color-text);
+}
+.rdlg-h p {
+  margin: 0;
+  font-size: 16px;
+  color: var(--sk-color-text);
+}
+.retiro {
+  border: 1px solid var(--sk-color-border);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.retiro-h {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding: 20px 24px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--sk-font-body), sans-serif;
+}
+.retiro-h .fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+.retiro-h .cab {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--sk-color-text);
+}
+.retiro-h .chev {
+  display: flex;
+  color: var(--sk-color-primary);
+  transition: transform 0.2s;
+}
+.retiro-h[aria-expanded='true'] .chev {
+  transform: rotate(180deg);
+}
+.retiro-h .cuando {
+  font-size: 15px;
+  color: var(--sk-color-text);
+}
+.segmentos {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+}
+.segmentos span {
+  flex: 1;
+  height: 6px;
+  border-radius: 100px;
+  background: var(--sk-color-border);
+}
+.segmentos span.on {
+  background: linear-gradient(90deg, var(--sk-color-primary), #8fe000);
+}
+.retiro-h .paso {
+  font-size: 14px;
+  color: var(--sk-color-text-2);
+}
+.retiro-b {
+  padding: 0 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.retiro-b[hidden] {
+  display: none;
+}
+.rdet {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--sk-color-border);
+  border-radius: 16px;
+  font-size: 15px;
+  color: var(--sk-color-text);
+  margin: 0;
+}
+.rdet div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 22px;
+  border-bottom: 1px solid var(--sk-color-border);
+}
+.rdet dt {
+  font-weight: 700;
+}
+.rdet dd {
+  margin: 0;
+  text-align: right;
+}
+.rpdf {
+  align-self: flex-end;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--sk-font-heading), sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  color: var(--sk-color-info);
+}
+@media (max-width: 600px) {
+  .retiros {
+    gap: 12px;
+    justify-content: space-between;
+    padding: 8px 16px;
+  }
+  .camino {
+    display: none;
+  }
+  .rdlg {
+    padding: 24px 16px;
+  }
+  .rdet {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Con la ficha del producto abierta no hay retiros
+:host-context(.vista-producto) .retiros {
+  display: none !important;
+}
+
+// Con el buscador del header abierto en pantallas angostas se oculta el botón flotante
+@media (max-width: 768px) {
+  :host-context(body:has(.search:focus-within:not(.cerrado))) .retiros {
+    display: none !important;
+  }
+}
+
+// Móvil: igual a Portal Clientes (tarjeta flotante + hoja inferior)
+.m-wallet {
+  display: none;
+}
+@media (max-width: 600px) {
+  .retiros {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%);
+    z-index: 50;
+    width: 240px;
+    min-width: 80px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 50px;
+    border: none;
+    background: var(--sk-color-primary);
+    box-shadow:
+      0 12px 32px -8px rgba(0, 0, 0, 0.12),
+      0 4px 8px -2px rgba(0, 0, 0, 0.06);
+  }
+  .retiros:hover {
+    border-color: transparent;
+  }
+  .retiros .m-wallet {
+    flex: 0 0 32px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sk-color-primary);
+  }
+  .retiros .rt {
+    font-size: 14px;
+    white-space: nowrap;
+    color: #fff;
+  }
+  .retiros .camino,
+  .retiros .rl {
+    display: none;
+  }
+  .rmodal {
+    align-items: flex-end;
+    padding: 0;
+  }
+  .rdlg {
+    width: 390px;
+    max-width: 100%;
+    max-height: 85vh;
+    padding: 20px 16px 28px;
+    border-radius: 16px 16px 0 0;
+    gap: 12px;
+    animation: skHoja 0.25s ease-out;
+  }
+  @keyframes skHoja {
+    from {
+      transform: translateY(24px);
+      opacity: 0;
+    }
+    to {
+      transform: none;
+      opacity: 1;
+    }
+  }
+  .rclose {
+    top: 16px;
+    right: 12px;
+  }
+  .rdlg-h h2 {
+    font-size: 18px;
+  }
+  .rdlg-h p {
+    font-size: 14px;
+  }
+  .retiro-h {
+    padding: 16px;
+  }
+  .retiro-h .cab {
+    font-size: 13px;
+  }
+  .retiro-b {
+    padding: 0 16px 16px;
+  }
+  .rdet {
+    font-size: 13px;
+  }
+  .rdet div {
+    padding: 12px 14px;
+  }
+  // Con la hoja de retiros abierta no se ve el botón flotante
+  .retiros.con-modal {
+    display: none;
+  }
+}
+
+// Móvil: una pestaña abierta como pantalla aparte oculta los retiros
+@media (max-width: 600px) {
+  :host-context(.m-detalle) .retiros {
+    display: none !important;
+  }
+}
+
+// Modo misión
+.retiros {
+  transition:
+    background-color 0.45s ease,
+    color 0.45s ease,
+    border-color 0.45s ease,
+    box-shadow 0.45s ease;
+}
+:host-context(.modo-mision) .retiros {
+  background: var(--sk-color-graphite);
+  border-color: var(--sk-color-text-4);
+}
+:host-context(.modo-mision) .retiros .rt {
+  color: #ffffff;
+}
+@media (prefers-reduced-motion: reduce) {
+  .retiros {
+    transition: none;
+  }
+}
+
+// Móvil: con el menú abierto no se ve el botón flotante
+@media (max-width: 768px) {
+  :host-context(.nav-open) .retiros {
+    display: none;
+  }
+}

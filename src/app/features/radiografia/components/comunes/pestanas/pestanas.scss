@@ -1,0 +1,41 @@
+@use '../../../styles/rx-base';
+
+:host { display: block; }
+/* Pestañas tipo carpeta (como la ficha actual) */
+.tabs { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; padding: 0; }
+/* Como `body[data-view]` del prototipo: más específico que `.tabs`, se mantiene también por debajo de 1180 px */
+.tabs.tabs--5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.tabs.tabs--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.tab {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  height: 40px; padding: 0 10px;
+  border: 0; border-radius: 12px 12px 0 0;
+  background: var(--sk-color-surface-3); color: var(--sk-color-text);
+  /* Auxiliary Title / H6 Bold 14px: Montserrat 700, 14px, interlineado 22px */
+  font: 700 14px/22px var(--sk-font-heading); letter-spacing: 0; white-space: nowrap;
+}
+.tab svg { color: var(--sk-color-text); }
+.tab:hover { color: var(--sk-color-primary-strong); }
+.tab[aria-selected="true"] { background: var(--sk-color-primary); color: var(--sk-color-surface); font-weight: 700; }
+.tab[aria-selected="true"] svg { color: var(--sk-color-surface); }
+
+@media (max-width: 1180px) {
+  .tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 6px; }
+  .tab { border-radius: 12px; }
+}
+
+/* Pestañas en celular: lista de secciones como tarjetas (ficha de Contigo). Al tocar una se entra a su detalle */
+@media (max-width: 768px) {
+  .tabs { display: flex; flex-direction: column; gap: 12px; padding-bottom: var(--space-3); }
+  .tab, .tab[aria-selected="true"] {
+    justify-content: flex-start; gap: 14px; height: 56px; padding: 0 16px;
+    border-radius: 12px; background: var(--sk-color-surface); color: var(--sk-color-text);
+    box-shadow: 0 0 4px 0 rgba(61, 75, 92, 0.15); font-size: 15px;
+  }
+  .tab svg, .tab[aria-selected="true"] svg { width: 24px; height: 24px; color: var(--sk-color-text); flex: none; }
+  .tab::after { content: ""; width: 8px; height: 8px; margin-left: auto; border-top: 2.4px solid var(--sk-color-primary); border-right: 2.4px solid var(--sk-color-primary); transform: rotate(45deg); }
+  .tab:hover { color: var(--sk-color-text); }
+}
+@media (hover: none) {
+  .tab:hover { color: inherit; }
+}

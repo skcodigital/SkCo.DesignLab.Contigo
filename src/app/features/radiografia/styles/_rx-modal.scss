@@ -1,0 +1,34 @@
+// Modal del sistema (Dialog: radio 16, cierre con X) y su capa.
+.overlay {
+  position: fixed; inset: 0; z-index: 50;
+  background: rgba(255, 255, 255, 0.94);
+  display: grid; place-items: center; padding: var(--space-3);
+  overflow-y: auto;
+}
+.modal {
+  width: 100%; max-width: 560px;
+  border-radius: 16px; background: var(--sk-color-surface);
+  box-shadow: 0 0 4px 0 rgba(61, 75, 92, 0.15), 0 12px 32px -8px rgba(0, 0, 0, 0.12);
+  padding: var(--space-3);
+}
+.modal-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); }
+.modal-title { margin: 0; font: 700 20px/1.3 var(--sk-font-heading); color: var(--texts-strong); }
+.modal-close { width: 36px; height: 36px; border: 0; border-radius: 50%; background: none; color: var(--sk-color-primary); display: grid; place-items: center; }
+.modal-close:hover { background: var(--sk-color-brand-light); }
+/* En las modales la X va en la esquina superior derecha; el título deja su espacio */
+.modal { position: relative; }
+.modal .modal-close { position: absolute; top: 12px; right: 12px; }
+.modal .modal-head { padding-right: 36px; }
+.modal-desc { margin: 6px 0 var(--space-3); font-size: 14px; color: var(--sk-color-text); }
+.modal-desc b { font-weight: 700; }
+.modal-body { display: flex; flex-direction: column; gap: var(--space-3); }
+.modal-note { margin: 0; font-size: 12.5px; color: var(--sk-color-text-2); }
+.modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.modal-actions--end { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
+.modal-actions--end .btn-primary, .modal-actions--end .btn-outline { width: auto; padding: 0 28px; }
+@media (max-width: 768px) { .modal-actions--end { flex-direction: column-reverse; } .modal-actions--end .btn-primary, .modal-actions--end .btn-outline { width: 100%; } }
+@media (max-width: 768px) {
+  .overlay { padding: 12px; align-items: start; }
+  .modal { padding: var(--space-2); }
+  .modal-actions { grid-template-columns: minmax(0, 1fr); }
+}

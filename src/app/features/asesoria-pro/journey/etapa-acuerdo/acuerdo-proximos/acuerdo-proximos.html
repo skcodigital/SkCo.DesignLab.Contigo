@@ -1,0 +1,26 @@
+<div class="jw-bloque5">
+  <p class="jw-qt">Próximos pasos</p>
+  <label class="jw-check"><input type="checkbox" [checked]="st().np.resumen" [disabled]="ro()" (change)="marcar('resumen', $event)" /> Enviar resumen de la conversación al cliente</label>
+  <label class="jw-check"><input type="checkbox" [checked]="st().np.seguimiento" [disabled]="ro()" (change)="marcar('seguimiento', $event)" /> Agendar llamada de seguimiento</label>
+  <div class="jw-a5-campos">
+    <label class="jw-a5-campo"><span>Fecha de seguimiento</span><input type="date" [min]="hoy" [value]="st().fseg" [disabled]="ro()" (change)="seguimiento($event)" /></label>
+    <label class="jw-a5-campo jw-a5-notas">
+      <span>Notas del Financial Planner</span>
+      <textarea rows="2" maxlength="500" placeholder="Lo más importante que dijo el cliente…" [value]="st().notas" [disabled]="ro()" (input)="notas($event)"></textarea>
+    </label>
+  </div>
+</div>
+<div class="jw-bloque5">
+  <p class="jw-qt">Lo que está en juego</p>
+  <div class="jw-juego">
+    <div><small>En riesgo (señal)</small><b>{{ enRiesgo }}</b></div>
+    <div><small>Desea retirar</small><b>{{ desea() }}</b></div>
+    <div><small>Sigue invertido</small><b>{{ sigue() }}</b><span>en {{ nombreContrato() }}</span></div>
+    <div class="verde"><small>Preservado</small><b>{{ preservado() }}</b></div>
+  </div>
+</div>
+<details class="jw-resc">
+  <summary class="jw-ro-ok">Ver resumen para el cliente</summary>
+  <pre>{{ resumen() }}</pre>
+  <button type="button" class="jw-link jw-ro-ok" (click)="copiarResumen()"><svg ncIcono="copiar"></svg><span>{{ copiar() }}</span></button>
+</details>

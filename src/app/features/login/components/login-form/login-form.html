@@ -1,0 +1,33 @@
+<div class="lg-zona-h">
+  <span>Zona para Asesores Independientes de Seguros<small>(Ingresa con tu correo externo)</small></span>
+</div>
+@if (datosIncorrectos()) {
+  <div class="lg-alerta" role="alert">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="10" />
+      <path d="m15 9-6 6M9 9l6 6" />
+    </svg>
+    <div><b>Datos incorrectos</b><span>Verifica tu información e intenta de nuevo.</span></div>
+  </div>
+}
+<nc-campo-flotante
+  #campoCorreo
+  etiqueta="Correo electrónico"
+  tipo="email"
+  autocomplete="username"
+  [error]="errorCorreo()"
+  [valor]="correo()"
+  (valorChange)="escribirCorreo($event)"
+/>
+<nc-campo-flotante
+  #campoClave
+  etiqueta="Contraseña"
+  tipo="password"
+  autocomplete="current-password"
+  [conVer]="true"
+  [error]="errorClave()"
+  [valor]="clave()"
+  (valorChange)="escribirClave($event)"
+/>
+<a #enlaceOlvido class="lg-link" href="#" (click)="abrirOlvido($event)">¿Olvidaste tu contraseña?</a>
+<button class="lg-btn lg-btn-sec" type="submit">Ingresar</button>

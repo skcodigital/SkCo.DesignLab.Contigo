@@ -1,0 +1,27 @@
+<div class="ds-lg-h">
+  <nc-selector-mes class="ds-mes" [seleccion]="store.mes()" [ultimo]="store.ultimoMes" (elegir)="store.elegirMes($event)" />
+  <div class="ds-lg-der">
+    <nc-selector-asesor class="ds-selw" [asesores]="asesores" [seleccion]="store.asesor()" (elegir)="store.elegirAsesor($event)" />
+    <a href="#" class="ds-link" (click)="$event.preventDefault()">Balance Score Card</a>
+  </div>
+  <span class="ds-ojo-w">
+    <button class="ojo ds-ojo" type="button" [attr.aria-pressed]="oculto()" [attr.aria-label]="ojo().aria" aria-describedby="ds-ojo-tt" (click)="oculto.set(!oculto())">
+      <svg nc-icono-ojo [tam]="26" [tachado]="!oculto()"></svg>
+    </button>
+    <span class="ds-ojo-tt" role="tooltip" id="ds-ojo-tt">{{ ojo().tooltip }}</span>
+  </span>
+</div>
+<div class="ds-lg-b">
+  <div class="ds-fila3">
+    @for (ind of filaSuperior(); track ind.id) {
+      <article nc-indicador class="ds-ind" [indicador]="ind" [oculto]="oculto()" [actualizacion]="store.actualizacion()"></article>
+    }
+  </div>
+  <div class="ds-fila2">
+    <div class="ds-col">
+      <article nc-indicador class="ds-ind" [indicador]="aum()" [oculto]="oculto()" [actualizacion]="store.actualizacion()"></article>
+      <article nc-dona-distribucion class="ds-card ds-dist" [segmentos]="distribucion"></article>
+    </div>
+    <article nc-grafica-comisiones class="ds-card ds-com" [meses]="comisiones" [total]="totalComisiones" [oculto]="oculto()"></article>
+  </div>
+</div>

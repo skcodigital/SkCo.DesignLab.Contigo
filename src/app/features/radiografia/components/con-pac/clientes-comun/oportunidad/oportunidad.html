@@ -1,0 +1,53 @@
+<section class="card block" [attr.aria-labelledby]="'oport-title' + sufijo()">
+  <h2 class="block-title block-title--space" [id]="'oport-title' + sufijo()">La oportunidad</h2>
+  <div class="oport">
+    <div class="oport-stats">
+      <div class="stat">
+        <span class="kpi-label">Empleados <span class="tip-wrap"><button class="tip tip--warning" aria-label="Atención: el dato de empleados está desactualizado" [attr.aria-describedby]="'tip-empleados' + sufijo()"><nc-rx-icono nombre="aviso" /></button><span class="tooltip" role="tooltip" [id]="'tip-empleados' + sufijo()">Empleados que la empresa reportó al abrir el plan. El dato de cantidad de empleados totales está actualizado <b>solo hasta octubre de 2025</b>.</span></span></span>
+        <span class="kpi-value--big num">1.250</span>
+      </div>
+      <div class="stat">
+        <span class="kpi-label">Clientes Skandia</span>
+        <span class="kpi-value--big num stat-brand"><button type="button" class="link-btn link-btn--kpi" aria-label="Ver los clientes de Skandia en la empresa" (click)="store.abrirLista('clientes')">412</button></span>
+      </div>
+      <div class="stat">
+        <span class="kpi-label">Sin relación <span class="tip-wrap"><button class="tip" aria-label="Qué es la población sin relación" [attr.aria-describedby]="'tip-sinrel' + sufijo()"><nc-rx-icono nombre="ayuda" /></button><span class="tooltip" role="tooltip" [id]="'tip-sinrel' + sufijo()">Empleados de la empresa <b>sin ningún producto</b> con Skandia. Es la población no atendida.</span></span></span>
+        <span class="kpi-value--big num stat-muted">838</span>
+      </div>
+    </div>
+
+    <div class="oport-bar">
+      <div class="oport-bar-head">
+        <span class="kpi-label">Clientes activos</span>
+        <span class="kpi-value--big num stat-brand">33,0%</span>
+      </div>
+      <div class="stack" role="img" [attr.aria-label]="etiquetaBarra()">
+        @for (t of tramos(); track t.clase) {
+          <span class="stack-seg" [class.seg--dueno]="t.clase === 'dueno'" [class.seg--agencia]="t.clase === 'agencia'" [class.seg--otras]="t.clase === 'otras'" [class.stack-empty]="t.clase === 'vacio'"
+                [style.width.%]="t.ancho" [ncRxChartTip]="{ titulo: tituloTip, lineas: [tip(t)] }">
+            @if (t.etiqueta) {
+              <span class="stack-val" [class.stack-val--muted]="t.clase === 'vacio'">{{ t.etiqueta }}</span>
+            }
+          </span>
+        }
+      </div>
+      <div class="legend-inline">
+        @for (t of tramos(); track t.clase) {
+          <span><i [class]="'sw sw--' + t.clase"></i>{{ t.leyenda }} · {{ t.valor }}</span>
+        }
+      </div>
+      <div class="history num">
+        <span>Clientes activos 2024: <b>32,3%</b></span>
+        <span>2025: <b>32,9%</b></span>
+        <span>2026: <b>33,0%</b></span>
+        <nc-rx-variacion
+          direccion="up"
+          texto="+0,1 pts"
+          etiqueta="Subió 0,1 puntos frente a octubre de 2025. Semáforo verde. Hoy 33,0%; en octubre de 2025, 32,9%."
+          titulo="Puntos porcentuales con respecto a octubre de 2025"
+          detalle="Hoy 33,0% · oct 2025: 32,9%"
+        />
+      </div>
+    </div>
+  </div>
+</section>

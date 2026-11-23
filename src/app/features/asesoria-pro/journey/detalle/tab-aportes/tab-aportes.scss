@@ -1,0 +1,19 @@
+@use '../../styles/controles';
+@use '../../styles/datos';
+
+$v: ':host-context(#jm-velo)';
+
+:host{display:contents}
+.jw-apor{display:flex;flex-direction:column}
+.jw-apor>div{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:start;padding:10px 0;border-top:1px solid var(--sk-color-surface-5)}
+.jw-apor>div:first-child{border-top:0}
+.jw-apor .jw-cuad{margin-top:6px}
+.jw-apor span{font-size:12px;color:var(--sk-color-text-3)}
+.jw-apor b.v{font-family:var(--sk-font-heading)}
+#{$v} .jw-apor span{color:var(--tx3)}
+#{$v} .jw-apor>div{border-color:var(--bd)}
+#{$v} .jw-barra--sola{display:flex;margin-top:6px;height:6px}
+#{$v} .jw-apor p{margin:0}
+#{$v} .jw-tabla-acc{display:flex;gap:14px}
+#{$v} .jw-tabla-acc .jw-link{display:inline-flex;align-items:center;gap:6px;padding:0;font-size:13px}
+#{$v} .jw-tabla-wrap{overflow-x:auto;border:1px solid var(--bd);border-radius:10px}

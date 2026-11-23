@@ -1,0 +1,179 @@
+// Sami decorativo del login (la variante oscura depende de la clase .lg-dark del panel)
+
+:host {
+  position: relative;
+  width: 150px;
+  margin: 36px auto 52px;
+  pointer-events: none;
+}
+
+.lg-sami-fig {
+  position: relative;
+  animation: lgsFlota 4s ease-in-out infinite;
+}
+
+.lg-detras {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  z-index: 0;
+  opacity: 0.95;
+}
+
+img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 18px 24px rgba(0, 60, 20, 0.28));
+}
+
+:host-context(.lg-dark) img {
+  filter: drop-shadow(0 18px 26px rgba(0, 0, 0, 0.55));
+}
+
+.lg-diadema {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.18));
+}
+
+:host::after {
+  content: '';
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  bottom: -16px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(0, 70, 20, 0.28);
+  filter: blur(4px);
+  animation: lgsSombra 4s ease-in-out infinite;
+}
+
+:host-context(.lg-dark)::after {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+@keyframes lgsFlota {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes lgsSombra {
+  0%,
+  100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scaleX(0.86);
+    opacity: 0.6;
+  }
+}
+
+// Salto: dos clases con la misma animación para poder reiniciarla en saltos seguidos.
+:host(.salta) .lg-sami-fig {
+  transform-origin: 50% 100%;
+  animation: lgsSalto 0.65s cubic-bezier(0.3, 0, 0.35, 1);
+}
+
+:host(.salta-b) .lg-sami-fig {
+  transform-origin: 50% 100%;
+  animation: lgsSaltoB 0.65s cubic-bezier(0.3, 0, 0.35, 1);
+}
+
+:host(.salta)::after {
+  animation: lgsSombraSalto 0.65s cubic-bezier(0.3, 0, 0.35, 1);
+}
+
+:host(.salta-b)::after {
+  animation: lgsSombraSaltoB 0.65s cubic-bezier(0.3, 0, 0.35, 1);
+}
+
+@mixin salto {
+  0% {
+    transform: translateY(0) scale(1, 1);
+  }
+
+  15% {
+    transform: translateY(0) scale(1.08, 0.9);
+  }
+
+  45% {
+    transform: translateY(-28px) scale(0.95, 1.06);
+  }
+
+  70% {
+    transform: translateY(0) scale(1.06, 0.93);
+  }
+
+  85% {
+    transform: translateY(-5px) scale(0.99, 1.01);
+  }
+
+  100% {
+    transform: translateY(0) scale(1, 1);
+  }
+}
+
+@mixin sombra-salto {
+  0%,
+  100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+
+  45% {
+    transform: scaleX(0.6);
+    opacity: 0.35;
+  }
+
+  70% {
+    transform: scaleX(1.08);
+    opacity: 1;
+  }
+}
+
+@keyframes lgsSalto {
+  @include salto;
+}
+
+@keyframes lgsSaltoB {
+  @include salto;
+}
+
+@keyframes lgsSombraSalto {
+  @include sombra-salto;
+}
+
+@keyframes lgsSombraSaltoB {
+  @include sombra-salto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lg-sami-fig,
+  :host::after {
+    animation: none !important;
+  }
+}
+
+@media (max-width: 1100px) {
+  :host {
+    width: 120px;
+  }
+}

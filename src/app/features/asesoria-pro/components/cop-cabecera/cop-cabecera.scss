@@ -1,0 +1,27 @@
+:host{display:block}
+.cop-h{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:0 0 4px}
+.cop-seg{display:flex;gap:2px;padding:3px;background:var(--sk-color-surface-4);border-radius:9999px}
+.cop-seg button{border:0;background:transparent;border-radius:9999px;padding:6px 12px;font-family:var(--sk-font-body);font-size:13px;color:var(--sk-color-text);cursor:pointer}
+.cop-seg button[aria-selected="true"]{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.cop-mis-tit{margin:0;font-family:var(--sk-font-heading);font-weight:700;font-size:18px;color:var(--sk-color-text)}
+:host-context(.panel-cop) .cop-seg{background:rgba(255,255,255,.05);box-shadow:0 0 0 1px rgba(255,255,255,.18) inset}
+:host-context(.panel-cop) .cop-seg button{color:var(--sk-color-border-4)}
+:host-context(.panel-cop) .cop-seg button[aria-selected="true"]{background:var(--sk-color-primary);color:var(--sk-color-mission-bg);font-weight:600;box-shadow:none}
+@keyframes copBlink{50%{opacity:.25}}
+.cop-punto{display:flex;align-items:center;gap:12px}
+.cop-punto::before{content:"";flex:none;width:10px;height:10px;border-radius:50%;background:var(--sk-color-lime);box-shadow:0 0 10px var(--sk-color-lime);animation:copBlink 1.6s ease-in-out 3}
+@media (prefers-reduced-motion:reduce){.cop-punto::before{animation:none}}
+:host-context(.panel-cop) .cop-mis-tit{color:#ffffff}
+.cop-hud{display:flex;flex-wrap:wrap;gap:6px 20px;font-family:var(--sk-font-body);font-size:12px;letter-spacing:0;color:var(--sk-color-border-4)}
+.cop-hud b{color:var(--sk-color-lime);font-weight:600}
+.cop-cab{display:flex;flex-direction:column;gap:10px;min-width:0}
+.cop-hud{gap:6px 0}
+.cop-hud>span{display:inline-flex;align-items:center;gap:6px;padding:0 14px;border-left:1px solid var(--sk-color-text-4)}
+.cop-hud>span:first-child{padding-left:22px;border-left:0}
+.cop-prog>i{display:inline-block;width:64px;height:4px;border-radius:2px;background:var(--sk-color-text-4);overflow:hidden;margin-right:4px}
+.cop-prog>i>i{display:block;height:100%;background:var(--sk-color-lime);box-shadow:0 0 8px var(--sk-color-lime)}
+@media (max-width:600px){
+  :host-context(.panel-cop) .cop-h{flex-wrap:wrap;gap:14px}
+  :host-context(.panel-cop) .cop-hud{flex-direction:column;align-items:flex-start;gap:4px;padding-left:22px}
+  :host-context(.panel-cop) .cop-hud>span,:host-context(.panel-cop) .cop-hud>span:first-child{padding:0;border-left:0}
+}

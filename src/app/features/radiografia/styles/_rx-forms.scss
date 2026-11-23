@@ -1,0 +1,58 @@
+// Formularios: metas editables, campos y checkbox (sk-checkbox).
+.goals { border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.goals-title { padding: 0; margin-bottom: 10px; font: 700 15px/1.3 var(--sk-font-heading); color: var(--texts-strong); }
+.goal {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 4px 16px;
+  padding: 12px 16px; border-radius: 12px; background: var(--sk-color-surface-3);
+}
+.goal.is-off { opacity: 0.55; }
+.goal-check { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--sk-color-text); cursor: pointer; }
+.goal-check b { font-weight: 700; color: var(--texts-strong); }
+
+.goal-edit { display: flex; align-items: center; gap: 6px; }
+.goal-affix { font-size: 14px; color: var(--sk-color-text); white-space: nowrap; }
+.goal-input {
+  width: 84px; height: 48px; padding: 0 10px; text-align: right;
+  border: 1px solid var(--sk-color-border); border-radius: 8px; background: var(--sk-color-surface);
+  font: 700 16px/1 var(--sk-font-body); color: var(--texts-strong);
+}
+.goal-input:focus { outline: 0; border: 2px solid var(--sk-color-primary); padding: 0 9px; }
+.goal-input:disabled { background: var(--sk-color-border-3); }
+.goal-calc { grid-column: 1 / -1; margin: 0; padding-left: 28px; font-size: 12.5px; color: var(--sk-color-text-2); display: flex; flex-wrap: wrap; gap: 4px 10px; }
+.goal-calc .edited { color: var(--sk-color-text); font-weight: 600; }
+.goal-calc button { border: 0; background: none; padding: 0; color: var(--sk-color-info); font-size: 12.5px; font-weight: 700; text-decoration: underline; }
+
+.field { border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.field-label { padding: 0; font: 700 14px/1.3 var(--sk-font-body); color: var(--texts-strong); }
+.field-opt { font-weight: 400; color: var(--sk-color-text-2); }
+/* La leyenda de un fieldset no respeta el gap del flex: se separa con margen */
+legend.field-label { margin-bottom: 12px; }
+/* Plazo personalizado: aparece al elegir "Otro" */
+.plazo-otro { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--sk-color-text); }
+.plazo-otro[hidden] { display: none; }
+.opt { font-weight: 400; color: var(--sk-color-text-2); }
+.field textarea {
+  width: 100%; resize: vertical; min-height: 84px; padding: 12px 14px;
+  border: 1px solid var(--sk-color-border); border-radius: 8px;
+  font: 400 14px/1.5 var(--sk-font-body); color: var(--sk-color-text);
+}
+.field textarea:focus { outline: 0; border: 2px solid var(--sk-color-primary); padding: 11px 13px; }
+input[type="checkbox"] {
+  appearance: none; -webkit-appearance: none; flex: none;
+  width: 20px; height: 20px; margin: 0; border-radius: 4px;
+  border: 1.5px solid var(--sk-color-placeholder); background: var(--sk-color-surface) center / 12px 12px no-repeat;
+  cursor: pointer; transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+input[type="checkbox"]:checked {
+  background-color: var(--sk-color-primary); border-color: var(--sk-color-primary);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E");
+}
+label:hover > input[type="checkbox"]:not(:disabled), input[type="checkbox"]:not(:disabled):hover { border-color: var(--sk-color-primary); box-shadow: 0 0 8px color-mix(in srgb, var(--sk-color-primary), transparent 70%); }
+input[type="checkbox"]:focus-visible { outline: 0; box-shadow: 0 0 0 8px color-mix(in srgb, var(--feedback-success-dark), transparent 78%); }
+input[type="checkbox"]:disabled { cursor: not-allowed; border-color: var(--sk-color-border); background-color: var(--feedback-standby-light, #f5f5f5); }
+input[type="checkbox"]:disabled:checked { background-color: var(--neutral-l06, #b7b7b7); border-color: var(--neutral-l06, #b7b7b7); }
+.goal-check, .step-check { gap: 8px; font: 400 14px/20px var(--sk-font-body); color: var(--sk-color-text); }
+@media (max-width: 768px) {
+  .goal { grid-template-columns: minmax(0, 1fr); }
+  .goal-calc { padding-left: 0; }
+}

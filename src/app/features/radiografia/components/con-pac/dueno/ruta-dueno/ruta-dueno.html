@@ -1,0 +1,14 @@
+@if (conDiagnostico()) {
+  <nc-rx-ruta-encabezado rol="dueno" />
+}
+@if (vacia()) {
+  <!-- Sin ruta todavía -->
+  <nc-rx-ruta-vacia rol="dueno" />
+}
+@if (listado()) {
+  <!-- Seguimiento de la ruta de acción: aparece al enviarla -->
+  <nc-rx-ruta-metas rol="dueno" />
+}
+@if (conDiagnostico()) {
+  <nc-rx-ruta-pasos rol="dueno" />
+}

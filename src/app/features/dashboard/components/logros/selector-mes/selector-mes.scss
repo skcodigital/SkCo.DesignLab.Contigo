@@ -1,0 +1,167 @@
+// .ds-mes del prototipo: selector de mes de Logros (Figma Portal Contigo · Year Picker 43746:29739)
+:host {
+  position: relative;
+  display: flex;
+}
+
+.ds-lg-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border: 0;
+  border-radius: 16px 0 8px 0;
+  background: #caf9cb;
+  font-family: var(--sk-font-heading);
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 700;
+  color: var(--sk-color-text);
+  cursor: pointer;
+
+  span {
+    color: var(--sk-color-primary);
+    margin-left: -4px;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--sk-color-info);
+    outline-offset: 2px;
+  }
+}
+
+.ds-lg-chev {
+  transition: transform 0.2s;
+}
+
+.ds-lg-tab[aria-expanded='true'] .ds-lg-chev {
+  transform: rotate(180deg);
+}
+
+.ds-mp {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  width: 235px;
+  height: 222px;
+  padding: 8px 4px 8px 0;
+  background: var(--sk-color-surface);
+  border-radius: 8px;
+  filter: drop-shadow(0 0 2px rgba(68, 68, 68, 0.15));
+  box-shadow: 0 4px 16px rgba(61, 75, 92, 0.12);
+}
+
+.ds-mp-h {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 30px;
+  padding: 0 8px;
+}
+
+.ds-mp-anio {
+  flex: 1;
+  font-family: var(--sk-font-heading);
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 500;
+  color: var(--sk-color-text);
+}
+
+.ds-mp-nav {
+  display: flex;
+  gap: 4px;
+
+  button {
+    display: flex;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    border-radius: 4px;
+
+    &:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--sk-color-info);
+    }
+  }
+}
+
+.ds-mp-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+
+  button {
+    position: relative;
+    border: 0;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: var(--sk-font-body);
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 400;
+    color: var(--sk-color-text);
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 6.25% 3.57%;
+      border-radius: 39.805px;
+      background: transparent;
+      transition: background-color 0.15s;
+    }
+
+    span {
+      position: relative;
+    }
+
+    &:hover:not(:disabled)::before {
+      background: var(--sk-color-brand-light);
+    }
+
+    &[aria-checked='true'] {
+      color: var(--sk-color-surface);
+      font-weight: 700;
+
+      &::before {
+        background: var(--sk-color-primary);
+      }
+    }
+
+    &:disabled {
+      color: var(--sk-color-placeholder);
+      cursor: default;
+    }
+
+    &:focus-visible {
+      outline: none;
+
+      &::before {
+        box-shadow: 0 0 0 2px var(--sk-color-info);
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-mp-grid button::before,
+  .ds-lg-chev {
+    transition: none;
+  }
+}
+
+@media (hover: none) {
+  .ds-mp-grid button:not([aria-checked='true']):hover::before {
+    background: transparent;
+  }
+}

@@ -1,0 +1,29 @@
+@use '../../../styles/rx-base';
+@use '../../../styles/rx-card';
+@use '../../../styles/rx-charts';
+
+:host { display: block; }
+/* En el prototipo `.block .sk-alert` separa las alertas de su bloque (más específico que `.sk-alert--in-card`) */
+.block .sk-alert { margin-top: var(--space-3); }
+
+/* Pestaña Clientes */
+.block + .clients-grid { margin-top: var(--space-3); }
+.clients-grid > .card { align-self: stretch; }
+.oport { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: var(--space-4); align-items: center; }
+.oport-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-2); }
+.oport-bar { display: flex; flex-direction: column; gap: 12px; }
+.oport-bar-head { display: flex; align-items: baseline; justify-content: space-between; }
+.clients-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-3); align-items: start; }
+
+@media (max-width: 1180px) {
+  .clients-grid, .oport { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 900px) {
+  .oport { gap: var(--space-3); }
+}
+@media (max-width: 768px) {
+  .oport-stats { gap: 12px; }
+}
+@media (max-width: 480px) {
+  .oport-stats { grid-template-columns: minmax(0, 1fr); }
+}

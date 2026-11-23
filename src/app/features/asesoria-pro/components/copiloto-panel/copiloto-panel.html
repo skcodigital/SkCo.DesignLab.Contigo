@@ -1,0 +1,65 @@
+<!-- Loading introductorio: fuera de la sección (que crea su propio contexto de apilamiento) para cubrir la pantalla -->
+<div class="cop-intro" role="status" aria-live="polite">
+  <div class="cop-intro-orb" aria-hidden="true"><span class="cop-intro-ring"><i></i></span><img src="assets/sami-cabeza.png" alt="" width="72" height="53" /></div>
+  <p>{{ textos.introCarga }}</p>
+</div>
+
+<section class="panel panel-cop" id="p-copiloto" [class.intro]="intro()" [class.revela]="revela()">
+  <div class="cop-espacio" aria-hidden="true">
+    <svg class="cop-orbita" viewBox="0 0 1200 600" preserveAspectRatio="xMaxYMin slice">
+      <g class="cop-giro">
+        <ellipse cx="900" cy="120" rx="420" ry="130" fill="none" stroke="rgba(255,255,255,.14)" stroke-dasharray="2 8" />
+        <circle cx="1320" cy="120" r="5" fill="#8fe000" style="filter: drop-shadow(0 0 8px #8fe000)" />
+      </g>
+    </svg>
+  </div>
+  <div class="cop">
+    <nc-cop-cabecera [(vista)]="vista" [verSenal]="!gestionada()" [senal]="senal" [ultima]="ultima()" [hechas]="hechas()" />
+
+    @if (vista() === 'journeys') {
+      <div class="cop-b">
+        <div class="cop-mis">
+          <!-- Tarjeta de misión como en Angular: señal de Dali Oportunidades (oportunidad 32, OPPORTUNITY_BASE, prioridad Alta),
+               que hoy no trae monto ni probabilidad -->
+          @if (verTarjeta()) {
+            <article class="mis mis-urg" [class.mis--curso]="enCurso()" (click)="abrirMision()">
+              <span class="mis-cat">Necesita atención</span>
+              @if (enCurso()) {
+                <p class="mis-estado">{{ estadoMision() }}</p>
+              }
+              <h4 class="mis-t">Este cliente podría retirar su Fondo Voluntario de Pensión.</h4>
+              <p class="mis-d"><strong>Por qué:</strong> Señal de Fligoo: prioridad alta</p>
+              <button class="mis-btn" type="button" (click)="$event.stopPropagation(); abrirMision()">{{ enCurso() ? textos.continuar : textos.iniciar }}</button>
+              <p class="mis-conv">Conversación: <b>Acompañamiento en el retiro</b></p>
+              <!-- Como en Angular: no se descarta una misión iniciada -->
+              @if (!enCurso()) {
+                <button class="mis-desc" type="button" aria-haspopup="dialog" (click)="pedirDescarte($event)">Descartar</button>
+              }
+            </article>
+          }
+        </div>
+        @if (descarte() && !gestionada()) {
+          <div class="mis-descartada" role="status">
+            <span>Descartaste esta misión. Motivo: <b>{{ motivoDescarte() }}</b></span>
+            <button type="button" (click)="deshacerDescarte()">Deshacer</button>
+          </div>
+        }
+        @if (gestionada()) {
+          <div class="cop-vacio cop-vacio--mis"><svg ncIcono="radar"></svg>No hay recomendaciones para este cliente hoy</div>
+        }
+        <nc-cop-otras [conRetiro]="gestionada() || !!descarte()" (abrirRetiro)="abrirCatalogo()" />
+      </div>
+    } @else {
+      <div class="cop-b">
+        <nc-cop-historial [conversaciones]="historial()" (abrir)="abrirHistorial($event)" />
+      </div>
+    }
+  </div>
+</section>
+
+<nc-descartar-mision-modal [(abierta)]="descartarAbierta" [nombre]="nombre" (confirmar)="descartar($event)" />
+
+@switch (fase()) {
+  @case ('cargando') { <nc-journey-carga (lista)="fase.set('abierto')" /> }
+  @case ('abierto') { <nc-journey (cerrar)="cerrarJourney($event)" /> }
+}

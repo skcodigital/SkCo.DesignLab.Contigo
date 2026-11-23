@@ -1,0 +1,15 @@
+@use '../../styles/controles';
+@use '../opciones';
+$v: ':host-context(#jm-velo)';
+
+.jw-norep{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border:1px solid var(--sk-color-border);border-radius:9999px;background:#fff;font-family:var(--sk-font-body);font-size:13px;color:var(--sk-color-text);cursor:pointer}
+.jw-norep:hover{border-color:var(--sk-color-primary)}
+.jw-norep[aria-pressed="true"]{border-color:var(--sk-color-primary);background:var(--sk-color-brand-light);color:var(--sk-color-primary-dark);font-weight:600}
+.jw-norep:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:2px}
+@media (hover:none){.jw-norep:hover{border-color:var(--sk-color-border)}}
+#{$v} .jw-norep{background:transparent;border-color:var(--bd2);color:var(--sk-color-mission-text)}
+#{$v} .jw-norep:hover{border-color:var(--lk)}
+#{$v} .jw-norep[aria-pressed="true"]{background:var(--sel);border-color:var(--lk);color:var(--vd)}
+@media (hover:none){#{$v} .jw-norep:hover{border-color:var(--bd)}}
+
+@include controles.solo-lectura;

@@ -1,0 +1,105 @@
+// Controles comunes del journey (botones, enlaces, chips, campos, preguntas, avisos) con su variante oscura.
+// Cada componente del journey hace `@use` de este archivo: la encapsulación emulada no comparte estilos entre componentes.
+// `#jm-velo` es el contenedor del journey (lo pinta `nc-journey`): sus reglas van con `:host-context(#jm-velo)`
+// para conservar la especificidad de id del prototipo.
+$v: ':host-context(#jm-velo)';
+
+.jw-eb{margin:0;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--sk-color-primary-dark)}
+.jw-h{margin:-8px 0 0;font-family:var(--sk-font-heading);font-size:18px;line-height:26px;font-weight:700;color:var(--sk-color-text)}
+.jw-dest{padding:14px 18px;border-radius:12px;background:var(--sk-color-brand-light)}
+.jw-q{display:flex;flex-direction:column;gap:10px;padding:16px;border:1px solid #cdeed6;border-radius:12px;background:#fff;box-shadow:0 2px 10px rgba(0,199,61,.06)}
+.jw-qt{margin:0;font-size:15px;font-weight:700;color:var(--sk-color-text)}
+.jw-op{display:flex;flex-direction:column;gap:2px;padding:12px 14px;border:1px solid var(--sk-color-border);border-radius:10px;background:#fff;text-align:left;font-family:var(--sk-font-body);cursor:pointer;transition:border-color .15s,background-color .15s}
+.jw-op b{font-size:15px;font-weight:600;color:var(--sk-color-text)}
+.jw-op span{font-size:12px;color:var(--sk-color-text-3)}
+.jw-op:hover{border-color:var(--sk-color-primary)}
+.jw-op[aria-pressed="true"]{border-color:var(--sk-color-primary);background:var(--sk-color-brand-light)}
+.jw-op:focus-visible,.jw-chips button:focus-visible,.jw-btn:focus-visible,.jw-link:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:2px}
+.jw-chips{display:flex;flex-wrap:wrap;gap:8px}
+.jw-chips button{padding:8px 16px;border:1px solid var(--sk-color-border);border-radius:9999px;background:#fff;font-family:var(--sk-font-body);font-size:14px;color:var(--sk-color-text);cursor:pointer}
+.jw-chips button:hover{border-color:var(--sk-color-primary)}
+.jw-chips button[aria-pressed="true"]{background:var(--sk-color-brand-light);border-color:var(--sk-color-primary);color:var(--sk-color-primary-dark);font-weight:600}
+.jw-fila{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.jw-campo{display:flex;align-items:center;gap:6px;width:240px;height:40px;padding:0 12px;border:1px solid var(--sk-color-border);border-radius:8px;background:#fff;font-size:15px;color:var(--sk-color-text)}
+.jw-campo:focus-within{border-color:var(--sk-color-primary);box-shadow:0 0 0 3px rgba(0,199,61,.12)}
+.jw-campo input{flex:1;min-width:0;border:0;outline:0;background:transparent;font-family:var(--sk-font-body);font-size:15px;color:var(--sk-color-text)}
+.jw-dest{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.jw-dest .jw-campo{background:#fff}
+.jw-ayuda{margin:0;font-size:12px;line-height:18px;color:var(--sk-color-text-3)}
+.jw-hecho{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 14px;border:1px solid var(--sk-color-line);border-radius:8px;background:var(--sk-color-surface-2);font-size:14px;color:var(--sk-color-text-2)}
+.jw-hecho b{color:var(--sk-color-text);font-weight:600}
+.jw-link{display:inline-flex;align-items:center;gap:6px;border:0;background:none;padding:2px 0;font-family:var(--sk-font-body);font-size:14px;font-weight:600;color:var(--sk-color-primary-strong-2);cursor:pointer;text-decoration:none}
+.jw-link:hover{text-decoration:underline}
+.jw-btn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 20px;border:1px solid var(--sk-color-primary);border-radius:9999px;background:var(--sk-color-primary);color:#fff;font-family:var(--sk-font-heading);font-size:14px;font-weight:700;cursor:pointer;transition:background-color .15s}
+.jw-btn:hover{background:var(--sk-color-primary-strong);border-color:var(--sk-color-primary-strong)}
+.jw-btn:disabled{background:var(--sk-color-border-2);border-color:var(--sk-color-border-2);color:var(--sk-color-placeholder);cursor:not-allowed}
+.jw-btn--sec{background:#fff;color:var(--sk-color-primary-strong-2)}
+.jw-btn--sec:hover{background:var(--sk-color-brand-light)}
+.jw-pie{display:flex;justify-content:center;padding-top:4px}
+.jw-proximo{margin:0;padding:16px;border-radius:10px;background:var(--sk-color-surface-2);font-size:14px;color:var(--sk-color-text-2)}
+.jw-aviso{margin:0;padding:10px 14px;border:1px solid #f1d9ae;border-radius:10px;background:#fffaf1;font-size:14px;line-height:22px;color:var(--sk-color-text)}
+.jw-tg{display:inline-flex;align-items:center;gap:4px;padding:1px 8px;border-radius:9999px;font-size:11px;font-weight:700;line-height:18px}
+.jw-tg--ok{background:var(--sk-color-primary-soft);color:var(--sk-color-primary-dark)}
+.jw-tg--menor{border:1px solid var(--sk-color-primary);color:var(--sk-color-primary-dark);background:#fff}
+.jw-tg--no{background:var(--sk-color-warning-light);color:#9a5c00}
+.jw-nota{display:flex;gap:8px;padding:10px 12px;border-radius:8px;background:var(--sk-color-surface-3);font-size:13px;line-height:20px;color:var(--sk-color-ink-2)}
+.jw-nota--alerta{border:1px solid #f1d9ae;background:#fffaf1}
+.jw-check{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--sk-color-text);cursor:pointer}
+.jw-check input{width:18px;height:18px;margin:0;accent-color:var(--sk-color-primary);cursor:pointer}
+.jw-check input:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:2px}
+.jw-a5-campo{display:flex;flex-direction:column;gap:6px;font-size:12px}
+.jw-a5-campo input,.jw-a5-campo textarea{width:100%;box-sizing:border-box;padding:9px 12px;border:1px solid var(--sk-color-border);border-radius:8px;background:#fff;font-family:var(--sk-font-body);font-size:14px;color:var(--sk-color-text);resize:vertical}
+.jw-a5-campo input:focus-visible,.jw-a5-campo textarea:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:1px}
+.jw-chips button:disabled{opacity:.45;cursor:not-allowed}
+@media (hover:none){.jw-op:hover,.jw-chips button:hover{border-color:var(--sk-color-border)}.jw-link:hover{text-decoration:none}}
+@media (max-width:900px){.jw-campo{width:100%}}
+@media (prefers-reduced-motion:reduce){.jw-op{transition:none}}
+
+// ---- Journey en oscuro suave (superficies grafito del modo misión) ----
+#{$v} .jw-q,#{$v} .jw-op,#{$v} .jw-caja{background:var(--sf2);border-color:var(--bd);box-shadow:none}
+#{$v} .jw-op:hover{border-color:var(--lk)}
+#{$v} .jw-op[aria-pressed="true"]{background:var(--sel);border-color:var(--lk);box-shadow:0 0 0 1px var(--lk) inset}
+#{$v} .jw-dest{background:var(--sel)}
+#{$v} .jw-hecho,#{$v} .jw-proximo,#{$v} .jw-nota{background:rgba(255,255,255,.06);border-color:var(--bd);color:var(--tx2)}
+#{$v} .jw-aviso,#{$v} .jw-nota--alerta{background:var(--warn);border-color:var(--warnb);color:var(--tx2)}
+#{$v} .jw-h,#{$v} .jw-qt,#{$v} .jw-op b,#{$v} .jw-hecho b{color:var(--tx)}
+#{$v} .jw-check,#{$v} .jw-aviso b{color:var(--sk-color-line)}
+#{$v} .jw-ayuda,#{$v} .jw-op span{color:var(--tx3)}
+#{$v} .jw-eb{color:var(--vd)}
+#{$v} .jw-link{color:var(--lk)}
+#{$v} .jw-tg--ok{background:rgba(0,199,61,.16);color:var(--vd)}
+#{$v} .jw-tg--menor{background:transparent;border-color:var(--lk);color:var(--vd)}
+#{$v} .jw-tg--no{background:rgba(232,155,0,.16);color:var(--sk-color-warning)}
+#{$v} .jw-chips button{background:transparent;border-color:var(--bd2);color:var(--sk-color-mission-text)}
+#{$v} .jw-chips button:hover{border-color:var(--lk)}
+#{$v} .jw-chips button[aria-pressed="true"]{background:var(--sel);border-color:var(--lk);color:var(--vd)}
+#{$v} .jw-campo,#{$v} .jw-dest .jw-campo{background:rgba(255,255,255,.05);border-color:var(--bd2);color:var(--tx)}
+#{$v} .jw-campo input{color:var(--tx)}
+#{$v} .jw-campo input::placeholder{color:var(--tx3)}
+#{$v} .jw-btn:disabled{background:var(--sk-color-text-4);border-color:var(--sk-color-text-4);color:var(--tx3)}
+#{$v} .jw-btn--sec{background:transparent;color:var(--lk)}
+#{$v} .jw-btn--sec:hover{background:var(--sel)}
+@media (hover:none){#{$v} .jw-op:hover,#{$v} .jw-chips button:hover{border-color:var(--bd)}#{$v} .jw-chips button[aria-pressed="true"]:hover{border-color:var(--lk)}}
+#{$v} .jw-btn:not(.jw-btn--sec):not(:disabled):not(.jw-cerrado){color:var(--sk-color-mission-bg)}
+#{$v} .jw-chips button[aria-pressed="true"]::before{content:"✓";margin-right:6px;font-weight:700}
+#{$v} .jw-aviso{display:flex;gap:8px;align-items:flex-start}
+#{$v} .jw-aviso svg{flex:none;margin-top:3px;color:var(--sk-color-warning)}
+#{$v} .jw-nodisp{display:flex;gap:6px;align-items:flex-start;margin:0;font-size:12px;color:var(--tx3)}
+#{$v} .jw-nodisp b{font-weight:600;color:var(--tx2)}
+#{$v} .jw-nodisp svg{flex:none;margin-top:2px}
+#{$v} .jw-dest.jw-nodisp{padding:14px 18px;border-radius:12px}
+#{$v} .jw-seg{display:inline-flex;flex-wrap:wrap;align-items:center;gap:4px}
+#{$v} .jw-seg-t{margin-right:4px;font-size:12px;color:var(--tx3)}
+#{$v} .jw-seg button{padding:4px 12px;border:1px solid var(--bd2);border-radius:9999px;background:transparent;font-family:var(--sk-font-body);font-size:12px;color:var(--sk-color-mission-text);cursor:pointer}
+#{$v} .jw-seg button[aria-pressed="true"]{background:var(--sk-color-primary);border-color:var(--sk-color-primary);color:var(--sk-color-mission-bg);font-weight:600}
+#{$v} .jw-a5-campo span{display:inline-flex;align-items:center;gap:6px;color:var(--sk-color-border-4)}
+#{$v} .jw-a5-campo input,#{$v} .jw-a5-campo textarea{background:rgba(255,255,255,.05);border-color:var(--bd2);color:#fff;color-scheme:dark}
+#{$v} .jw-a5-campo textarea::placeholder{color:var(--sk-color-mission-text-2)}
+#{$v} .jw-hecho--imp{margin:0}
+
+// ---- Solo lectura: controles atenuados (los enlaces, el panel y «Continuar a…» siguen activos) ----
+// Solo dentro de las etapas (`.jw-etapas`): cada etapa hace `@include controles.solo-lectura;`.
+@mixin solo-lectura {
+  :host-context(#jm-velo.jw-solo) button:disabled:not(.jw-p),:host-context(#jm-velo.jw-solo) input:disabled,:host-context(#jm-velo.jw-solo) textarea:disabled{opacity:.6;cursor:default}
+  :host-context(#jm-velo.jw-solo) .jw-btn.jw-cerrado:disabled{opacity:1}
+}

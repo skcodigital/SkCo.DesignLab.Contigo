@@ -1,0 +1,26 @@
+<button type="button" class="ds-perso">
+  <img src="assets/dash/edit.svg" width="16" height="16" alt="" />Personalizar<img src="assets/dash/chev-down-verde.svg" width="16" height="16" alt="" />
+</button>
+<div class="ds-banner" aria-label="Indicadores de mercado">
+  <button type="button" class="ds-periodo"><b>Periodo: Diario</b><img src="assets/dash/chev-down-sm.svg" width="16" height="16" alt="" /></button>
+  <div class="ds-tk-vent">
+    <div class="ds-tk-pista">
+      <ng-container [ngTemplateOutlet]="cinta" />
+      <!-- Copia para que la cinta sea continua -->
+      <span class="ds-tk-copia" aria-hidden="true"><ng-container [ngTemplateOutlet]="cinta" /></span>
+    </div>
+  </div>
+</div>
+
+<ng-template #cinta>
+  @for (tk of indicadores; track tk.nombre) {
+    <span class="ds-tk">
+      <b>{{ tk.nombre }}</b>
+      @if (tk.sube) {
+        <span class="ds-pill up">{{ tk.variacion }}<img src="assets/dash/tend-sube-sm.svg" width="15" height="9" alt="sube" /></span>
+      } @else {
+        <span class="ds-pill down">{{ tk.variacion }}<img class="rot" src="assets/dash/tend-baja-sm.svg" width="15" height="8.87" alt="baja" /></span>
+      }
+    </span>
+  }
+</ng-template>

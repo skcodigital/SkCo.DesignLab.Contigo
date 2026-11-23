@@ -1,0 +1,42 @@
+// Panel de detalle (prototipo 1213–1278, 1156–1160 y variante oscura 2197–2262)
+$v: ':host-context(#jm-velo)';
+
+.jw-velo-det{position:absolute;inset:0;z-index:5;background:rgba(0,0,0,.28)}
+.jw-det{position:absolute;top:0;right:0;bottom:0;z-index:6;width:min(720px,100%);display:flex;flex-direction:column;background:#fff;box-shadow:-8px 0 24px rgba(0,0,0,.12);animation:jwDet .22s ease both}
+@keyframes jwDet{from{transform:translateX(24px);opacity:0}to{transform:none;opacity:1}}
+.jw-det-h{display:flex;align-items:center;gap:14px;padding:14px 20px 10px}
+.jw-det-t{margin:0;font-family:var(--sk-font-heading);font-size:16px;font-weight:700;color:var(--sk-color-text)}
+.jw-det-sel{flex:1;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--sk-color-text-3)}
+.jw-det-sel select{flex:1;height:38px;padding:0 10px;border:1px solid var(--sk-color-border);border-radius:8px;background:#fff;font-family:var(--sk-font-body);font-size:14px;color:var(--sk-color-text)}
+.jw-det-x{flex:none;width:36px;height:36px;display:grid;place-items:center;border:1px solid var(--sk-color-primary);border-radius:10px;background:#fff;color:var(--sk-color-primary-strong-2);cursor:pointer}
+.jw-det-x:hover{background:var(--sk-color-brand-light)}
+.jw-det-tabs{display:flex;gap:4px;padding:0 20px;border-bottom:1px solid var(--sk-color-line)}
+.jw-det-tabs button{padding:10px 12px;border:0;border-bottom:2px solid transparent;background:none;font-family:var(--sk-font-body);font-size:14px;color:var(--sk-color-text-2);cursor:pointer}
+.jw-det-tabs button[aria-selected="true"]{border-bottom-color:var(--sk-color-primary);color:var(--sk-color-primary-dark);font-weight:700}
+.jw-det-tabs button:focus-visible,.jw-det-x:focus-visible,.jw-det-sel select:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:2px}
+.jw-det-b{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding:16px 20px 24px;font-size:14px;line-height:21px;color:var(--sk-color-text);scrollbar-width:thin}
+// Por encima de todo (header y menú incluidos), con el alto de la pantalla
+#{$v} .jw-velo-det{position:fixed;inset:0;z-index:400}
+#{$v} .jw-det{position:fixed;top:0;right:0;bottom:0;z-index:401}
+@media (max-width:900px){
+  .jw-det{width:100%}
+  .jw-det-h{flex-wrap:wrap}
+  .jw-det-sel{order:3;flex-basis:100%}
+  .jw-det-t{flex:1}
+  .jw-det-tabs{overflow-x:auto}
+}
+// Oscuro suave
+#{$v} .jw-det-t{color:var(--tx)}
+#{$v} .jw-det-b{color:var(--sk-color-line)}
+#{$v} .jw-det-tabs button{color:var(--tx2)}
+#{$v} .jw-det-sel{color:var(--tx3)}
+#{$v} .jw-det-tabs button[aria-selected="true"]{color:var(--vd)}
+#{$v} .jw-det-x{color:var(--lk)}
+#{$v} .jw-det-x:hover{background:rgba(255,255,255,.08)}
+#{$v} .jw-det-sel select{background:rgba(255,255,255,.05);border-color:var(--bd2);color:var(--tx)}
+#{$v} .jw-det-sel select option{background:var(--sk-color-graphite);color:#fff}
+#{$v} .jw-det-tabs{border-color:var(--bd)}
+#{$v} .jw-det-b{scrollbar-color:#5a5a5a transparent}
+#{$v} .jw-det{background:#333333;box-shadow:-8px 0 24px rgba(0,0,0,.45);color:var(--sk-color-line)}
+#{$v} .jw-velo-det{background:rgba(5,10,18,.55)}
+#{$v} .jw-det-x{background:transparent}

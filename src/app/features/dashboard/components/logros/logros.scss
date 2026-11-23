@@ -1,0 +1,214 @@
+// .ds-logros del prototipo
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 0 24px 24px 0;
+  border-radius: 16px;
+  background: var(--sk-color-surface-2);
+}
+
+.ds-lg-h {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+
+  > .ds-mes {
+    flex: none;
+  }
+}
+
+.ds-lg-der {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 24px;
+  padding-top: 16px;
+  order: 2;
+}
+
+.ds-link {
+  font-family: var(--sk-font-heading);
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 700;
+  color: var(--sk-color-primary);
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Ojo de Logros: mismo componente que la ficha del cliente. Los saldos arrancan ocultos
+.ds-ojo-w {
+  position: relative;
+  display: flex;
+  align-items: center;
+  order: 1;
+  margin-left: 4px;
+}
+
+.ds-ojo {
+  padding: 4px;
+
+  &:hover {
+    background: var(--sk-color-brand-light);
+  }
+}
+
+.ds-ojo-tt {
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  width: max-content;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: var(--sk-color-text-5);
+  color: var(--sk-color-surface);
+  font-family: var(--sk-font-body);
+  font-size: 14px;
+  line-height: 22px;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s, visibility 0.15s;
+}
+
+.ds-ojo-w:hover .ds-ojo-tt,
+.ds-ojo:focus-visible + .ds-ojo-tt {
+  opacity: 1;
+  visibility: visible;
+}
+
+.ds-lg-b {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-left: 16px;
+}
+
+.ds-fila3 {
+  display: grid;
+  grid-template-columns: 280px 280px 1fr;
+  gap: 16px;
+  transition: opacity 0.2s;
+}
+
+.ds-fila2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.ds-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+// Indicadores y tarjetas (el contenido interno vive en cada componente)
+.ds-ind {
+  padding: 8px 16px;
+}
+
+.ds-col > .ds-ind {
+  padding: 8px 24px;
+}
+
+.ds-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  background: var(--sk-color-surface);
+  border-radius: 16px;
+  filter: drop-shadow(0 0 2px rgba(61, 75, 92, 0.15));
+}
+
+.ds-dist {
+  flex: 1;
+}
+
+@media (max-width: 1100px) {
+  .ds-fila3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .ds-fila2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .ds-fila3 {
+    grid-template-columns: 1fr;
+  }
+  .ds-lg-h {
+    flex-wrap: wrap;
+    row-gap: 20px;
+  }
+  .ds-lg-der {
+    order: 3;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 0 0 16px;
+    gap: 12px;
+  }
+  .ds-ojo-w {
+    order: 2;
+    margin-left: auto;
+    padding-top: 0;
+  }
+  // Versión pequeña de los 4 indicadores (Figma Portal Contigo · 32880:88748): grilla 2x2
+  .ds-lg-b {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 8px;
+  }
+  .ds-fila3,
+  .ds-fila2,
+  .ds-col {
+    display: contents;
+  }
+  .ds-dist,
+  .ds-com {
+    grid-column: 1 / -1;
+  }
+  .ds-ind,
+  .ds-col > .ds-ind {
+    padding: 8px;
+  }
+  .ds-selw {
+    flex: 1;
+    min-width: 0;
+  }
+  :host {
+    padding-right: 16px;
+  }
+}
+
+@media (hover: none) {
+  .ds-ojo-tt {
+    display: none;
+  }
+  .ds-ojo:hover {
+    background: transparent;
+  }
+  .ds-link:hover {
+    text-decoration: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-ojo-tt {
+    transition: none;
+  }
+}

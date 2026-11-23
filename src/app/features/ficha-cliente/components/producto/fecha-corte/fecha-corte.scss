@@ -1,0 +1,174 @@
+// El selector es un hijo directo de la barra de controles (flex).
+:host {
+  display: contents;
+}
+
+.pf-fecha {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: var(--sk-font-body);
+}
+.pf-fecha-lbl {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--sk-color-text);
+}
+.pf-fecha-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-width: 200px;
+  height: 40px;
+  padding: 0 12px 0 16px;
+  border: 1px solid var(--sk-color-border);
+  border-radius: 8px;
+  background: #fff;
+  font-family: var(--sk-font-body);
+  font-size: 14px;
+  color: var(--sk-color-text);
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.pf-fecha-btn:hover {
+  border-color: var(--sk-color-primary);
+}
+.pf-fecha-btn[aria-expanded='true'] {
+  border-color: var(--sk-color-primary);
+}
+.pf-fecha-btn:focus-visible {
+  outline: 2px solid var(--sk-color-info);
+  outline-offset: 2px;
+}
+.pf-cal {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  z-index: 30;
+  width: 304px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(61, 75, 92, 0.18);
+  padding: 16px;
+}
+.pf-cal-h {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.pf-cal-mes {
+  font-family: var(--sk-font-heading);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--sk-color-text);
+  text-transform: none;
+}
+.pf-cal-nav {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--sk-color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.pf-cal-nav:hover {
+  background: var(--sk-color-brand-light);
+}
+.pf-cal-nav:disabled {
+  color: #c5c5c5;
+  cursor: default;
+  background: transparent;
+}
+.pf-cal-sem,
+.pf-cal-dias {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  text-align: center;
+}
+.pf-cal-sem span {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--sk-color-text-3);
+  padding: 6px 0;
+}
+.pf-cal-dias button {
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  font-family: var(--sk-font-body);
+  font-size: 14px;
+  color: var(--sk-color-text);
+  cursor: pointer;
+}
+.pf-cal-dias button:hover:not(:disabled) {
+  background: var(--sk-color-brand-light);
+  color: var(--sk-color-primary);
+}
+.pf-cal-dias button.hoy {
+  box-shadow: inset 0 0 0 1px var(--sk-color-primary);
+}
+.pf-cal-dias button[aria-selected='true'] {
+  background: var(--sk-color-primary);
+  color: #fff;
+  font-weight: 600;
+}
+.pf-cal-dias button:disabled {
+  color: #c5c5c5;
+  cursor: default;
+}
+.pf-cal-dias button:focus-visible {
+  outline: 2px solid var(--sk-color-info);
+  outline-offset: 1px;
+}
+.pf-cal-pie {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--sk-color-border-3);
+  font-size: 11px;
+  color: var(--sk-color-text-2);
+}
+.pf-cal-hoy {
+  border: 0;
+  background: none;
+  padding: 4px 0;
+  font-family: var(--sk-font-heading);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--sk-color-primary);
+  cursor: pointer;
+}
+.pf-cal-hoy:hover {
+  text-decoration: underline;
+}
+@media (max-width: 600px) {
+  .pf-fecha-btn {
+    width: 100%;
+  }
+  .pf-cal {
+    left: 0;
+    right: auto;
+    width: 100%;
+    max-width: 304px;
+  }
+}
+
+// Táctil: los estados hover no se quedan pegados
+@media (hover: none) {
+  .pf-cal-dias button:hover:not(:disabled):not([aria-selected='true']) {
+    background: transparent;
+    color: var(--sk-color-text);
+  }
+}

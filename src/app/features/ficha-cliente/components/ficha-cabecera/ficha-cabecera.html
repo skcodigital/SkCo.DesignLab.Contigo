@@ -1,0 +1,34 @@
+<div class="m-cliente">
+  <a class="m-volver" href="#" aria-label="Volver al inicio" (click)="alVolver($event)"
+    ><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg></a
+  ><span class="m-nombre">{{ cliente().nombre }}</span>
+</div>
+
+<div class="crumb">
+  <svg width="22" height="16" viewBox="0 0 22 16" fill="none" stroke="#00C73D" stroke-width="2" stroke-linecap="round" (click)="alFlecha()"><path d="M21 8H2M8 1L1 8l7 7" /></svg>
+  <span class="crumb-inicio" role="link" tabindex="0" (click)="alInicio($event)" (keydown.enter)="alInicio($event)">Inicio</span
+  ><span class="sep">/</span
+  ><a href="#" class="crumb-cliente" (click)="alCliente($event)">{{ cliente().nombre }}</a
+  ><span class="crumb-prod"><span class="sep">/</span><b>{{ contrato() }}</b></span>
+</div>
+
+<div class="idbar">
+  <h1>{{ cliente().nombre }}</h1>
+  <span class="chip">{{ cliente().chip }}</span>
+  @for (meta of cliente().metas; track meta.texto) {
+    <span class="meta">
+      @switch (meta.icono) {
+        @case ('persona') {
+          <svg class="ico-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4 4-6 8-6s8 2 8 6" /></svg>
+        }
+        @case ('celular') {
+          <svg class="ico-sm" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2" /><path d="M11 18h2" /></svg>
+        }
+        @case ('correo') {
+          <svg class="ico-sm" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1" /><path d="M3 6l9 7 9-7" /></svg>
+        }
+      }
+      {{ meta.texto }}
+    </span>
+  }
+</div>

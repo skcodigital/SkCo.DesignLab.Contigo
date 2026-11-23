@@ -1,0 +1,11 @@
+@use '../../../../styles/rx-base';
+@use '../../../../styles/rx-card';
+@use '../../../../styles/rx-charts';
+
+:host { display: block; }
+.clients-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-3); align-items: start; }
+.clients-grid > .card { align-self: stretch; }
+
+@media (max-width: 1180px) {
+  .clients-grid { grid-template-columns: minmax(0, 1fr); }
+}

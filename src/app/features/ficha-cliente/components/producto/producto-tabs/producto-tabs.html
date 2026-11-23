@@ -1,0 +1,37 @@
+<div class="pf-tabs" role="tablist" aria-label="Secciones del producto">
+  @for (p of pestanas; track p.id) {
+    <button
+      type="button"
+      class="pf-tab"
+      role="tab"
+      [class.on]="p.id === activa()"
+      [attr.aria-selected]="p.id === activa()"
+      [attr.data-pf]="p.id"
+      (click)="elegir.emit(p.id)"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        @switch (p.id) {
+          @case ('comportamiento') {
+            <path d="M3 3v18h18" /><path d="m7 14 4-4 3 3 6-6" />
+          }
+          @case ('composicion') {
+            <path d="M21.2 15.9A10 10 0 1 1 8 2.8" /><path d="M22 12A10 10 0 0 0 12 2v10z" />
+          }
+          @case ('movimientos') {
+            <path d="M21 12a9 9 0 0 0-15-6.7L3 8" /><path d="M3 3v5h5" /><path d="M3 12a9 9 0 0 0 15 6.7l3-2.7" /><path d="M16 16h5v5" />
+          }
+          @case ('detalles') {
+            <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9l-.8-1.2A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" /><path d="M8 13h.01M12 13h.01M16 13h.01" />
+          }
+          @case ('cuentas') {
+            <rect x="2" y="5" width="20" height="14" rx="2" /><path d="M2 10h20" /><path d="M6 15h4" />
+          }
+          @case ('actividad') {
+            <circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" />
+          }
+        }
+      </svg>
+      {{ p.etiqueta }}
+    </button>
+  }
+</div>

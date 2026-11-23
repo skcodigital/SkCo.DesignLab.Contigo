@@ -1,0 +1,13 @@
+@if (nivel() > 0) {
+  <div class="m-seccion">
+    <nav class="m-ruta" aria-label="Ruta">
+      @for (miga of migas(); track miga.nivel; let primera = $first) {
+        @if (!primera) {
+          <span class="sep" aria-hidden="true">›</span>
+        }
+        <a href="#" (click)="alSubir($event, miga.nivel)">{{ miga.texto }}</a>
+      }
+    </nav>
+    <h2 class="m-sec-tit">{{ titulo() }}</h2>
+  </div>
+}

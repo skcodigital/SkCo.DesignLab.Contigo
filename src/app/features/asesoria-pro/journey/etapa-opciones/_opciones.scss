@@ -1,0 +1,37 @@
+// Cajas de la etapa Opciones (`article.jw-o3`): retiro, crédito puente, combinación y si no retira.
+// Lo usan los componentes de cada caja (la encapsulación no comparte estilos entre componentes).
+$v: ':host-context(#jm-velo)';
+
+// La caja es un ítem directo de la cuadrícula `.jw-ops3` del padre
+:host{display:contents}
+.jw-o3{display:flex;flex-direction:column;gap:8px;padding:14px;border:1px solid var(--sk-color-border-2);border-radius:12px;background:#fff;transition:border-color .15s,background-color .15s,opacity .15s}
+.jw-o3.elegida{border-color:var(--sk-color-primary);background:var(--sk-color-brand-light);box-shadow:0 0 0 1px var(--sk-color-primary) inset}
+.jw-o3.off .jw-o3-cuerpo{opacity:.45}
+.jw-o3 h4{margin:0;font-family:var(--sk-font-heading);font-size:16px;font-weight:700;color:var(--sk-color-text)}
+.jw-o3 dl{margin:0;display:flex;flex-direction:column;gap:6px}
+.jw-o3-cuerpo{display:flex;flex-direction:column;gap:8px;flex:1}
+.jw-o3 dl>div{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.jw-o3 dt{font-size:13px;line-height:18px;color:var(--sk-color-text-2)}
+.jw-o3 dt small{display:block;font-size:11px;color:var(--sk-color-text-3)}
+.jw-o3 dd{margin:0;font-size:13px;font-weight:600;color:var(--sk-color-text);white-space:nowrap;text-align:right}
+.jw-o3 .tot{padding-top:8px;border-top:1px solid var(--sk-color-line)}
+.jw-o3 .tot dt{font-weight:700;color:var(--sk-color-text)}
+.jw-o3 .tot dd{font-family:var(--sk-font-heading);font-size:18px;font-weight:700}
+.jw-o3 .tot.verde dd{color:var(--sk-color-primary-dark)}
+.jw-o3-nota{margin:0;font-size:11px;line-height:16px;color:var(--sk-color-text-3)}
+
+#{$v} .jw-o3{background:var(--sf2);border-color:var(--bd);box-shadow:none}
+#{$v} .jw-o3.elegida{background:var(--sel);border-color:var(--lk);box-shadow:0 0 0 1px var(--lk) inset}
+#{$v} .jw-o3 h4,#{$v} .jw-o3 .tot dt{color:var(--tx)}
+#{$v} .jw-o3 dd{color:var(--sk-color-line)}
+#{$v} .jw-o3 dt{color:var(--tx2)}
+#{$v} .jw-o3 dt small,#{$v} .jw-o3-nota{color:var(--tx3)}
+#{$v} .jw-o3 .tot.verde dd{color:var(--vd)}
+#{$v} .jw-o3 .tot{border-color:var(--bd)}
+#{$v} .jw-o3,#{$v} .jw-o3-cuerpo{min-width:0}
+#{$v} .jw-o3-sub{margin:4px 0 0;font-size:12px;font-weight:700;color:#fff}
+#{$v} .jw-o3 dd{font-variant-numeric:tabular-nums}
+#{$v} .jw-imp-nota{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin-top:2px}
+#{$v} .jw-imp-nota .jw-link{padding:0;font-size:11px}
+#{$v} .jw-dian{padding:0 5px;border:1px solid var(--bd2);border-radius:4px;background:transparent;font-family:var(--sk-font-heading);font-size:9px;font-weight:700;letter-spacing:.04em;line-height:14px;color:var(--tx2);cursor:help}
+#{$v} .jw-o3-nota b{color:#fff}

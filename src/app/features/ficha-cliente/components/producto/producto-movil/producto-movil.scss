@@ -1,0 +1,348 @@
+@use '../../../styles/comunes' as *;
+
+:host {
+  display: block;
+}
+
+@include prod-tag;
+@include pf-pipeline;
+@include pf-dos;
+@include pf-aviso;
+
+// Móvil: contrato homologado con Portal Clientes
+.m-pf {
+  display: none;
+}
+@media (max-width: 600px) {
+  :host-context(.vista-producto:not(.m-pf-sec)) .m-pf {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .m-pf-id {
+    font-family: var(--sk-font-body);
+    font-size: 12px;
+    line-height: 20px;
+    color: var(--sk-color-ink-2);
+  }
+  .m-pf-id p {
+    margin: 0;
+  }
+  .m-pf-nom {
+    margin: 0 0 4px;
+    font-family: var(--sk-font-heading);
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: 700;
+    color: var(--sk-color-ink);
+  }
+  .m-pf-id .m-pf-num {
+    font-family: var(--sk-font-heading);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--sk-color-ink);
+  }
+  .m-pf-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    border-radius: 16px;
+    border: 2px solid transparent;
+    background:
+      linear-gradient(#fff, #fff) padding-box,
+      linear-gradient(135deg, #00c73d, #8fe000) border-box;
+    font-family: var(--sk-font-body);
+    color: var(--sk-color-text);
+  }
+  .m-pf-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .m-pf-lbl {
+    font-size: 13px;
+    line-height: 20px;
+  }
+  .m-pf-top .prod-tag {
+    font-size: 12px;
+    line-height: 18px;
+    padding: 2px 8px;
+  }
+  .m-pf-big {
+    margin: 2px 0 0;
+    font-family: var(--sk-font-heading);
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 700;
+    color: var(--sk-color-ink);
+  }
+  .m-pf-mid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .m-pf-ley {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 13px;
+    line-height: 20px;
+  }
+  .m-pf-ley li {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .m-pf-ley i {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex: none;
+  }
+  .m-pf-ley b {
+    font-weight: 600;
+  }
+  .m-pf-dona {
+    flex: none;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: conic-gradient(var(--sk-charts-c01) 0 10%, var(--sk-charts-c02) 10% 100%);
+    -webkit-mask: radial-gradient(circle, transparent 26px, #000 27px);
+    mask: radial-gradient(circle, transparent 26px, #000 27px);
+  }
+  .m-pf-link {
+    margin-top: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--sk-color-info);
+    text-decoration: none;
+  }
+  .m-pf-link:hover {
+    text-decoration: underline;
+  }
+  .m-pf-card .pf-pipeline {
+    margin-top: 16px;
+    width: 100%;
+    font-size: 14px;
+    padding: 8px 18px;
+  }
+  .m-pf-benef {
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 0 4px 0 rgba(68, 68, 68, 0.15);
+    font-family: var(--sk-font-body);
+    color: var(--sk-color-text);
+  }
+  .m-pf-benef summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    cursor: pointer;
+  }
+  .m-pf-benef summary::-webkit-details-marker {
+    display: none;
+  }
+  .m-pf-benef summary svg {
+    flex: none;
+  }
+  .m-pf-benef-t {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .m-pf-benef-t > b {
+    font-family: var(--sk-font-heading);
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
+  }
+  .m-pf-chev {
+    margin-left: auto;
+    transition: transform 0.2s;
+  }
+  .m-pf-benef[open] .m-pf-chev {
+    transform: rotate(90deg);
+  }
+  .m-pf-benef .pf-dos {
+    margin: 0 12px 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--sk-color-border-3);
+  }
+  .m-pf-benef summary:focus-visible {
+    outline: 2px solid var(--sk-color-info);
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+}
+
+// Móvil: estilos exactos de Figma, Portal Clientes 2.0 · Contrato App (nodo 49361:37603)
+@media (max-width: 600px) {
+  :host-context(.vista-producto:not(.m-pf-sec)) .m-pf {
+    gap: 18px;
+  }
+  .m-pf-id {
+    font-family: var(--sk-font-body);
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 400;
+    color: var(--sk-color-text);
+  }
+  .m-pf-nom {
+    margin: 0;
+    font-family: var(--sk-font-heading);
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+    color: var(--sk-color-text);
+    text-decoration: none;
+  }
+  .m-pf-id .m-pf-num {
+    font-family: var(--sk-font-body);
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 700;
+    color: var(--sk-color-text);
+  }
+  .m-pf-card {
+    overflow: hidden;
+    padding: 10px 14px 18px;
+    border: 2px solid #8fe000;
+    border-radius: 16px;
+    background: var(--sk-color-surface);
+    margin-bottom: 0;
+  }
+  .m-pf-marca {
+    position: absolute;
+    pointer-events: none;
+    max-width: none;
+  }
+  .m-pf-marca-izq {
+    left: 20px;
+    bottom: -14px;
+    transform: rotate(-90deg);
+  }
+  .m-pf-marca-der {
+    right: 24px;
+    top: -19px;
+    transform: rotate(90deg);
+  }
+  .m-pf-card > *:not(.m-pf-marca) {
+    position: relative;
+  }
+  .m-pf-top {
+    align-items: flex-start;
+  }
+  .m-pf-lbl {
+    font-family: var(--sk-font-body);
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 400;
+    color: var(--sk-color-text);
+  }
+  .m-pf-big {
+    margin: 0;
+    font-family: var(--sk-font-heading);
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 700;
+    color: var(--sk-color-text-2);
+  }
+  .m-pf-mid {
+    margin-top: 12px;
+    gap: 8px;
+  }
+  .m-pf-ley {
+    gap: 4px;
+    font-family: var(--sk-font-body);
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 400;
+    color: var(--sk-color-text);
+  }
+  .m-pf-ley li {
+    gap: 5px;
+    flex-wrap: nowrap;
+  }
+  .m-pf-ley i {
+    width: 8px;
+    height: 8px;
+    border-radius: 80px;
+  }
+  .m-pf-dona {
+    width: 60px;
+    height: 60px;
+    -webkit-mask: radial-gradient(circle, transparent 22px, #000 23px);
+    mask: radial-gradient(circle, transparent 22px, #000 23px);
+  }
+  .m-pf-link {
+    margin-top: 12px;
+    font-family: var(--sk-font-body);
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 700;
+    color: var(--sk-color-info);
+    text-decoration: underline;
+    text-underline-position: from-font;
+  }
+  .m-pf-card .pf-pipeline {
+    margin-top: 18px;
+    min-width: 80px;
+    padding: 4px 16px;
+    border: 1px solid var(--sk-color-primary);
+    border-radius: 50px;
+    background: transparent;
+    font-family: var(--sk-font-heading);
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 700;
+    color: var(--sk-color-primary);
+  }
+  .m-pf-card .pf-pipeline:hover {
+    background: #caf9cb;
+  }
+  // Beneficio de permanencia: acordeón informativo (gris, sin sombra, chevron abajo), pegado a la tarjeta
+  .m-pf-benef {
+    margin-top: -6px;
+    border-radius: 8px;
+    background: var(--sk-color-surface-3);
+    box-shadow: none;
+    filter: none;
+  }
+  .m-pf-benef[open] .m-pf-chev {
+    transform: rotate(180deg);
+  }
+  .m-pf-benef .pf-dos {
+    border-top-color: #e2e2e2;
+  }
+  .m-pf-benef .m-pf-aviso {
+    background: var(--sk-color-info-light);
+  }
+  .m-pf-aviso {
+    margin: 0 12px 12px;
+    padding: 10px 12px;
+    gap: 10px;
+    font-size: 12px;
+    line-height: 18px;
+    align-items: center;
+  }
+}
+
+// Táctil: los estados hover no se quedan pegados
+@media (hover: none) {
+  .m-pf-card .pf-pipeline:hover,
+  .pf-pipeline:hover {
+    background: transparent;
+  }
+}

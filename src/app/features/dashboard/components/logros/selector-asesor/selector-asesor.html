@@ -1,0 +1,38 @@
+<button
+  #boton
+  type="button"
+  class="ds-sel"
+  aria-haspopup="listbox"
+  [attr.aria-expanded]="abierta()"
+  aria-controls="ds-ops"
+  aria-label="Filtrar logros por asesor"
+  (click)="alternar()"
+  (keydown)="teclaBoton($event)"
+>
+  <span class="ds-sel-tx" [class.vacio]="seleccion() === null">{{ etiqueta() }}</span><img class="ds-sel-chev" src="assets/dash/chev-down-gris.svg" width="16" height="16" alt="" />
+</button>
+<ul
+  #lista
+  class="ds-ops"
+  id="ds-ops"
+  role="listbox"
+  aria-label="Asesores"
+  tabindex="-1"
+  [hidden]="!abierta()"
+  [attr.aria-activedescendant]="activa() >= 0 ? 'ds-op-' + activa() : null"
+  (keydown)="teclaLista($event)"
+>
+  @for (nombre of asesores(); track nombre; let i = $index) {
+    <li
+      #opcion
+      role="option"
+      [id]="'ds-op-' + i"
+      [attr.aria-selected]="i === seleccion()"
+      [class.activo]="i === activa()"
+      (click)="elegirOpcion(i)"
+      (mousemove)="marcar(i)"
+    >
+      {{ nombre }}<svg class="ds-op-ck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+    </li>
+  }
+</ul>

@@ -1,0 +1,25 @@
+@use '../../styles/controles';
+@use '../acuerdo';
+$v: ':host-context(#jm-velo)';
+
+.jw-a5-campos{display:grid;grid-template-columns:200px minmax(0,1fr);gap:12px;margin-top:4px}
+.jw-juego{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--sk-color-border-2);border-radius:10px}
+.jw-juego>div{display:flex;flex-direction:column;gap:2px;padding:10px 14px}
+.jw-juego>div+div{border-left:1px solid var(--sk-color-border-2)}
+.jw-juego small{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.jw-juego b{font-family:var(--sk-font-heading);font-size:17px}
+.jw-juego span{font-size:12px}
+.jw-resc summary{cursor:pointer;font-size:14px;font-weight:600;color:var(--sk-color-primary-strong-2);list-style-position:inside}
+.jw-resc summary:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:2px}
+.jw-resc pre{margin:10px 0 6px;padding:12px 14px;border-radius:10px;white-space:pre-wrap;font-family:var(--sk-font-body);font-size:13px;line-height:20px;max-height:260px;overflow-y:auto}
+#{$v} .jw-juego{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.10)}
+#{$v} .jw-juego>div+div{border-color:rgba(255,255,255,.10)}
+#{$v} .jw-juego small{color:var(--sk-color-border-4)}
+#{$v} .jw-juego b{color:#fff}
+#{$v} .jw-juego .verde b{color:var(--sk-color-lime)}
+#{$v} .jw-juego span{color:var(--sk-color-mission-text-2)}
+#{$v} .jw-resc summary{color:var(--sk-color-primary)}
+#{$v} .jw-resc pre{background:rgba(255,255,255,.06);color:var(--sk-color-line)}
+@media (max-width:900px){.jw-a5-campos{grid-template-columns:1fr}.jw-juego{grid-template-columns:1fr 1fr}.jw-juego>div:nth-child(3){border-left:0}.jw-juego>div:nth-child(n+3){border-top:1px solid rgba(255,255,255,.10)}}
+
+@include controles.solo-lectura;

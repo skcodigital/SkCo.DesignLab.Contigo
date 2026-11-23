@@ -1,0 +1,43 @@
+.m-seccion {
+  display: none;
+}
+@media (max-width: 600px) {
+  // Barra de sección (ruta + título) oculta por ahora a pedido de UX; el código queda listo para retomarla
+  .m-seccion {
+    display: none;
+    margin-top: 20px;
+  }
+  .m-ruta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2px 6px;
+    margin-bottom: 2px;
+    font-family: var(--sk-font-body);
+    font-size: 12px;
+    line-height: 18px;
+    color: var(--sk-color-muted);
+  }
+  .m-ruta:empty {
+    display: none;
+  }
+  .m-ruta a {
+    color: var(--sk-color-info);
+    text-decoration: underline;
+    font-weight: 600;
+  }
+  .m-ruta .sep {
+    color: var(--sk-color-muted);
+  }
+  .m-sec-tit {
+    margin: 0;
+    font-family: var(--sk-font-heading);
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: 700;
+    color: var(--sk-color-ink);
+  }
+  :host-context(.modo-mision) .m-ruta a {
+    color: #7cc7f0;
+  }
+}

@@ -1,0 +1,258 @@
+// Carrusel del panel derecho. La variante oscura depende de la clase .lg-dark del panel (quitarla vuelve al verde).
+
+.lg-hero {
+  position: relative;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.lg-eyebrow {
+  font-family: var(--sk-font-heading);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--sk-color-lime);
+}
+
+.lg-hero h2 {
+  margin-top: 12px;
+  font-family: var(--sk-font-heading);
+  font-weight: 700;
+  font-size: clamp(19px, 1.75vw, 25px);
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #fff;
+}
+
+.lg-hero h2 span {
+  color: #1e1e1e;
+}
+
+.lg-txt {
+  margin-top: 18px;
+  font-size: 16px;
+  line-height: 25px;
+  color: #1e1e1e;
+  max-width: 520px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.lg-chips {
+  list-style: none;
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 480px;
+}
+
+.lg-chips li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--sk-color-text);
+  font-family: var(--sk-font-heading);
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+// ===== Carrusel del login (patrón de Portal Clientes: flechas + puntos) =====
+:host {
+  position: static;
+}
+
+.lg-txt {
+  text-wrap: balance;
+}
+
+.lg-slides {
+  display: grid;
+}
+
+.lg-slide {
+  grid-area: 1/1;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease,
+    visibility 0s 0.45s;
+}
+
+.lg-slide.on {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease;
+}
+
+.lg-flecha {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 0;
+  background: #3a3a3a;
+  color: var(--sk-color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.lg-flecha:hover {
+  background: #1e1e1e;
+}
+
+.lg-flecha:focus-visible,
+.lg-puntos button:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.lg-flecha.prev {
+  left: 16px;
+}
+
+.lg-flecha.next {
+  right: 16px;
+}
+
+.lg-flecha svg {
+  width: 26px;
+  height: 26px;
+  stroke-width: 3.2;
+}
+
+.lg-puntos {
+  display: flex;
+  gap: 8px;
+  margin-top: 30px;
+}
+
+.lg-puntos button {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--sk-color-lime);
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    width 0.2s;
+}
+
+.lg-puntos button[aria-selected='true'] {
+  background: #fff;
+  width: 26px;
+  border-radius: 9999px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lg-slide,
+  .lg-slide.on {
+    transition: none;
+  }
+}
+
+// ===== Variante oscura =====
+:host-context(.lg-dark) {
+  position: static;
+}
+
+:host-context(.lg-dark) .lg-hero {
+  position: relative;
+  z-index: 1;
+}
+
+:host-context(.lg-dark) .lg-flecha {
+  position: absolute;
+  z-index: 2;
+}
+
+:host-context(.lg-dark) .lg-eyebrow {
+  color: var(--sk-color-lime);
+}
+
+:host-context(.lg-dark) .lg-hero h2 {
+  color: #fff;
+}
+
+:host-context(.lg-dark) .lg-hero h2 span {
+  color: var(--sk-color-primary);
+}
+
+:host-context(.lg-dark) .lg-txt {
+  color: var(--sk-color-mission-text);
+}
+
+:host-context(.lg-dark) .lg-chips li {
+  background: #4a4b4d;
+  color: #fff;
+  box-shadow: none;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+:host-context(.lg-dark) .lg-flecha {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--sk-color-primary);
+}
+
+:host-context(.lg-dark) .lg-flecha:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+:host-context(.lg-dark) .lg-puntos button {
+  background: #6a6a6a;
+}
+
+:host-context(.lg-dark) .lg-puntos button[aria-selected='true'] {
+  background: var(--sk-color-primary);
+}
+
+// Centrado junto a Sami decorativo
+.lg-hero {
+  margin: 0;
+}
+
+:host {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+:host .lg-txt {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+:host .lg-chips {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+:host .lg-chips li {
+  text-align: left;
+}
+
+:host .lg-puntos {
+  justify-content: center;
+}

@@ -1,0 +1,295 @@
+// LOGIN (estructura de Portal Clientes; campos de Contigo).
+// La página pinta el marco (tarjeta, columnas) y la caja de cada hijo directo de .lg-izq; el contenido de
+// cada zona lo pinta su componente. El orden replica el del prototipo (varias reglas se anulan entre sí).
+@use '../../styles/login-ui';
+
+// Antes `.lg` + `body.lg-on`: el login es su propia ruta y cubre la ventana.
+:host {
+  position: fixed;
+  inset: 0;
+  z-index: 140;
+  background: var(--sk-color-surface);
+  padding: 0;
+  display: flex;
+  overflow: auto;
+  font-family: var(--sk-font-body);
+  color: var(--sk-color-text);
+}
+
+.lg-card {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(380px, 527fr) 943fr;
+  min-height: 100%;
+  background: var(--sk-color-surface);
+  border-radius: 0;
+  overflow: hidden;
+  box-shadow: none;
+}
+
+.lg-izq {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 14px;
+  padding: 56px 48px 40px;
+  overflow: auto;
+  background: #f4f5f6;
+}
+
+.lg-izq > * {
+  position: relative;
+  z-index: 1;
+}
+
+.lg-izq > form {
+  margin-bottom: auto;
+}
+
+.lg-logo {
+  align-self: center;
+  width: 140px;
+  height: auto;
+  margin-bottom: auto;
+  padding-bottom: 32px;
+  box-sizing: content-box;
+}
+
+.lg-zona {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px;
+  border: 0;
+  border-radius: 16px;
+  background: var(--sk-color-surface);
+  box-shadow: var(--sk-shadow-card);
+}
+
+.lg-zona-sk {
+  background: var(--sk-color-surface);
+}
+
+.lg-o {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0;
+  color: var(--sk-color-placeholder);
+  font-size: 12px;
+}
+
+.lg-o::before,
+.lg-o::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--sk-color-border-3);
+}
+
+// Restablecer contraseña: oculta el saludo y las zonas del login
+.lg-izq.rs-on > .lg-hola,
+.lg-izq.rs-on > .lg-zona:not(.lg-reset),
+.lg-izq.rs-on > .lg-o {
+  display: none;
+}
+
+.lg-reset {
+  margin-bottom: auto;
+  gap: 0;
+  padding: 24px 24px 28px;
+}
+
+// Tarjeta centrada y de alto fijo: barra, títulos y campos no se mueven al cambiar de paso
+.lg-reset {
+  box-sizing: border-box;
+  min-height: 490px;
+  padding-top: 20px;
+}
+
+// Banner en móvil: fondo oscuro detrás del logo y el saludo, hasta la mitad de la primera zona
+.lg-mini,
+.lg-logo-w {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .lg-izq:not(.rs-on) {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .lg-izq:not(.rs-on)::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: var(--hero-h, 320px);
+    z-index: -1;
+    background: var(--sk-color-text) url('/assets/fondo-login-dark.png') 30% top / cover no-repeat;
+    border-radius: 0 0 24px 24px;
+  }
+
+  .lg-izq:not(.rs-on) .lg-logo {
+    display: none;
+  }
+
+  .lg-izq:not(.rs-on) .lg-logo-w {
+    display: flex;
+    order: -3;
+    align-items: center;
+    justify-content: space-between;
+    align-self: stretch;
+    margin-bottom: 12px;
+  }
+
+  .lg-logo-w svg {
+    width: 32px;
+    height: 32px;
+    display: block;
+  }
+
+  .lg-logo-w span {
+    font-family: var(--sk-font-heading);
+    font-weight: 700;
+    font-size: 16px;
+    color: #fff;
+  }
+
+  .lg-izq:not(.rs-on) .lg-mini {
+    display: flex;
+    order: -2;
+    align-items: center;
+    gap: 12px;
+    align-self: center;
+    max-width: 320px;
+    margin: 8px 0 28px;
+  }
+
+  .lg-izq:not(.rs-on) .lg-hola {
+    display: none;
+  }
+
+  .lg-izq:not(.rs-on) .lg-hola h1,
+  .lg-izq:not(.rs-on) .lg-hola p {
+    color: #fff;
+  }
+}
+
+// Login en móvil: una columna compacta, tarjetas a todo el ancho y sin espacios vacíos
+@media (max-width: 600px) {
+  .lg-izq {
+    padding: 24px 16px 32px;
+    gap: 12px;
+  }
+
+  .lg-logo {
+    width: 120px;
+    padding-bottom: 8px;
+  }
+
+  .lg-zona,
+  .lg-reset {
+    padding: 20px 16px;
+  }
+
+  .lg-reset {
+    min-height: 0;
+  }
+
+  .lg-izq.rs-on .lg-logo {
+    margin-bottom: 24px;
+  }
+}
+
+// Login sin scroll: espacios más compactos para que todo quepa en pantallas de 650 px de alto
+.lg-izq {
+  padding: 32px 40px 24px;
+  gap: 10px;
+}
+
+.lg-logo {
+  padding-bottom: 16px;
+}
+
+.lg-zona {
+  padding: 20px 24px;
+  gap: 10px;
+}
+
+.lg-o {
+  margin: 0;
+}
+
+.lg-reset {
+  padding: 20px 24px 24px;
+}
+
+@media (max-height: 640px) {
+  .lg-izq {
+    padding: 20px 40px 16px;
+    gap: 8px;
+  }
+
+  .lg-logo {
+    padding-bottom: 8px;
+  }
+
+  .lg-zona {
+    padding: 16px 20px;
+    gap: 8px;
+  }
+
+  .lg-reset {
+    min-height: 470px;
+    padding: 16px 20px 20px;
+  }
+}
+
+// Panel derecho (variante oscura: quitar .lg-dark vuelve al verde)
+.lg-der {
+  position: relative;
+  overflow: hidden;
+  background: var(--sk-color-primary) url('/assets/fondo-login.png') center / cover no-repeat;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 56px 64px;
+}
+
+.lg-der.lg-dark {
+  background: var(--sk-color-text) url('/assets/fondo-login-dark.png') center / cover no-repeat;
+}
+
+@media (max-width: 1100px) {
+  .lg-der {
+    padding: 48px;
+  }
+}
+
+@media (max-width: 900px) {
+  :host {
+    padding: 0;
+  }
+
+  .lg-card {
+    grid-template-columns: 1fr;
+    border-radius: 0;
+    min-height: 100%;
+  }
+
+  .lg-der {
+    display: none;
+  }
+
+  .lg-izq {
+    padding: 32px 20px;
+    max-width: 480px;
+    width: 100%;
+    margin: 0 auto;
+  }
+}

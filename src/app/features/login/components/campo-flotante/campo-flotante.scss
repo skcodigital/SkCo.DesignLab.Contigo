@@ -1,0 +1,150 @@
+// La etiqueta y el error son hijos directos del contenedor flex (zona del login o paso del restablecimiento).
+:host {
+  display: contents;
+}
+
+.lg-campo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--sk-color-border-3);
+  border-radius: 8px;
+  background: var(--sk-color-surface);
+  color: var(--sk-color-text-3);
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+.lg-campo:focus-within {
+  border-color: var(--sk-color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 199, 61, 0.1);
+  color: var(--sk-color-primary);
+}
+
+.lg-campo input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-family: var(--sk-font-body);
+  font-size: 14px;
+  color: var(--sk-color-text);
+}
+
+.lg-campo input::placeholder {
+  color: var(--sk-color-text-3);
+}
+
+.lg-ver {
+  border: 0;
+  background: none;
+  padding: 2px;
+  display: flex;
+  color: var(--sk-color-text-3);
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.lg-ver:focus-visible {
+  outline: 2px solid var(--sk-color-info);
+  outline-offset: 2px;
+}
+
+// Caja del campo: etiqueta arriba y valor abajo, en columna con 4px (estilos de Portal Clientes)
+.lg-campo.rs-fl {
+  position: relative;
+  height: 56px;
+  border-radius: 12px;
+  padding: 8px 44px 8px 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 4px;
+  align-self: stretch;
+  transition:
+    height 0.15s,
+    border-color 0.15s;
+}
+
+.lg-campo.rs-fl:focus-within {
+  border-color: var(--sk-color-primary);
+  box-shadow: none;
+}
+
+.rs-fl .fl {
+  order: -1;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--sk-color-text-2);
+  pointer-events: none;
+  transition:
+    font-size 0.15s,
+    color 0.15s;
+}
+
+.rs-fl input {
+  align-self: stretch;
+  flex: none;
+  height: 20px;
+  padding: 0;
+  line-height: 20px;
+  transition: height 0.15s;
+}
+
+.rs-fl input::placeholder {
+  color: transparent;
+}
+
+// Vacío y sin foco: la etiqueta hace de placeholder, centrada
+.rs-fl:not(:focus-within):has(input:placeholder-shown) {
+  gap: 0;
+  height: 38px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.rs-fl:not(:focus-within):has(input:placeholder-shown) .fl {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--sk-color-text-3);
+}
+
+.rs-fl:not(:focus-within):has(input:placeholder-shown) input {
+  height: 0;
+}
+
+.rs-fl .lg-ver {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lg-campo.rs-fl.err {
+  border-color: var(--sk-color-danger-strong);
+}
+
+.rs-err {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-top: -6px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--sk-color-danger-strong);
+}
+
+.rs-err svg {
+  flex: none;
+  margin-top: 2px;
+}
+
+.lg-campo.err {
+  border-color: var(--sk-color-danger-strong);
+}

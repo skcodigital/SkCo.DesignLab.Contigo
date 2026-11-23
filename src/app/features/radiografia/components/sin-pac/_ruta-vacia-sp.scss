@@ -1,0 +1,13 @@
+// Estado vacío de la radiografía sin PAC (Plan corporativo y Ruta comercial): mismo patrón del estado vacío.
+// Ojo: en el prototipo `.card` va después y pisa padding, fondo y sombra; por eso se usa ANTES de rx-card.
+.ruta-vacia { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); padding: 40px var(--space-3); text-align: center; background: var(--sk-color-surface-3); box-shadow: none; }
+.ruta-vacia-icon { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; background: var(--sk-color-brand-light); color: var(--sk-color-primary-strong); }
+.ruta-vacia-title { margin: 0; font: 700 18px/26px var(--sk-font-heading); color: var(--texts-strong); }
+.ruta-vacia-desc { margin: 0; max-width: 560px; font: 400 14px/22px var(--sk-font-body); color: var(--sk-color-text); }
+.ruta-vacia-desc b { font-weight: 700; }
+.ruta-vacia .btn-primary { width: auto; min-width: 280px; padding: 0 32px; margin-top: var(--space-1); }
+.ruta-vacia .btn-primary[hidden] { display: none; }
+.ruta-vacia-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-3); width: 100%; max-width: 600px; margin-top: var(--space-1); padding: var(--space-3); border-radius: 16px; background: var(--sk-color-surface); }
+.ruta-vacia-stats .stat { align-items: center; }
+@media (max-width: 768px) { .ruta-vacia-stats { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 768px) { .ruta-vacia .btn-primary { width: 100%; min-width: 0; } }

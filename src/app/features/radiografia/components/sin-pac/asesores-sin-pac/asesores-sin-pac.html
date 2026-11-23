@@ -1,0 +1,65 @@
+<div class="sk-alert sk-alert--info sk-alert--top" role="note"><span class="sk-alert__icon" aria-hidden="true"><nc-rx-icono-sp nombre="info" /></span><div class="sk-alert__content"><p class="sk-alert__title">Esta empresa no tiene FP Asignado</p><p class="sk-alert__desc">El FP Asignado es el asesor responsable de la relación con la empresa. Como esta empresa no tiene Plan de Ahorro Corporativo, <b>hoy no hay un responsable de la relación</b>: la atienden 5 asesores de varias agencias, entre ellos tú.</p></div></div>
+<article class="card owner-chart">
+  <div class="card-head">
+    <div>
+      <h3 class="card-title">Clientes nuevos en la empresa, por quién los vinculó</h3>
+      <p class="card-sub">Clientes nuevos para Skandia que trabajan en Empresa XYZ S.A.S.</p>
+    </div>
+    <div class="legend-inline">
+      <span><i class="sw sw--agencia"></i>Tu agencia (Agencia Norte)</span>
+      <span><i class="sw sw--otras"></i>Otras agencias</span>
+    </div>
+  </div>
+  <div class="owner-chart-grid">
+    <div class="owner-chart-main">
+      <div class="bars">
+        @for (c of columnas; track c.anio) {
+          <div class="bar-col">
+            <span class="bar-total num">{{ c.total }}</span>
+            <div class="bar" role="img" [attr.aria-label]="c.aria">
+              @for (t of c.tramos; track t.gestion) {
+                <span [class]="'seg seg--' + t.gestion" [style.height.px]="t.alto" [ncRxChartTip]="t.tip"><span class="seg-val">{{ t.valor }}</span></span>
+              }
+            </div>
+            <span class="bar-year">{{ c.anio }}</span>
+          </div>
+        }
+      </div>
+      <p class="card-foot">* 2026 hasta octubre.</p>
+    </div>
+    @if (lecturas) {
+      <!-- C-04: las lecturas automáticas no salen por ahora (y en esta pestaña el lateral va oculto) -->
+      <div class="owner-side">
+        <div class="sk-alert sk-alert--info sk-alert--reading" role="note"><span class="sk-alert__icon" aria-hidden="true"><nc-rx-icono-sp nombre="info" /></span><div class="sk-alert__content"><p class="sk-alert__title">Lectura para la conversación</p><p class="sk-alert__desc">Desde 2024, tu agencia vinculó <b>6</b> clientes nuevos en la empresa y otras agencias, <b>3</b>. Felipe Arango tiene la relación más profunda: <b>4 clientes</b> y <b>1,8</b> productos por cliente.</p></div></div>
+      </div>
+    }
+  </div>
+</article>
+
+<section class="card block" aria-labelledby="asesores-title-sp">
+  <div class="block-head">
+    <h2 class="block-title" id="asesores-title-sp">Asesores con clientes en la empresa (5)</h2>
+  </div>
+  <div class="table-wrap">
+    <table class="table table--sp">
+      <thead>
+        <tr>
+          <th scope="col"><span class="th">Asesor</span></th>
+          <th scope="col"><span class="th">Clientes</span></th>
+          <th scope="col"><span class="th">Activos</span></th>
+          <th scope="col"><span class="th">Productos por cliente</span></th>
+          <th scope="col"><span class="th">Clientes nuevos desde 2024</span></th>
+          <th scope="col"><span class="th">Último cliente nuevo</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (a of asesores; track a.nombre) {
+          <tr [class.row-agg]="a.agregada">
+            <th scope="row"><span class="who"><i [class]="'sw sw--' + a.gestion"></i><span><b>@if (a.agregada) {<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> }{{ a.nombre }}</b><small>{{ a.detalle }}</small></span></span></th>
+            <td class="c num">{{ a.clientes }}</td><td class="c num">{{ a.activos }}</td><td class="c num">{{ a.productosPorCliente }}</td><td class="c num">{{ a.nuevos }}</td><td class="c">{{ a.ultimo }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

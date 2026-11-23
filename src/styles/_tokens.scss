@@ -1,0 +1,82 @@
+// Tokens de diseño del Design Lab de Contigo.
+// Valores exactos del prototipo de UX (nuevo-contigo/v1) para conservar la fidelidad visual.
+// Regla: en SCSS de componentes se usa var(--sk-*) cuando el valor coincide con un token;
+// si un color nuevo se repite en varios componentes, se agrega aquí en vez de repetir el hex.
+
+:root {
+  // Marca
+  --sk-color-primary: #00c73d;
+  --sk-color-primary-hover: #00b336;
+  --sk-color-primary-strong: #03a835;
+  --sk-color-primary-strong-2: #00a234;
+  --sk-color-primary-dark: #007a25;
+  --sk-color-primary-soft: #e6f9ec;
+  --sk-color-primary-tint: #f4fcf3;
+  --sk-color-lime: #8fe000;
+  --sk-color-brand-light: #f6fcf2;
+  --sk-color-brand-active: #eaf8e4;
+  --sk-color-mint: #ebfbf6;
+  --sk-gradient-brand: linear-gradient(135deg, #00c73d, #8fe000);
+
+  // Informativo / feedback
+  --sk-color-info: #0099de;
+  --sk-color-info-light: #ebf4ff;
+  --sk-color-info-soft: #e6f4fb;
+  --sk-color-danger: #e5383b;
+  --sk-color-danger-strong: #e3262f;
+  --sk-color-warning: #f0b54a;
+  --sk-color-warning-strong: #ffae08;
+  --sk-color-warning-light: #fff3e0;
+
+  // Texto
+  --sk-color-ink: #333;
+  --sk-color-ink-2: #555;
+  --sk-color-text: #404040;
+  --sk-color-text-2: #666;
+  --sk-color-text-3: #878787;
+  --sk-color-text-4: #4a4a4a;
+  --sk-color-text-5: #444;
+  --sk-color-muted: #8a8a8a;
+  --sk-color-placeholder: #a5a5a5;
+  --sk-color-black: #000;
+
+  // Superficies y bordes
+  --sk-color-surface: #fff;
+  --sk-color-surface-2: #fafafa;
+  --sk-color-surface-3: #f7f7f7;
+  --sk-color-surface-4: #f3f3f3;
+  --sk-color-surface-5: #f0f0f0;
+  --sk-color-surface-6: #f5f5f5;
+  --sk-color-line: #ececec;
+  --sk-color-border: #ddd;
+  --sk-color-border-2: #e3e3e3;
+  --sk-color-border-3: #e9e9e9;
+  --sk-color-border-4: #d0d3d5;
+
+  // Modo misión (superficies grafito)
+  --sk-color-mission-text: #e3e5e7;
+  --sk-color-mission-text-2: #a3a8ac;
+  --sk-color-mission-text-3: #b5b9bc;
+  --sk-color-mission-bg: #03140a;
+  --sk-color-graphite: #383838;
+  --sk-color-graphite-2: #2b2b2b;
+
+  // Gráficas (paleta del DS)
+  --sk-charts-c01: #a1dd70;
+  --sk-charts-c02: #a4d7e1;
+  --sk-charts-c03: #60a9a6;
+  --sk-charts-c04: #ff9460;
+  --sk-charts-c05: #8ba2c1;
+
+  // Sombras
+  --sk-shadow-card: 0 0 4px 0 rgba(61, 75, 92, 0.15);
+  --sk-shadow-card-2: 0 0 4px 0 rgba(68, 68, 68, 0.15);
+
+  // Tipografía
+  --sk-font-heading: Montserrat, system-ui, sans-serif;
+  --sk-font-body: 'Open Sans', sans-serif;
+
+  // Layout del shell
+  --sk-rail-width: 112px;
+  --sk-header-height: 80px;
+}

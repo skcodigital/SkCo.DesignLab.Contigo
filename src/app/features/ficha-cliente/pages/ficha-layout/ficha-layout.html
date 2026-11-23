@@ -1,0 +1,20 @@
+<nc-retiros-en-curso [retiros]="retiros" [oculto]="store.saldosOcultos()" />
+
+<nc-ficha-cabecera
+  [cliente]="cliente"
+  [contrato]="'#' + producto.contrato"
+  [productoAbierto]="productoAbierto()"
+  (inicio)="irInicio()"
+  (cerrarProducto)="cerrarProducto()"
+  (volver)="volver()"
+/>
+
+<nc-m-seccion
+  [nivel]="nivel()"
+  [pestana]="store.etiquetaPestana()"
+  [producto]="producto.nombre"
+  [seccionProducto]="store.etiquetaPestanaProducto()"
+  (subir)="subirA($event)"
+/>
+
+<router-outlet />

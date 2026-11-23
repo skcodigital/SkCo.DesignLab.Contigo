@@ -1,0 +1,27 @@
+@switch (clave()) {
+  <!-- Con plan corporativo · director comercial -->
+  @case ('director-resumen') { <nc-rx-resumen-director /> }
+  @case ('director-dueno') { <nc-rx-equipo-asignado /> }
+  @case ('director-clientes') { <nc-rx-clientes-director /> }
+  @case ('director-relacion') { <nc-rx-relacion-director /> }
+  @case ('director-plan') { <nc-rx-plan-corporativo /> }
+  @case ('director-ruta') { <nc-rx-ruta-director /> }
+  <!-- Con plan corporativo · FP Asignado (Plan corporativo es el mismo panel del director) -->
+  @case ('dueno-resumen') { <nc-rx-resumen-dueno /> }
+  @case ('dueno-clientes') { <nc-rx-clientes-dueno /> }
+  @case ('dueno-relacion') { <nc-rx-relacion-dueno /> }
+  @case ('dueno-plan') { <nc-rx-plan-corporativo /> }
+  @case ('dueno-ruta') { <nc-rx-ruta-dueno /> }
+  <!-- Con plan corporativo · asesor (otro FP) -->
+  @case ('fp-resumen') { <nc-rx-resumen-fp /> }
+  @case ('fp-clientes') { <nc-rx-clientes-fp /> }
+  @case ('fp-relacion') { <nc-rx-relacion-fp /> }
+  @case ('fp-plan') { <nc-rx-plan-fp /> }
+  <!-- Sin plan corporativo -->
+  @case ('sin-resumen') { <nc-rx-resumen-sin-pac /> }
+  @case ('sin-dueno') { <nc-rx-asesores-sin-pac /> }
+  @case ('sin-clientes') { <nc-rx-clientes-sin-pac /> }
+  @case ('sin-relacion') { <nc-rx-relacion-sin-pac /> }
+  @case ('sin-plan') { <nc-rx-plan-sin-pac /> }
+  @case ('sin-ruta') { <nc-rx-ruta-sin-pac /> }
+}

@@ -1,0 +1,127 @@
+// La sección es el panel de la pestaña (como en el prototipo, hija directa del contenedor de la ficha).
+:host{display:contents}
+
+// Regla base de los paneles de la ficha (la encapsulación no la comparte)
+.panel{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);padding:16px 16px 32px 16px;justify-content:center;align-items:flex-start;gap:16px;align-self:stretch;border:0;border-radius:0 16px 16px 16px;background:#FFF;box-shadow:0 0 4px 0 rgba(61,75,92,.15);position:relative;z-index:1;min-height:645px}
+// Móvil: las pestañas son filas; el panel solo se ve como pantalla aparte (`.m-detalle`)
+@media (max-width:600px){.panel{display:none}:host-context(.m-detalle) .panel{margin-top:16px}}
+
+// ===== Copiloto de conversaciones =====
+.panel-cop{display:flex;flex-direction:column;align-items:stretch;min-height:0}
+.panel-cop>.cop{width:100%}
+.cop{border:0;border-radius:0;background:transparent;box-shadow:none;font-family:var(--sk-font-body);color:var(--sk-color-text)}
+.cop-b{padding:18px 0 0}
+.cop-vacio{display:flex;align-items:center;gap:12px;padding:20px;border:1px dashed var(--sk-color-border-3);border-radius:12px;background:var(--sk-color-surface-2);font-size:15px;color:var(--sk-color-text-2)}
+.cop-vacio svg{color:var(--sk-color-text-3);flex:none}
+.cop-mis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin:16px 0 32px}
+.mis{display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:20px 24px 24px;border-radius:16px;background:#fff;box-shadow:0 0 4px 0 rgba(61,75,92,.15);border-top:4px solid var(--sk-color-info)}
+.mis.mis-urg{border-top-color:var(--sk-color-primary)}
+.mis-cat{padding:3px 10px;border-radius:9999px;background:var(--sk-color-info-soft);color:#00669a;font-size:12px;font-weight:700}
+.mis-urg .mis-cat{background:var(--sk-color-primary-soft);color:var(--sk-color-primary-dark)}
+.mis-t{margin:0;font-family:var(--sk-font-heading);font-weight:700;font-size:16px;color:var(--sk-color-text)}
+.mis-d{margin:0;font-size:14px;line-height:21px;color:var(--sk-color-text)}
+.mis-btn{margin-top:4px;padding:10px 22px;border:1px solid var(--sk-color-primary);border-radius:9999px;background:var(--sk-color-primary);color:#fff;font-family:var(--sk-font-heading);font-weight:700;font-size:14px;cursor:pointer}
+.mis-btn:hover{background:var(--sk-color-primary-strong);border-color:var(--sk-color-primary-strong)}
+.mis-conv{margin:-4px 0 0;font-size:12px;color:var(--sk-color-text-2)}
+// Una sola misión: ocupa todo el ancho; texto a la izquierda, acción a la derecha
+.mis:only-child{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:40px;row-gap:10px;align-items:center}
+.mis:only-child>.mis-cat,.mis:only-child>.mis-t,.mis:only-child>.mis-d{grid-column:1;justify-self:start}
+.mis:only-child>.mis-d{max-width:70ch}
+.mis:only-child>.mis-btn{grid-column:2;grid-row:1/4;align-self:center;justify-self:end;margin-top:0}
+.mis:only-child>.mis-desc{grid-column:2;grid-row:4;justify-self:end;align-self:end}
+.mis-desc{padding:6px 12px;border:0;border-radius:9999px;background:transparent;color:var(--sk-color-primary);font-family:var(--sk-font-heading);font-size:14px;font-weight:700;cursor:pointer}
+.mis-desc:hover{background:rgba(0,199,61,.1)}
+.mis-desc:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:2px}
+.mis-descartada{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:16px 24px;border-radius:16px;border:1px dashed var(--sk-color-text-4);color:var(--sk-color-mission-text);font-size:14px;line-height:22px}
+.mis-descartada b{color:#fff}
+.mis-descartada button{padding:6px 12px;border:0;border-radius:9999px;background:transparent;color:var(--sk-color-primary);font-family:var(--sk-font-heading);font-size:14px;font-weight:700;cursor:pointer}
+.cop-mis+.mis-descartada{margin:0 0 24px}
+.mis:only-child>.mis-conv{grid-column:1;grid-row:4;justify-self:start;margin:4px 0 0}
+@media (max-width:960px){.mis:only-child{display:flex;align-items:flex-start}}
+.panel-cop .mis-conv{font-family:var(--sk-font-body);letter-spacing:0;color:var(--sk-color-mission-text-3)}
+.panel-cop .mis-conv b{color:#ffffff;font-weight:500}
+.mis-btn:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:2px}
+@media (max-width:960px){.cop-mis{grid-template-columns:1fr}}
+@media (max-width:960px){.panel{grid-template-columns:1fr;padding:16px 16px 32px}}
+
+// Móvil: la pestaña abre como pantalla aparte
+@media (max-width:600px){
+  :host-context(.m-detalle) .panel{display:grid;grid-template-columns:1fr;margin-top:20px}
+  :host-context(.m-detalle) .panel.panel-cop{display:flex;padding:20px 16px 28px;border-radius:16px}
+  .panel-cop .mis{padding:18px 16px 20px}
+  .panel-cop .mis .mis-btn,.panel-cop .mis:only-child>.mis-btn{align-self:stretch}
+  .panel-cop .mis .mis-desc{align-self:center}
+}
+
+// Modo misión
+:host-context(.modo-mision) .panel.panel-cop{box-shadow:0 0 0 1px var(--sk-color-text-4),0 0 40px rgba(0,199,61,.08)}
+
+// ===== Estilo espacial "mission control" =====
+.panel.panel-cop{position:relative;overflow:hidden;isolation:isolate;padding:28px 32px 36px;border-radius:0 16px 16px 16px;color:#ffffff;
+  background:radial-gradient(70% 60% at 90% 0%,#3a3a3a 0%,rgba(58,58,58,0) 60%),radial-gradient(60% 50% at 0% 100%,rgba(0,199,61,.10) 0%,rgba(0,199,61,0) 65%),#313131;
+  box-shadow:0 0 0 1px var(--sk-color-text-4)}
+.panel-cop::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.8;
+  background-image:radial-gradient(1px 1px at 22px 34px,#fff,transparent),radial-gradient(1px 1px at 120px 80px,#cfe,transparent),radial-gradient(1.5px 1.5px at 190px 20px,#fff,transparent),radial-gradient(1px 1px at 260px 140px,#bfe,transparent),radial-gradient(1px 1px at 60px 170px,#fff,transparent),radial-gradient(1.5px 1.5px at 330px 60px,#9fe8b8,transparent),radial-gradient(1px 1px at 380px 190px,#fff,transparent);
+  background-size:400px 220px;animation:copTwinkle 2.5s ease-in-out 2}
+@keyframes copTwinkle{50%{opacity:.45}}
+@keyframes copBlink{50%{opacity:.25}}
+.panel-cop .mis{background:var(--sk-color-graphite);border:1px solid var(--sk-color-text-4);border-top:1px solid var(--sk-color-text-4);box-shadow:none}
+.panel-cop .mis.mis-urg{border-color:rgba(0,199,61,.35);box-shadow:0 0 30px rgba(0,199,61,.08),inset 0 0 30px rgba(0,199,61,.04)}
+.panel-cop .mis-cat{background:transparent;border:1px solid rgba(0,240,224,.4);color:#00F0E0;font-family:var(--sk-font-body);font-weight:600;letter-spacing:.06em}
+.panel-cop .mis-urg .mis-cat{border-color:rgba(0,199,61,.45);color:var(--sk-color-lime);display:inline-flex;align-items:center;gap:8px}
+.panel-cop .mis-urg .mis-cat::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--sk-color-primary);box-shadow:0 0 8px var(--sk-color-lime);animation:copBlink 1.6s ease-in-out 3}
+.panel-cop .mis-t{color:#ffffff;font-size:18px}
+.panel-cop .mis-d{color:var(--sk-color-mission-text)}
+.panel-cop .mis-d strong{color:#ffffff}
+.panel-cop .mis-btn{color:var(--sk-color-mission-bg);box-shadow:none}
+.panel-cop .mis-btn:hover{background:var(--sk-color-primary-strong);border-color:var(--sk-color-primary-strong)}
+// Misión principal: mismo efecto de clic que las tarjetas del catálogo
+.mis{cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s}
+.mis:hover{transform:translateY(-3px)}
+.mis:active{transform:translateY(-1px) scale(.99)}
+.panel-cop .mis.mis-urg:hover{border-color:rgba(0,199,61,.6);box-shadow:0 0 26px rgba(0,199,61,.14),inset 0 0 30px rgba(0,199,61,.04)}
+.mis-btn{transition:background-color .15s,border-color .15s,transform .1s}
+.mis-btn:active{transform:scale(.97)}
+@media (prefers-reduced-motion:reduce){.panel-cop::before,.panel-cop .mis-urg .mis-cat::before{animation:none}}
+// Planeta, órbitas y telemetría
+.cop-espacio{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;border-radius:inherit}
+.cop-orbita{position:absolute;inset:0;width:100%;height:100%}
+.cop-giro{transform-origin:900px 120px;transform-box:view-box;animation:copGiro 6s cubic-bezier(.2,.8,.2,1) 1 both}
+@keyframes copGiro{from{transform:rotate(-40deg)}to{transform:rotate(0)}}
+@media (prefers-reduced-motion:reduce){.cop-giro{animation:none}}
+.panel-cop .cop-b{padding-top:24px}
+.panel-cop .cop-mis{margin-top:0}
+
+// ===== Loading introductorio al abrir Planeación Pro (≈1,3 s) =====
+.cop-intro{position:fixed;inset:0;z-index:300;display:none;flex-direction:column;align-items:center;justify-content:center;gap:20px;background:rgba(255,255,255,.94);font-family:var(--sk-font-heading);font-size:16px;color:var(--sk-color-text)}
+:host-context(.cop-cargando) .cop-intro{display:flex;animation:copIntroSale .35s ease 1s forwards}
+.panel-cop.intro .cop{opacity:0}
+.panel-cop.revela .cop{animation:copRevela .5s cubic-bezier(.2,.8,.2,1) both}
+.cop-intro-orb{position:relative;width:120px;height:120px;display:grid;place-items:center}
+.cop-intro-ring{position:absolute;inset:0;border-radius:50%;border:1px dashed rgba(64,64,64,.35);animation:copIntroGira 1.2s linear infinite}
+.cop-intro-ring i{position:absolute;top:-4px;left:50%;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--sk-color-primary)}
+.cop-intro-orb img{width:72px;height:auto;animation:copIntroSami .9s ease-in-out infinite alternate;filter:drop-shadow(0 8px 12px rgba(0,0,0,.18))}
+.cop-intro p{margin:0;opacity:0;animation:copIntroTxt .4s ease .2s forwards}
+@keyframes copIntroGira{to{transform:rotate(360deg)}}
+@keyframes copIntroSami{from{transform:translateY(2px)}to{transform:translateY(-6px)}}
+@keyframes copIntroTxt{to{opacity:1}}
+@keyframes copIntroSale{to{opacity:0;visibility:hidden}}
+@keyframes copRevela{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.cop-intro-ring,.cop-intro-orb img{animation:none}.panel-cop.revela .cop{animation:none}}
+
+// ===== Estado de la misión y misión vacía =====
+.mis-estado{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--sk-color-lime)}
+.panel-cop .cop-vacio{background:transparent;border-color:var(--sk-color-text-4);color:var(--sk-color-border-4);font-size:14px}
+.panel-cop .cop-vacio svg{color:var(--sk-color-mission-text-2)}
+.cop-vacio--mis{margin:0 0 32px}
+.panel-cop .mis-estado{margin:-4px 0 0;font-size:12px;color:var(--sk-color-lime)}
+// Con «En curso · n de m etapas» la tarjeta suma una fila: el pie y Descartar bajan una
+.mis--curso:only-child>.mis-estado{grid-column:1;justify-self:start}
+.mis--curso:only-child>.mis-btn{grid-row:1/5}
+.mis--curso:only-child>.mis-conv,.mis--curso:only-child>.mis-desc{grid-row:5}
+
+// ===== Ventana de carga en «modo misión»: velo grafito, no blanco =====
+.cop-intro{background:radial-gradient(90% 60% at 85% 0%,rgba(56,56,56,.9) 0%,rgba(56,56,56,0) 60%),rgba(43,43,43,.96);color:var(--sk-color-mission-text)}
+.cop-intro-ring{border-color:rgba(255,255,255,.25)}
+.cop-intro-ring i{background:var(--sk-color-primary);box-shadow:0 0 8px rgba(0,199,61,.6)}
+.cop-intro-orb img{filter:drop-shadow(0 8px 12px rgba(0,0,0,.45))}

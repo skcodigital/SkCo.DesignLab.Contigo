@@ -1,0 +1,51 @@
+.pp-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: max-content;
+  max-width: calc(100vw - 32px);
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: var(--sk-color-text-5);
+  color: var(--sk-color-surface);
+  font-family: var(--sk-font-body);
+  font-size: 14px;
+  line-height: 22px;
+  transform: translate(-50%, 16px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+
+  &.on {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+  }
+
+  button {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--sk-color-lime);
+    font-family: var(--sk-font-heading);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 600px) {
+  .pp-toast {
+    bottom: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pp-toast {
+    transition: none;
+  }
+}

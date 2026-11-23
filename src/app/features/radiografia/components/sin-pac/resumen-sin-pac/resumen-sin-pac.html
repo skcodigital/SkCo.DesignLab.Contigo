@@ -1,0 +1,78 @@
+<div class="kpis kpis--panel">
+  <article class="kpi" ncRxPlegable #p1="ncRxPlegable" nombre="Clientes activos">
+    <button type="button" class="plg-btn" [attr.aria-expanded]="!p1.plegado()" [attr.aria-label]="p1.etiqueta()" (click)="p1.alternar($event)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+    <span class="kpi-label" (click)="p1.alCabecera($event)">Clientes activos <span class="tip-wrap"><button class="tip tip--warning" aria-label="Atención: el dato de empleados está desactualizado" aria-describedby="tip-pen-sp"><nc-rx-icono-sp nombre="aviso" /></button><span class="tooltip" role="tooltip" id="tip-pen-sp">Clientes de Skandia que trabajan en la empresa, divididos entre los empleados de la empresa. El dato está actualizado <b>solo hasta octubre de 2025</b>.</span></span></span>
+    <div class="kpi-value-row"><span class="kpi-value--big num">9,2%</span><nc-rx-variacion direccion="up" texto="+10,0%" etiqueta="Subió 10,0% frente a octubre de 2025. Semáforo verde. Hoy 11 clientes; en octubre de 2025, 10." detalle="Hoy 11 clientes · oct 2025: 10" /></div>
+    <span class="kpi-sub num">11 clientes de 120 empleados</span>
+    <ul class="kpi-breakdown"><li><i class="sw sw--agencia"></i><span>Tu agencia: <b class="num">5,8%</b> · 7 clientes</span></li><li><i class="sw sw--otras"></i><span>Otras agencias: <b class="num">3,3%</b> · 4 clientes</span></li></ul>
+  </article>
+  <article class="kpi" ncRxPlegable #p2="ncRxPlegable" nombre="Cross-sell 2P+">
+    <button type="button" class="plg-btn" [attr.aria-expanded]="!p2.plegado()" [attr.aria-label]="p2.etiqueta()" (click)="p2.alternar($event)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+    <span class="kpi-label" (click)="p2.alCabecera($event)">Cross-sell 2P+ <span class="tip-wrap"><button class="tip" aria-label="Qué es el cross-sell 2P+" aria-describedby="tip-cross-sp"><nc-rx-icono-sp nombre="ayuda" /></button><span class="tooltip" role="tooltip" id="tip-cross-sp">Porcentaje de clientes de la empresa que tienen <b>2 o más líneas de producto</b> con Skandia.</span></span></span>
+    <div class="kpi-value-row"><span class="kpi-value--big num">36,4%</span><nc-rx-variacion direccion="flat" texto="0,0%" etiqueta="Se mantuvo frente a octubre de 2025. Semáforo amarillo. Hoy 4 clientes 2P+; en octubre de 2025, 4." detalle="Hoy 4 clientes 2P+ · oct 2025: 4" /></div>
+    <span class="kpi-sub num">4 clientes con 2 o más productos</span>
+    <ul class="kpi-breakdown"><li><i class="sw sw--agencia"></i><span>Tu agencia: <b class="num">42,9%</b> · 3 de 7</span></li><li><i class="sw sw--otras"></i><span>Otras agencias: <b class="num">25,0%</b> · 1 de 4</span></li></ul>
+  </article>
+  <article class="kpi" ncRxPlegable #p3="ncRxPlegable" nombre="Share de FPOB de la agencia">
+    <button type="button" class="plg-btn" [attr.aria-expanded]="!p3.plegado()" [attr.aria-label]="p3.etiqueta()" (click)="p3.alternar($event)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+    <span class="kpi-label" (click)="p3.alCabecera($event)">Share de FPOB de la agencia <span class="tip-wrap"><button class="tip" aria-label="Qué es el share de FPOB" aria-describedby="tip-share-sp"><nc-rx-icono-sp nombre="ayuda" /></button><span class="tooltip" role="tooltip" id="tip-share-sp">De los empleados de la empresa afiliados a <b>pensión obligatoria</b> con Skandia, cuántos atiende tu agencia (los asesores de Agencia Norte).</span></span></span>
+    <div class="kpi-value-row"><span class="kpi-value--big num">63,6%</span><nc-rx-variacion direccion="down" texto="−12,5%" etiqueta="Bajó 12,5% frente a octubre de 2025. Semáforo rojo. Hoy 7 afiliados; en octubre de 2025, 8." detalle="Hoy 7 afiliados · oct 2025: 8" /></div>
+    <span class="kpi-sub num">7 de 11 afiliados a FPOB</span>
+    <ul class="kpi-breakdown"><li><i class="sw sw--agencia"></i><span>Tu agencia: <b class="num">63,6%</b> · 7 afiliados</span></li><li><i class="sw sw--otras"></i><span>Otras agencias: <b class="num">36,4%</b> · 4 afiliados</span></li></ul>
+  </article>
+  <article class="kpi" ncRxPlegable #p4="ncRxPlegable" nombre="Activos de Skandia en la empresa">
+    <button type="button" class="plg-btn" [attr.aria-expanded]="!p4.plegado()" [attr.aria-label]="p4.etiqueta()" (click)="p4.alternar($event)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+    <span class="kpi-label" (click)="p4.alCabecera($event)">Activos de Skandia en la empresa <span class="tip-wrap"><button class="tip" aria-label="Qué son los activos de Skandia en la empresa" aria-describedby="tip-act-sp"><nc-rx-icono-sp nombre="ayuda" /></button><span class="tooltip" role="tooltip" id="tip-act-sp">Activos que Skandia administra para los empleados de la empresa en pensión obligatoria, voluntaria, cesantías y fiduciaria. No incluye los productos de la empresa.</span></span></span>
+    <div class="kpi-value-row"><span class="kpi-value--big num">$1.180 M</span><nc-rx-variacion direccion="up" texto="+5,4%" etiqueta="Subió 5,4% frente a octubre de 2025. Semáforo verde. Hoy $1.180 M; en octubre de 2025, $1.120 M." detalle="Hoy $1.180 M · oct 2025: $1.120 M" /></div>
+    <span class="kpi-sub num">De sus empleados</span>
+    <ul class="kpi-breakdown"><li><i class="sw sw--agencia"></i><span>Tu agencia: <b class="num">$760 M</b> · 64%</span></li><li><i class="sw sw--otras"></i><span>Otras agencias: <b class="num">$420 M</b> · 36%</span></li></ul>
+  </article>
+</div>
+
+<div class="resumen-grid">
+  <section class="card products products--slim" id="products-sp" tabindex="-1" aria-labelledby="products-title-sp">
+    <h2 class="block-title" id="products-title-sp">Productos de la empresa</h2>
+    <div class="acc">
+      <article class="acc-card">
+        <button class="acc-head" [attr.aria-expanded]="ahorroAbierto()" aria-controls="acc-prod-sp-1" (click)="alternarAhorro()">
+          <span class="kpi-icon kpi-icon--savings" style="margin:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V9M9 19V5M14 19v-7M19 19v-11"/></svg></span>
+          <span class="acc-title">Ahorro e inversión</span>
+          <span class="acc-chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path [attr.d]="ahorroAbierto() ? 'm15 6-6 6 6 6' : 'm9 6 6 6-6 6'"/></svg></span>
+        </button>
+        <div class="acc-body" id="acc-prod-sp-1" [hidden]="!ahorroAbierto()">
+          <!-- Producto de la empresa con la estructura de la ficha de Contigo -->
+          <div class="product product--fic">
+            <button class="product-fic-head" type="button"><span class="product-fic-goal">Tesorería <span aria-hidden="true">💼</span></span><span class="product-fic-sep" aria-hidden="true">|</span><span class="num">#301000527714</span><svg class="product-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+            <div class="product-fic-row">
+              <span class="product-fic-name">Fondo De Inversión Colectiva Skandia Efectivo <span class="product-fic-sep" aria-hidden="true">|</span> Saldo: <b class="num">$1.245.380.000</b></span>
+              <button class="product-fic-mas" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg> Más</button>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+  <section class="card products products--route" aria-labelledby="ruta-title-sp">
+    <h2 class="block-title" id="ruta-title-sp">Ruta de penetración</h2>
+    <div class="card-body">
+      <div class="route" role="img" aria-label="Clientes activos hoy 9,2 por ciento: tu agencia 5,8, otras agencias 3,3. Meta 2027: 15 por ciento.">
+        <div class="route-bar">
+          @for (t of ruta; track t.clase) {
+            <span class="route-seg" [style.width.%]="t.ancho" [style.background]="'var(--gestion-' + t.clase + ')'" [ncRxChartTip]="t.tip"></span>
+          }
+        </div>
+        <span class="route-mark route-mark--hoy" style="left:9.2%"><span class="route-mark-label">Hoy · 9,2%</span><span class="route-mark-line"></span></span>
+        <span class="route-mark route-mark--meta" style="left:15%"><span class="route-mark-label">Meta 2027 · 15%</span><span class="route-mark-line"></span></span>
+      </div>
+      <div class="route-scale num" aria-hidden="true"><span style="left:0">0%</span><span style="left:25%">25%</span><span style="left:50%">50%</span><span style="left:75%">75%</span><span style="left:100%">100%</span></div>
+      <div class="route-foot">
+        <div class="legend-inline">
+          <span><i class="sw sw--agencia"></i>Tu agencia (Agencia Norte)</span>
+          <span><i class="sw sw--otras"></i>Otras agencias</span>
+          <span><i class="sw sw--vacio"></i>Sin relación: 109 empleados</span>
+        </div>
+      </div>
+      <div class="sk-alert sk-alert--info" role="note"><span class="sk-alert__icon" aria-hidden="true"><nc-rx-icono-sp nombre="info" /></span><div class="sk-alert__content"><p class="sk-alert__desc">Hoy estás en <b>9,2%</b> · Meta 2027: <b>15%</b> (18 de 120 empleados) · faltan <b>7 clientes</b>. Para llegar a la meta se necesita <b>casi 1 cliente neto al mes</b>; en 2026 el neto va en 0.</p></div></div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,31 @@
+@use '../../styles/controles';
+@use '../../styles/datos';
+
+$v: ':host-context(#jm-velo)';
+
+// Los hijos son elementos del cuerpo flex del panel (gap 12px)
+:host{display:contents}
+.jw-det-tit{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:14px}
+.jw-det-tit span{padding:1px 8px;border-radius:6px;background:#f2f2f2;font-size:12px;color:var(--sk-color-text-2)}
+.jw-kpis{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--sk-color-border-2);border-radius:10px}
+.jw-kpis>div{display:flex;flex-direction:column;gap:2px;padding:10px 12px}
+.jw-kpis>div+div{border-left:1px solid var(--sk-color-border-2)}
+.jw-kpis small{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--sk-color-text-2)}
+.jw-kpis b{font-family:var(--sk-font-heading);font-size:18px}
+.jw-kpis span{font-size:12px;color:var(--sk-color-text-3)}
+.jw-kpis .jw-naranja{color:#b36b00}
+.jw-kpis .jw-link{font-size:12px;padding:0}
+.jw-trio{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-size:12px;color:var(--sk-color-text-2)}
+.jw-trio b{display:block;font-size:13px;color:var(--sk-color-text)}
+@media (max-width:900px){
+  .jw-kpis{grid-template-columns:1fr}
+  .jw-kpis>div+div{border-left:0;border-top:1px solid var(--sk-color-border-2)}
+}
+#{$v} .jw-kpis{background:var(--sf2);border-color:var(--bd);box-shadow:none}
+#{$v} .jw-det-tit span{background:rgba(255,255,255,.06);border-color:var(--bd);color:var(--tx2)}
+#{$v} .jw-kpis .jw-naranja{color:var(--sk-color-warning)}
+#{$v} .jw-trio b{color:var(--tx)}
+#{$v} .jw-kpis small,#{$v} .jw-trio{color:var(--tx2)}
+#{$v} .jw-kpis span{color:var(--tx3)}
+#{$v} .jw-kpis>div+div{border-color:var(--bd)}
+#{$v} .jw-desglose .tot{padding-top:6px;border-top:1px solid var(--bd)}

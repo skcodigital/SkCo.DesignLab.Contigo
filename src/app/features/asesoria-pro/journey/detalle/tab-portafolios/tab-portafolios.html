@@ -1,0 +1,28 @@
+@let c = contrato();
+<div class="jw-port-h">
+  <p>Saldo <b>{{ pesos(total()) }}</b> · {{ c.port.length }} portafolios</p>
+  <span class="jw-seg" role="group" aria-label="Rentabilidad">
+    <span class="jw-seg-t">Rentabilidad</span>
+    @for (r of periodos; track r[0]) {
+      <button type="button" [attr.aria-pressed]="st().rentPer === r[0]" (click)="store.elegirPeriodo(r[0])">{{ r[1] }}</button>
+    }
+  </span>
+</div>
+@if (c.cerrados) {
+  <p class="jw-nota"><span>Algunos portafolios de este contrato están cerrados y su valor puede reflejar valoración de mercado.</span></p>
+}
+<table class="jw-tabla">
+  <thead>
+    <tr><th scope="col">Portafolio</th><th scope="col">Saldo</th><th scope="col">Participación</th><th scope="col">Rentabilidad E.A.</th></tr>
+  </thead>
+  <tbody>
+    @for (x of c.port; track x.nombre) {
+      <tr>
+        <td>{{ x.nombre }}@if (st().monto > 0) {<span class="jw-sale">Sale del retiro</span>}</td>
+        <td>{{ pesos(x.saldo) }}</td>
+        <td>{{ x.participacion }}</td>
+        <td>{{ rentabilidad(x.rentabilidad) }}</td>
+      </tr>
+    }
+  </tbody>
+</table>

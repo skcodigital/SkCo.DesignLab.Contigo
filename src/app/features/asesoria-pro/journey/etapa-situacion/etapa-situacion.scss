@@ -1,0 +1,58 @@
+@use '../styles/controles';
+@use '../styles/datos';
+@use '../styles/etapa';
+
+$v: ':host-context(#jm-velo)';
+
+@include controles.solo-lectura;
+
+// Fichas de contrato (del prototipo WPP)
+.jw-cts{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.jw-ct{position:relative;display:flex;flex-direction:column;gap:10px;padding:14px 12px;border:1px solid var(--sk-color-border-2);border-radius:12px;background:#fff;cursor:pointer;transition:border-color .15s,background-color .15s}
+.jw-ct:hover{border-color:var(--sk-color-primary)}
+.jw-ct:has(input:checked){border-color:var(--sk-color-primary);background:var(--sk-color-brand-light);box-shadow:0 0 0 1px var(--sk-color-primary) inset}
+.jw-ct:has(input:focus-visible){outline:2px solid var(--sk-color-info);outline-offset:2px}
+.jw-ct-top{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;align-items:start}
+.jw-ct input{appearance:none;width:18px;height:18px;margin:2px 0 0;border:1.5px solid var(--sk-color-placeholder);border-radius:50%;background:#fff;display:grid;place-items:center;cursor:pointer}
+.jw-ct input:checked{border-color:var(--sk-color-primary)}
+.jw-ct input:checked::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--sk-color-primary)}
+.jw-ct-nom{font-family:var(--sk-font-heading);font-size:15px;font-weight:700;color:var(--sk-color-text)}
+.jw-ct-num{grid-column:2;font-size:12px;line-height:17px;color:var(--sk-color-text-3)}
+.jw-ct-tags{grid-column:2;display:flex;flex-wrap:wrap;gap:6px}
+.jw-ct-disp{margin:0;font-size:14px;color:var(--sk-color-text)}
+.jw-ct-disp b{font-family:var(--sk-font-heading);font-size:17px}
+.jw-ley{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--sk-color-text-2)}
+.jw-ley li{display:flex;align-items:center;gap:5px;white-space:nowrap}
+.jw-ley b{color:var(--sk-color-text);font-weight:600}
+.jw-ct-res{margin:0;display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;padding-top:10px;border-top:1px solid var(--sk-color-line);font-size:13px;line-height:20px;color:var(--sk-color-text)}
+.jw-ct-res div{display:flex;flex-direction:column;justify-content:space-between;gap:1px}
+.jw-ct-res dt{font-size:12px;line-height:16px;color:var(--sk-color-text-2)}
+.jw-ct-res dd{margin:0;font-family:var(--sk-font-heading);font-size:15px;font-weight:700}
+.jw-ct-res div:first-child dd{color:var(--sk-color-primary-dark)}
+.jw-ct-res p{grid-column:1/-1;margin:2px 0 0;font-size:12px;line-height:18px;color:var(--sk-color-text-3)}
+.jw-ct .jw-link{align-self:flex-start;margin-top:auto;font-size:13px}
+@media (hover:none){.jw-ct:hover{border-color:var(--sk-color-border-2)}.jw-ct:has(input:checked):hover{border-color:var(--sk-color-primary)}}
+@media (max-width:900px){.jw-cts{grid-template-columns:1fr}}
+.jw-cts{grid-template-columns:repeat(3,minmax(0,1fr))}
+.jw-ley li{display:grid;grid-template-columns:9px minmax(0,1fr) auto;gap:6px;align-items:start;white-space:normal;line-height:16px}
+.jw-ley li .jw-cuad{margin-top:3px}
+.jw-ley b{text-align:right}
+@media (max-width:1180px) and (min-width:901px){.jw-cts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:900px){.jw-cts{grid-template-columns:1fr}}
+
+// Oscuro suave
+#{$v} .jw-ct{background:var(--sf2);border-color:var(--bd);box-shadow:none}
+#{$v} .jw-ct:hover{border-color:var(--lk)}
+#{$v} .jw-ct:has(input:checked){background:var(--sel);border-color:var(--lk);box-shadow:0 0 0 1px var(--lk) inset}
+#{$v} .jw-ct-nom{color:var(--tx)}
+#{$v} .jw-ct-disp,#{$v} .jw-ct-res,#{$v} .jw-ley b{color:var(--sk-color-line)}
+#{$v} .jw-ley,#{$v} .jw-ct-res dt{color:var(--tx2)}
+#{$v} .jw-ct-num,#{$v} .jw-ct-res p{color:var(--tx3)}
+#{$v} .jw-ct-res div:first-child dd{color:var(--vd)}
+#{$v} .jw-ct input{background:transparent;border-color:var(--tx3)}
+#{$v} .jw-ct input:checked{border-color:var(--lk)}
+#{$v} .jw-ct-res{border-color:var(--bd)}
+@media (hover:none){#{$v} .jw-ct:hover{border-color:var(--bd)}#{$v} .jw-ct:has(input:checked):hover{border-color:var(--lk)}}
+#{$v} .jw-pen{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:0 0 12px;padding:10px 14px;border:1px solid var(--bd);border-radius:12px;background:var(--sf2)}
+#{$v} .jw-pen-t{margin:0;font-size:14px;color:#fff}
+#{$v} .jw-pen .jw-ayuda{flex-basis:100%;margin:0}

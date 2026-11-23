@@ -1,0 +1,140 @@
+// Contenido del banner móvil. Su visibilidad y posición dentro del panel (display/order) las pone la página.
+@media (max-width: 900px) {
+  img {
+    flex: none;
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.45));
+  }
+
+  .lg-mini-eb {
+    font-family: var(--sk-font-heading);
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sk-color-lime);
+  }
+
+  .lg-mini-t {
+    margin-top: 4px;
+    font-family: var(--sk-font-heading);
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22px;
+    color: #fff;
+  }
+
+  .lg-mini-t span {
+    color: var(--sk-color-primary);
+  }
+
+  .lg-mini-txt {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .lg-mini-slides {
+    display: grid;
+    touch-action: pan-y;
+  }
+
+  :host {
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  :host(.arrastra) {
+    cursor: grabbing;
+  }
+
+  img {
+    -webkit-user-drag: none;
+    pointer-events: none;
+  }
+
+  .lg-mini-s {
+    grid-area: 1/1;
+    opacity: 0;
+    transform: translateX(12px);
+    transition:
+      opacity 0.35s,
+      transform 0.35s;
+    visibility: hidden;
+  }
+
+  .lg-mini-s.on {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+  }
+
+  .lg-mini-puntos {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .lg-mini-puntos button {
+    width: 7px;
+    height: 7px;
+    padding: 0;
+    border: 0;
+    border-radius: 9999px;
+    background: #6a6a6a;
+    cursor: pointer;
+    transition:
+      width 0.2s,
+      background 0.2s;
+  }
+
+  .lg-mini-puntos button[aria-current='true'] {
+    width: 20px;
+    background: var(--sk-color-primary);
+  }
+
+  // Dos clases con la misma animación para reiniciarla en cada cambio de novedad.
+  img.salta {
+    animation: lgsSalto 0.65s cubic-bezier(0.3, 0, 0.35, 1);
+  }
+
+  img.salta-b {
+    animation: lgsSaltoB 0.65s cubic-bezier(0.3, 0, 0.35, 1);
+  }
+}
+
+@mixin salto {
+  0% {
+    transform: translateY(0) scale(1, 1);
+  }
+
+  15% {
+    transform: translateY(0) scale(1.08, 0.9);
+  }
+
+  45% {
+    transform: translateY(-28px) scale(0.95, 1.06);
+  }
+
+  70% {
+    transform: translateY(0) scale(1.06, 0.93);
+  }
+
+  85% {
+    transform: translateY(-5px) scale(0.99, 1.01);
+  }
+
+  100% {
+    transform: translateY(0) scale(1, 1);
+  }
+}
+
+@keyframes lgsSalto {
+  @include salto;
+}
+
+@keyframes lgsSaltoB {
+  @include salto;
+}

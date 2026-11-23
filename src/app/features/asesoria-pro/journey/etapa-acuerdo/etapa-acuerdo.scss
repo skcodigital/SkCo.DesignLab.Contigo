@@ -1,0 +1,22 @@
+@use '../styles/controles';
+@use '../styles/etapa';
+$v: ':host-context(#jm-velo)';
+
+.jw-dec{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.jw-dec .jw-op{position:relative;min-height:76px}
+.jw-dec .jw-op:disabled{opacity:.45;cursor:not-allowed}
+.jw-dec .jw-tg{align-self:flex-start;margin-bottom:4px}
+.jw-a5{display:flex;flex-direction:column;gap:14px}
+.jw-pie5{flex-wrap:wrap;gap:10px}
+.jw-pie5 .jw-btn--sec{gap:8px}
+#{$v} .jw-btn.jw-cerrado,#{$v} .jw-btn.jw-cerrado:disabled{background:rgba(0,199,61,.12);border-color:var(--sk-color-primary);color:var(--sk-color-lime);cursor:default}
+#{$v} .jw-dec .jw-op span{color:var(--sk-color-mission-text-2)}
+#{$v} .jw-a5-msg.ok{background:rgba(0,199,61,.12);color:var(--sk-color-line)}
+#{$v} .jw-dec .jw-op b{color:#fff}
+@media (max-width:900px){.jw-pie5 .jw-btn{flex:1 1 100%;justify-content:center}}
+#{$v} .jw-destacada{display:flex;flex-direction:column;gap:2px;padding:14px 18px;border-radius:12px;background:var(--sel)}
+#{$v} .jw-destacada b{font-family:var(--sk-font-heading);font-size:26px;font-weight:700;line-height:32px;color:var(--vd)}
+#{$v} .jw-destacada span{font-size:14px;color:var(--tx2)}
+#{$v} .jw-a5-msg.ok{background:var(--sel);color:var(--sk-color-line)}
+
+@include controles.solo-lectura;

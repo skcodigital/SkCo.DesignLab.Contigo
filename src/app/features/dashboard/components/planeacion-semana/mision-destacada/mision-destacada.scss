@@ -1,0 +1,369 @@
+// .pp-sem.amplio .pp-dest del prototipo (solo existe en el módulo ampliado).
+// 2026-11-19 (v3, elegida por Isa): tarjeta blanca con franja superior; v4 (.oscuro): tarjeta grafito.
+:host {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  padding-top: 20px;
+  border-radius: 16px;
+  background: var(--sk-color-surface);
+  filter: drop-shadow(0 0 2px rgba(61, 75, 92, 0.15));
+  align-self: stretch;
+  overflow: hidden;
+
+  // Franja en el gris Pro (antes degradado verde→lima)
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 4px;
+    background: var(--sk-color-text);
+  }
+}
+
+:host > *:not(.pp-orbita) {
+  position: relative;
+  z-index: 1;
+}
+
+// Órbita punteada de Planeación Pro (como en el panel de la ficha), tenue en la esquina superior derecha
+.pp-orbita {
+  position: absolute;
+  top: 4px;
+  right: 0;
+  width: 240px;
+  height: 160px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.pp-giro {
+  transform-origin: 250px 34px;
+  transform-box: view-box;
+  animation: ppGiro 6s cubic-bezier(0.2, 0.8, 0.2, 1) 1 both;
+
+  circle {
+    filter: drop-shadow(0 0 4px #8fe000);
+  }
+}
+
+@keyframes ppGiro {
+  from {
+    transform: rotate(-35deg);
+  }
+  to {
+    transform: rotate(0);
+  }
+}
+
+.pp-nom {
+  margin: 0;
+  font-family: var(--sk-font-heading);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  color: var(--sk-color-text);
+}
+
+.pp-nom-link {
+  color: var(--sk-color-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:hover {
+    color: var(--sk-color-primary-strong);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--sk-color-info);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+.pp-segm {
+  display: block;
+  font-family: var(--sk-font-body);
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 400;
+  color: var(--sk-color-text-2);
+}
+
+.pp-dato {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--sk-color-text);
+
+  svg {
+    flex: none;
+    color: var(--sk-color-text-2);
+  }
+}
+
+.pp-money {
+  font-weight: 700;
+}
+
+// Oculto: el número se reemplaza por "$ ••••••" sin reservar su ancho, así el ojo queda pegado al texto visible
+:host(.oculto) .pp-money {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0;
+  white-space: nowrap;
+
+  &::after {
+    content: '$ ••••••';
+    font-size: 13px;
+    line-height: 20px;
+  }
+}
+
+// Ojo de saldos (vive solo junto al saldo de la misión destacada)
+.pp-tt-w {
+  position: relative;
+  display: flex;
+}
+
+.pp-saldo-l .pp-ojo-w {
+  display: inline-flex;
+  margin-left: 2px;
+}
+
+.pp-ojo {
+  padding: 4px;
+
+  &:hover {
+    background: var(--sk-color-brand-light);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--sk-color-info);
+    outline-offset: 2px;
+  }
+}
+
+.pp-saldo-l .pp-ojo {
+  padding: 2px;
+
+  svg {
+    width: 18px;
+    height: 18px;
+    color: var(--sk-color-primary);
+  }
+}
+
+.pp-tt {
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  width: max-content;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: var(--sk-color-text-5);
+  color: var(--sk-color-surface);
+  font-family: var(--sk-font-body);
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s, visibility 0.15s;
+}
+
+.pp-tt-w:hover .pp-tt,
+.pp-tt-w :focus-visible + .pp-tt {
+  opacity: 1;
+  visibility: visible;
+}
+
+.pp-guia {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--sk-color-brand-light);
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--sk-color-text);
+
+  p {
+    margin: 0;
+  }
+}
+
+.pp-guia-sami {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--sk-color-text-2);
+
+  img {
+    filter: drop-shadow(0 0 4px rgba(143, 224, 0, 0.65));
+  }
+}
+
+.pp-guia-t {
+  font-family: var(--sk-font-heading);
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 700;
+}
+
+.pp-acc {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 4px;
+  margin-top: auto;
+}
+
+.pp-ini {
+  padding: 8px 20px;
+  border: 0;
+  border-radius: 9999px;
+  background: var(--sk-color-primary);
+  color: var(--sk-color-surface);
+  font-family: var(--sk-font-heading);
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.15s, transform 0.1s;
+
+  &:hover {
+    background: var(--sk-color-primary-strong);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+.pp-pos-w {
+  position: relative;
+}
+
+.pp-pos {
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 9999px;
+  background: transparent;
+  color: var(--sk-color-primary);
+  font-family: var(--sk-font-heading);
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 700;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--sk-color-brand-light);
+  }
+}
+
+.pp-ini:focus-visible,
+.pp-pos:focus-visible {
+  outline: 2px solid var(--sk-color-info);
+  outline-offset: 2px;
+}
+
+// ===== Variante oscura (v4, 2026-11-19): .pp-oscuro en #pp-sem =====
+:host(.oscuro) {
+  background: var(--sk-color-graphite);
+  border: 1px solid rgba(0, 199, 61, 0.35);
+  filter: none;
+  box-shadow: 0 0 30px rgba(0, 199, 61, 0.08), inset 0 0 30px rgba(0, 199, 61, 0.04);
+  color: var(--sk-color-mission-text);
+
+  &::before {
+    display: none;
+  }
+
+  .pp-nom {
+    color: var(--sk-color-surface);
+    font-size: 18px;
+    line-height: 26px;
+  }
+  .pp-segm {
+    color: var(--sk-color-mission-text-3);
+  }
+  .pp-nom-link {
+    color: var(--sk-color-primary);
+  }
+  .pp-nom-link:hover {
+    color: #2bd65c;
+  }
+  .pp-dato {
+    color: var(--sk-color-mission-text);
+  }
+  .pp-dato svg {
+    color: var(--sk-color-mission-text-3);
+  }
+  .pp-saldo-l .pp-ojo svg {
+    color: var(--sk-color-primary);
+  }
+  .pp-money {
+    color: var(--sk-color-surface);
+  }
+  .pp-guia {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--sk-color-text-4);
+    color: var(--sk-color-mission-text);
+  }
+  .pp-guia-sami {
+    color: var(--sk-color-mission-text-3);
+  }
+  .pp-guia-t {
+    color: var(--sk-color-surface);
+  }
+  // Botón verde sobre oscuro → texto oscuro
+  .pp-ini {
+    color: var(--sk-color-mission-bg);
+  }
+  .pp-pos:hover,
+  .pp-ojo:hover {
+    background: rgba(0, 199, 61, 0.12);
+  }
+  .pp-orbita ellipse {
+    stroke: rgba(255, 255, 255, 0.22);
+  }
+}
+
+@media (hover: none) {
+  .pp-tt {
+    display: none;
+  }
+  .pp-ojo:hover,
+  .pp-pos:hover {
+    background: transparent;
+  }
+  .pp-ini:hover {
+    background: var(--sk-color-primary);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pp-giro {
+    animation: none;
+  }
+  .pp-tt {
+    transition: none;
+  }
+}

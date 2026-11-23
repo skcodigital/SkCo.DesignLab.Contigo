@@ -1,0 +1,27 @@
+<nc-saldos-resumen
+  [saldos]="saldos"
+  [oculto]="store.saldosOcultos()"
+  [ampliado]="store.kpisAmpliados()"
+  [recogidos]="ui.activo('saldos-recogidos')"
+  (alternarOjo)="store.alternarSaldos()"
+  (alternarAmpliado)="store.alternarAmpliado()"
+  (alternarRecogidos)="ui.toggle('saldos-recogidos')"
+/>
+
+<nc-ficha-tabs [activa]="store.pestana()" (elegir)="abrirPestana($event)" />
+
+@switch (store.panel()) {
+  @case ('copiloto') {
+    <nc-copiloto-panel />
+  }
+  @case ('productos') {
+    <section class="panel" id="p-productos" data-panel-id="productos">
+      <nc-productos-panel [categorias]="categorias" [oculto]="store.saldosOcultos()" (abrirProducto)="abrirProducto()" />
+    </section>
+  }
+  @default {
+    <section class="panel panel-vacio" id="p-otros" data-panel-id="otros">
+      <p>Contenido de esta pestaña en construcción.</p>
+    </section>
+  }
+}

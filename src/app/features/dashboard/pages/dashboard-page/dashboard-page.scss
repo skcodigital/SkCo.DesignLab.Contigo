@@ -1,0 +1,149 @@
+// ===== Dashboard del asesor (Figma Portal Contigo · AMPLIADOS) =====
+:host {
+  display: block;
+}
+
+.dash {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 938px;
+  margin: 22px auto 48px;
+  font-family: var(--sk-font-body);
+  color: var(--sk-color-text);
+}
+
+:host-context(.modo-mision) .dash {
+  display: none;
+}
+
+// Aviso «Interés»
+.ds-aviso {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  min-height: 90px;
+  padding: 0 16px 8px;
+  border-radius: 16px;
+  background: var(--sk-color-warning-light);
+  color: var(--sk-color-text);
+  text-decoration: none;
+
+  > b {
+    font-family: var(--sk-font-heading);
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+    padding-right: 90px;
+  }
+
+  img {
+    transition: transform 0.15s;
+  }
+
+  &:hover img {
+    transform: translateX(3px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--sk-color-info);
+    outline-offset: 2px;
+  }
+}
+
+.ds-aviso-tx {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.ds-aviso-tag {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 85px;
+  padding: 2px 4px;
+  border-radius: 0 16px 0 8px;
+  background: var(--sk-color-warning-strong);
+  color: var(--sk-color-surface);
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+}
+
+// Módulos: Planeación Pro (compacto = media columna, ampliado = ancho completo) + «Agregar módulo»
+.ds-mods {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: stretch;
+}
+
+.ds-add {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 200px;
+  padding: 16px;
+  border: 1.5px dashed #c9cdd1;
+  border-radius: 16px;
+  background: transparent;
+  color: var(--sk-color-text-2);
+  font-family: var(--sk-font-body);
+  font-size: 14px;
+  line-height: 22px;
+  cursor: pointer;
+
+  b {
+    font-family: var(--sk-font-heading);
+    color: var(--sk-color-primary);
+  }
+
+  &:hover {
+    background: var(--sk-color-brand-light);
+    border-color: var(--sk-color-primary);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--sk-color-info);
+    outline-offset: 2px;
+  }
+}
+
+.ds-mods:has(.pp-sem.amplio) .ds-add {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .dash {
+    margin: 16px 0 40px;
+    gap: 20px;
+  }
+  .ds-aviso > b {
+    font-size: 14px;
+    line-height: 22px;
+    padding-top: 22px;
+    padding-right: 0;
+  }
+  .ds-aviso-tx {
+    font-size: 13px;
+  }
+  .ds-mods {
+    grid-template-columns: 1fr;
+  }
+  .ds-add {
+    display: none !important;
+  }
+}
+
+@media (hover: none) {
+  .ds-aviso:hover img {
+    transform: none;
+  }
+}

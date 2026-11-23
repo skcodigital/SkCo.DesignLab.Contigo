@@ -1,0 +1,29 @@
+// Piezas de datos del journey (barras de tramos, cajas, listas de cálculo y tablas) que usan Situación y el panel de detalle.
+$v: ':host-context(#jm-velo)';
+
+.jw-barra{display:flex;gap:2px;height:8px;border-radius:9999px;overflow:hidden;background:var(--sk-color-surface-5)}
+.jw-barra i{display:block;height:100%}
+.jw-cuad{flex:none;width:9px;height:9px;border-radius:2px}
+.c-ex{background:var(--sk-color-primary-dark)}.c-sr{background:#6cc788}.c-cc{background:#e89b00}.c-sc{background:#8a8a8a}
+.jw-caja{display:flex;flex-direction:column;gap:8px;padding:12px 14px;border:1px solid var(--sk-color-border-2);border-radius:10px}
+.jw-caja h5{margin:0;font-size:14px;font-weight:700;color:var(--sk-color-text)}
+.jw-caja .jw-verde{color:var(--sk-color-primary-strong-2);font-weight:700}
+.jw-tabla{width:100%;border-collapse:collapse;font-size:13px}
+.jw-tabla th{padding:8px 10px;background:var(--sk-color-surface-2);font-weight:600;font-size:12px;color:var(--sk-color-text-2);text-align:right}
+.jw-tabla th:first-child,.jw-tabla td:first-child{text-align:left}
+.jw-tabla td{padding:8px 10px;border-top:1px solid var(--sk-color-surface-5);text-align:right;white-space:nowrap}
+.jw-tabla td:first-child{white-space:normal}
+.jw-lista-calc{display:flex;flex-direction:column;gap:4px;font-size:13px}
+.jw-lista-calc div{display:flex;justify-content:space-between;gap:12px}
+
+#{$v} .jw-caja{background:var(--sf2);border-color:var(--bd);box-shadow:none}
+#{$v} .jw-caja h5{color:var(--tx)}
+#{$v} .jw-caja .jw-verde{color:var(--vd)}
+#{$v} .jw-tabla th{color:var(--tx2)}
+#{$v} .jw-barra{background:var(--sk-color-text-4)}
+#{$v} .c-ex{background:var(--sk-color-primary)}
+#{$v} .jw-tabla td{border-color:var(--bd)}
+#{$v} .jw-tabla th{background:rgba(255,255,255,.04)}
+#{$v} .jw-lista-calc>div+div{padding-top:4px;border-top:1px solid var(--bd)}
+#{$v} .jw-tabla tr.tot td{font-weight:700;color:#fff}
+#{$v} .jw-tabla tr.grupo td{padding-top:10px;font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--tx3);text-align:left}

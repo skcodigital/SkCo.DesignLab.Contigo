@@ -1,0 +1,149 @@
+// Contenedor del journey: velo a pantalla del área de contenido, cabecera, barra de pasos, cuerpo y avisos.
+// Las reglas conservan el orden del prototipo (las de `#jm-velo` ganan por especificidad de id, como allá).
+
+// ===== Journey (navegación horizontal, una etapa a la vez) =====
+.jw-cab{display:flex;flex-direction:column;gap:12px;padding:16px 28px 14px;border-bottom:1px solid var(--sk-color-surface-5)}
+.jw-pasos{list-style:none;margin:0;padding:0;display:flex;align-items:center;gap:0}
+.jw-pasos li{flex:1;display:flex;align-items:center;min-width:0}
+.jw-pasos li:not(:last-child)::after{content:"";flex:1;height:2px;margin:0 10px;background:var(--sk-color-border-2);border-radius:2px}
+.jw-pasos li.hecho:not(:last-child)::after{background:var(--sk-color-primary)}
+.jw-p{display:flex;align-items:center;gap:10px;padding:6px 4px;border:0;background:none;border-radius:8px;font-family:var(--sk-font-body);font-size:14px;color:var(--sk-color-text-3);cursor:pointer;white-space:nowrap}
+.jw-p:disabled{cursor:default}
+.jw-n{flex:none;width:28px;height:28px;border-radius:50%;border:1.5px solid #cfcfcf;display:grid;place-items:center;font-size:13px;font-weight:700;color:var(--sk-color-text-3);background:#fff}
+.jw-p.on{color:var(--sk-color-text);font-weight:700}
+.jw-p.on .jw-n{background:var(--sk-color-primary);border-color:var(--sk-color-primary);color:#fff}
+.jw-p.ok{color:var(--sk-color-text)}
+.jw-p.ok .jw-n{background:var(--sk-color-brand-light);border-color:var(--sk-color-primary);color:var(--sk-color-primary-strong-2)}
+.jw-p:not(:disabled):not(.on):hover .jw-pt{text-decoration:underline}
+.jw-p:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:2px}
+.jw-ctx{display:flex;flex-wrap:wrap;gap:8px}
+.jw-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border:1px solid var(--sk-color-border-2);border-radius:9999px;background:#fff;font-family:var(--sk-font-body);font-size:13px;color:var(--sk-color-text);cursor:pointer}
+.jw-chip b{font-weight:700}
+.jw-chip svg{color:var(--sk-color-text-3)}
+.jw-chip:hover{border-color:var(--sk-color-primary)}
+.jw-chip:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:2px}
+.jw-cuerpo{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr)}
+.jw-scroll{overflow-y:auto;padding:24px 28px 32px;scrollbar-color:var(--sk-color-primary) var(--sk-color-surface-4);scrollbar-width:thin}
+
+// Journey en pantalla completa: sin velo ni esquinas
+#jm-velo{padding:0;background:#fff;animation:none}
+#jm-velo .jy-modal{width:100%;height:100%;border-radius:0;box-shadow:none;animation:jwFull .25s ease both}
+@keyframes jwFull{from{opacity:0}to{opacity:1}}
+#jm-velo .jm-top{padding-left:max(24px,calc((100% - 1100px) / 2));padding-right:max(24px,calc((100% - 1100px) / 2))}
+.jw-cab{padding-left:max(28px,calc((100% - 1100px) / 2));padding-right:max(28px,calc((100% - 1100px) / 2))}
+.jw-scroll{background:var(--sk-color-surface-2)}
+// Se conservan el header y el menú lateral: el journey ocupa solo el área de contenido
+#jm-velo{top:var(--jw-top,var(--sk-header-height,80px));left:var(--sk-rail-width,112px)}
+@media (max-width:768px){#jm-velo{left:0}} // en móvil el menú lateral está fuera de pantalla
+#jm-velo .jm-top{background:#fff;color:var(--sk-color-text);border-bottom:1px solid var(--sk-color-surface-5);padding-top:10px;padding-bottom:10px}
+#jm-velo .jm-salir{color:var(--sk-color-primary-strong-2);font-weight:600}
+#jm-velo .jm-salir:hover{background:var(--sk-color-brand-light)}
+#jm-velo .jm-tit{color:var(--sk-color-text)}
+@media (prefers-reduced-motion:reduce){#jm-velo .jy-modal{animation:none}}
+@media (max-width:900px){#jm-velo .jm-top{padding:12px 16px}.jw-cab{padding:12px 16px}}
+.jw-cuerpo{position:relative}
+@media (max-width:900px){.jw-cuerpo{grid-template-columns:1fr;overflow-y:auto}.jw-scroll{overflow:visible;padding:16px}}
+
+// Resumen que se arma con cada etapa (columna izquierda)
+.jw-lienzo{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:250px minmax(0,1fr);gap:24px;align-items:start}
+.jw-etapas{min-width:0}
+@media (min-width:901px){.jw-ctx{display:none!important}}
+
+// Fondo oscuro como Planeación Pro; los pasos sin fondo ni contenedor
+#jm-velo .jy-modal{background:var(--sk-color-graphite-2) radial-gradient(90% 60% at 85% 0%,var(--sk-color-graphite) 0%,rgba(56,56,56,0) 60%) no-repeat;background-attachment:local;color:#fff}
+#jm-velo .jy-modal .jw-cuerpo,#jm-velo .jy-modal .jw-scroll{background:transparent}
+#jm-velo .jy-modal .jm-top{position:static;background:transparent;border-bottom:0;box-shadow:none;color:#fff;padding-top:16px;padding-bottom:0}
+#jm-velo .jm-tit{color:#fff}
+#jm-velo .jm-salir{color:var(--sk-color-primary)}
+#jm-velo .jm-salir:hover{background:rgba(255,255,255,.08)}
+#jm-velo .jw-cab{background:transparent;border-bottom:0}
+#jm-velo .jw-p{color:#9a9fa3}
+#jm-velo .jw-p.ok{color:var(--sk-color-mission-text)}
+#jm-velo .jw-p.on{color:#fff}
+#jm-velo .jw-n{background-color:var(--sk-color-text-4);background-clip:padding-box}
+#jm-velo .jw-pasos li:not(:last-child) .jw-n{border-right-color:transparent}
+#jm-velo .jw-p.on .jw-n,#jm-velo .jw-p.ok .jw-n{background-color:var(--sk-color-lime)}
+#jm-velo .jw-cont{color:#fff}
+
+// Los pasos no quedan fijos: todo el journey hace scroll; solo "Regresar" queda arriba y el resumen acompaña
+#jm-velo .jy-modal{display:block;overflow-y:auto;scrollbar-color:var(--sk-color-primary) var(--sk-color-surface-4);scrollbar-width:thin}
+#jm-velo .jm-top{position:sticky;top:0;z-index:3}
+#jm-velo .jw-cuerpo{display:block;min-height:calc(100% - 80px);overflow:visible;background:var(--sk-color-surface-2)}
+#jm-velo .jw-scroll{overflow:visible}
+
+// Pasos con el estilo de Portal Clientes 2.0 (barra segmentada 8px con el nombre de cada paso)
+.jw-cab{gap:8px}
+.jw-pasos{gap:0;align-items:stretch}
+.jw-pasos li{flex:1 1 0}
+.jw-pasos li:not(:last-child)::after{display:none}
+.jw-pasos li:not(:last-child) .jw-n{border-right:4px solid #fff}
+.jw-p{flex:1;flex-direction:column;align-items:stretch;gap:6px;padding:0;border-radius:0;white-space:nowrap;text-align:left;font-size:13px;line-height:18px;color:var(--sk-color-text-3)}
+.jw-n{width:auto;height:8px;border:0;border-radius:0;background:var(--sk-color-border-3);font-size:0;line-height:0;color:transparent;box-sizing:content-box}
+.jw-pasos li:first-child .jw-n{border-radius:8px 0 0 8px}
+.jw-pasos li:last-child .jw-n{border-radius:0 4px 4px 0}
+.jw-p.on .jw-n,.jw-p.ok .jw-n{background:var(--sk-color-lime);border-color:#fff}
+.jw-p.on{color:var(--sk-color-text);font-weight:700}
+.jw-p.ok{color:var(--sk-color-text);font-weight:400}
+.jw-p:focus-visible{outline-offset:4px}
+.jw-cont{margin:0;font-family:var(--sk-font-body);font-size:12px;line-height:20px;color:var(--sk-color-text)}
+.jw-cont{display:none}
+@media (max-width:900px){
+  .jw-pasos{overflow-x:auto;scrollbar-width:none}
+  .jw-pasos li{flex:none}
+  .jw-pasos li:not(:last-child)::after{width:24px;flex:none}
+  .jw-pt{display:none}
+  .jw-p.on .jw-pt{display:inline}
+  #jm-velo .jw-lienzo{grid-template-columns:1fr}
+  #jm-velo .jw-pasos{overflow:visible}
+  #jm-velo .jw-pasos li{flex:1 1 0}
+  #jm-velo .jw-pasos li:not(:last-child)::after{display:none}
+  #jm-velo .jw-pt,#jm-velo .jw-p.on .jw-pt{display:none}
+  .jw-p{gap:0}
+  #jm-velo .jw-cont{display:block;font-weight:700}
+}
+
+// Márgenes homologadas con la ficha del cliente (main)
+#jm-velo .jm-top,#jm-velo .jw-cab{padding-left:clamp(16px,2.5vw,35px);padding-right:clamp(16px,4vw,58px)}
+#jm-velo .jw-scroll{padding-left:clamp(16px,2.5vw,35px);padding-right:clamp(16px,4vw,58px)}
+#jm-velo .jw-lienzo{max-width:none}
+@media (min-width:901px){#jm-velo .jw-lienzo{grid-template-columns:270px minmax(0,1fr)}}
+#jm-velo .jm-salir{margin-left:-8px}
+@media (max-width:900px){.jw-lienzo{grid-template-columns:1fr}}
+
+// ===== Velo y modal del journey =====
+// visibility:visible explícito: el shell oculta <main> (donde vive este componente) con `.jw-abierto`
+.jm-velo{position:fixed;inset:0;z-index:305;visibility:visible;display:flex;align-items:center;justify-content:center;padding:32px;background:rgba(10,10,10,.62);animation:jmFade .3s ease both}
+.jy-modal{width:min(1240px,100%);height:min(860px,100%);display:flex;flex-direction:column;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.45);font-family:var(--sk-font-body);color:var(--sk-color-text);animation:jmSube .35s cubic-bezier(.2,.8,.2,1) both}
+@keyframes jmFade{from{opacity:0}}
+@keyframes jmSube{from{opacity:0;transform:translateY(18px) scale(.985)}}
+.jm-top{display:flex;align-items:center;gap:20px;padding:14px 24px;background:var(--sk-color-graphite-2);color:#fff}
+.jm-salir{display:flex;align-items:center;gap:8px;border:0;background:none;color:#fff;font-family:var(--sk-font-body);font-size:15px;cursor:pointer;padding:6px 8px;border-radius:8px}
+.jm-salir:hover{background:rgba(255,255,255,.08)}
+.jm-tit{flex:1;min-width:0;margin:0;font-family:var(--sk-font-heading);font-size:14px;font-weight:700;color:var(--sk-color-mission-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.jm-salir:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:2px}
+@media (max-width:900px){.jm-velo{padding:0}.jy-modal{height:100%;border-radius:0}.jm-tit{display:none}}
+@media (prefers-reduced-motion:reduce){.jm-velo,.jy-modal{animation:none}}
+
+// ===== Journey en oscuro suave: superficies grafito del modo misión =====
+#jm-velo{--sf:#363636;--sf2:rgba(255,255,255,.04);--bd:rgba(255,255,255,.10);--bd2:rgba(255,255,255,.18);--tx:#ffffff;--tx2:var(--sk-color-border-4);--tx3:var(--sk-color-mission-text-2);--vd:var(--sk-color-lime);--lk:var(--sk-color-primary);--sel:rgba(0,199,61,.12);--warn:rgba(232,155,0,.10);--warnb:rgba(232,155,0,.32)}
+#jm-velo .jw-chip svg{color:var(--tx3)}
+#jm-velo .jw-chip{background:transparent;border-color:var(--bd2);color:var(--sk-color-mission-text)}
+#jm-velo .jw-chip:hover{border-color:var(--lk)}
+#jm-velo .jy-modal{scrollbar-color:#5a5a5a transparent}
+@media (hover:none){.jw-chip:hover{border-color:var(--sk-color-border)}#jm-velo .jw-chip:hover{border-color:var(--bd)}}
+
+// ===== v5 en cuatro partes: estado de la conversación, aviso de cierre y avisos =====
+#jm-velo .jw-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+#jm-velo .jw-estado-conv{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;margin:6px 0 0;padding:3px 10px;border-radius:9999px;background:var(--sk-color-text-5);font-size:11px;font-weight:600;color:var(--tx2)}
+#jm-velo .jw-cierre-aviso{margin:0 0 14px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,.06);font-size:12px;line-height:18px;color:var(--tx2)}
+#jm-velo .jw-cierre-aviso b{color:#fff}
+#jm-velo .jw-toasts{position:absolute;right:16px;bottom:16px;z-index:8;display:flex;flex-direction:column;gap:8px;width:min(360px,calc(100% - 32px))}
+#jm-velo .jw-toast{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border:1px solid var(--sk-color-text-4);border-radius:12px;background:#363636;box-shadow:0 8px 24px rgba(0,0,0,.35);font-size:13px;line-height:19px;color:var(--tx2)}
+#jm-velo .jw-toast>svg{flex:none;margin-top:2px}
+#jm-velo .jw-toast--exito>svg{color:var(--sk-color-primary)}
+#jm-velo .jw-toast--info>svg{color:var(--sk-color-info)}
+#jm-velo .jw-toast--error>svg{color:var(--sk-color-warning)}
+#jm-velo .jw-toast div{flex:1}
+#jm-velo .jw-toast b{display:block;font-weight:600;color:#fff}
+#jm-velo .jw-toast p{margin:2px 0 0}
+#jm-velo .jw-toast-x{flex:none;width:24px;height:24px;padding:0;border:0;border-radius:6px;background:none;font-size:18px;line-height:1;color:var(--tx3);cursor:pointer}

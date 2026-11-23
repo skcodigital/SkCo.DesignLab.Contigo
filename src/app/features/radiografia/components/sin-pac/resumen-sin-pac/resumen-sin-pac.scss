@@ -1,0 +1,48 @@
+@use '../../../styles/rx-base';
+@use '../../../styles/rx-card';
+@use '../../../styles/rx-charts';
+
+:host { display: block; }
+
+/* Resumen: productos a la izquierda y ruta en el lugar del Monitor Contigo */
+.resumen-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-3); align-items: start; }
+.products { display: flex; flex-direction: column; gap: 12px; }
+.products--route { align-self: stretch; }
+.products--route > .card-body { flex: 1; }
+.resumen-grid .route-foot { flex-direction: column; align-items: flex-start; }
+.products--slim .acc { gap: 0; }
+.products--slim .acc-card { box-shadow: none; border-radius: 0; padding: 14px 0; }
+.products--slim .acc-card:first-child { border-top: 0; padding-top: 4px; }
+.products--slim .acc-body { gap: 16px; margin-top: 14px; }
+.product--slim { padding: 10px 10px 10px 12px; border-radius: 0 8px 8px 0; }
+.product--slim:hover { background: var(--sk-color-brand-light); }
+.acc { display: flex; flex-direction: column; gap: var(--space-2); }
+.acc-card { border-radius: 16px; background: var(--sk-color-surface); box-shadow: 0 0 4px 0 rgba(61, 75, 92, 0.15); padding: 16px 18px; }
+.acc-head { display: flex; align-items: center; gap: 12px; width: 100%; background: none; border: 0; padding: 0; text-align: left; }
+.acc-title { font: 700 15px/1.3 var(--sk-font-heading); color: var(--sk-color-text); flex: 1; }
+.acc-chev { color: var(--sk-color-primary); display: grid; place-items: center; }
+.acc-body { margin-top: var(--space-2); display: flex; flex-direction: column; gap: 22px; }
+.product { display: block; width: 100%; text-align: left; background: none; border: 0; border-left: 2px solid var(--sk-color-primary); padding: 2px 10px 2px 12px; margin-left: 4px; }
+.product-chev { color: var(--sk-color-primary); }
+/* `.product--fic` define padding 2px 0 2px 12px, pero en el prototipo `.product` va después y lo pisa */
+.product-fic-head { display: inline-flex; align-items: center; gap: 8px; padding: 0; border: 0; background: none; font: 400 14px/1.4 var(--sk-font-heading); color: var(--sk-color-text); cursor: pointer; }
+.product-fic-goal { display: inline-flex; align-items: center; gap: 4px; }
+.product-fic-sep { color: var(--sk-color-primary); }
+.product-fic-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 6px; }
+.product-fic-name { font: 400 14.5px/1.4 var(--sk-font-body); color: var(--texts-strong); }
+.product-fic-name b { font-weight: 700; }
+.product-fic-mas { display: inline-flex; align-items: center; gap: 4px; flex: none; padding: 0; border: 0; background: none; font: 400 14px/1 var(--sk-font-body); color: var(--sk-color-info); cursor: pointer; }
+.products button.acc-head { cursor: pointer; border-radius: 8px; }
+.products button.acc-head:focus-visible { outline: 2px solid var(--sk-color-primary); outline-offset: 4px; }
+.products .acc-body[hidden] { display: none; }
+
+@media (max-width: 1180px) {
+  .resumen-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 768px) {
+  /* Resumen: Ruta de penetración primero y Productos de la empresa después */
+  .resumen-grid > .products--route { order: -1; }
+}
+@media (hover: none) {
+  .product--slim:hover { background: none; }
+}

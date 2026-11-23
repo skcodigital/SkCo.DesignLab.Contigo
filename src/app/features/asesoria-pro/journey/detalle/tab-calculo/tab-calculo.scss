@@ -1,0 +1,17 @@
+@use '../../styles/controles';
+@use '../../styles/datos';
+
+$v: ':host-context(#jm-velo)';
+
+:host{display:contents}
+.jw-pasos-calc{display:flex;flex-direction:column;border:1px solid var(--sk-color-border-2);border-radius:10px}
+.jw-pasos-calc>div{display:flex;justify-content:space-between;gap:12px;padding:9px 12px}
+.jw-pasos-calc>div+div{border-top:1px solid var(--sk-color-surface-5)}
+.jw-pasos-calc .tot{background:var(--sk-color-brand-light);font-weight:700}
+.jw-pasos-calc em{font-style:normal;font-size:11px;color:var(--sk-color-text-3);margin-left:6px}
+#{$v} .jw-pasos-calc{background:var(--sf2);border-color:var(--bd);box-shadow:none}
+#{$v} .jw-pasos-calc .tot{background:var(--sel)}
+#{$v} .jw-pasos-calc em{color:var(--tx3)}
+#{$v} .jw-pasos-calc>div+div{border-color:var(--bd)}
+#{$v} .jw-calc-h{display:flex;flex-direction:column;gap:2px}
+#{$v} .jw-calc-h span{font-size:12px;color:var(--tx3)}

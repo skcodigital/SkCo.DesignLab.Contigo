@@ -1,0 +1,17 @@
+@use '../../../styles/rx-base';
+@use '../../../styles/rx-card';
+
+:host { display: block; }
+.plan-seg { margin-bottom: var(--space-3); background: var(--sk-color-surface-3); box-shadow: none; }
+.ruta-vacia { margin: 0; font-size: 14px; color: var(--sk-color-text-2); }
+.ruta-metas { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.ruta-metas > li { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 12px 16px; padding: 12px 0; border-bottom: 1px solid var(--sk-color-border); }
+.ruta-metas > li:last-child { border-bottom: 0; }
+.ruta-meta-name { font: 600 14px/1.4 var(--sk-font-body); color: var(--texts-strong); }
+.ruta-meta-val { display: block; margin-top: 2px; font: 400 13px/1.4 var(--sk-font-body); color: var(--sk-color-text); }
+.ruta-meta-val b { font-weight: 700; color: var(--texts-strong); }
+.ruta-metas > li.is-descartada .ruta-meta-name, .ruta-metas > li.is-descartada .ruta-meta-val { color: var(--sk-color-text-2); text-decoration: line-through; }
+.ruta-meta-acts { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.btn-icon { width: 30px; height: 30px; display: grid; place-items: center; border: 0; border-radius: 50%; background: none; color: var(--sk-color-text-2); cursor: pointer; }
+.btn-icon:hover { background: var(--feedback-error-light); color: var(--feedback-error-dark); }
+@media (max-width: 768px) { .ruta-metas > li { grid-template-columns: minmax(0, 1fr) auto; } .ruta-meta-acts { grid-column: 1 / -1; justify-content: flex-start; } }

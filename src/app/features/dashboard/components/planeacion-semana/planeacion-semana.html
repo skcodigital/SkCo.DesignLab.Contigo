@@ -1,0 +1,96 @@
+<div class="pp-h">
+  <span class="pp-tab" id="pp-tit"><img src="assets/sami.png" width="24" height="24" alt="" />Planeación Pro</span>
+  <!-- Subtítulo y n/5: junto al título solo en el ampliado; en el compacto van en su propia línea -->
+  @if (amplio()) {
+    <ng-container [ngTemplateOutlet]="subTexto" />
+  }
+  <div class="pp-der">
+    @if (amplio()) {
+      <nc-diana-progreso [completadas]="store.completadas().length" [lectura]="store.lectura()" />
+    }
+    <span class="pp-lect">Solo lectura</span>
+    <span class="pp-tt-w pp-tam-w">
+      <button class="pp-tam" type="button" [attr.aria-pressed]="amplio()" [attr.aria-label]="tam().aria" (click)="alternarTamano()">
+        @if (amplio()) {
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14h6v6M20 10h-6V4M14 10l7-7M3 21l7-7" /></svg>
+        } @else {
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" /></svg>
+        }
+      </button>
+      <span class="pp-tt" role="tooltip">{{ tam().tooltip }}</span>
+    </span>
+    <a href="#" class="ds-link pp-todas" (click)="verTodas($event)">Todas tus misiones</a>
+  </div>
+</div>
+@if (!amplio()) {
+  <div class="pp-sub" id="pp-sub">
+    <ng-container [ngTemplateOutlet]="subTexto" />
+    <nc-diana-progreso [completadas]="store.completadas().length" [lectura]="store.lectura()" />
+  </div>
+}
+<div class="pp-cuerpo">
+  <ul class="pp-lista" id="pp-lista">
+    @for (m of store.pendientes(); track m.id; let k = $index) {
+      <li>
+        <button type="button" class="pp-fila" [attr.aria-current]="amplio() && k === store.indiceDestacada() ? 'true' : null" (click)="clicFila(m, k)">
+          <span class="pp-fila-tx">
+            <span class="pp-fila-mis">Misión: Acompañamiento al retirar</span>
+            <span class="pp-fila-l">
+              <span class="pp-fila-n">{{ m.nombre }}</span>
+              <span class="pp-chip" [class.alta]="m.chip === 'alta'" [class.seg]="m.chip === 'seg'">{{ chip[m.chip] }}</span>
+            </span>
+          </span>
+          <ng-container [ngTemplateOutlet]="chevron" />
+        </button>
+      </li>
+    } @empty {
+      <li><p class="pp-vacio">{{ store.textoVacio() }}</p></li>
+    }
+    <!-- Las completadas van al final -->
+    @for (h of store.completadas(); track h.nombre) {
+      <li>
+        <button type="button" class="pp-fila hecha" (click)="clicCompletada()">
+          <span class="pp-fila-tx">
+            <span class="pp-fila-mis">Misión: Acompañamiento al retirar</span>
+            <span class="pp-fila-l"><span class="pp-fila-n">{{ h.nombre }}</span><span class="pp-chip hecha">Completada</span></span>
+          </span>
+          <ng-container [ngTemplateOutlet]="chevron" />
+        </button>
+      </li>
+    }
+  </ul>
+  @if (amplio()) {
+    @if (store.destacada(); as destacada) {
+      <!-- Se vuelve a crear al cambiar de misión: la órbita gira de nuevo, como en el prototipo -->
+      @for (m of [destacada]; track m.id) {
+        <nc-mision-destacada
+          id="pp-dest"
+          [mision]="m"
+          [oculto]="oculto()"
+          [lectura]="store.lectura()"
+          (alternarOjo)="oculto.set(!oculto())"
+          (iniciar)="abrir(m)"
+          (verFicha)="verFicha(m)"
+          (descartar)="abrirDescartar(m)"
+        />
+      }
+    }
+  }
+</div>
+@if (amplio()) {
+  <!-- 2026-11-18: sin «Ver la semana» ni «n atendidas»; el pie queda como espaciador -->
+  <div class="pp-pie"></div>
+}
+
+<nc-descartar-mision-modal [(abierta)]="modalAbierta" [nombre]="aDescartar()?.nombre ?? ''" (confirmar)="onDescarte($event)" />
+
+<ng-template #subTexto>
+  <span class="pp-sub-tx">
+    <span id="pp-quien">{{ store.quien() }}</span>
+    <span class="pp-fecha"><span class="pp-sep">· </span><b>16 al 20 nov</b></span>
+  </span>
+</ng-template>
+
+<ng-template #chevron>
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+</ng-template>

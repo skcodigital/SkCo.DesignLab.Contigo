@@ -1,0 +1,28 @@
+<section class="v-producto" aria-label="Ficha del producto Potencializar mi inversión">
+  <nc-producto-movil [producto]="producto" />
+  <nc-producto-tarjetas [producto]="producto" />
+  <nc-producto-tabs [activa]="ficha.pestanaProducto()" (elegir)="abrirSeccion($event)" />
+
+  @if (ficha.pestanaProducto() === 'composicion') {
+    <div class="pf-panel" data-pf-panel="composicion">
+      <div class="pf-caja">
+        <nc-producto-composicion
+          [segmento]="store.segmento()"
+          [filas]="store.filas()"
+          [gradiente]="store.gradiente()"
+          [etiquetaDona]="store.etiquetaDona()"
+          [fechaCorte]="store.fechaCorte()"
+          [fechaCorteTexto]="store.fechaCorteTexto()"
+          [hoy]="store.hoy"
+          [minima]="store.minima"
+          (elegirSegmento)="store.elegirSegmento($event)"
+          (elegirFechaCorte)="store.elegirFechaCorte($event)"
+        />
+      </div>
+    </div>
+  } @else {
+    <div class="pf-panel" data-pf-panel="otros">
+      <div class="pf-caja pf-vacio"><p>Contenido de esta sección en construcción.</p></div>
+    </div>
+  }
+</section>

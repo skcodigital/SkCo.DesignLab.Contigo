@@ -1,0 +1,26 @@
+@use '../../../../styles/rx-base';
+@use '../../../../styles/rx-card';
+@use '../../../../styles/rx-charts';
+@use '../../../../styles/rx-segmented';
+
+:host { display: block; }
+
+/* Selector de tipo de plan */
+.plan-type { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: var(--space-3); }
+.plan-type-label { font: 700 14px/22px var(--sk-font-heading); color: var(--texts-strong); }
+
+.clients-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-3); align-items: start; }
+.clients-grid > .card { align-self: stretch; }
+
+.pairs--money .pair-bar { width: 52px; }
+.pairs--money .pair-bar span { font-size: 12px; }
+/* Los años y la neta van debajo del eje: se reserva su espacio dentro de la card (`#panel-plan .pairs`) */
+:host .card .pairs { margin: 16px 0 52px; }
+:host > .sk-alert { margin-top: var(--space-3); }
+
+@media (max-width: 1180px) {
+  .clients-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 768px) {
+  .pairs--money .pair-bar { width: 40px; }
+}

@@ -1,0 +1,31 @@
+@if (!(cr().M > 0)) {
+  <article class="jw-o3">
+    <h4>Crédito puente</h4>
+    <p class="jw-nodisp"><svg ncIcono="off"></svg><span><b>No disponible</b> · No tiene crédito preaprobado con respaldo del fondo</span></p>
+  </article>
+} @else {
+  <article class="jw-o3" [class.off]="st().noRepone" [class.elegida]="st().pref === 'credito'">
+    <h4>Crédito puente</h4>
+    <div class="jw-o3-cuerpo">
+      <dl>
+        <div><dt>Monto</dt><dd>{{ pesos(cr().M) }}</dd></div>
+        <div><dt>Respaldo requerido</dt><dd>{{ pesos(cr().resp) }}</dd></div>
+      </dl>
+      <nc-plazo-credito />
+      <dl>
+        <div><dt>Tasa</dt><dd>{{ tasa }}</dd></div>
+        <div><dt>Intereses y 4×1000</dt><dd>{{ pesos(cr().costo) }}</dd></div>
+        <div class="tot"><dt>Total a pagar</dt><dd>{{ pesos(cr().total) }}</dd></div>
+      </dl>
+      @if (cr().tope) {
+        <p class="jw-o3-nota">No alcanza: es el máximo preaprobado; faltan <b>{{ pesos(st().monto - cr().M) }}</b></p>
+      }
+    </div>
+    <button type="button" class="jw-norep" [attr.aria-pressed]="st().noRepone" [disabled]="ro()" (click)="alternarNoRepone()">
+      @if (st().noRepone) {
+        <svg ncIcono="check"></svg>
+      }
+      No lo repondría
+    </button>
+  </article>
+}

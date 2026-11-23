@@ -1,0 +1,183 @@
+@use '../../styles/comunes' as *;
+
+:host {
+  display: block;
+}
+
+.saldos {
+  margin-top: 34px;
+}
+.saldos-h {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.saldos-h h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--sk-color-ink);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.saldos-h h2 .amt {
+  color: var(--sk-color-primary);
+}
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(12px, 2.2vw, 32px);
+  margin-top: 24px;
+}
+
+// Móvil: Ampliar muestra los datos secundarios de las tarjetas
+.m-ampliar {
+  display: none;
+}
+@media (max-width: 600px) {
+  .saldos {
+    margin-top: 20px;
+  }
+  .m-ampliar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 16px 0 0 auto;
+    border: 0;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--sk-color-info);
+    text-decoration: underline;
+  }
+  .m-ampliar[aria-expanded='true'] svg path {
+    d: path('M8 12h8');
+  }
+  .kpis {
+    margin-top: 10px;
+  }
+}
+
+// Móvil: una pestaña abierta como pantalla aparte oculta los saldos
+@media (max-width: 600px) {
+  :host-context(.m-detalle) .saldos {
+    display: none !important;
+  }
+}
+
+// Planeación Pro: recoger la sección de saldos para ganar espacio
+.saldos-tgl {
+  display: none;
+  margin-left: auto;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  background: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-family: var(--sk-font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--sk-color-mission-text);
+  cursor: pointer;
+}
+.saldos-tgl:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+.saldos-tgl:focus-visible {
+  outline: 2px solid var(--sk-color-info);
+  outline-offset: 2px;
+}
+.saldos-tgl svg {
+  transition: transform 0.25s;
+}
+// 2026-11-17: en Planeación Pro se omite "Ver saldos"; los saldos quedan recogidos
+:host-context(.modo-mision) .saldos-tgl {
+  display: none;
+}
+:host-context(.modo-mision) .saldos-h {
+  width: 100%;
+}
+.kpis {
+  transition:
+    max-height 0.35s ease,
+    opacity 0.25s ease,
+    margin 0.35s ease;
+}
+:host-context(.modo-mision.saldos-recogidos) .kpis {
+  max-height: 0 !important;
+  opacity: 0;
+  margin-top: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+:host-context(.modo-mision.saldos-recogidos) .saldos-tgl svg {
+  transform: rotate(180deg);
+}
+:host-context(.modo-mision:not(.saldos-recogidos)) .kpis {
+  max-height: 600px;
+}
+@media (max-width: 600px) {
+  .saldos-tgl {
+    display: none !important;
+  }
+}
+
+:host-context(.modo-mision) .saldos-h h2 .amt {
+  text-shadow: 0 0 18px rgba(0, 199, 61, 0.45);
+}
+
+@media (max-width: 1279px) {
+  .kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+@media (max-width: 600px) {
+  // Saldo en móvil — igual a Portal Clientes (vista Móvil)
+  .saldos-h h2 {
+    column-gap: 10px;
+    row-gap: 2px;
+  }
+  .saldos-h h2 .tt {
+    flex-basis: 100%;
+    font-size: 16px;
+  }
+  .saldos-h h2 .amt {
+    font-size: 20px;
+  }
+  .saldos-h .ojo svg,
+  .saldos-h .tip svg {
+    width: 20px;
+    height: 20px;
+  }
+  // Tarjetas en móvil: cuadrícula 2 × 2 como el Contigo actual
+  .kpis {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin: 10px 0 0;
+    padding: 0;
+    overflow: visible;
+  }
+}
+@media (max-width: 768px) {
+  .saldos {
+    margin-top: 24px;
+  }
+  .saldos-h .tip svg {
+    flex: none;
+    width: 24px;
+    height: 24px;
+  }
+  .ojo svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+@include tip-box-angosto;

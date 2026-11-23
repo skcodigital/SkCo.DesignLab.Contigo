@@ -1,0 +1,19 @@
+:host{display:block}
+.jy-t{font-size:15px;font-weight:600;display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.jy-d{font-size:13px;color:var(--sk-color-text-2)}
+.cop-hist{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px;border:1px solid var(--sk-color-border-3);border-radius:8px}
+.cop-hist>div{display:flex;flex-direction:column;gap:2px}
+.cop-estado{font-size:12px;font-weight:600;color:#009a2f;background:var(--sk-color-primary-soft);border-radius:9999px;padding:3px 10px}
+.cop-hist-lista{display:flex;flex-direction:column;gap:10px}
+button.cop-hist{width:100%;font-family:var(--sk-font-body);text-align:left;cursor:pointer;transition:border-color .2s}
+button.cop-hist:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:2px}
+
+// Estilo espacial de Planeación Pro
+:host-context(.panel-cop) .cop-hist{background:var(--sk-color-graphite);border-color:var(--sk-color-text-4);color:#ffffff}
+:host-context(.panel-cop) .cop-hist .jy-d{color:var(--sk-color-border-4)}
+:host-context(.panel-cop) .cop-estado{background:rgba(0,199,61,.14);color:var(--sk-color-lime)}
+:host-context(.panel-cop) button.cop-hist:hover{border-color:rgba(0,199,61,.55)}
+:host-context(.panel-cop) .cop-hist .jy-t{font-size:15px;font-weight:600}
+:host-context(.panel-cop) .cop-estado--abierto{background:transparent;border:1px solid rgba(0,199,61,.45);color:var(--sk-color-lime)}
+:host-context(.panel-cop) .cop-estado--seguimiento{background:rgba(232,155,0,.1);color:var(--sk-color-warning)}
+:host-context(.panel-cop) .cop-estado--completado{background:rgba(0,199,61,.14);color:var(--sk-color-lime)}

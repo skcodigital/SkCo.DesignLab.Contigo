@@ -1,0 +1,43 @@
+<button
+  #disparador
+  type="button"
+  class="ds-lg-tab"
+  aria-haspopup="dialog"
+  [attr.aria-expanded]="abierto()"
+  aria-controls="ds-mp"
+  (click)="alternar()"
+>
+  <img src="assets/dash/star.svg" width="24" height="24" alt="" />Logros en <span id="ds-mes-txt">{{ texto() }}</span><img class="ds-lg-chev" src="assets/dash/chev-down-verde.svg" width="16" height="16" alt="" />
+</button>
+@if (abierto()) {
+  <div class="ds-mp" id="ds-mp" role="dialog" aria-label="Elige el mes de los logros" (keydown.escape)="$event.preventDefault(); cerrar(true)">
+    <div class="ds-mp-h">
+      <span class="ds-mp-anio" id="ds-mp-anio" aria-live="polite">{{ vista() }}</span>
+      <span class="ds-mp-nav">
+        <button type="button" aria-label="Año siguiente" [disabled]="vista() >= ultimo().anio" (click)="cambiarAnio(1)">
+          <img src="assets/dash/chev-arriba.svg" width="16" height="16" alt="" />
+        </button>
+        <button type="button" aria-label="Año anterior" [disabled]="vista() <= minAnio" (click)="cambiarAnio(-1)">
+          <img src="assets/dash/chev-abajo.svg" width="16" height="16" alt="" />
+        </button>
+      </span>
+    </div>
+    <div class="ds-mp-grid" role="radiogroup" aria-labelledby="ds-mp-anio">
+      @for (m of meses(); track $index; let i = $index) {
+        <button
+          #mesBtn
+          type="button"
+          role="radio"
+          [attr.aria-checked]="m.marcado"
+          [attr.aria-label]="m.aria"
+          [tabIndex]="i === foco() ? 0 : -1"
+          [disabled]="m.deshabilitado"
+          (click)="elegirMes(i)"
+          (keydown)="navegar($event, i)"
+        >
+          <span>{{ m.corto }}</span>
+        </button>
+      }
+    </div>
+  </div>
+}

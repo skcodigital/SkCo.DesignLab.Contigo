@@ -1,0 +1,38 @@
+<article class="jw-o3" [class.elegida]="st().pref === 'combo'">
+  <h4>Retiro + crédito puente</h4>
+  <div class="jw-o3-cuerpo">
+    <h5 class="jw-o3-sub">Retiro</h5>
+    <dl>
+      <div><dt>Se descuenta del contrato</dt><dd>{{ pesos(cb().kt.D) }}</dd></div>
+      <div><dt>Retenciones</dt><dd>{{ pesos(cb().kt.rcA + cb().kt.rrA) }}</dd></div>
+      <div><dt>4×1000</dt><dd>{{ pesos(cb().kt.g) }}</dd></div>
+      <div><dt>Recibe</dt><dd>{{ pesos(cb().kt.R) }}</dd></div>
+    </dl>
+    <h5 class="jw-o3-sub">Crédito por lo que falta</h5>
+    <dl>
+      <div><dt>Monto</dt><dd>{{ pesos(cb().M) }}</dd></div>
+    </dl>
+    <nc-plazo-credito />
+    <dl>
+      <div><dt>Tasa</dt><dd>{{ tasa }}</dd></div>
+      <div><dt>Intereses y 4×1000</dt><dd>{{ pesos(cb().cr.costo) }}</dd></div>
+      <div class="tot verde"><dt>Recibe</dt><dd>{{ pesos(cb().recibe) }}</dd></div>
+      <div>
+        <dt>
+          Costo de la combinación<small class="jw-imp-nota"
+            >intereses más posible impuesto
+            <button type="button" class="jw-dian jw-ro-ok" aria-label="Impuesto de la DIAN: Skandia no lo cobra" title="Este impuesto lo liquida el cliente en su declaración de renta y lo paga a la DIAN. Skandia no lo cobra.">DIAN</button
+            >{{ imp().nota }} · <button type="button" class="jw-link jw-ro-ok" (click)="ajustar()">Ajustar</button></small
+          >
+        </dt>
+        <dd>{{ costo() }}</dd>
+      </div>
+    </dl>
+    @if (conRx()) {
+      <nc-renta-exenta [k]="cb().kt" />
+    }
+    @if (!cb().cubre) {
+      <p class="jw-o3-nota">El crédito disponible ({{ pesos(cb().disp) }}) no cubre lo que falta ({{ pesos(cb().falta) }}).</p>
+    }
+  </div>
+</article>

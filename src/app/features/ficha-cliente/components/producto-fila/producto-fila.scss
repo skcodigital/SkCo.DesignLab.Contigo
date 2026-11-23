@@ -1,0 +1,212 @@
+@use '../../styles/comunes' as *;
+
+// La fila es hija directa del acordeón (flex en columna).
+:host {
+  display: contents;
+}
+
+.prod {
+  margin: 12px 0 0 16px;
+  border-left: 2px solid var(--sk-color-primary);
+  padding-left: 6px;
+}
+.prod .t {
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: -8px;
+}
+.prod .t .ed {
+  color: var(--sk-color-info);
+  font-size: 11px;
+  font-weight: 700;
+  font-style: italic;
+}
+.prod .t .n {
+  font-weight: 400;
+}
+@include prod-tag;
+.prod .d {
+  font-size: 11px;
+  color: var(--sk-color-ink-2);
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.prod .d b {
+  color: var(--sk-color-ink);
+}
+.prod .d a {
+  color: var(--sk-color-info);
+  font-weight: 600;
+  font-size: 13px;
+  text-decoration: underline;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.prod-abrir {
+  border: 0;
+  background: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-align: left;
+}
+// Hover del producto: toda la fila es clicable
+.prod.prod-click {
+  cursor: pointer;
+  margin-left: 16px;
+  padding: 14px 12px 12px 10px;
+  border-radius: 0 8px 8px 0;
+  transition: background-color 0.15s;
+}
+.prod.prod-click .t {
+  margin-top: 0;
+}
+.prod.prod-click .prod-abrir:not(.prod-chev) {
+  transition: color 0.15s;
+}
+.prod.prod-click .prod-chev svg {
+  transition: transform 0.15s;
+}
+.prod.prod-click:hover {
+  background: var(--sk-color-brand-light);
+}
+.prod.prod-click:hover .prod-abrir:not(.prod-chev) {
+  color: var(--sk-color-primary);
+}
+.prod.prod-click:hover .prod-abrir .n {
+  color: var(--sk-color-primary);
+}
+.prod.prod-click:hover .prod-chev svg {
+  transform: translateX(3px);
+}
+.prod.prod-click:active {
+  background: var(--sk-color-brand-active);
+}
+@media (prefers-reduced-motion: reduce) {
+  .prod.prod-click,
+  .prod.prod-click .prod-chev svg {
+    transition: none;
+  }
+}
+.prod-abrir:focus-visible {
+  outline: 2px solid var(--sk-color-info);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.prod-chev {
+  padding: 4px;
+}
+
+// Móvil: fila del producto sin línea verde; nombre, contrato y tag uno debajo del otro
+@media (max-width: 600px) {
+  .prod,
+  .prod.prod-click {
+    border-left: 0;
+    margin: 8px 0 0;
+    padding: 12px 8px;
+    border-radius: 8px;
+  }
+  .prod .t,
+  .prod.prod-click .t {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    gap: 6px 8px;
+  }
+  .prod .t .prod-abrir:not(.prod-chev) {
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+  .prod .t .ed {
+    font-size: 11px;
+    line-height: 14px;
+  }
+  .prod .t .nom {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
+  }
+  .prod .t .n {
+    font-size: 13px;
+    line-height: 18px;
+    color: var(--sk-color-ink-2);
+  }
+  .prod .t .n-sep {
+    display: none;
+  }
+  .prod .t .prod-tag {
+    grid-column: 1;
+    justify-self: start;
+    margin-top: 4px;
+  }
+  // Flecha junto al nombre del producto
+  .prod .t .prod-chev {
+    display: none;
+  }
+  .prod .t .nom::after {
+    content: '';
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-left: 6px;
+    vertical-align: -2px;
+    background: var(--sk-color-primary);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E")
+      center/contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E")
+      center/contain no-repeat;
+    transition: transform 0.15s;
+  }
+  .prod.prod-click:hover .nom::after {
+    transform: translateX(3px);
+  }
+  .prod .d {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .prod .d .d-sep {
+    display: none;
+  }
+  .prod .d a {
+    margin-top: 6px;
+  }
+}
+
+// Táctil (móvil/tablet): no hay hover; los estados hover no se quedan pegados
+@media (hover: none) {
+  .prod.prod-click:hover .prod-chev svg,
+  .prod.prod-click:hover .nom::after {
+    transform: none;
+  }
+  .prod.prod-click:hover {
+    background: transparent;
+  }
+  .prod.prod-click:hover .prod-abrir:not(.prod-chev),
+  .prod.prod-click:hover .prod-abrir .n {
+    color: inherit;
+  }
+  .prod.prod-click:active {
+    background: var(--sk-color-brand-active);
+  }
+}

@@ -1,0 +1,63 @@
+:host {
+  display: block;
+}
+
+.v-producto {
+  margin-top: 32px;
+}
+.pf-panel {
+  position: relative;
+  z-index: 1;
+  background: var(--sk-color-surface);
+  border-radius: 0 16px 16px 16px;
+  box-shadow: 0 0 4px 0 rgba(61, 75, 92, 0.15);
+  padding: 16px 16px 32px 16px;
+}
+.pf-caja {
+  background: var(--sk-color-surface-3);
+  border-radius: 16px;
+  padding: 20px 28px 40px;
+}
+.pf-vacio p {
+  margin: 24px 0 0;
+  font-family: var(--sk-font-body);
+  font-size: 14px;
+  color: var(--sk-color-text);
+}
+.pf-caja.pf-vacio p {
+  margin: 0;
+}
+@media (max-width: 600px) {
+  .v-producto {
+    margin-top: 20px;
+  }
+  .pf-panel {
+    padding: 12px;
+  }
+  .pf-caja {
+    padding: 16px 12px 24px;
+  }
+}
+
+// Móvil: navegación por niveles (producto > sección del producto)
+@media (max-width: 600px) {
+  :host-context(.vista-producto) .v-producto {
+    margin-top: 16px;
+  }
+  :host-context(.vista-producto:not(.m-pf-sec)) .pf-panel {
+    display: none !important;
+  }
+  // Pantalla de una sección del producto: solo su contenido
+  :host-context(.m-pf-sec) .pf-panel {
+    border-radius: 16px;
+    padding: 0;
+    box-shadow: none;
+    background: transparent;
+  }
+  // Sin contenedor general dentro de las secciones: el contenido usa todo el ancho
+  :host-context(.m-pf-sec) .pf-caja {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+  }
+}

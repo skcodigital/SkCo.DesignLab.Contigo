@@ -1,0 +1,68 @@
+@let p = producto();
+<div class="pf-cards" #carrusel (scroll)="alDesplazar()">
+  <article class="pf-card pf-principal">
+    <div class="pf-tit">
+      <h2>{{ p.fondo }}</h2>
+      <span class="prod-tag">{{ p.tag }}</span>
+    </div>
+    <div class="pf-saldo">
+      <div class="pf-saldo-izq">
+        <p class="pf-big">{{ p.saldoTotal }}</p>
+        <a href="#" class="pf-retiro" (click)="$event.preventDefault()">Saldo para retiro: {{ p.saldoRetiro }}</a>
+        <p class="pf-meta">Saldo total <i aria-hidden="true"></i> Contrato #{{ p.contrato }}</p>
+      </div>
+      <button type="button" class="pf-pipeline">Ir a Pipeline</button>
+    </div>
+    <p class="pf-admin">Administrado por {{ p.administradora }}</p>
+  </article>
+
+  <article class="pf-card">
+    <h3 class="pf-h">
+      Evolución histórica del contrato
+      <span class="tip"
+        ><button class="tip-btn pf-ayuda" type="button" aria-label="¿Qué es la evolución histórica?" aria-describedby="tip-evo">?</button
+        ><span class="tip-box" role="tooltip" id="tip-evo"
+          >Muestra cuánto del saldo actual corresponde a lo que tu cliente ha aportado (capital) y cuánto a lo que ha ganado
+          (rendimientos) desde que abrió el contrato.</span
+        ></span
+      >
+    </h3>
+    <div class="pf-evo">
+      <div class="pf-datos">
+        <div class="pf-dato pf-dato-a">
+          <span>Rendimientos totales</span>
+          <p class="pf-big">
+            {{ p.rendimientos }}
+            <span class="trend"
+              ><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#00C73D" stroke-width="1.5"><path d="M1 9l3-3 2 2 5-5" /><path d="M8 3h3v3" /></svg
+            ></span>
+          </p>
+        </div>
+        <div class="pf-dato">
+          <span>Capital</span>
+          <p class="pf-num">{{ p.capital }}</p>
+        </div>
+      </div>
+      <div class="pf-donut pf-donut-evo" role="img" aria-label="10 % rendimientos y 90 % capital"></div>
+    </div>
+  </article>
+
+  <article class="pf-card">
+    <h3 class="pf-h">Beneficio de permanencia</h3>
+    <p class="pf-lbl">Saldo para retiro sin perder beneficio de permanencia</p>
+    <p class="pf-big pf-alerta">
+      {{ p.beneficio.saldoSinPerder }}
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#F5A623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Atención"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
+    </p>
+    <div class="pf-dos">
+      <div><span>Valor acumulado a alcanzar</span><b>{{ p.beneficio.acumulado }}</b></div>
+      <div><span>Ya devuelto</span><b>{{ p.beneficio.devuelto }}</b></div>
+    </div>
+  </article>
+</div>
+
+<div class="pf-dots" aria-hidden="true">
+  @for (i of puntos; track i) {
+    <i [class.on]="i === activa()"></i>
+  }
+</div>

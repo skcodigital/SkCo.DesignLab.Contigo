@@ -1,0 +1,139 @@
+// Piezas visuales compartidas por la página de login, el formulario y el restablecimiento de contraseña
+// (saludo, encabezado de zona, botones y enlaces). Cada componente las incluye con @use: la encapsulación
+// emulada las acota a su plantilla. El orden replica el del prototipo (importa para la cascada).
+
+.lg-hola {
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.lg-hola h1 {
+  font-family: var(--sk-font-heading);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--sk-color-text);
+}
+
+.lg-hola p {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--sk-color-text);
+}
+
+.lg-hola strong {
+  font-weight: 700;
+}
+
+.lg-zona-h {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 12px;
+  font-family: var(--sk-font-heading);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--sk-color-text);
+}
+
+.lg-zona-h svg {
+  flex: none;
+  color: var(--sk-color-primary);
+}
+
+.lg-zona-h small {
+  display: block;
+  font-family: var(--sk-font-body);
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--sk-color-text-2);
+}
+
+.lg-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  border-radius: 9999px;
+  border: 1px solid var(--sk-color-primary);
+  background: var(--sk-color-primary);
+  color: #fff;
+  font-family: var(--sk-font-heading);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s;
+}
+
+.lg-btn:hover {
+  background: var(--sk-color-primary-strong);
+  border-color: var(--sk-color-primary-strong);
+}
+
+.lg-btn-sec {
+  background: var(--sk-color-surface);
+  color: var(--sk-color-primary);
+}
+
+.lg-btn-sec:hover {
+  background: var(--sk-color-brand-light);
+  border-color: var(--sk-color-primary);
+}
+
+.lg-btn:focus-visible,
+.lg-link:focus-visible {
+  outline: 2px solid var(--sk-color-info);
+  outline-offset: 2px;
+}
+
+.lg-link {
+  align-self: flex-start;
+  font-family: var(--sk-font-heading);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--sk-color-primary);
+  text-decoration: none;
+}
+
+.lg-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .lg-hola {
+    padding-bottom: 4px;
+  }
+
+  .lg-hola p {
+    text-wrap: balance;
+  }
+}
+
+.lg-btn:disabled {
+  background: #d7d7d7;
+  border-color: #d7d7d7;
+  color: #fff;
+  cursor: not-allowed;
+}
+
+// Login sin scroll: saludo centrado entre el logo y la primera zona
+.lg-hola {
+  margin-bottom: auto;
+  padding-bottom: 16px;
+}
+
+.lg-hola p {
+  margin-top: 4px;
+}
+
+@media (max-height: 640px) {
+  .lg-hola {
+    padding-bottom: 8px;
+  }
+}

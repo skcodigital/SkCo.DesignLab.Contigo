@@ -1,0 +1,134 @@
+<div class="gestion-zona">
+  <article class="owner">
+    <span class="owner-avatar" aria-hidden="true">JR</span>
+    <div class="owner-info">
+      <span class="owner-eyebrow">Plan implementado por</span>
+      <h2 class="owner-name">{{ fpAsignado }}</h2>
+      <p class="owner-meta">Implementado en marzo de 2019 · Último partícipe nuevo: <b>julio de 2026</b> · Último aporte: <b>octubre de 2026</b></p>
+    </div>
+    @if (rutaAccionVisible) {
+      @if (store.rutaEnviada()) {
+        <span class="tag tag--info">{{ enviada }}</span>
+      } @else {
+        <span class="tag tag--warning"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>Requiere ruta de acción</span>
+      }
+    }
+  </article>
+  <div class="plan-type gestion-anio">
+    <span class="plan-type-label" id="gestion-anio-label">Gestión en</span>
+    <div class="segmented" role="radiogroup" aria-labelledby="gestion-anio-label">
+      @for (a of anios; track a) {
+        <label><input type="radio" name="gestion-anio" [value]="a" [checked]="anio() === a" (change)="anio.set(a)"><span>{{ a }}</span></label>
+      }
+    </div>
+  </div>
+  <div class="kpis kpis--panel kpis--gestion" aria-live="polite">
+    <article class="kpi">
+      <span class="kpi-label">Clientes nuevos de la agencia <span class="tip-wrap"><button class="tip" aria-label="Qué cuenta como agencia" aria-describedby="tip-g-agencia"><nc-rx-icono nombre="ayuda" /></button><span class="tooltip" role="tooltip" id="tip-g-agencia">Incluye al FP Asignado y a los demás asesores de su agencia.</span></span></span>
+      <span class="kpi-value--big num"><span>{{ gestion().nuevos }}</span> <small class="kpi-of">{{ gestion().de }}</small></span>
+      <span class="kpi-sub num">{{ gestion().nuevosSub }}</span>
+    </article>
+    <article class="kpi">
+      <span class="kpi-label">Partícipes nuevos de la agencia <span class="tip-wrap"><button class="tip" aria-label="Diferencia entre partícipe y cliente nuevo" aria-describedby="tip-participe"><nc-rx-icono nombre="ayuda" /></button><span class="tooltip" role="tooltip" id="tip-participe">Un <b>partícipe nuevo</b> es un empleado que entra al plan corporativo, aunque ya fuera cliente de Skandia. Un <b>cliente nuevo</b> no tenía ningún producto con Skandia. Incluye los vinculados por el FP Asignado y por los demás asesores de su agencia.</span></span></span>
+      <span class="kpi-value--big num">{{ gestion().participes }}</span>
+      <span class="kpi-sub num">{{ gestion().participesSub }}</span>
+    </article>
+    <article class="kpi">
+      <span class="kpi-label">Clientes con cross-sell de la agencia</span>
+      <span class="kpi-value--big num">{{ gestion().contratos }}</span>
+      <span class="kpi-sub num">{{ gestion().contratosSub }}</span>
+    </article>
+    <article class="kpi">
+      <span class="kpi-label">Neto de clientes de la agencia <span class="tip-wrap"><button class="tip" aria-label="Qué es el neto" aria-describedby="tip-neto"><nc-rx-icono nombre="ayuda" /></button><span class="tooltip" role="tooltip" id="tip-neto"><b>Clientes nuevos menos clientes perdidos</b> en el año.</span></span></span>
+      <!-- Si el neto es negativo (perdió más de los que trajo), se marca como alerta -->
+      <span class="kpi-value--big num" [class.kpi-value--warning]="gestion().netoNegativo">{{ gestion().neto }}@if (gestion().netoNegativo) {
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" [attr.aria-label]="netoAlerta"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+      }</span>
+      <span class="kpi-sub num">{{ gestion().netoSub }}</span>
+    </article>
+  </div>
+</div>
+
+<article class="card owner-chart">
+  <div class="card-head">
+    <div>
+      <h3 class="card-title">Clientes nuevos en la empresa, por quién los vinculó</h3>
+      <p class="card-sub">Clientes nuevos para Skandia que trabajan en Empresa ABC S.A.</p>
+    </div>
+    <div class="legend-inline">
+      <span><i class="sw sw--dueno"></i>FP Asignado</span>
+      <span><i class="sw sw--agencia"></i>Agencia Norte</span>
+      <span><i class="sw sw--otras"></i>Otras agencias</span>
+    </div>
+  </div>
+  <!-- Lote 1: sin la columna de lectura y CTA, la gráfica va a todo el ancho -->
+  <div class="owner-chart-grid" [class.owner-chart-grid--uno]="!rutaAccionVisible">
+    <div class="owner-chart-main">
+      <div class="bars">
+        @for (b of barras; track b.anio) {
+          <div class="bar-col">
+            <span class="bar-total num">{{ b.total }}</span>
+            <div class="bar" role="img" [attr.aria-label]="b.aria">
+              @for (t of b.tramos; track t.gestion) {
+                <span [class]="'seg seg--' + t.gestion" [style.height.px]="t.alto" [ncRxChartTip]="{ titulo: b.anio, lineas: [t.etiqueta] }">
+                  @if (!t.sinValor) {
+                    <span class="seg-val">{{ t.valor }}</span>
+                  }
+                </span>
+              }
+            </div>
+            <span class="bar-year">{{ b.anio }}</span>
+          </div>
+        }
+      </div>
+      <p class="card-foot">* 2026 hasta octubre.</p>
+    </div>
+    @if (rutaAccionVisible) {
+      <div class="owner-side">
+        @if (lecturasVisibles) {
+          <div class="sk-alert sk-alert--info sk-alert--reading" role="note">
+            <span class="sk-alert__icon" aria-hidden="true"><nc-rx-icono /></span>
+            <div class="sk-alert__content">
+              <p class="sk-alert__title">Lectura para la conversación</p>
+              <p class="sk-alert__desc">Desde 2024, otros asesores vincularon <b>47</b> clientes nuevos en la empresa y el FP Asignado, <b>5</b>. Su último cliente nuevo fue en agosto de 2025 y en 2026 sumó <b>1</b> partícipe al plan. La empresa crece, pero por fuera de su gestión.</p>
+            </div>
+          </div>
+        }
+        <div class="actions">
+          <button class="btn-primary" aria-haspopup="dialog" (click)="store.abrirCrearRuta()">{{ store.rutaEnviada() ? textosRuta.verEnviada : textosRuta.botonCrear }}</button>
+          <p class="actions-note">La ruta de acción le llega al asesor a su correo y como notificación en Contigo, y queda en su ruta comercial.</p>
+        </div>
+      </div>
+    }
+  </div>
+  <!-- "Reasignar empresa" se omite hasta que negocio defina las reglas de dueño (hallazgo del taller) -->
+</article>
+
+<section class="card block" aria-labelledby="asesores-title">
+  <div class="block-head">
+    <h2 class="block-title" id="asesores-title">Asesores con clientes en la empresa (14)</h2>
+  </div>
+  <div class="table-wrap">
+    <table class="table table--asesores">
+      <thead>
+        <tr>
+          <th scope="col"><span class="th">Asesor</span></th>
+          <th scope="col"><span class="th">Clientes</span></th>
+          <th scope="col"><span class="th">Activos</span></th>
+          <th scope="col"><span class="th">Clientes nuevos desde 2024</span></th>
+          <th scope="col"><span class="th">Último cliente nuevo</span></th>
+          <th scope="col"><span class="th">Estado</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (a of asesores; track a.nombre) {
+          <tr [class.row-owner]="a.propio" [class.row-agg]="a.agregado">
+            <th scope="row"><span class="who"><i [class]="'sw sw--' + a.gestion"></i><span><b>@if (a.agregado) {<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> }{{ a.nombre }}</b><small>{{ a.detalle }}</small></span></span></th>
+            <td class="c num">{{ a.clientes }}</td><td class="c num">{{ a.activos }}</td><td class="c num">{{ a.nuevos }}</td><td>{{ a.ultimo }}</td>
+            <td><span class="tag" [class.tag--success]="a.estado === 'Activo'" [class.tag--neutral]="a.estado === 'Agregado'">{{ a.estado }}</span></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

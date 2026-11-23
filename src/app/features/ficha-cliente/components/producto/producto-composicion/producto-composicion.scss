@@ -1,0 +1,287 @@
+@use '../../../styles/comunes' as *;
+
+:host {
+  display: block;
+}
+
+@include pf-aviso;
+
+.pf-seg {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  background: #fff;
+  border-radius: 32px;
+}
+.pf-seg button {
+  border: 0;
+  background: transparent;
+  border-radius: 24px;
+  padding: 10px 20px;
+  font-family: var(--sk-font-heading);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--sk-color-text-3);
+  cursor: pointer;
+}
+.pf-seg button[aria-selected='true'] {
+  background: var(--sk-color-primary);
+  color: #fff;
+}
+.pf-seg button:not([aria-selected='true']):hover {
+  color: var(--sk-color-primary);
+}
+.pf-donut {
+  border-radius: 50%;
+  flex: none;
+}
+.pf-comp {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-top: 32px;
+}
+.pf-donut-comp {
+  width: 200px;
+  height: 200px;
+  background: conic-gradient(var(--sk-charts-c01) 0 65%, var(--sk-charts-c02) 65% 100%);
+  -webkit-mask: radial-gradient(circle, transparent 56px, #000 57px);
+  mask: radial-gradient(circle, transparent 56px, #000 57px);
+}
+.pf-tabla-wrap {
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+}
+// Tabla: Texto pequeño 12px; solo los títulos en bold
+.pf-tabla {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 8px 10px;
+  font-family: var(--sk-font-body);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  color: var(--sk-color-text);
+}
+.pf-tabla th {
+  font-weight: 700;
+}
+.pf-tabla td,
+.pf-tabla td b {
+  font-weight: 400;
+}
+.pf-tabla th {
+  font-weight: 700;
+  background: #fff;
+  border-radius: 4px;
+  padding: 8px 10px;
+  white-space: nowrap;
+}
+.pf-tabla td {
+  background: #fff;
+  border-radius: 4px;
+  padding: 8px 10px;
+  text-align: center;
+  white-space: nowrap;
+}
+.pf-tabla th:first-child,
+.pf-tabla td:first-child,
+.pf-tabla th.pf-izq,
+.pf-tabla td.pf-izq {
+  background: transparent;
+  padding-left: 0;
+  padding-right: 0;
+}
+.pf-tabla .pf-izq {
+  text-align: left;
+}
+.pf-tabla td.pf-izq i {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  margin-right: 10px;
+  vertical-align: -1px;
+}
+.pf-tabla td.pf-izq b {
+  margin-right: 10px;
+}
+.pf-desc {
+  border: 0;
+  background: none;
+  padding: 2px;
+  cursor: pointer;
+  display: flex;
+  border-radius: 4px;
+}
+.pf-desc:focus-visible {
+  outline: 2px solid var(--sk-color-info);
+}
+
+// Fecha de corte (calendario) de Composición
+.pf-barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.pf-ctrl {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+}
+.pf-radios {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.pf-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: var(--sk-font-body);
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--sk-color-text);
+}
+.pf-radio input {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid var(--sk-color-text-3);
+  border-radius: 50%;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.pf-radio input::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--sk-color-primary);
+  transform: scale(0);
+  transition: transform 0.15s;
+}
+.pf-radio input:checked {
+  border-color: var(--sk-color-primary);
+}
+.pf-radio input:checked::before {
+  transform: scale(1);
+}
+.pf-radio:hover input {
+  border-color: var(--sk-color-primary);
+}
+.pf-radio input:focus-visible {
+  outline: 2px solid var(--sk-color-info);
+  outline-offset: 2px;
+}
+@media (max-width: 600px) {
+  .pf-ctrl {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+}
+
+// La tabla y la dona se refrescan al cambiar la fecha de corte
+.pf-tabla.actualiza tbody,
+.pf-donut-comp.actualiza {
+  animation: pfActualiza 0.35s ease;
+}
+.pf-tabla.actualiza-2 tbody,
+.pf-donut-comp.actualiza-2 {
+  animation: pfActualiza2 0.35s ease;
+}
+@keyframes pfActualiza {
+  from {
+    opacity: 0.25;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes pfActualiza2 {
+  from {
+    opacity: 0.25;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pf-tabla.actualiza tbody,
+  .pf-donut-comp.actualiza,
+  .pf-tabla.actualiza-2 tbody,
+  .pf-donut-comp.actualiza-2 {
+    animation: none;
+  }
+}
+@media (max-width: 600px) {
+  .pf-barra {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 1100px) {
+  .pf-comp {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .pf-donut-comp {
+    align-self: center;
+  }
+}
+@media (max-width: 600px) {
+  .pf-seg button {
+    font-size: 13px;
+    padding: 8px 12px;
+    white-space: nowrap;
+  }
+  .pf-donut-comp {
+    width: 180px;
+    height: 180px;
+    -webkit-mask: radial-gradient(circle, transparent 50px, #000 51px);
+    mask: radial-gradient(circle, transparent 50px, #000 51px);
+  }
+}
+
+// Móvil: pantalla de una sección del producto (sin contenedor general)
+@media (max-width: 600px) {
+  :host-context(.m-pf-sec) .pf-seg {
+    background: var(--sk-color-surface-3);
+  }
+  :host-context(.m-pf-sec) .pf-tabla th,
+  :host-context(.m-pf-sec) .pf-tabla td:not(:first-child):not(.pf-izq) {
+    background: var(--sk-color-surface-3);
+  }
+  :host-context(.m-pf-sec) .pf-tabla th:first-child,
+  :host-context(.m-pf-sec) .pf-tabla th.pf-izq {
+    background: transparent;
+  }
+  .pf-seg {
+    display: flex;
+  }
+  .pf-seg button {
+    flex: 1;
+  }
+}
+
+// Táctil: los estados hover no se quedan pegados
+@media (hover: none) {
+  .pf-radio:hover input:not(:checked) {
+    border-color: var(--sk-color-text-3);
+  }
+  .pf-seg button:not([aria-selected='true']):hover {
+    color: var(--sk-color-text-3);
+  }
+}

@@ -1,0 +1,19 @@
+<div class="overlay" ncRxDialogo ncRxDialogoFoco="#editar-meta-valor" (cerrar)="store.cerrarEditarMeta()">
+  <div class="modal modal--meta" role="dialog" aria-modal="true" aria-labelledby="editar-meta-title">
+    <div class="modal-head">
+      <h2 class="modal-title" id="editar-meta-title">Editar meta</h2>
+      <button class="modal-close" aria-label="Cerrar" (click)="store.cerrarEditarMeta()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <p class="modal-desc" id="editar-meta-nombre">{{ nombre() }}</p>
+    <div class="goal-edit">
+      <span class="goal-affix">{{ unidad()[0] }}</span>
+      <input class="goal-input" type="number" inputmode="numeric" min="0" step="1" id="editar-meta-valor" aria-labelledby="editar-meta-nombre" [value]="valor()" (input)="alEscribir($event)">
+      <span class="goal-affix">{{ unidad()[1] }}</span>
+    </div>
+    <p class="goal-calc" aria-live="polite">{{ calc() }}</p>
+    <div class="modal-actions">
+      <button type="button" class="btn-outline" (click)="store.cerrarEditarMeta()">Cancelar</button>
+      <button type="button" class="btn-primary" (click)="store.guardarMeta(valor())">Guardar cambios</button>
+    </div>
+  </div>
+</div>

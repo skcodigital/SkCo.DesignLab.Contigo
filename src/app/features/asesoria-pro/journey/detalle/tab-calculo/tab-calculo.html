@@ -1,0 +1,40 @@
+@if (!(st().monto > 0)) {
+  <p class="jw-nodisp"><svg ncIcono="off"></svg><span><b>No disponible</b> · Falta el monto que necesita · Complete «Entender»</span></p>
+} @else {
+  @let c = contrato();
+  @let r = k();
+  <p class="jw-calc-h"><b>El retiro paso a paso</b><span>Contrato {{ c.num }}</span></p>
+  <div class="jw-pasos-calc">
+    <div><span>Recibe</span><b>{{ pesos(r.R) }}</b></div>
+    <div><span>+ Retención contingente</span><span>{{ pesos(r.rcA) }}</span></div>
+    <div><span>+ Retención sobre rendimientos{{ especial() ? '' : ' (7 %)' }}</span><span>{{ pesos(r.rrA) }}</span></div>
+    <div><span>+ 4×1000<em>Estimado</em></span><span>{{ pesos(r.g) }}</span></div>
+    <div class="tot"><span>= Se descuenta del contrato</span><span>{{ pesos(r.D) }}</span></div>
+  </div>
+  @if (!r.cubre) {
+    <p class="jw-nota jw-nota--alerta"><span>Lo disponible no alcanza: faltan <b>{{ pesos(st().monto - r.R) }}</b>.</span></p>
+  }
+  @if (c.perm) {
+    <p class="jw-nota">
+      <span>Cobro por permanencia (capital más seguro) <b>{{ pesos(permanencia()) }}</b> · estimado. En capital más seguro, el 2,5 % de cada aporte se descuenta al aportar y se devuelve al cumplir 3 años de permanencia. Si se retira antes, no se devuelve: es lo que deja de recibir, no se descuenta de lo que recibe.</span>
+    </p>
+  }
+  <div class="jw-caja">
+    <h5>De qué portafolios sale</h5>
+    <div class="jw-lista-calc">
+      @for (x of porPortafolio(); track x.nombre) {
+        <div><span>{{ x.nombre }}</span><b>{{ pesos(x.valor) }}</b></div>
+      }
+    </div>
+  </div>
+  <div class="jw-caja">
+    <h5>De qué aportes sale</h5>
+    <p>
+      @for (x of tramos(); track x[0]; let last = $last) {
+        {{ x[0] }} <b>{{ pesos(x[1]) }}</b>@if (!last) { · }
+      }
+    </p>
+    <p>{{ anios() }}</p>
+  </div>
+  <p class="jw-ayuda">Lo que se retiene hoy es un anticipo: se descuenta del impuesto en la declaración de renta.</p>
+}

@@ -1,0 +1,29 @@
+<div class="route-cards">
+  @for (c of cajitas(); track c.paso.id) {
+    <article class="card step" [class.is-lograda]="(c.seguimiento?.pct ?? 0) >= 100">
+      <span class="step-head"><span class="step-num" [class.step-num--warning]="c.paso.aviso">{{ c.paso.num }}</span>{{ c.paso.etapa }}</span>
+      <h3 class="step-title">{{ c.paso.titulo }}</h3>
+      <p class="step-desc">{{ c.desc }}</p>
+      @if (c.quien.length) {
+        <p class="step-who">
+          @for (q of c.quien; track q.texto) {
+            <span><i [class]="'sw sw--' + q.gestion"></i>{{ q.texto }}@if (q.candado) {<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-label="Agregado, sin detalle"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>}</span>
+          }
+        </p>
+      }
+      <p class="step-goal">@for (p of c.meta; track $index) {@if (p.b) {<b>{{ p.t }}</b>} @else {{{ p.t }}}}</p>
+      @if (rol() === 'director' && checkVisible) {
+        <label class="step-check"><input type="checkbox" [checked]="c.incluida" [disabled]="store.rutaEnviada()" (change)="incluir(c.paso.id, $event)"> Incluir en la ruta de acción</label>
+      }
+      @if (c.seguimiento; as s) {
+        <div class="step-acts">
+          <div class="step-prog">
+            <div class="step-prog-head"><span>Cumplimiento</span><b class="num">{{ s.pct }}%</b></div>
+            <span class="seg-bar-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" [attr.aria-valuenow]="s.pct" [attr.aria-label]="etiquetaCumplimiento"><span class="seg-bar-fill" [style.width.%]="s.pct"></span></span>
+            <span class="step-prog-meta">{{ s.avance }}</span>
+          </div>
+        </div>
+      }
+    </article>
+  }
+</div>

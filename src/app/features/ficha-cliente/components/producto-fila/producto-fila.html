@@ -1,0 +1,18 @@
+@let p = producto();
+<div class="prod prod-click" (click)="alFila($event)">
+  <div class="t">
+    <button type="button" class="prod-abrir" [attr.aria-label]="etiquetaAbrir()" (click)="alBoton($event)">
+      <span class="ed">{{ p.edicion }}</span><span class="nom">{{ p.nombre }}</span>
+      <span class="n"><span class="n-sep">| </span>{{ p.contrato }}</span></button
+    ><span class="prod-tag">{{ p.tag }}</span>
+    <button type="button" class="prod-abrir prod-chev" aria-label="Ver ficha del producto" (click)="alBoton($event)">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="#00C73D" stroke-width="1.6" style="margin-left: 8px"><path d="M3 1.5L6.5 5 3 8.5" /></svg>
+    </button>
+  </div>
+  <div class="d">
+    <span class="d-fondo">{{ p.fondo }}</span><span class="d-sep">|</span><span>Saldo Total: <b>{{ p.saldoTotal | monto: oculto() }}</b></span>
+    <a href="#" (click)="$event.preventDefault()"
+      ><svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="#0099DE" stroke-width="1.4"><circle cx="7" cy="7" r="6" /><path d="M7 4v6M4 7h6" /></svg>Más</a
+    >
+  </div>
+</div>

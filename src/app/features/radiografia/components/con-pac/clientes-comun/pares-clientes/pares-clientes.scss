@@ -1,0 +1,16 @@
+// La caja `.pairs` (host) la estiliza el padre con `rx-charts`; aquí va lo de adentro.
+.pair { position: relative; display: flex; flex-direction: column; align-items: center; }
+.pair-bars { display: flex; align-items: flex-end; gap: 6px; height: 180px; }
+.pair-bar { width: 40px; border-radius: 6px 6px 0 0; display: flex; justify-content: center; }
+.pair-bar span { margin-top: -20px; font: 700 13px/1 var(--sk-font-body); color: var(--texts-strong); }
+.pair-bar--nuevos { background: var(--charts-c18); }
+.pair-bar--perdidos { background: var(--sk-charts-c04); }
+/* El año va debajo de la línea base, fuera del flujo, para que las barras se apoyen en la línea */
+.pair-year { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: 10px; white-space: nowrap; font: 700 14px/1 var(--sk-font-body); color: var(--sk-color-text); text-align: center; }
+.pair-year small { display: block; margin-top: 6px; font: 600 12.5px/1 var(--sk-font-body); color: var(--sk-color-primary-strong); }
+/* Neto negativo en rojo y neto en cero en gris (Evolución de clientes) */
+.pair-year small.neto-neg { color: var(--feedback-error-dark) !important; }
+.pair-year small.neto-cero { color: var(--sk-color-text-2) !important; }
+@media (max-width: 768px) {
+  .pair-bar { width: 32px; }
+}

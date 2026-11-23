@@ -1,0 +1,31 @@
+<section class="card block plan-seg" [attr.aria-labelledby]="'ruta-metas-title-' + rol()">
+  <div class="block-head block-head--space">
+    <div>
+      <h2 class="block-title" [id]="'ruta-metas-title-' + rol()">{{ rol() === 'dueno' ? 'Ruta de acción de tu director' : 'Ruta de acción' }}</h2>
+      <p class="card-sub">{{ modificacion() }}</p>
+    </div>
+    <button type="button" class="btn-xs" aria-haspopup="dialog" (click)="store.abrirEditarRuta()">Editar ruta</button>
+  </div>
+  <ul class="ruta-metas">
+    @for (m of metas(); track m.id) {
+      <li [class]="'is-' + m.estado">
+        <div>
+          <span class="ruta-meta-name">{{ m.nombre }}</span>
+          <span class="ruta-meta-val">Hoy <b>{{ m.hoy }}</b> → meta <b>{{ m.meta }}</b> · Desde el <span>{{ m.desde }}</span></span>
+        </div>
+        <!-- Sin etiqueta mientras está en curso -->
+        <span [class]="m.claseTag">{{ m.tag }}</span>
+        <div class="ruta-meta-acts">
+          @if (m.estado === 'curso') {
+            <button type="button" class="btn-xs btn-xs--primary" (click)="store.marcarLograda(m.id)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg> Lograda</button>
+            <button type="button" class="btn-xs btn-icon" title="Descartar meta" [attr.aria-label]="textos.descartarMeta + m.nombre" (click)="store.pedirDescarte(m.id)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg></button>
+          } @else {
+            <button type="button" class="btn-xs btn-xs--ghost" (click)="store.deshacerMeta(m.id)">Deshacer</button>
+          }
+        </div>
+      </li>
+    } @empty {
+      <li class="ruta-vacia">{{ textos.sinMetas }}</li>
+    }
+  </ul>
+</section>

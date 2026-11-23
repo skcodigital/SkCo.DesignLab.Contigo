@@ -1,0 +1,64 @@
+<div class="clients-grid">
+  <section class="card block" [attr.aria-labelledby]="'evol-title' + sufijo()">
+    <div class="block-head block-head--space">
+      <h2 class="block-title" [id]="'evol-title' + sufijo()">Evolución de clientes</h2>
+      <div class="segmented segmented--sm" role="radiogroup" aria-label="Ver Evolución de clientes para">
+        <label><input type="radio" [name]="grupo + '-evol'" value="skandia" [checked]="ambitoEvol() === 'skandia'" (change)="ambitoEvol.set('skandia')"><span>Skandia</span></label><label><input type="radio" [name]="grupo + '-evol'" value="agencia" [checked]="ambitoEvol() === 'agencia'" (change)="ambitoEvol.set('agencia')"><span>Agencia Norte</span></label>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-head" [class.card-head--tag-derecha]="vista() === 'director'">
+        <p class="card-sub">{{ textos.evolSub[ambitoEvol()] }}</p>
+        <span class="tag tag--warning"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>El neto se desacelera</span>
+        <div class="legend-inline">
+          <span><i class="sw sw--nuevos"></i>Nuevos</span>
+          <span><i class="sw sw--perdidos"></i>Perdidos</span>
+        </div>
+      </div>
+      <nc-rx-pares-clientes [anios]="evol().evol" />
+      <div class="sk-alert sk-alert--info sk-alert--in-card" role="note">
+        <span class="sk-alert__icon" aria-hidden="true"><nc-rx-icono /></span>
+        <div class="sk-alert__content">
+          <p class="sk-alert__desc">@for (p of alertaEvol(); track $index) {@if (p.b) {<b>{{ p.t }}</b>} @else {<ng-container>{{ p.t }}</ng-container>}}</p>
+          <button class="link-btn" (click)="store.abrirLista('perdidos')">Ver los clientes perdidos <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card block" [attr.aria-labelledby]="'prod-title' + sufijo()">
+    <div class="block-head block-head--space">
+      <h2 class="block-title" [id]="'prod-title' + sufijo()">Productos por cliente</h2>
+      <div class="segmented segmented--sm" role="radiogroup" aria-label="Ver Productos por cliente para">
+        <label><input type="radio" [name]="grupo + '-prod'" value="skandia" [checked]="ambitoProd() === 'skandia'" (change)="ambitoProd.set('skandia')"><span>Skandia</span></label><label><input type="radio" [name]="grupo + '-prod'" value="agencia" [checked]="ambitoProd() === 'agencia'" (change)="ambitoProd.set('agencia')"><span>Agencia Norte</span></label>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-head">
+        <p class="card-sub">{{ textos.prodSub(prod()) }}</p>
+        <span class="block-meta"><b class="num">{{ dosOMas() }}</b> con 2 o más</span>
+      </div>
+      <nc-rx-productos-cliente [conteos]="prod().prod" [total]="prod().total" [aria1p]="aria1p()" />
+      <div class="sk-alert sk-alert--info sk-alert--in-card" role="note">
+        <span class="sk-alert__icon" aria-hidden="true"><nc-rx-icono /></span>
+        <div class="sk-alert__content">
+          <p class="sk-alert__desc">@for (p of alertaProd(); track $index) {@if (p.b) {<b>{{ p.t }}</b>} @else {<ng-container>{{ p.t }}</ng-container>}}</p>
+          <button class="link-btn" (click)="store.abrirLista('monoproducto')">Ver los clientes monoproducto <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="clients-grid segmentos">
+  <section class="card block" [attr.aria-labelledby]="'seg-title' + sufijo()">
+    <div class="block-head block-head--space"><h2 class="block-title" [id]="'seg-title' + sufijo()">Clientes por segmento</h2><div class="segmented segmented--sm" role="radiogroup" aria-label="Ver Clientes por segmento para"><label><input type="radio" [name]="grupo + '-seg'" value="skandia" [checked]="ambitoSeg() === 'skandia'" (change)="ambitoSeg.set('skandia')"><span>Skandia</span></label><label><input type="radio" [name]="grupo + '-seg'" value="agencia" [checked]="ambitoSeg() === 'agencia'" (change)="ambitoSeg.set('agencia')"><span>Agencia Norte</span></label></div></div>
+    <p class="card-sub">{{ textos.segSub[ambitoSeg()] }}</p>
+    <nc-rx-dona-segmentos [valores]="seg().seg" [total]="seg().total" />
+  </section>
+  <section class="card block" [attr.aria-labelledby]="'edad-title' + sufijo()">
+    <div class="block-head block-head--space"><h2 class="block-title" [id]="'edad-title' + sufijo()">Clientes por rango de edad</h2><div class="segmented segmented--sm" role="radiogroup" aria-label="Ver Clientes por rango de edad para"><label><input type="radio" [name]="grupo + '-edad'" value="skandia" [checked]="ambitoEdad() === 'skandia'" (change)="ambitoEdad.set('skandia')"><span>Skandia</span></label><label><input type="radio" [name]="grupo + '-edad'" value="agencia" [checked]="ambitoEdad() === 'agencia'" (change)="ambitoEdad.set('agencia')"><span>Agencia Norte</span></label></div></div>
+    <p class="card-sub">{{ textos.edadSub[ambitoEdad()] }}</p>
+    <nc-rx-barras-edad [valores]="edad().edad" [total]="edad().total" />
+  </section>
+</div>

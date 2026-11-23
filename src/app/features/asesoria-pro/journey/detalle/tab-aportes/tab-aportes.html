@@ -1,0 +1,63 @@
+@let c = contrato();
+<p><b>Aportes del contrato {{ c.num }}</b></p>
+<span class="jw-seg" role="group" aria-label="Cómo ver los aportes">
+  @for (v of vistas; track v[0]) {
+    <button type="button" [attr.aria-pressed]="st().apVista === v[0]" (click)="store.elegirVistaAportes(v[0])">{{ v[1] }}</button>
+  }
+</span>
+@if (st().apVista === 'resumen') {
+  <div class="jw-apor">
+    @for (t of tramos(); track t.tipo) {
+      <div>
+        <span class="jw-cuad c-{{ t.tipo }}"></span>
+        <p>
+          <b>{{ t.nombre }}</b> <span>· {{ t.descripcion }}</span>
+          <span class="jw-barra jw-barra--sola"><i class="c-{{ t.tipo }}" [style.width]="t.ancho"></i></span>
+        </p>
+        <b class="v">{{ pesos(t.valor) }}</b>
+      </div>
+    }
+  </div>
+  @if (st().monto > 0) {
+    <p class="jw-nota"><span>Para recibir <b>{{ pesos(k().R) }}</b> saldrían {{ saldrian() }}.</span></p>
+  }
+} @else {
+  <div class="jw-tabla-acc">
+    <button type="button" class="jw-link" (click)="copiar()">{{ etiquetaCopiar() }}</button>
+    <button type="button" class="jw-link" (click)="descargar()"><svg ncIcono="bajar"></svg>Descargar Excel</button>
+  </div>
+  <div class="jw-tabla-wrap">
+    <table class="jw-tabla">
+      <thead>
+        <tr>
+          @for (col of columnas; track col) {
+            <th scope="col">{{ col }}</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="tot">
+          <td>{{ aportes().length }} aportes</td>
+          <td>{{ pesos(totales().valor) }}</td>
+          <td>{{ pesos(totales().rend) }}</td>
+          <td>{{ pesos(totales().saldo) }}</td>
+          <td colspan="5"></td>
+        </tr>
+        @for (x of aportes(); track x.fecha) {
+          <tr class="grupo"><td colspan="9">{{ x.fecha.slice(-4) }} · 1 aporte</td></tr>
+          <tr>
+            <td>{{ x.fecha }}</td>
+            <td>{{ pesos(x.valor) }}</td>
+            <td>{{ pesos(x.rend) }}</td>
+            <td>{{ pesos(x.saldo) }}</td>
+            <td>{{ estados[x.est] }}</td>
+            <td>{{ x.cert }}</td>
+            <td>{{ x.tras }}</td>
+            <td>{{ x.rc ? pesos(x.rc) : '—' }}</td>
+            <td>{{ x.cumple }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

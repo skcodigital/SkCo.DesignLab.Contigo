@@ -1,0 +1,80 @@
+<div class="overlay" ncRxDialogo [ncRxDialogoFoco]="foco" (cerrar)="store.cerrarPlanModal()">
+  <div class="modal" role="dialog" aria-modal="true" [attr.aria-labelledby]="store.enviada() ? 'plan-sent-title' : 'plan-title'" aria-describedby="plan-desc">
+    @if (store.enviada(); as env) {
+      <!-- Confirmación: reemplaza el formulario al enviar -->
+      <div class="sent" tabindex="-1" #sent>
+        <span class="sent-icon" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>
+        <h2 class="sent-title" id="plan-sent-title">{{ env.editada ? textos.actualizada : textos.enviada }}</h2>
+        <p class="sent-desc">{{ confirmacion().quien }}{{ confirmacion().resto }}@if (env.plazo) {<span>Tiene <b>{{ plazoTexto() }}</b> para revisar su ruta y estructurar una estrategia junto a tu apoyo.</span>}</p>
+        <div class="sent-summary">
+          <h3 class="sent-summary-title">Metas de la ruta</h3>
+          <ul class="sent-list">
+            @for (m of env.metas; track m.id) {
+              <li>{{ m.texto }}@if (m.editada) {&#32;<span class="sent-edited">{{ textos.editada }}</span>}</li>
+            }
+          </ul>
+        </div>
+        <button type="button" class="btn-primary" (click)="store.cerrarPlanModal()">Entendido</button>
+      </div>
+    } @else {
+      <div class="modal-head">
+        <h2 class="modal-title" id="plan-title">{{ store.editandoRuta() ? textos.tituloEditar : textos.tituloCrear }}</h2>
+        <button class="modal-close" aria-label="Cerrar" (click)="store.cerrarPlanModal()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
+      <p class="modal-desc" id="plan-desc">Para <b>{{ destinatario() }}</b> en {{ empresa() }}. Te sugerimos metas a partir de los datos de la empresa; puedes ajustarlas antes de crear la ruta.</p>
+
+      <form class="modal-body" novalidate (submit)="enviar($event)">
+        <fieldset class="goals">
+          <legend class="goals-title">Metas para los próximos 12 meses</legend>
+          @for (m of metas(); track m.id) {
+            <div class="goal" [class.is-off]="!m.incluida">
+              <label class="goal-check"><input type="checkbox" [checked]="m.incluida" (change)="alIncluir(m.id, $event)"> <span><b>{{ m.campo.nombre }}</b>{{ m.detalle }}</span></label>
+              <div class="goal-edit">
+                <span class="goal-affix">{{ m.campo.antes }}</span>
+                <input #valor class="goal-input" type="number" inputmode="numeric" [min]="m.min" [attr.max]="m.campo.max" step="1"
+                       [value]="m.valor" [disabled]="!m.incluida" [attr.aria-label]="m.campo.aria" (input)="alEscribir(m.id, $event)">
+                <span class="goal-affix">{{ m.campo.despues }}</span>
+              </div>
+              <p class="goal-calc" aria-live="polite">
+                <span>{{ m.calc }}</span>
+                @if (m.editada) {
+                  <span class="edited">{{ textos.editadaSugerida }}{{ m.sugeridaTxt }}</span>
+                  <button type="button" (click)="usarSugerida(m.id, valor)">{{ textos.usarSugerida }}</button>
+                } @else {
+                  <span>{{ textos.metaSugerida }}</span>
+                }
+              </p>
+            </div>
+          }
+        </fieldset>
+
+        <fieldset class="field">
+          <legend class="field-label">Plazo para que el asesor revise la ruta <span class="field-opt">(opcional)</span></legend>
+          <div class="segmented">
+            @for (p of plazos; track p.valor) {
+              <label><input type="radio" name="plazo" [value]="p.valor" [checked]="store.plazo() === p.valor" (change)="alElegirPlazo(p.valor)"><span>{{ p.etiqueta }}</span></label>
+            }
+          </div>
+          @if (store.plazo() === 'otro') {
+            <label class="plazo-otro">
+              <input #dias type="number" class="goal-input" min="1" max="180" inputmode="numeric" [value]="store.plazoDias()" aria-label="Número de días para revisar la ruta" (input)="alEscribirDias($event)">
+              <span>días</span>
+            </label>
+          }
+        </fieldset>
+
+        <div class="field">
+          <label class="field-label" for="plan-msg">Mensaje para el asesor <span class="opt">(opcional)</span></label>
+          <textarea id="plan-msg" rows="3" placeholder="Cuéntale qué esperas de la ruta o en qué quieres que se enfoque." [value]="store.mensaje()" (input)="alEscribirMensaje($event)"></textarea>
+        </div>
+
+        <p class="modal-note">El asesor recibe la ruta a su correo y como notificación en Contigo.</p>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-outline" (click)="store.cerrarPlanModal()">Cancelar</button>
+          <button type="submit" class="btn-primary">{{ store.editandoRuta() ? textos.botonGuardar : textos.botonCrear }}</button>
+        </div>
+      </form>
+    }
+  </div>
+</div>

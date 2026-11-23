@@ -1,0 +1,9 @@
+<!-- Sin Plan de Ahorro Corporativo no hay ruta: invitación a abrir la empresa (mismo estilo del estado vacío de la versión con plan) -->
+<section class="card ruta-vacia" aria-labelledby="ruta-sp-title">
+  <span class="ruta-vacia-icon" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></span>
+  <h2 class="ruta-vacia-title" id="ruta-sp-title">Aún no hay ruta comercial para esta empresa</h2>
+  <p class="ruta-vacia-desc">@for (p of nota(); track $index) {@if (p.b) {<b>{{ p.t }}</b>} @else {<ng-container>{{ p.t }}</ng-container>}}</p>
+  @if (crearVisible) {
+    <button class="btn-outline btn-inline" aria-haspopup="dialog" disabled (click)="store.abrirCrearRuta()">{{ store.rutaEnviada() ? textos.verEnviada : textos.botonCrear }}</button>
+  }
+</section>

@@ -1,0 +1,32 @@
+@if (abierta()) {
+  <div class="pp-md-velo" (click)="clicVelo($event)" (keydown)="atraparFoco($event)">
+    <div #caja class="pp-md" role="dialog" aria-modal="true" aria-labelledby="pp-desc-tit" aria-describedby="pp-desc-d">
+      <button type="button" class="pp-md-x" aria-label="Cerrar" (click)="cerrar()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+      </button>
+      <span class="pp-md-ico">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" /><path d="M12 9v4M12 17h.01" /></svg>
+      </span>
+      <h2 id="pp-desc-tit">¿Por qué descartas esta misión?</h2>
+      <p id="pp-desc-d">
+        La misión con <b>{{ nombre() }}</b> saldrá de tu semana. Tu respuesta queda registrada y nos ayuda a mejorar las misiones.
+      </p>
+      <fieldset class="pp-md-ops">
+        <legend class="sr">Motivo</legend>
+        @for (op of opciones; track op.valor) {
+          <label class="pp-md-op">
+            <input type="radio" name="pp-motivo" [value]="op.valor" [checked]="motivo() === op.valor" (change)="motivo.set(op.valor)" />
+            <span>{{ op.etiqueta }}</span>
+          </label>
+        }
+      </fieldset>
+      @if (motivo() === Otro) {
+        <div class="pp-md-otro">
+          <label for="pp-desc-tx">Cuéntanos el motivo</label>
+          <textarea id="pp-desc-tx" rows="2" maxlength="200" [value]="detalle()" (input)="leerTexto($event)"></textarea>
+        </div>
+      }
+      <button type="button" class="pp-md-ok" [disabled]="!valido()" (click)="enviar()">Descartar misión</button>
+    </div>
+  </div>
+}

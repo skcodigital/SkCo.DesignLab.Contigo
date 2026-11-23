@@ -1,0 +1,31 @@
+@use '../../styles/controles';
+@use '../../styles/datos';
+
+$v: ':host-context(#jm-velo)';
+
+:host{display:contents}
+#{$v} .jw-imp{display:flex;flex-direction:column;gap:12px}
+#{$v} .jw-imp-t{display:flex;align-items:center;gap:8px;margin:0;font-size:15px;font-weight:700;color:#fff}
+#{$v} .jw-imp-t svg{color:var(--vd)}
+#{$v} .jw-imp-cuerpo{display:flex;flex-direction:column;gap:10px;padding-top:10px;border-top:1px solid var(--bd)}
+#{$v} .jw-imp-tarifa{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:14px;color:#fff}
+#{$v} .jw-campo--pct{width:96px;gap:4px}
+#{$v} .jw-campo--pct input{width:60px;text-align:right}
+#{$v} .jw-campo--pct.mal{border-color:var(--sk-color-warning)}
+#{$v} .jw-imp-lista{display:flex;flex-direction:column;gap:6px;margin:0}
+#{$v} .jw-imp-lista>div{display:flex;justify-content:space-between;gap:12px;font-size:13px}
+#{$v} .jw-imp-lista dt{color:var(--tx2)}
+#{$v} .jw-imp-lista dt small{display:block;font-size:11px;color:var(--tx3)}
+#{$v} .jw-imp-lista dd{margin:0;font-weight:600;color:var(--sk-color-line);white-space:nowrap}
+#{$v} .jw-imp-lista .tot{padding-top:8px;border-top:1px solid var(--bd)}
+#{$v} .jw-imp-lista .tot dt{font-weight:700;color:var(--vd)}
+#{$v} .jw-imp-lista .tot dd{font-size:14px;font-weight:700;color:var(--vd)}
+#{$v} .jw-imp-lista .atenuado{opacity:.5}
+#{$v} .jw-imp-lista .elegido dt,#{$v} .jw-imp-lista .elegido dd{font-weight:700;color:#fff}
+#{$v} .jw-imp-res{display:flex;flex-direction:column;gap:8px;padding:12px 14px;border:1px solid var(--warnb);border-radius:12px;background:var(--warn)}
+#{$v} .jw-imp-res p{margin:0}
+#{$v} .jw-imp-res>p:first-child b{font-family:var(--sk-font-heading);font-size:16px;color:var(--vd)}
+#{$v} .jw-chico{font-size:11px}
+#{$v} .jw-imp-ops{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+#{$v} .jw-imp-ops .jw-op{display:flex;flex-direction:column;gap:4px;padding:10px 12px;border:1px solid var(--bd2);border-radius:10px;background:transparent;text-align:left;cursor:pointer}
+@media (max-width:640px){#{$v} .jw-imp-ops{grid-template-columns:1fr}}

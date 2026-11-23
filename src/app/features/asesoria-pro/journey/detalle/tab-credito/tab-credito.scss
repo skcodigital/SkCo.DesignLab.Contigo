@@ -1,0 +1,35 @@
+@use '../../styles/controles';
+
+$v: ':host-context(#jm-velo)';
+
+:host{display:contents}
+#{$v} .jw-cr-t{margin:0;font-family:var(--sk-font-heading);font-size:16px;font-weight:700;color:#fff}
+#{$v} .jw-cr-sub{font-size:11px;line-height:16px;color:var(--tx3)}
+#{$v} .jw-cr-tope{padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.06);font-size:13px;color:var(--tx2)}
+#{$v} .jw-cr-h{margin:6px 0 0;font-size:14px;font-weight:700;color:#fff}
+#{$v} .jw-cr-marco{display:flex;flex-direction:column;gap:10px;padding:14px;border:1px solid var(--bd);border-radius:16px;background:var(--sf2)}
+#{$v} .jw-cr-datos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+#{$v} .jw-cr-datos>div{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.05);font-size:13px}
+#{$v} .jw-cr-datos>div.tasa{background:var(--sel)}
+#{$v} .jw-cr-datos span{color:var(--tx2)}
+#{$v} .jw-cr-datos b{text-align:right;color:#fff}
+#{$v} .jw-cr-datos small{grid-column:1/-1;font-size:11px;line-height:15px;color:var(--tx3)}
+#{$v} .jw-cr-franja{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:10px;background:var(--sel);font-size:13px;color:var(--tx2)}
+#{$v} .jw-cr-franja b{font-family:var(--sk-font-heading);font-size:16px;color:var(--vd)}
+#{$v} .jw-cr-franja small{color:var(--tx3)}
+#{$v} .jw-cr-monto{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--tx2)}
+#{$v} .jw-cr-monto>span{display:flex;justify-content:space-between}
+#{$v} .jw-cr-monto b{color:#fff}
+#{$v} .jw-cr-monto input,#{$v} .jw-cr-abono input[type="checkbox"]{accent-color:var(--sk-color-primary)}
+#{$v} .jw-cr-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+#{$v} .jw-cr-abono{display:flex;flex-direction:column;gap:8px}
+#{$v} .jw-cr-sug{display:flex;gap:8px;align-items:flex-start;margin:0;font-size:13px;color:var(--tx2)}
+#{$v} .jw-cr-sug svg{flex:none;margin-top:2px;color:var(--vd)}
+#{$v} .jw-cr-ct{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16px;padding:10px 0;border-top:1px solid var(--bd)}
+#{$v} .jw-cr-ct>div{display:flex;flex-direction:column;gap:2px}
+#{$v} .jw-cr-ct b{color:#fff}
+#{$v} .jw-cr-ct small{font-size:12px;color:var(--tx3)}
+#{$v} .jw-cr-ct dl{display:flex;flex-wrap:wrap;gap:4px 16px;margin:0;font-size:12px}
+#{$v} .jw-cr-ct dt{color:var(--tx3)}
+#{$v} .jw-cr-ct dd{margin:0;font-weight:600;color:#fff;text-align:right}
+@media (max-width:640px){#{$v} .jw-cr-datos,#{$v} .jw-cr-cols{grid-template-columns:1fr}}

@@ -1,0 +1,9 @@
+// Bloques de la etapa Acuerdo (`.jw-bloque5`) que pintan los hijos (trámite, próximos pasos).
+$v: ':host-context(#jm-velo)';
+
+// Los bloques son ítems directos de `.jw-a5` (columna con gap) del padre
+:host{display:contents}
+.jw-bloque5{display:flex;flex-direction:column;gap:10px;padding:14px 16px;border:1px solid var(--sk-color-border-2);border-radius:12px}
+.jw-a5-linea{margin:0;font-size:14px;line-height:22px}
+#{$v} .jw-bloque5{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.10)}
+#{$v} .jw-a5-linea{color:var(--sk-color-line)}

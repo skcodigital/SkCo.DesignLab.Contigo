@@ -1,0 +1,15 @@
+@use '../../../../styles/rx-base';
+@use '../../../../styles/rx-card';
+@use '../../../../styles/rx-charts';
+@use '../../../../styles/rx-segmented';
+
+/* Va después de "La oportunidad" (`.block + .clients-grid` del prototipo) */
+:host { display: block; margin-top: var(--space-3); }
+.clients-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-3); align-items: start; }
+.clients-grid > .card { align-self: stretch; }
+/* C-03 / C-05: en la vista del director el tag va a la derecha (`#panel-clientes .card-head .tag`) */
+.card-head--tag-derecha .tag { margin-left: auto; }
+
+@media (max-width: 1180px) {
+  .clients-grid { grid-template-columns: minmax(0, 1fr); }
+}

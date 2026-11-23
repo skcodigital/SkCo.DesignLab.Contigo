@@ -1,0 +1,14 @@
+// .kpi-var del prototipo (el host es el contenedor).
+:host { display: inline-flex; align-items: center; gap: 4px; align-self: center; }
+.num { font-variant-numeric: tabular-nums; }
+:host > b { font: 700 14px/22px var(--sk-font-body); color: var(--texts-strong); }
+.kpi-tt { position: relative; display: inline-flex; }
+.kpi-tt-btn { display: flex; align-items: center; justify-content: center; width: 25px; height: 25px; padding: 0; border: 0; border-radius: 100px; cursor: help; }
+:host(.kpi-var--up) .kpi-tt-btn { background: var(--sk-color-brand-active); color: var(--sk-color-primary); }
+:host(.kpi-var--flat) .kpi-tt-btn { background: var(--sk-color-warning-light); color: #E59400; }
+:host(.kpi-var--down) .kpi-tt-btn { background: #FDECEC; color: var(--feedback-error-dark); }
+.kpi-tt-btn:focus-visible { outline: 2px solid var(--sk-color-primary); outline-offset: 1px; }
+.kpi-tt-box { position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); z-index: 30; width: max-content; max-width: 280px; padding: 4px 8px; border-radius: 4px; background: var(--sk-color-text-5); color: var(--sk-color-surface); font: 400 14px/22px var(--sk-font-body); text-align: left; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .15s, visibility .15s; }
+.kpi-tt-box small { display: block; font-size: 12px; line-height: 18px; color: var(--sk-color-mission-text); }
+.kpi-tt:hover .kpi-tt-box, .kpi-tt-btn:focus + .kpi-tt-box { opacity: 1; visibility: visible; }
+@media (max-width: 768px) { .kpi-tt-box { left: auto; right: -4px; transform: none; } }

@@ -1,0 +1,21 @@
+<nc-sidebar />
+
+<div class="wrap">
+  <nc-header />
+
+  <main>
+    <router-outlet />
+  </main>
+
+  @if (!radiografia()) {
+    <footer>
+      <span class="ayuda">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.6"><path d="M4 20l1.5-4A8 8 0 1 1 9 19z" /></svg>Centro de ayuda
+      </span>
+      <span>Términos y condiciones</span><span>Accesibilidad</span><span>Mapa del sitio</span><span>Onboarding</span>
+      <span class="r">2023 © Skandia</span>
+    </footer>
+  }
+</div>
+
+<nc-aviso-toast />

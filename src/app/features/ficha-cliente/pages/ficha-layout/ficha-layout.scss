@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+// Modo misión: al abrir Planeación Pro toda la ficha pasa a modo oscuro espacial
+// (en el prototipo eran las variables --ink/--ink-2/--muted/--line redefinidas en body.modo-mision).
+:host-context(.modo-mision) {
+  --sk-color-ink: #ffffff;
+  --sk-color-ink-2: var(--sk-color-mission-text);
+  --sk-color-muted: var(--sk-color-border-4);
+  --sk-color-line: var(--sk-color-text-4);
+  color: #ffffff;
+}

@@ -1,0 +1,9 @@
+@use '../../styles/controles';
+@use '../acuerdo';
+$v: ':host-context(#jm-velo)';
+
+.jw-p4-acc{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.jw-p4-acc .jw-btn--sec{gap:8px}
+#{$v} .jw-contador{margin-top:4px}
+
+@include controles.solo-lectura;

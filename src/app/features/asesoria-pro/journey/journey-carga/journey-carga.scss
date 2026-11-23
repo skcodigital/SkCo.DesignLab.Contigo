@@ -1,0 +1,36 @@
+// Loading de Sami antes del journey. visibility:visible explícito: el shell oculta <main> con `.jw-abierto`.
+.jm-carga{position:fixed;inset:0;z-index:310;visibility:visible;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(255,255,255,.94);font-family:var(--sk-font-body);color:var(--sk-color-text);text-align:center;padding:24px}
+.jm-carga-sami{position:relative;width:150px;height:150px;display:grid;place-items:center;margin-bottom:10px}
+.cop-intro-ring{position:absolute;inset:0;border-radius:50%;border:1px dashed rgba(64,64,64,.35);animation:copIntroGira 1.2s linear infinite}
+.cop-intro-ring i{position:absolute;top:-4px;left:50%;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--sk-color-primary)}
+.jm-carga-sami .cop-intro-ring{border-color:rgba(64,64,64,.3)}
+.jm-carga-sami .cop-intro-ring i{background:var(--sk-color-primary);box-shadow:none}
+.jm-carga-sami img{width:96px;height:auto;animation:copIntroSami .9s ease-in-out infinite alternate;filter:drop-shadow(0 8px 12px rgba(0,0,0,.18))}
+.jm-carga h2{margin:0;font-family:var(--sk-font-heading);font-weight:700;font-size:20px;color:var(--sk-color-primary-dark)}
+.jm-carga-sub{margin:0 0 14px;font-size:14px;color:var(--sk-color-text-2)}
+.jm-carga-pasos{list-style:none;display:grid;gap:10px;text-align:left;width:min(340px,100%)}
+.jm-carga-pasos li{display:flex;align-items:center;gap:12px;font-size:15px;color:var(--sk-color-placeholder);transition:color .3s}
+.jm-ck{flex:none;width:24px;height:24px;border-radius:50%;border:2px solid var(--sk-color-border);display:grid;place-items:center;color:transparent;transition:all .3s}
+.jm-carga-pasos li.on{color:var(--sk-color-text)}
+.jm-carga-pasos li.on .jm-ck{background:var(--sk-color-primary);border-color:var(--sk-color-primary);color:#fff}
+.jm-carga-pasos li.va .jm-ck{border-color:var(--sk-color-primary);border-top-color:transparent;animation:copIntroGira .8s linear infinite}
+.jm-carga-barra{width:min(340px,100%);height:6px;border-radius:9999px;background:var(--sk-color-border-3);overflow:hidden;margin-top:12px}
+.jm-carga-barra i{display:block;height:100%;width:0;background:var(--sk-color-primary);border-radius:9999px}
+.jm-carga.corre .jm-carga-barra i{transition:width 2.4s cubic-bezier(.4,0,.2,1);width:100%}
+@keyframes copIntroGira{to{transform:rotate(360deg)}}
+@keyframes copIntroSami{from{transform:translateY(2px)}to{transform:translateY(-6px)}}
+@media (prefers-reduced-motion:reduce){.cop-intro-ring,.jm-carga-sami img{animation:none}.jm-carga.corre .jm-carga-barra i{transition:none}}
+
+// Ventanas de carga en «modo misión»: velo grafito con el halo de la página, no blanco
+.jm-carga{background:radial-gradient(90% 60% at 85% 0%,rgba(56,56,56,.9) 0%,rgba(56,56,56,0) 60%),rgba(43,43,43,.96);color:var(--sk-color-mission-text)}
+.jm-carga-sami .cop-intro-ring{border-color:rgba(255,255,255,.25)}
+.jm-carga-sami .cop-intro-ring i{background:var(--sk-color-primary);box-shadow:0 0 8px rgba(0,199,61,.6)}
+.jm-carga-sami img{filter:drop-shadow(0 8px 12px rgba(0,0,0,.45))}
+.jm-carga h2{color:var(--sk-color-primary)}
+.jm-carga-sub{color:var(--sk-color-mission-text-2)}
+.jm-carga-pasos li{color:var(--sk-color-mission-text-2)}
+.jm-carga-pasos li.va{color:var(--sk-color-mission-text)}
+.jm-carga-pasos li.on{color:#ffffff}
+.jm-ck{border-color:var(--sk-color-text-4)}
+.jm-carga-pasos li.on .jm-ck{background:var(--sk-color-primary);border-color:var(--sk-color-primary);color:#1b1b1b}
+.jm-carga-barra{background:var(--sk-color-text-4)}

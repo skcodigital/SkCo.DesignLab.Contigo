@@ -1,0 +1,10 @@
+@use '../../../styles/rx-base';
+@use '../../../styles/rx-card';
+
+:host { display: block; }
+.ruta-vacia { background: var(--sk-color-surface-3); box-shadow: none; display: flex; flex-direction: column; align-items: center; gap: var(--space-2); padding: var(--space-5, 40px) var(--space-3); text-align: center; }
+.ruta-vacia-title { margin: 0; font: 700 18px/26px var(--sk-font-heading); color: var(--texts-strong); }
+.ruta-vacia-desc { margin: 0; max-width: 520px; font: 400 14px/22px var(--sk-font-body); color: var(--sk-color-text); }
+.ruta-vacia .btn-primary { width: auto; min-width: 280px; padding: 0 32px; margin-top: var(--space-1); }
+.ruta-vacia { margin: 0; font-size: 14px; color: var(--sk-color-text-2); }
+@media (max-width: 768px) { .ruta-vacia { padding: 16px; } }

@@ -1,0 +1,77 @@
+<div class="overlay" ncRxDialogo (cerrar)="cerrar.emit()">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="info-title" aria-describedby="info-desc">
+    <div class="modal-head">
+      <h2 class="modal-title" id="info-title">
+        @switch (vista()) {
+          @case ('director') {
+            @if (sinPac()) { Vista gerencial: la empresa completa y los asesores que la atienden } @else { Vista gerencial: la empresa completa y la gestión del FP Asignado }
+          }
+          @case ('dueno') { Eres el FP Asignado: ves la empresa completa }
+          @case ('fp') { Esta radiografía muestra solo tus {{ sinPac() ? 31 : 2 }} clientes en Empresa ABC S.A. }
+        }
+      </h2>
+      <button class="modal-close" aria-label="Cerrar" (click)="cerrar.emit()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <p class="modal-desc" id="info-desc">
+      @switch (vista()) {
+        @case ('director') {
+          @if (sinPac()) { La empresa no tiene Plan de Ahorro Corporativo, así que no tiene FP Asignado. Ves qué asesores la atienden y la oportunidad de proponerle el plan. } @else { Ves cuánto gestiona el FP Asignado frente a lo que vinculan otros asesores. }
+        }
+        @case ('dueno') { Lo que gestionan otros asesores aparece en gris y agregado. Sirve para dimensionar la empresa; no muestra sus clientes ni sus contratos. }
+        @case ('fp') { Puedes trabajar a tus clientes de esta empresa como siempre. El plan corporativo lo atiende otro asesor. }
+      }
+    </p>
+    @switch (vista()) {
+      @case ('dueno') {
+    <div class="info-scope"><div class="scope-cols"><div><h3 class="scope-title">Ves</h3><ul class="scope-list scope-yes"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Total de la empresa y población no atendida</li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Todas las líneas: plan corporativo, obligatoria, voluntaria, cesantías, seguros y fiduciaria</li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Tu porción frente a la de otros asesores (agregada)</li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Potencial total y ruta comercial</li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Informe en PDF para la reunión con gestión humana</li></ul></div><div><h3 class="scope-title">No ves</h3><ul class="scope-list scope-no"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.6 6.1A9.8 9.8 0 0 1 12 6c5.5 0 9 6 9 6a15.6 15.6 0 0 1-2.5 3.3M6.3 7.6C4.2 9.2 3 12 3 12s3.5 6 9 6a8.6 8.6 0 0 0 4.4-1.2"/><path d="M9.9 10a3 3 0 0 0 4.2 4.2"/><path d="m3 3 18 18"/></svg>Nombres, saldos y contratos de los clientes de otros asesores</li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.6 6.1A9.8 9.8 0 0 1 12 6c5.5 0 9 6 9 6a15.6 15.6 0 0 1-2.5 3.3M6.3 7.6C4.2 9.2 3 12 3 12s3.5 6 9 6a8.6 8.6 0 0 0 4.4-1.2"/><path d="M9.9 10a3 3 0 0 0 4.2 4.2"/><path d="m3 3 18 18"/></svg>Quiénes son los otros asesores</li></ul></div></div></div>
+      }
+      @case ('fp') {
+    <div class="info-scope"><div class="scope-cols"><div><h3 class="scope-title">Ves</h3><ul class="scope-list scope-yes"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Tus clientes, sus productos y su evolución</li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Tus activos por línea de negocio</li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Tus clientes con un solo producto, para ofrecer el segundo</li></ul></div><div><h3 class="scope-title">No ves</h3><ul class="scope-list scope-no"><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.6 6.1A9.8 9.8 0 0 1 12 6c5.5 0 9 6 9 6a15.6 15.6 0 0 1-2.5 3.3M6.3 7.6C4.2 9.2 3 12 3 12s3.5 6 9 6a8.6 8.6 0 0 0 4.4-1.2"/><path d="M9.9 10a3 3 0 0 0 4.2 4.2"/><path d="m3 3 18 18"/></svg>Clientes, saldos y contratos de otros asesores</li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.6 6.1A9.8 9.8 0 0 1 12 6c5.5 0 9 6 9 6a15.6 15.6 0 0 1-2.5 3.3M6.3 7.6C4.2 9.2 3 12 3 12s3.5 6 9 6a8.6 8.6 0 0 0 4.4-1.2"/><path d="M9.9 10a3 3 0 0 0 4.2 4.2"/><path d="m3 3 18 18"/></svg>El plan corporativo y sus partícipes</li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.6 6.1A9.8 9.8 0 0 1 12 6c5.5 0 9 6 9 6a15.6 15.6 0 0 1-2.5 3.3M6.3 7.6C4.2 9.2 3 12 3 12s3.5 6 9 6a8.6 8.6 0 0 0 4.4-1.2"/><path d="M9.9 10a3 3 0 0 0 4.2 4.2"/><path d="m3 3 18 18"/></svg>El tamaño total de la empresa y su potencial</li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.6 6.1A9.8 9.8 0 0 1 12 6c5.5 0 9 6 9 6a15.6 15.6 0 0 1-2.5 3.3M6.3 7.6C4.2 9.2 3 12 3 12s3.5 6 9 6a8.6 8.6 0 0 0 4.4-1.2"/><path d="M9.9 10a3 3 0 0 0 4.2 4.2"/><path d="m3 3 18 18"/></svg>Quién atiende el plan corporativo</li><li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.6 6.1A9.8 9.8 0 0 1 12 6c5.5 0 9 6 9 6a15.6 15.6 0 0 1-2.5 3.3M6.3 7.6C4.2 9.2 3 12 3 12s3.5 6 9 6a8.6 8.6 0 0 0 4.4-1.2"/><path d="M9.9 10a3 3 0 0 0 4.2 4.2"/><path d="m3 3 18 18"/></svg>El informe en PDF</li></ul></div></div></div>
+      }
+      @default {
+        @if (sinPac()) {
+        <div class="info-scope">
+            <div class="scope-cols">
+              <div>
+                <h3 class="scope-title">Ves</h3>
+                <ul class="scope-list scope-yes">
+                  <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Clientes y activos de sus empleados</li>
+                  <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Productos que la empresa tiene con Skandia</li>
+                  <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Asesores de tu agencia con clientes en la empresa</li>
+                  <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>La oportunidad de proponer el Plan de Ahorro Corporativo</li>
+                </ul>
+              </div>
+              <div>
+                <h3 class="scope-title">No ves</h3>
+                <ul class="scope-list scope-no">
+                  <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.6 6.1A9.8 9.8 0 0 1 12 6c5.5 0 9 6 9 6a15.6 15.6 0 0 1-2.5 3.3M6.3 7.6C4.2 9.2 3 12 3 12s3.5 6 9 6a8.6 8.6 0 0 0 4.4-1.2"/><path d="M9.9 10a3 3 0 0 0 4.2 4.2"/><path d="m3 3 18 18"/></svg>Asesores de otras agencias: aparecen agregados</li>
+                </ul>
+              </div>
+            </div>
+    </div>
+        } @else {
+        <div class="info-scope">
+            <div class="scope-cols">
+              <div>
+                <h3 class="scope-title">Ves</h3>
+                <ul class="scope-list scope-yes">
+                  <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Todo lo que ve el FP Asignado</li>
+                  <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Gestión del FP Asignado: vinculaciones, tiempo sin vincular y estado</li>
+                  <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Asesores de tu agencia con clientes en la empresa</li>
+                  
+                </ul>
+              </div>
+              <div>
+                <h3 class="scope-title">No ves</h3>
+                <ul class="scope-list scope-no">
+                  <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.6 6.1A9.8 9.8 0 0 1 12 6c5.5 0 9 6 9 6a15.6 15.6 0 0 1-2.5 3.3M6.3 7.6C4.2 9.2 3 12 3 12s3.5 6 9 6a8.6 8.6 0 0 0 4.4-1.2"/><path d="M9.9 10a3 3 0 0 0 4.2 4.2"/><path d="m3 3 18 18"/></svg>Asesores de otras agencias: aparecen agregados</li>
+                </ul>
+              </div>
+            </div>
+    </div>
+        }
+      }
+    }
+    <button type="button" class="btn-primary btn-small" (click)="cerrar.emit()">Entendido</button>
+  </div>
+</div>

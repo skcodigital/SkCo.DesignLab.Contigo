@@ -1,0 +1,176 @@
+:host {
+  display: block;
+}
+
+.crumb {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 12px;
+  padding: 20px 0 0 6px;
+}
+.crumb .sep {
+  color: var(--sk-color-ink-2);
+}
+.crumb a {
+  color: var(--sk-color-primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+.crumb-inicio {
+  margin-left: 4px;
+}
+
+.idbar {
+  margin-top: 20px;
+  background: var(--sk-color-surface-2);
+  border-radius: 4px;
+  min-height: 44px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  padding: 8px 9px;
+  color: var(--sk-color-text);
+  font-family: var(--sk-font-body), sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+.idbar h1 {
+  font-family: var(--sk-font-heading);
+  font-size: 14px;
+  line-height: normal;
+  font-weight: 600;
+  color: var(--sk-color-ink);
+  margin-right: 2px;
+}
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.meta .ico-sm {
+  stroke: var(--sk-color-text);
+}
+.meta {
+  cursor: default;
+  text-underline-offset: 3px;
+}
+.meta:hover {
+  text-decoration: underline;
+}
+
+// Migas con la ficha del producto abierta
+.crumb-prod {
+  display: none;
+  align-items: center;
+  gap: 14px;
+}
+.crumb-prod b {
+  color: var(--sk-color-primary);
+  font-weight: 700;
+}
+:host-context(.vista-producto) .crumb-prod {
+  display: inline-flex;
+}
+:host-context(.vista-producto) .crumb-cliente {
+  color: var(--sk-color-ink);
+  font-weight: 400;
+}
+:host-context(.vista-producto) .crumb svg,
+:host-context(.vista-producto) .crumb-cliente {
+  cursor: pointer;
+}
+@media (max-width: 600px) {
+  :host-context(.vista-producto) .crumb {
+    display: none;
+  }
+}
+
+// Móvil: volver + nombre del cliente en lugar de las migas
+.m-cliente {
+  display: none;
+}
+@media (max-width: 600px) {
+  .crumb {
+    display: none;
+  }
+  .idbar {
+    margin-top: 14px;
+    font-size: 11px;
+    line-height: 18px;
+    gap: 6px 12px;
+  }
+  .idbar .ico-sm {
+    width: 12px;
+    height: 12px;
+  }
+  .idbar h1 {
+    display: none;
+  }
+  .meta:hover {
+    text-decoration: none;
+  }
+  .m-cliente {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .m-nombre {
+    font-family: var(--sk-font-heading);
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
+    color: var(--sk-color-ink);
+  }
+  .m-volver {
+    flex: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--sk-color-primary);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+// Modo misión
+.idbar {
+  transition:
+    background-color 0.45s ease,
+    color 0.45s ease,
+    border-color 0.45s ease,
+    box-shadow 0.45s ease;
+}
+:host-context(.modo-mision) .crumb span {
+  color: var(--sk-color-mission-text);
+}
+:host-context(.modo-mision) .idbar {
+  background: var(--sk-color-graphite);
+  color: #ffffff;
+  box-shadow: 0 0 0 1px var(--sk-color-text-4);
+}
+:host-context(.modo-mision) .idbar .ico-sm {
+  stroke: var(--sk-color-mission-text);
+}
+:host-context(.modo-mision) .chip {
+  background: rgba(0, 199, 61, 0.14);
+  color: var(--sk-color-lime);
+}
+@media (prefers-reduced-motion: reduce) {
+  .idbar {
+    transition: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .idbar h1 {
+    flex: 1 0 100%;
+  }
+}

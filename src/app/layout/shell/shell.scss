@@ -1,0 +1,88 @@
+:host {
+  display: block;
+}
+
+.wrap {
+  margin-left: var(--sk-rail-width);
+}
+
+main {
+  padding: 0 clamp(16px, 4vw, 58px) 0 clamp(16px, 2.5vw, 35px);
+}
+
+footer {
+  margin-top: 50px;
+  border-top: 1px solid var(--sk-color-line);
+  min-height: 56px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 40px;
+  padding: 16px 32px;
+  font-size: 14px;
+  color: var(--sk-color-ink);
+  transition: background-color 0.45s ease, color 0.45s ease, border-color 0.45s ease, box-shadow 0.45s ease;
+
+  .ayuda {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .r {
+    margin-left: auto;
+    color: var(--sk-color-muted);
+  }
+}
+
+// El journey ocupa el área de contenido: lo de atrás no se ve (el journey declara visibility:visible).
+:host-context(.jw-abierto) main {
+  visibility: hidden;
+}
+
+:host-context(.modo-mision) footer {
+  color: var(--sk-color-mission-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  footer {
+    transition: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .wrap {
+    margin-left: 0;
+  }
+
+  footer {
+    padding: 16px;
+    gap: 10px 24px;
+    font-size: 13px;
+
+    .r {
+      margin-left: 0;
+      flex: 1 0 100%;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  footer {
+    display: none;
+  }
+}
+
+// Imprimir / PDF (p. ej. la radiografía): solo el contenido, sin menú, header ni pie.
+@media print {
+  nc-sidebar,
+  nc-header,
+  nc-aviso-toast,
+  footer {
+    display: none !important;
+  }
+
+  .wrap {
+    margin-left: 0;
+  }
+}

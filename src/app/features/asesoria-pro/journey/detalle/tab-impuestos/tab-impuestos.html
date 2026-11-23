@@ -1,0 +1,120 @@
+@let I = imp();
+@let r = k();
+<section class="jw-imp" id="detalle-impuestos">
+  <div class="jw-caja">
+    <h3 class="jw-imp-t"><svg ncIcono="balanza"></svg>Posible impuesto en la declaración</h3>
+    @if (I.metodo === 'preguntas') {
+      <p class="jw-ayuda">Con estas respuestas se calcula el posible impuesto en la declaración, en lugar del IBC: si usted o su contador usaron los aportes como renta exenta y si no los usaron.</p>
+    }
+    <span class="jw-seg" role="group" aria-label="Cómo estimar el posible impuesto">
+      @for (m of metodos; track m[0]) {
+        <button type="button" [attr.aria-pressed]="I.metodo === m[0]" [disabled]="ro()" (click)="store.elegirMetodoImpuesto(m[0])">{{ m[1] }}</button>
+      }
+    </span>
+    <div class="jw-imp-cuerpo">
+      @if (!(st().monto > 0)) {
+        <p class="jw-ayuda">Registre en «Entender» cuánto necesita el cliente para estimar el posible impuesto.</p>
+      } @else if (I.metodo === 'tarifa') {
+        <label class="jw-imp-tarifa">
+          <span>Tarifa marginal de renta</span>
+          <span class="jw-campo jw-campo--pct" [class.mal]="!tarifaValida()">
+            <input inputmode="decimal" aria-label="Tarifa marginal de renta del cliente" [value]="I.tarifa" [disabled]="ro()" (input)="escribirTarifa($event)" />%
+          </span>
+        </label>
+        <p class="jw-ayuda">
+          {{ tarifaValida() ? 'Tarifa marginal de renta del cliente. La retención de hoy (7% o contingente) es un anticipo de este impuesto.' : 'Ingrese una tarifa entre 0% y 39%.' }}
+        </p>
+        @if (especial()) {
+          <p class="jw-ayuda">Con la condición especial, el retiro no causa impuesto.</p>
+        } @else if (tarifaOk()) {
+          <dl class="jw-imp-lista">
+            @if (r.noEx > 0.5) {
+              <div><dt>Si usted o su contador no usaron los aportes como renta exenta</dt><dd>{{ pesos(im().no) }}</dd></div>
+              <div><dt>Si usted o su contador sí usaron los aportes como renta exenta</dt><dd>{{ pesos(im().si) }}</dd></div>
+            } @else {
+              <div><dt>Posible impuesto en la declaración</dt><dd>{{ pesos(im().no) }}</dd></div>
+            }
+            <div><dt>Se retiene hoy<small>anticipo que se descuenta de este impuesto</small></dt><dd>{{ pesos(r.rcA + r.rrA) }}</dd></div>
+          </dl>
+          <p class="jw-ayuda">Estimado con la tarifa de {{ tarifaTxt() }}% ingresada por el asesor.</p>
+        }
+      } @else {
+        @for (p of preguntas(); track p.n) {
+          @if (p.n < I.paso) {
+            <p class="jw-hecho jw-hecho--imp">
+              <span>{{ p.etiqueta }}: <b>{{ p.valor }}</b></span>
+              @if (!ro()) {
+                <button type="button" class="jw-link" (click)="store.cambiarPreguntaImpuesto(p.n)"><svg ncIcono="lapiz"></svg>Cambiar</button>
+              }
+            </p>
+          } @else if (p.n === I.paso && !ro()) {
+            <div class="jw-q">
+              <p class="jw-qt">{{ p.pregunta }}</p>
+              @switch (p.n) {
+                @case (1) {
+                  <div class="jw-fila">
+                    <span class="jw-campo"><span aria-hidden="true">$</span><input inputmode="numeric" placeholder="Ingreso mensual en pesos" [value]="miles(I.ingreso)" (input)="escribirIngreso($event)" /></span>
+                    <button type="button" class="jw-btn" [disabled]="!I.ingreso" (click)="store.siguientePreguntaImpuesto(1)">Continuar</button>
+                  </div>
+                  <p class="jw-ayuda">Prellenado con el IBC de su última cotización en Skandia. Verifícalo con el cliente.</p>
+                }
+                @case (2) {
+                  <div class="jw-imp-ops">
+                    @for (b of beneficios; track b[0]) {
+                      <button type="button" class="jw-op" (click)="store.elegirBeneficios(b[0])"><b>{{ b[1] }}</b><span>{{ b[2] }}</span></button>
+                    }
+                  </div>
+                }
+                @case (3) {
+                  <div class="jw-fila">
+                    <span class="jw-campo"><span aria-hidden="true">$</span><input inputmode="numeric" placeholder="Total del año, aproximado" [value]="miles(I.otrosTmp)" (input)="escribirOtros($event)" /></span>
+                    <button type="button" class="jw-btn" [disabled]="!I.otrosTmp" (click)="store.siguientePreguntaImpuesto(3)">Continuar</button>
+                    <button type="button" class="jw-btn jw-btn--sec" (click)="store.sinOtrosIngresos()">No tiene o no sabe</button>
+                  </div>
+                }
+                @case (4) {
+                  <div class="jw-chips">
+                    @for (o of siNo; track o[0]) {
+                      <button type="button" (click)="store.elegirDependientes(o[0])">{{ o[1] }}</button>
+                    }
+                  </div>
+                }
+              }
+            </div>
+          }
+        }
+        @if (preguntasOk()) {
+          <div class="jw-imp-res">
+            <p>Posible impuesto en la declaración por el {{ retiroTxt() }} (estimado): <b>{{ resultado() }}</b></p>
+            @if (st().rx === 'si' || st().rx === 'no') {
+              <p class="jw-ayuda">Con la respuesta: si usted o su contador {{ st().rx === 'si' ? 'sí' : 'no' }} usaron los aportes como renta exenta{{ st().rx === 'no' ? ' · impuesto sobre los rendimientos' : '' }}.</p>
+            }
+            <dl class="jw-imp-lista">
+              @for (e of escenarios(); track e.id) {
+                <div [class]="claseEscenario(e.id)">
+                  <dt>{{ e.titulo }}@if (e.etiqueta) {<small>{{ e.etiqueta }}</small>}</dt>
+                  <dd>{{ pesos(e.valor) }}</dd>
+                </div>
+              }
+            </dl>
+            <p class="jw-ayuda">
+              Se descuentan {{ pesos(r.D) }} del contrato y recibe {{ pesos(r.R) }}. Se retiene hoy: {{ pesos(r.rcA + r.rrA) }}. Es un anticipo: se descuenta del impuesto en la declaración de renta.{{ r.noEx > 0.5 ? ' Salen sin cumplir requisitos ' + pesos(r.srCap) + ' de capital y ' + pesos(r.srRend) + ' de rendimientos.' : ' Todo lo que sale ya cumplió requisitos.' }}
+            </p>
+            <p class="jw-ayuda jw-chico">UVT de $52.374 · año gravable 2026. Si usted o su contador usaron los aportes como renta exenta, el capital que sale sin cumplir requisitos se declara como ingreso, sin rentas exentas adicionales. Si no los usaron, se declaran sus rendimientos como renta de capital.</p>
+          </div>
+        }
+        <p class="jw-nota"><svg ncIcono="info"></svg><span>Estimación orientativa. No reemplaza la declaración de renta ni la revisión que hagan el cliente o su contador.</span></p>
+      }
+    </div>
+  </div>
+  @if (st().monto > 0 && I.metodo !== 'tarifa' && !especial()) {
+    <div class="jw-caja">
+      <dl class="jw-imp-lista">
+        <div><dt>Impuesto del año sin retirar</dt><dd>{{ pesos(sinRetiro) }}</dd></div>
+        <div><dt>Impuesto del año si retira</dt><dd>{{ siRetira() }}</dd></div>
+        <div class="tot verde"><dt>Diferencia: posible impuesto en la declaración</dt><dd>{{ im().txt }}</dd></div>
+      </dl>
+      <p class="jw-ayuda">Año gravable 2026 · {{ estimadoCon() }}</p>
+    </div>
+  }
+</section>
