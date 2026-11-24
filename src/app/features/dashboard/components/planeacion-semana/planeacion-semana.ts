@@ -46,7 +46,11 @@ export class PlaneacionSemana {
   private readonly movil = injectMediaQuery(MQ_MODULO_COMPACTO);
   /** Preferencia de tamaño (2026-11-18: vuelve la opción de ampliar; se recuerda en este navegador). */
   private readonly prefiereAmplio = signal(leerModuloAmplio());
-  protected readonly amplio = computed(() => this.prefiereAmplio() && !this.movil());
+  /**
+   * Sin el botón de ampliar/reducir (2026-11-24): el módulo queda siempre en su versión ampliada.
+   * En pantallas de hasta 600px sigue compacto, como en el prototipo.
+   */
+  protected readonly amplio = computed(() => !this.movil());
   /** Los saldos arrancan ocultos (también al volver al inicio: la vista se crea de nuevo). */
   protected readonly oculto = signal(true);
 

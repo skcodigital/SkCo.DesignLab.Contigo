@@ -6,10 +6,10 @@
   </div>
   @if (falta()) {
     <div class="jw-dest jw-nodisp">
-      <svg ncIcono="off"></svg><span><b>No disponible</b> · Falta el monto que necesita · Respóndalo en «Entender»</span>
+      <svg ncIcono="off"></svg><span><b>No disponible</b> · Falta el monto que necesita · Respóndalo en «Entendimiento»</span>
     </div>
   } @else {
-    <div>
+    <div class="jw-op-cuerpo">
       <!-- Misma alerta de Situación: rendimientos generados por el contrato elegido -->
       @if (generado(); as g) {
         <p class="jw-info" role="status" [title]="'Valor exacto: ' + g.exacto + ' (incluye los rendimientos ya retirados)'">
@@ -18,7 +18,10 @@
       }
       <!-- Renta exenta: es un dato del cliente, se responde una vez y vale para todas las cajas (ninguna caja cambia otra) -->
       @if (conRx()) {
-        <div class="jw-rx-caja">
+        <div #rxCaja class="jw-rx-caja" [class.jw-rx-caja--falta]="rxFalta()" [class.jw-rx-caja--pide]="rxPedida()">
+          @if (rxPedida()) {
+            <p class="jw-rx-pide" role="alert"><svg ncIcono="alerta"></svg>Responde esta pregunta para poder ajustar el IBC.</p>
+          }
           <nc-renta-exenta [k]="kRx()" parte="pregunta" />
         </div>
       }

@@ -14,7 +14,8 @@ $v: ':host-context(#jm-velo)';
 #{$v} .jw-a5-msg.ok{background:rgba(0,199,61,.12);color:var(--sk-color-mission-text)}
 #{$v} .jw-dec .jw-op b{color:#fff}
 @media (max-width:900px){.jw-pie5 .jw-btn{flex:1 1 100%;justify-content:center}}
-#{$v} .jw-destacada{display:flex;flex-direction:column;gap:2px;padding:14px 18px;border-radius:12px;background:var(--sel)}
+// Monto destacado sin fondo: alineado con el título, como la caja del monto en Entender
+#{$v} .jw-destacada{display:flex;flex-direction:column;gap:2px;padding:0;border-radius:0;background:transparent}
 #{$v} .jw-destacada b{font-family:var(--sk-font-heading);font-size:26px;font-weight:700;line-height:32px;color:var(--sk-color-primary)}
 #{$v} .jw-destacada span{font-size:14px;color:var(--tx2)}
 #{$v} .jw-a5-msg.ok{background:var(--sel);color:var(--sk-color-mission-text)}
@@ -24,3 +25,18 @@ $v: ':host-context(#jm-velo)';
 // Pie: Atrás a la izquierda, acciones del cierre a la derecha
 .jw-pie5-acc{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:10px}
 @media (max-width:900px){.jw-pie5{flex-direction:column-reverse;align-items:stretch}.jw-pie5-acc{flex-direction:column}}
+
+// Dos tarjetas bajo las opciones: «Sigue invertido…» y «Rendimientos estimados en 12 meses»
+.jw-dest-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:700px){.jw-dest-cards{grid-template-columns:1fr}}
+.jw-dest-card{display:flex;flex-direction:column;gap:4px;padding:14px 16px;border:1px solid var(--sk-color-border-2);border-radius:12px;background:#fff}
+.jw-dest-card-t{font-size:14px;line-height:20px;color:var(--sk-color-text-2)}
+.jw-dest-card b{font-family:var(--sk-font-heading);font-size:24px;line-height:32px;font-weight:700;color:var(--sk-color-primary-dark)}
+.jw-dest-nota{font-size:12px;line-height:16px;color:var(--sk-color-text-3)}
+#{$v} .jw-dest-card{background:var(--sf2);border-color:var(--bd)}
+#{$v} .jw-dest-card-t{color:var(--tx2)}
+#{$v} .jw-dest-card b{color:var(--sk-color-primary)}
+#{$v} .jw-dest-nota{color:var(--tx3)}
+
+// ===== Espaciado entre secciones (revisión 2026-11-24) =====
+.jw-a5{gap:20px}

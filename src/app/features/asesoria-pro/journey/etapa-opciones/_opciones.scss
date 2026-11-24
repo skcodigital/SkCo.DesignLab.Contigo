@@ -34,7 +34,7 @@ $v: ':host-context(#jm-velo)';
 #{$v} .jw-o3-sub{margin:4px 0 0;font-size:12px;font-weight:700;color:#fff}
 #{$v} .jw-o3 dd{font-variant-numeric:tabular-nums}
 #{$v} .jw-imp-nota{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin-top:2px}
-#{$v} .jw-imp-nota .jw-link{padding:0;font-size:11px}
+#{$v} .jw-imp-nota .jw-link{padding:0;font-size:13px}
 #{$v} .jw-dian{padding:0 5px;border:1px solid var(--bd2);border-radius:4px;background:transparent;font-family:var(--sk-font-heading);font-size:9px;font-weight:700;letter-spacing:.04em;line-height:14px;color:var(--tx2);cursor:help}
 #{$v} .jw-o3-nota b{color:#fff}
 
@@ -98,10 +98,10 @@ $v: ':host-context(#jm-velo)';
 .jw-o3 .jw-o3-imp{align-items:flex-start}
 .jw-o3 .jw-o3-imp dd{padding-top:1px}
 .jw-o3 dt .jw-imp-nota{display:flex;flex-wrap:wrap;align-items:center;gap:2px 6px;margin-top:4px}
-.jw-imp-nota .jw-link{padding:0;font-size:12px;white-space:nowrap}
+.jw-imp-nota .jw-link{padding:0;font-size:13px;white-space:nowrap}
 .jw-imp-sep{color:var(--sk-color-text-3)}
 #{$v} .jw-imp-nota{gap:2px 6px;margin-top:4px}
-#{$v} .jw-imp-nota .jw-link{font-size:12px}
+#{$v} .jw-imp-nota .jw-link{font-size:13px}
 #{$v} .jw-imp-sep{color:var(--tx3)}
 .jw-imp-grupo{display:inline;white-space:normal}
 .jw-imp-grupo .jw-link{display:inline;vertical-align:baseline}

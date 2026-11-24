@@ -29,7 +29,8 @@ export const completa = (st: St, n: Etapa): boolean => COMPLETA[n](st);
 
 /** Se puede ir a la etapa `n` si las anteriores están completas (o en solo lectura). */
 export const habilitada = (st: St, n: Etapa): boolean =>
-  soloLectura(st) || ETAPAS.slice(0, n - 1).every((e) => completa(st, e));
+  // Cerrada como fuera de alcance («Rendimientos o expectativas»): el acompañamiento terminó en Entendimiento
+  st.fuera ? n === 1 : soloLectura(st) || ETAPAS.slice(0, n - 1).every((e) => completa(st, e));
 
 /** Etapas completas («En curso · n de 4 etapas»). */
 export const etapasCompletas = (st: St): number => ETAPAS.filter((e) => completa(st, e)).length;

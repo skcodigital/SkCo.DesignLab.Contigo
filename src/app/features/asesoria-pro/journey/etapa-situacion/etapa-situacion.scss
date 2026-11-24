@@ -154,3 +154,6 @@ $v: ':host-context(#jm-velo)';
 :host-context(#jm-velo) .jw-ct-total-h b{color:var(--tx)}
 :host-context(#jm-velo) .jw-ley-incl{border-color:var(--bd2)}
 :host-context(#jm-velo) .jw-ley-incl small{color:var(--tx3)}
+
+// ===== Espaciado entre secciones (revisión 2026-11-24) =====
+.jw-car-nav{margin:0 0 -12px}

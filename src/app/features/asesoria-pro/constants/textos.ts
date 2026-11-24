@@ -2,7 +2,7 @@ import { Decision, EstadoConv, Motivo, Preferencia, RespuestaRx } from '../inter
 import { TipoCaja } from '../interfaces/calculo';
 
 /** Partes del journey (barra de pasos y resumen). */
-export const PARTES = ['Entender', 'Situación', 'Opciones', 'Acuerdo'] as const;
+export const PARTES = ['Entendimiento', 'Situación', 'Opciones', 'Decisiones'] as const;
 /** Nombres de las etapas en la base de datos («Etapas conversadas»). */
 export const ETAPAS_BD = ['Necesidad', 'Lo que tiene y desde dónde', 'Comparador', 'Decisión y cierre'] as const;
 
@@ -15,8 +15,7 @@ export const MOTIVO: Readonly<Record<Motivo, string>> = {
 };
 
 export const FUERA_DE_ALCANCE: Readonly<Record<'rendimientos' | 'otro', string>> = {
-  rendimientos:
-    'Este acompañamiento cubre retiros por una necesidad de dinero. Si lo que pesa es la rentabilidad o las expectativas, anota el motivo, cierra esta conversación y revisa con él su portafolio en «Revisión de portafolio y objetivos».',
+  rendimientos: 'Por ahora este acompañamiento solo abarca temas de liquidez, muy pronto contarás con una ruta específica para esta misión.',
   otro: 'Este acompañamiento cubre retiros por una necesidad de dinero (liquidez, vivienda u objetivo personal). Si el motivo es otro (otra entidad, el servicio o un cambio de portafolio), anótalo y cierra la conversación como fuera de alcance.',
 };
 
@@ -147,7 +146,11 @@ export const TEXTOS = {
   copiar: 'Copiar',
   copiado: 'Copiado',
   noCopiado: 'No se pudo copiar',
-  toastFuera: ['Conversación cerrada como fuera de alcance', 'Queda registrada con el motivo que mencionó el cliente.'],
+  toastFuera: ['Acompañamiento finalizado', 'Queda registrado con el motivo: rendimientos o expectativas no cumplidas.'],
+  toastRentaExentaPrimero: [
+    'Primero responde la renta exenta',
+    'Antes de ajustar el IBC, indica si el valor total del retiro se usó como renta exenta.',
+  ] as const,
   toastCierrePrimero: ['Registra el cierre primero', 'El resumen se genera al registrar la decisión.'],
   toastEnviado: ['Resumen enviado al cliente', 'Queda registrado el envío; el envío real al cliente aún no está conectado.'],
   toastExcel: ['Descarga simulada', 'En el prototipo no se genera el Excel de aportes.'],

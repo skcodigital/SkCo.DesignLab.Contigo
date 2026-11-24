@@ -4,8 +4,8 @@ $v: ':host-context(#jm-velo)';
 // Piezas directas de la `.jw-o3-cuerpo` de la caja
 :host{display:contents}
 #{$v} .jw-adv,#{$v} .jw-rx{min-width:0}
-#{$v} .jw-rx{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding-top:8px;border-top:1px solid var(--bd)}
-#{$v} .jw-rx--pide{padding:8px;border-radius:10px;box-shadow:0 0 0 1px var(--lk) inset}
+// Sin línea ni recuadro propios: la pregunta va dentro del bloque .jw-rx-caja de Opciones (un solo contenedor)
+#{$v} .jw-rx{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px}
 // Pregunta en 14 px con la tipografía de títulos; el valor del retiro en negrita
 #{$v} .jw-rx-t{font-family:var(--sk-font-heading);font-size:14px;line-height:22px;font-weight:600;color:#fff}
 #{$v} .jw-rx-t b{font-weight:700}

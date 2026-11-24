@@ -7,3 +7,6 @@ $v: ':host-context(#jm-velo)';
 .jw-a5-linea{margin:0;font-size:14px;line-height:22px}
 #{$v} .jw-bloque5{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.10)}
 #{$v} .jw-a5-linea{color:var(--sk-color-mission-text)}
+
+// Bloques del cierre con más aire interno
+.jw-bloque5{gap:12px;padding:16px 20px}

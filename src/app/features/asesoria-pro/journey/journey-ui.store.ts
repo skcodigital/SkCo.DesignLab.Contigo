@@ -39,6 +39,14 @@ export class JourneyUiStore {
     this._focoMonto.update((n) => n + 1);
   }
 
+  /** Cada incremento pide a Opciones resaltar la pregunta de renta exenta y llevar el foco a ella. */
+  private readonly _pedirRx = signal(0);
+  readonly pedirRx = this._pedirRx.asReadonly();
+
+  pedirRentaExenta(): void {
+    this._pedirRx.update((n) => n + 1);
+  }
+
   abrirDetalle(ct: string, tab: TabDetalle = 'contrato'): void {
     this._detalle.set({ ct, tab });
   }

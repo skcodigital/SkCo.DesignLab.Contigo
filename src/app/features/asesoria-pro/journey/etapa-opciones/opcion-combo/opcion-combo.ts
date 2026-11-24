@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
-import { TASA_TXT, TEXTOS_OPCIONES_ACUERDO as T } from '../../../constants/textos';
+import { TASA_TXT, TEXTOS, TEXTOS_OPCIONES_ACUERDO as T } from '../../../constants/textos';
 import { Combo } from '../../../interfaces/calculo';
 import { ConversacionesStore } from '../../../state/conversaciones.store';
-import { ctId, esp, impuesto } from '../../../utils/calculos';
+import { ctId, esp, impuesto, tocaNoExento } from '../../../utils/calculos';
 import { pesos } from '../../../utils/formato';
 import { soloLectura } from '../../../utils/validaciones';
 import { JourneyUiStore } from '../../journey-ui.store';
@@ -50,7 +50,16 @@ export class OpcionCombo {
   protected readonly tasa = TASA_TXT;
   protected readonly pesos = pesos;
 
+  /**
+   * «Ajustar» el IBC: si el retiro toca aportes no exentos y aún no se respondió la renta exenta, avisa y lleva
+   * a la pregunta (sobre las cajas, resaltada) en lugar de abrir el panel de Impuestos.
+   */
   protected ajustar(): void {
-    this.ui.abrirDetalle(ctId(this.st()), 'impuestos');
+    const st = this.st();
+    if (tocaNoExento(st, this.cb().kt) && !st.rx) {
+      this.ui.pedirRentaExenta();
+      return;
+    }
+    this.ui.abrirDetalle(ctId(st), 'impuestos');
   }
 }

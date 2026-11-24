@@ -21,3 +21,6 @@ $v: ':host-context(#jm-velo)';
 #{$v} .jw-fuera .jw-btn{align-self:flex-end;gap:8px}
 #{$v} .jw-area{width:100%;box-sizing:border-box;padding:9px 12px;border:1px solid var(--bd2);border-radius:8px;background:rgba(255,255,255,.05);font-family:var(--sk-font-body);font-size:14px;color:#fff;resize:vertical}
 #{$v} .jw-area:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:1px}
+
+// Sin botón (acompañamiento finalizado como fuera de alcance): sin línea ni espacio de pie
+.jw-pie:not(:has(button)){display:none}

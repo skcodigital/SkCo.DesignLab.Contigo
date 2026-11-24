@@ -27,6 +27,7 @@ import { OpcionCredito } from './opcion-credito/opcion-credito';
 import { OpcionNoRetira } from './opcion-no-retira/opcion-no-retira';
 import { OpcionRetiro } from './opcion-retiro/opcion-retiro';
 import { RentaExenta } from './renta-exenta/renta-exenta';
+import { JourneyUiStore } from '../journey-ui.store';
 
 /**
  * Etapa 3 · Opciones (v5 del journey): cajas de retiro, Crédito Impulso, retiro total, combinación y «Si no retira»;
@@ -50,6 +51,7 @@ export class EtapaOpciones {
 
   // ---- Carrusel (desde 4 cajas) ----
   private readonly destroyRef = inject(DestroyRef);
+  private readonly ui = inject(JourneyUiStore);
   private readonly pista = viewChild<ElementRef<HTMLElement>>('pista');
   /** Cajas en pantalla: las de la lista más «Si no retira» (que no va con vivienda). */
   protected readonly nCajas = computed(() => this.v().list.length + (this.v().viv ? 0 : 1));
@@ -65,6 +67,16 @@ export class EtapaOpciones {
   });
 
   constructor() {
+    afterRenderEffect(() => {
+      const pedido = this.ui.pedirRx();
+      if (pedido === this.atendido) return;
+      this.atendido = pedido;
+      this.pedidaEn.set(pedido);
+      const caja = this.rxCaja()?.nativeElement;
+      if (!caja) return;
+      caja.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
+      caja.querySelector<HTMLButtonElement>('.jw-chips button:not(:disabled)')?.focus({ preventScroll: true });
+    });
     afterRenderEffect(() => {
       this.v();
       this.carrusel();
@@ -116,6 +128,15 @@ export class EtapaOpciones {
   /** Retiro sobre el que se pregunta la renta exenta (el elegido o, si no hay, el del monto). */
   protected readonly kRx = computed(() => (prefEsRetiro(this.st()) ? retiroPref(this.st()) : this.v().k));
   /** La pregunta de renta exenta se muestra si el retiro toca aportes no exentos. */
+  // ---- Pedido de responder la renta exenta (desde «Ajustar» del IBC) ----
+  private readonly rxCaja = viewChild<ElementRef<HTMLElement>>('rxCaja');
+  private readonly pedidaEn = signal(0);
+  /** La pregunta queda resaltada desde que se pide hasta que se responde. */
+  protected readonly rxPedida = computed(() => this.pedidaEn() > 0 && !this.st().rx);
+  /** Eligió una opción con retiro y aún no responde la renta exenta (se marca en verde). */
+  protected readonly rxFalta = computed(() => prefEsRetiro(this.st()) && !this.st().rx && !this.ro());
+  private atendido = this.ui.pedirRx();
+
   protected readonly conRx = computed(() => {
     const st = this.st();
     return tocaNoExento(st, prefEsRetiro(st) ? retiroPref(st) : this.v().k);

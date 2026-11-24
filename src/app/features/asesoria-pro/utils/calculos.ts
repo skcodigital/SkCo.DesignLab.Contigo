@@ -28,7 +28,8 @@ import { deIso, iso, masDias, pesos } from './formato';
 
 type St = EstadoConversacion;
 
-export const enAlcance = (m: Motivo | null): boolean => m === 'liquidez' || m === 'vivienda' || m === 'objetivo';
+/** Motivos que siguen el acompañamiento. «Rendimientos o expectativas» termina aquí: aún no está esa funcionalidad. */
+export const enAlcance = (m: Motivo | null): boolean => m === 'liquidez' || m === 'vivienda' || m === 'objetivo' || m === 'otro';
 /** Condición especial (pensión o vivienda): sin retenciones. */
 export const esp = (st: St): boolean => st.motivo === 'vivienda' || st.pen === 'si';
 

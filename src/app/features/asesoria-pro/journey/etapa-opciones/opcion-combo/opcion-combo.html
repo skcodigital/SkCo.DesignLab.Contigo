@@ -37,7 +37,7 @@
           Costo de la combinación<small class="jw-imp-nota"
             >intereses más posible impuesto
             <button type="button" class="jw-dian jw-ro-ok" aria-label="Impuesto de la DIAN: Skandia no lo cobra" title="Este impuesto lo liquida el cliente en su declaración de renta y lo paga a la DIAN. Skandia no lo cobra.">DIAN</button
-            >{{ imp().nota }} · <button type="button" class="jw-link jw-ro-ok" (click)="ajustar()">Ajustar</button></small
+            >{{ imp().nota }} · <button type="button" class="jw-link jw-ro-ok" (click)="$event.preventDefault(); ajustar()">Ajustar</button></small
           >
         </dt>
         <dd>{{ costo() }}</dd>

@@ -1,5 +1,5 @@
 <section class="jw-etapa" aria-labelledby="jw-t1">
-  <p class="jw-eb">Entender</p>
+  <p class="jw-eb">Entendimiento</p>
   <h3 class="jw-h" id="jw-t1"><label for="jw-monto">¿Cuánto desea retirar tu cliente?</label></h3>
   <!-- Como en Angular: la señal de Dali Oportunidades todavía no trae el estimado, así que no se muestra -->
   <div class="jw-dest">
@@ -19,11 +19,9 @@
         }
       </div>
       @if (textoFuera(); as fuera) {
+        <!-- Rendimientos o expectativas: por ahora el acompañamiento termina aquí -->
         <div class="jw-fuera">
           <p class="jw-fuera-txt"><svg ncIcono="info"></svg><span>{{ fuera }}</span></p>
-          <textarea class="jw-area" rows="2" maxlength="300" placeholder="¿Qué motivo mencionó el cliente?" aria-label="Motivo que mencionó el cliente"
-            [value]="st().otro" (input)="anotarFuera($event)"></textarea>
-          <button type="button" class="jw-btn jw-btn--sec" (click)="cerrarFuera()"><svg ncIcono="prohibido"></svg>Cerrar como fuera de alcance</button>
         </div>
       }
     </div>
@@ -40,6 +38,11 @@
   }
 
   <div class="jw-pie">
-    <button type="button" class="jw-btn" [disabled]="!puedeContinuar()" (click)="continuar()">Continuar a Situación <svg ncIcono="flecha"></svg></button>
+    <!-- Con «Rendimientos o expectativas» el mismo botón cambia a «Finalizar» y cierra el acompañamiento (un solo botón) -->
+    @if (textoFuera() && !ro()) {
+      <button type="button" class="jw-btn" (click)="cerrarFuera()">Finalizar</button>
+    } @else if (!st().fuera) {
+      <button type="button" class="jw-btn" [disabled]="!puedeContinuar()" (click)="continuar()">Continuar a Situación <svg ncIcono="flecha"></svg></button>
+    }
   </div>
 </section>

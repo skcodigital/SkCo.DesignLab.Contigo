@@ -42,7 +42,29 @@ $v: ':host-context(#jm-velo)';
 
 // Pregunta de renta exenta fuera de las cajas: bloque propio sobre las opciones
 .jw-rx-caja{margin:0 0 12px;padding:10px 14px;border:1px solid var(--sk-color-border-2);border-radius:8px;background:var(--sk-color-surface-2)}
-.jw-rx-caja ::ng-deep .jw-rx{padding-top:0;border-top:0}
 #{$v} .jw-rx-caja{background:var(--sf2);border-color:var(--bd)}
+// Eligió una opción con retiro y falta responder: borde verde en el mismo bloque (antes era un segundo recuadro)
+#{$v} .jw-rx-caja--falta{border-color:var(--lk);box-shadow:0 0 0 1px var(--lk) inset}
 // Advertencia de renta exenta: al final, debajo de las cajas
 .jw-adv-pie{margin-top:12px}
+
+// Pregunta de renta exenta pedida desde «Ajustar»: borde y fondo ámbar, mensaje dentro y un pulso breve
+.jw-rx-caja--pide{border-color:var(--sk-color-warning) !important;box-shadow:0 0 0 1px var(--sk-color-warning) inset;animation:jwRxPulso .9s ease-out 2}
+@keyframes jwRxPulso{0%{box-shadow:0 0 0 1px var(--sk-color-warning) inset,0 0 0 0 rgba(240,181,74,.55)}100%{box-shadow:0 0 0 1px var(--sk-color-warning) inset,0 0 0 10px rgba(240,181,74,0)}}
+.jw-rx-pide{display:flex;align-items:center;gap:6px;margin:0 0 8px;font-size:14px;line-height:20px;font-weight:600;color:color-mix(in srgb,var(--sk-color-warning),black 45%)}
+.jw-rx-pide svg{flex:none;width:16px;height:16px}
+#{$v} .jw-rx-caja--pide{background:rgba(240,181,74,.08)}
+#{$v} .jw-rx-pide{color:var(--sk-color-warning)}
+@media (prefers-reduced-motion:reduce){.jw-rx-caja--pide{animation:none}}
+
+// ===== Espaciado entre secciones (revisión 2026-11-24) =====
+.jw-op-tit{margin-top:-20px}
+@media (max-width:900px){.jw-op-tit{margin-top:-16px}}
+.jw-op-cuerpo{display:flex;flex-direction:column;gap:20px}
+.jw-op-cuerpo > .jw-info,#{$v} .jw-op-cuerpo > .jw-info{margin:0}
+.jw-op-cuerpo > .jw-rx-caja{margin:0}
+.jw-op-cuerpo > .jw-adv-pie{margin:0}
+// Flechas del carrusel pegadas a las cajas que controlan
+.jw-op-cuerpo > .jw-car-nav{margin:0 0 -12px}
+// Si además se pidió desde «Ajustar», manda el ámbar
+#{$v} .jw-rx-caja--falta.jw-rx-caja--pide{border-color:var(--sk-color-warning);box-shadow:0 0 0 1px var(--sk-color-warning) inset}

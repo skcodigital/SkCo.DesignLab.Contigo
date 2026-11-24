@@ -6,6 +6,7 @@ import {
   ElementRef,
   inject,
   Injector,
+  signal,
   viewChild,
   viewChildren,
 } from '@angular/core';
@@ -15,10 +16,10 @@ import { Decision } from '../../interfaces/conversacion';
 import { ConversacionesStore } from '../../state/conversaciones.store';
 import { detalleDecision, listaDecisiones, saleDe } from '../../utils/acuerdo';
 import { cajas, cred } from '../../utils/calculos';
-import { pesos } from '../../utils/formato';
+import { pct, pesos } from '../../utils/formato';
 import { soloLectura } from '../../utils/validaciones';
-import { JourneyUiStore } from '../journey-ui.store';
 import { AcuerdoProximos } from './acuerdo-proximos/acuerdo-proximos';
+import { CierreExitosoModal } from './cierre-exitoso-modal/cierre-exitoso-modal';
 import { AcuerdoTramite } from './acuerdo-tramite/acuerdo-tramite';
 
 interface OpcionDecision {
@@ -35,14 +36,13 @@ interface OpcionDecision {
  */
 @Component({
   selector: 'nc-etapa-acuerdo',
-  imports: [Icono, AcuerdoTramite, AcuerdoProximos],
+  imports: [Icono, AcuerdoTramite, AcuerdoProximos, CierreExitosoModal],
   templateUrl: './etapa-acuerdo.html',
   styleUrl: './etapa-acuerdo.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EtapaAcuerdo {
   private readonly store = inject(ConversacionesStore);
-  private readonly ui = inject(JourneyUiStore);
   private readonly injector = inject(Injector);
 
   private readonly titulo = viewChild.required<ElementRef<HTMLElement>>('titulo');
@@ -77,9 +77,14 @@ export class EtapaAcuerdo {
     const sale = saleDe(dec, this.v());
     if (sale == null) return null;
     const cerr = st.cerrado && !st.fuera;
+    const sigue = this.v().c.saldo - sale;
+    // Rendimientos estimados en 12 meses sobre lo que sigue invertido, con la rentabilidad de los últimos 12 meses
+    const tasa = this.v().k.tasa;
     return {
-      valor: pesos(this.v().c.saldo - sale),
+      valor: pesos(sigue),
       texto: (cerr ? TEXTOS.sigueInvertidoCerrado : TEXTOS.sigueInvertidoSi) + DEC_CAT[dec].toLowerCase(),
+      rend: pesos(sigue * tasa),
+      tasa: pct(tasa * 100, 2) + ' E.A.',
     };
   });
 
@@ -94,16 +99,14 @@ export class EtapaAcuerdo {
     this.store.irEtapa(3);
   }
 
-  protected enviar(): void {
-    if (this.store.enviarResumen()) this.ui.toast('exito', ...TEXTOS.toastEnviado);
-    else this.ui.toast('info', ...TEXTOS.toastCierrePrimero);
-  }
+  /** Modal de éxito tras registrar el cierre. */
+  protected readonly exito = signal(false);
 
   protected registrarCierre(): void {
     const st = this.st();
     if (!st.dec || st.cerrado) return;
     if (this.store.registrarCierre()) {
-      afterNextRender(() => this.cierre()?.nativeElement.focus(), { injector: this.injector });
+      this.exito.set(true); // modal «Tu acompañamiento fue exitoso»; al cerrarla el foco vuelve al botón del cierre
     } else if (this.store.st().msg) {
       afterNextRender(() => this.tramite()?.enfocar(), { injector: this.injector });
     }

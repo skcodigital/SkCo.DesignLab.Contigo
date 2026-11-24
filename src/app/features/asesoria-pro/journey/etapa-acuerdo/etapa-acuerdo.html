@@ -1,19 +1,28 @@
 <section class="jw-etapa jw-etapa--ancha" aria-labelledby="jw-t4">
-  <p class="jw-eb">Acuerdo</p>
+  <p class="jw-eb">Decisiones</p>
   <h3 #titulo class="jw-h" id="jw-t4" tabindex="-1">¿Qué decidió el cliente?</h3>
-  @if (destacada(); as d) {
-    <div class="jw-dest jw-destacada"><b>{{ d.valor }}</b><span>{{ d.texto }}</span></div>
-  }
   <div class="jw-dec" role="group" aria-labelledby="jw-t4">
     @for (o of decisiones(); track o.d) {
       <button #decBtn type="button" class="jw-op" [attr.aria-pressed]="st().dec === o.d" [disabled]="o.deshabilitada" (click)="elegir(o.d)">
-        @if (o.preferida) {
-          <span class="jw-tg jw-tg--menor">Preferida</span>
-        }
         <b>{{ o.nombre }}</b><span>{{ o.detalle }}</span>
       </button>
     }
   </div>
+  <!-- Después de las opciones: cómo queda el saldo invertido con la decisión elegida -->
+  @if (destacada(); as d) {
+    <!-- Dos tarjetas: lo que sigue invertido y lo que podría rentar (estimado, no es promesa) -->
+    <div class="jw-dest-cards">
+      <div class="jw-dest-card">
+        <span class="jw-dest-card-t">{{ d.texto }}</span>
+        <b>{{ d.valor }}</b>
+      </div>
+      <div class="jw-dest-card">
+        <span class="jw-dest-card-t">Rendimientos estimados en 12 meses</span>
+        <b>{{ d.rend }}</b>
+        <small class="jw-dest-nota">Con la rentabilidad de los últimos 12 meses ({{ d.tasa }}). Rentabilidades pasadas no garantizan rentabilidades futuras.</small>
+      </div>
+    </div>
+  }
   @if (conDecision()) {
     <div class="jw-a5">
       <nc-acuerdo-tramite />
@@ -28,7 +37,6 @@
     <button type="button" class="jw-btn jw-btn--sec jw-ro-ok" (click)="atras()"><svg ncIcono="flecha" class="jw-atras-ico"></svg>Atrás</button>
     @if (conDecision()) {
       <div class="jw-pie5-acc">
-        <button type="button" class="jw-btn jw-btn--sec jw-ro-ok" (click)="enviar()"><svg ncIcono="enviar"></svg>Enviar resumen al cliente</button>
         <button #cierre type="button" class="jw-btn" [class.jw-cerrado]="ro()" [disabled]="ro()" (click)="registrarCierre()">
           @if (ro()) {
             <svg ncIcono="ok"></svg>
@@ -41,3 +49,5 @@
     }
   </div>
 </section>
+<!-- Al registrar el cierre: «Tu acompañamiento fue exitoso» -->
+<nc-cierre-exitoso-modal [(abierta)]="exito" />

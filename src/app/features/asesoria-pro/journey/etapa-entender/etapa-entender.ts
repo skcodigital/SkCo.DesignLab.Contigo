@@ -37,11 +37,10 @@ export class EtapaEntender {
 
   /** Los chips de motivo quedan siempre visibles mientras la conversación es editable: se elige y se sigue. */
   protected readonly motivoAbierto = computed(() => !this.ro());
-  /** Por ahora no se muestra el aviso de fuera de alcance con su nota y «Cerrar como fuera de alcance» (decisión de Isa, 2026-11-23). */
-  private static readonly AVISO_FUERA = false;
   protected readonly textoFuera = computed(() => {
     const m = this.st().motivo;
-    return EtapaEntender.AVISO_FUERA && (m === 'rendimientos' || m === 'otro') ? FUERA_DE_ALCANCE[m] : null;
+    // «Otro» continúa; «Rendimientos o expectativas» termina la experiencia (aún no hay esa funcionalidad)
+    return m === 'rendimientos' ? FUERA_DE_ALCANCE.rendimientos : null;
   });
   /** El resumen «Motivo: …» solo se ve en solo lectura; en edición quedan los chips. */
   protected readonly motivoHecho = computed(() => {

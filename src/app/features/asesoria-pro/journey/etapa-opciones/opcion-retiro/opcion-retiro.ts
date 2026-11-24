@@ -3,7 +3,7 @@ import { Icono } from '@features/asesoria-pro/components/icono/icono';
 import { NOM_CAJA, TEXTOS } from '../../../constants/textos';
 import { Retiro, TipoCaja } from '../../../interfaces/calculo';
 import { ConversacionesStore } from '../../../state/conversaciones.store';
-import { ctId, impuesto } from '../../../utils/calculos';
+import { ctId, impuesto, tocaNoExento } from '../../../utils/calculos';
 import { soloLectura } from '../../../utils/validaciones';
 import { pesos } from '../../../utils/formato';
 import { JourneyUiStore } from '../../journey-ui.store';
@@ -50,7 +50,16 @@ export class OpcionRetiro {
     this.ui.abrirDetalle(ctId(this.st()), 'calculo');
   }
 
+  /**
+   * «Ajustar» el IBC: si el retiro toca aportes no exentos y aún no se respondió la renta exenta, avisa y lleva
+   * a la pregunta (sobre las cajas, resaltada) en lugar de abrir el panel de Impuestos.
+   */
   protected ajustar(): void {
-    this.ui.abrirDetalle(ctId(this.st()), 'impuestos');
+    const st = this.st();
+    if (tocaNoExento(st, this.k()) && !st.rx) {
+      this.ui.pedirRentaExenta();
+      return;
+    }
+    this.ui.abrirDetalle(ctId(st), 'impuestos');
   }
 }
