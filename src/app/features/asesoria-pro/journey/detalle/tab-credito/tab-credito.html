@@ -4,72 +4,62 @@
   @let c = s();
   @let si = sim();
   <p class="jw-cr-tope">Puede pedir hasta <b>{{ pesos(tope) }}</b> · a 360 días, sin cuotas</p>
-  <h3 class="jw-cr-h">Resumen del crédito</h3>
+  <!-- Diseño «Resumen de tu crédito» -->
+  <h3 class="jw-cr-h">Resumen de tu crédito</h3>
+  @if (deCombo()) {
+    <p class="jw-cr-de">Para la opción <b>Retiro + Crédito Impulso</b></p>
+  }
   <div class="jw-cr-marco">
+    @if (seleccionada()) {
+      <p class="jw-cr-sel"><svg ncIcono="ok"></svg>Opción seleccionada</p>
+    }
     <div class="jw-cr-datos">
       <div><span>Tipo de crédito:</span><b>Crédito Impulso</b><small>Otorgado por el Fondo de Capital Privado Skandia Alternativo - Crédito Impulso administrado por Skandia Fiduciaria S.A.</small></div>
-      <div class="tasa"><span>Tasa:</span><b>{{ tasa }}</b><small>Para desembolso del {{ fLarga(hoy) }}</small></div>
-      <div><span>¿Cuánto pide?:</span><b>{{ pesos(c.M) }}</b><small>Con el GMF (4 × 1.000), el crédito es de {{ pesos(c.cap) }}</small></div>
-      <div>
-        <span>{{ alVencimiento() ? 'Intereses a pagar al vencimiento:' : 'Intereses a pagar el ' + fLarga(pago()) + ':' }}</span><b>{{ pesos(c.int) }}</b><small>{{ c.dias }} días</small>
-      </div>
+      <div class="tasa"><span>Tasa:</span><b>{{ tasa }}</b><small>Para desembolso del {{ fLarga(hoy) }}.</small></div>
+      <div><span>¿Cuánto pediste?:</span><b>{{ pesos(c.M) }}</b></div>
+      <div><span>{{ alVencimiento() ? 'Intereses a pagar al finalizar el año:' : 'Intereses a pagar el ' + fLarga(pago()) + ':' }}</span><b>{{ pesos(c.int) }}</b></div>
     </div>
-    <div class="jw-cr-franja">
-      <span>{{ alVencimiento() ? 'Total a pagar al vencimiento' : 'Total a pagar el ' + fLarga(pago()) }}</span><b>{{ pesos(c.total) }}</b>
+    <div class="jw-cr-franja jw-cr-total">
+      <span>{{ alVencimiento() ? 'Total a pagar al vencimiento:' : 'Total a pagar el ' + fLarga(pago()) + ':' }}</span><b>{{ pesos(c.total) }}</b>
     </div>
   </div>
-  <h3 class="jw-cr-h">Ajústenlo en la conversación</h3>
+  <!-- Diseño «Contrato(s) que va(n) a respaldar tu crédito» -->
+  <h3 class="jw-cr-h">Contrato(s) que va(n) a respaldar tu crédito</h3>
+  <button type="button" class="jw-cr-porque jw-ro-ok" [attr.aria-expanded]="verPorque()" (click)="verPorque.set(!verPorque())">
+    <svg ncIcono="info"></svg>¿Por qué debo tener un respaldo?
+  </button>
+  @if (verPorque()) {
+    <p class="jw-ayuda jw-cr-porque-txt">El Crédito Impulso se respalda con el saldo de tus contratos del Fondo Voluntario de Pensión: ese monto queda bloqueado para transacciones mientras el crédito esté vigente, pero sigue invertido.</p>
+  }
   <div class="jw-cr-marco">
-    <label class="jw-cr-monto">
-      <span>Monto que pide <b>{{ pesos(montoEtiqueta()) }}</b></span>
-      <input type="range" [min]="montoMin" [max]="tope" step="500000" [value]="c.M" [disabled]="ro()" (input)="arrastrarMonto($event)" (change)="soltarMonto($event)" />
-    </label>
-    <div class="jw-cr-cols">
-      <label class="jw-a5-campo">
-        <span><svg ncIcono="cal"></svg> Fecha en que lo paga</span>
-        <input type="date" [min]="hoyIso" [max]="venceIso" [value]="si.fecha" [disabled]="ro()" (change)="fechaPago($event)" />
-        <small class="jw-ayuda">Vence el {{ fLarga(vence) }}</small>
-      </label>
-      <div class="jw-cr-abono">
-        <label class="jw-check"><input type="checkbox" role="switch" [checked]="si.abono" [disabled]="ro()" (change)="abono($event)" /> Abono parcial antes de pagar</label>
-        @if (si.abono) {
-          <label class="jw-a5-campo">
-            <span>Fecha del abono</span>
-            <input type="date" [min]="hoyIso" [max]="si.fecha" [value]="si.fAbono" [disabled]="ro()" (change)="fechaAbono($event)" />
-          </label>
-          <label class="jw-a5-campo">
-            <span>Monto del abono</span>
-            <input type="number" step="100000" min="0" [value]="si.vAbono" [disabled]="ro()" (change)="valorAbono($event)" />
-          </label>
-        }
+    <div class="jw-cr-resp">
+      <div class="jw-cr-resp-fila">
+        <b class="jw-cr-resp-t">Respaldo requerido:</b>
+        <span class="jw-cr-resp-v"><b>{{ pesos(c.resp) }}</b><span>(130% de {{ pesos(c.cap) }})</span></span>
       </div>
+      <p>Este monto será bloqueado para transacciones en el o los contratos del producto que seleccionaste como respaldo por el tiempo de vigencia del crédito.</p>
     </div>
-    @if (si.abono) {
-      <p class="jw-ayuda">El abono del {{ fechaLarga(si.fAbono) }} cubre primero {{ pesos(c.intA) }} de intereses causados y baja el capital en {{ pesos(c.bajo) }}.</p>
-    }
-  </div>
-  <h3 class="jw-cr-h">Contratos que respaldarían su crédito</h3>
-  <div class="jw-cr-marco">
-    <div class="jw-cr-franja"><span>Respaldo requerido <small>(130 % de {{ pesos(c.cap) }})</small></span><b>{{ pesos(c.resp) }}</b></div>
-    <p class="jw-ayuda">Este monto quedaría bloqueado para transacciones en los contratos que respaldan el crédito, mientras esté vigente. Su ahorro sigue invertido.</p>
-    <p class="jw-cr-sug"><svg ncIcono="escudo"></svg><span><b>Contratos sugeridos</b><br />Producto de respaldo: Fondo Voluntario de Pensión Skandia Multifund*</span></p>
+    <div class="jw-cr-sug">
+      <svg ncIcono="escudo"></svg>
+      <span><b>Contrato(s) sugerido(s):</b><small>Producto de respaldo: Fondo Voluntario de Pensión Skandia Multifund*</small></span>
+      <button type="button" class="jw-link jw-cr-cambiar jw-ro-ok" (click)="cambiarRespaldo()"><svg ncIcono="cambiar"></svg>Cambiar</button>
+    </div>
     @for (x of respaldo().bloq; track x.c.id) {
       <div class="jw-cr-ct">
-        <div><b>{{ nombre(x.c) }}</b><small>{{ x.c.prod }} · Contrato: {{ x.c.num }}</small></div>
+        <div class="jw-cr-ct-nom"><b>{{ x.c.prod }}</b><small>Contrato: {{ x.c.num }}</small></div>
         <dl>
-          <div><dt>Saldo a bloquear</dt><dd>{{ pesos(x.b) }}</dd></div>
-          <div><dt>** Disponible para bloquear</dt><dd>{{ pesos(x.disp) }}</dd></div>
-          <div><dt>Saldo del contrato</dt><dd>{{ pesos(x.c.saldo) }}</dd></div>
+          <div class="fuerte"><dt>Saldo a bloquear:</dt><dd>{{ pesos(x.b) }}</dd></div>
+          <div><dt>** Saldo disponible para bloquear:</dt><dd>{{ pesos(x.disp) }}</dd></div>
+          <div><dt>Saldo de contrato:</dt><dd>{{ pesos(x.c.saldo) }}</dd></div>
         </dl>
       </div>
     }
     @if (respaldo().falta > 0) {
-      <p class="jw-nota jw-nota--alerta"><svg ncIcono="alerta"></svg><span>El disponible para bloquear no alcanza: faltan {{ pesos(respaldo().falta) }} de respaldo. Baje el monto del crédito.</span></p>
+      <p class="jw-nota jw-nota--alerta"><svg ncIcono="alerta"></svg><span>El disponible para bloquear no alcanza: faltan {{ pesos(respaldo().falta) }} de respaldo. Baja el monto del crédito.</span></p>
     }
-    <a class="jw-link" [href]="urlAdmisibilidad" target="_blank" rel="noopener noreferrer">Consulta aquí los portafolios admitidos para usar como respaldo <svg ncIcono="ext"></svg></a>
-    <p class="jw-ayuda">* Administrado por: Skandia AFP - ACCAI S.A.</p>
-    <p class="jw-ayuda">** Corresponde al saldo del contrato menos cuenta contingente, retención sobre rendimientos, otras garantías de créditos, portafolios no admitidos, aportes en canje y retiros pendientes de aprobación.</p>
+    <a class="jw-cr-admit" [href]="urlAdmisibilidad" target="_blank" rel="noopener noreferrer">Consulta aquí los portafolios admitidos para usar como respaldo.</a>
   </div>
+  <p class="jw-ayuda jw-cr-pie">* Administrado por: Skandia AFP - ACCAI S.A<br />** Corresponde al saldo del contrato menos cuenta contingente, retención sobre rendimientos, otras garantías de créditos, portafolios no admitidos, aportes en canje y retiros pendientes de aprobación.</p>
   <p class="jw-nota">
     <svg ncIcono="info"></svg><span>Sin cuotas mensuales: los intereses se causan a diario y se pagan al vencimiento o cuando pague antes. Al vencimiento se puede renovar pagando los intereses causados ({{ pesos(renovacion()) }} si no hace abonos). Su ahorro sigue invertido y conserva el beneficio tributario.</span>
   </p>

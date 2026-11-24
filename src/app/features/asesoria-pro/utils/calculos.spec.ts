@@ -1,4 +1,4 @@
-import { contratoPorId, TOPE_CREDITO } from '../data/contratos.mock';
+import { contratoPorId, CREDITO_MIN, TOPE_CREDITO } from '../data/contratos.mock';
 import { nuevaConversacion } from '../data/conversaciones.mock';
 import { EstadoConversacion } from '../interfaces/conversacion';
 import {
@@ -122,5 +122,31 @@ describe('calculos', () => {
     const conAbono = creditoPanel({ ...s, abono: true, fAbono: iso(masDias(30)), vAbono: 5000000 });
     expect(conAbono.total).toBeLessThan(sinAbono.total);
     expect(conAbono.bajo).toBeGreaterThan(0);
+  });
+
+  it('Crédito Impulso: nunca desembolsa menos del mínimo de $10.000.000', () => {
+    // Caja Crédito Impulso: necesita $5 M → crédito de $10 M
+    expect(cred(st({ monto: 5000000 })).M).toBe(CREDITO_MIN);
+    expect(cred(st({ monto: 50000000 })).M).toBe(50000000);
+    // Retiro + Crédito Impulso: a «Proyecto finca» le faltan ≈ $3,3 M tras el retiro total → crédito de $10 M
+    // y el retiro se ajusta a $10 M para que entre los dos sumen exactamente los $20 M que necesita
+    const cb = combo(st({ monto: 20000000 }), contratoPorId('finca'));
+    expect(cb).not.toBeNull();
+    expect(cb!.falta).toBeLessThan(CREDITO_MIN);
+    expect(cb!.M).toBe(CREDITO_MIN);
+    expect(cb!.minimo).toBe(true);
+    expect(cb!.kt.R).toBe(20000000 - CREDITO_MIN);
+    expect(cb!.recibe).toBe(20000000);
+    // Si lo que falta ya supera el mínimo, retiro total + crédito por lo que falta (sin ajuste)
+    const grande = combo(st({ monto: 40000000 }), contratoPorId('finca'));
+    expect(grande!.minimo).toBe(false);
+    expect(grande!.M).toBe(grande!.falta);
+    // El asesor sube el crédito: el retiro baja en la misma medida y la suma sigue siendo el monto
+    const subido = combo(st({ monto: 20000000, creditoCombo: 15000000 }), contratoPorId('finca'));
+    expect(subido!.M).toBe(15000000);
+    expect(subido!.kt.R).toBe(5000000);
+    expect(subido!.recibe).toBe(20000000);
+    // Nunca por debajo del mínimo aunque se pida menos
+    expect(combo(st({ monto: 20000000, creditoCombo: 2000000 }), contratoPorId('finca'))!.M).toBe(CREDITO_MIN);
   });
 });

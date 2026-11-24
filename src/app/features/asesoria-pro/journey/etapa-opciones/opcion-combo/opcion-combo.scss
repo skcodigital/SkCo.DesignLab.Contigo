@@ -1,2 +1,24 @@
 @use '../../styles/controles';
 @use '../opciones';
+
+
+// Monto del crédito editable con lápiz
+.jw-cmb-monto dd{display:inline-flex;align-items:center;gap:6px}
+.jw-cmb-lapiz{display:inline-grid;place-items:center;width:24px;height:24px;padding:0;border:0;border-radius:6px;background:transparent;color:var(--sk-color-primary-dark);cursor:pointer}
+.jw-cmb-lapiz svg{width:14px;height:14px}
+.jw-cmb-lapiz:hover{background:var(--sk-color-brand-light)}
+.jw-cmb-lapiz:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:1px}
+.jw-cmb-campo{display:inline-flex;align-items:center;gap:4px;width:auto;height:30px;padding:0 8px;font-size:14px}
+.jw-cmb-campo input{width:110px;border:0;background:transparent;font:inherit;font-weight:600;text-align:right}
+.jw-cmb-campo input:focus{outline:none}
+.jw-cmb-campo:focus-within{outline:2px solid var(--sk-color-info);outline-offset:1px}
+.jw-cmb-rango{margin-top:-8px;font-size:12px;line-height:16px;color:var(--sk-color-text-3)}
+:host-context(#jm-velo) .jw-cmb-lapiz{color:var(--sk-color-primary)}
+:host-context(#jm-velo) .jw-cmb-lapiz:hover{background:rgba(0,199,61,.12)}
+:host-context(#jm-velo) .jw-cmb-rango{color:var(--sk-color-mission-text-3)}
+
+// Detalle del costo: texto corrido a todo el ancho; «DIAN» y «Ajustar» en línea con el texto
+.jw-imp-meta{margin:-8px 0 0;font-size:12px;line-height:18px;color:var(--sk-color-text-3)}
+.jw-imp-meta .jw-dian{display:inline-block;vertical-align:baseline;margin:0 2px}
+.jw-imp-meta .jw-link{display:inline;padding:0;font-size:13px;vertical-align:baseline}
+:host-context(#jm-velo) .jw-imp-meta{color:var(--sk-color-mission-text-3)}

@@ -7,7 +7,8 @@ import { ConversacionesStore } from '../../../state/conversaciones.store';
 import { esRetiro, lineaCredito } from '../../../utils/acuerdo';
 import { cajas, cred, tocaNoExento } from '../../../utils/calculos';
 import { pesos } from '../../../utils/formato';
-import { csvContador } from '../../../utils/texto-cliente';
+import { xlsxContador } from '../../../utils/texto-cliente';
+import { descargarBlob } from '../../../utils/xlsx';
 import { soloLectura } from '../../../utils/validaciones';
 
 interface OpcionTramite {
@@ -41,7 +42,8 @@ export class AcuerdoTramite {
   protected readonly linea = computed(() => {
     const v = this.v();
     if (this.ret()) {
-      const rec = this.st().dec === 'retiro' ? v.k.R : v.kt.R;
+      const d = this.st().dec;
+      const rec = d === 'retiro' ? v.k.R : d === 'combo' ? (v.cb?.kt ?? v.kt).R : v.kt.R;
       return TEXTOS_OPCIONES_ACUERDO.lineaRetiro(etiquetaContrato(v.c), pesos(rec));
     }
     return TEXTOS_OPCIONES_ACUERDO.lineaCredito(lineaCredito(cred(this.st())));
@@ -81,17 +83,9 @@ export class AcuerdoTramite {
     this.store.marcarValidacion((e.target as HTMLInputElement).checked);
   }
 
-  /** En Angular es un Excel; aquí se simula con un CSV que abre en Excel. */
+  /** Descarga el detalle de aportes como hoja de Excel (.xlsx). */
   protected descargar(): void {
-    const { nombre, contenido } = csvContador(this.st());
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([contenido], { type: 'text/csv;charset=utf-8' }));
-    a.download = nombre;
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(() => {
-      URL.revokeObjectURL(a.href);
-      a.remove();
-    }, 500);
+    const { nombre, blob } = xlsxContador(this.st());
+    descargarBlob(blob, nombre);
   }
 }

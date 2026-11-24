@@ -137,3 +137,11 @@ $v: ':host-context(#jm-velo)';
 #{$v} .jw-pie{border-top-color:var(--bd)}
 // Dentro de una pregunta, más aire entre el enunciado y las respuestas
 .jw-q{gap:12px;padding:20px}
+
+// ===== CTA «Seleccionar» de las fichas y cajas: botón secundario a todo el ancho, al fondo =====
+.jw-sel-cta{align-self:stretch;justify-content:center;margin-top:auto;height:36px;font-size:14px}
+.jw-sel-cta svg{width:16px;height:16px}
+.jw-sel-cta.on{cursor:default}
+
+// Chips largos que se parten en dos líneas (p. ej. «Rendimientos o expectativas no cumplidas»): texto a la izquierda
+.jw-chips button{text-align:left}

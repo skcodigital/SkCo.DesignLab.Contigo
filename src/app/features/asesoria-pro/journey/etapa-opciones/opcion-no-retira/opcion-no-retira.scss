@@ -1,1 +1,4 @@
+@use '../../styles/controles';
 @use '../opciones';
+
+@include controles.solo-lectura;

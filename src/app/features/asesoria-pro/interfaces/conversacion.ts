@@ -80,6 +80,8 @@ export interface EstadoConversacion {
   segundos: number;
   imp: EstadoImpuestos;
   cr: SimCredito | null;
+  /** Crédito que el asesor fijó en «Retiro + Crédito Impulso» (null = lo que falta o el mínimo). */
+  creditoCombo: number | null;
   apVista: VistaAportes;
   rentPer: PeriodoRent;
   verCalc: boolean;

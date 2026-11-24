@@ -45,7 +45,7 @@ export class EtapaOpciones {
 
   protected readonly st = this.store.st;
   protected readonly ro = computed(() => soloLectura(this.st()));
-  /** Sin monto no hay opciones: se pide en «Entender». */
+  /** Sin monto no hay opciones: se pide en «Situación». */
   protected readonly falta = computed(() => !(this.st().monto > 0));
   protected readonly v = computed(() => cajas(this.st()));
 

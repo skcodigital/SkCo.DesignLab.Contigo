@@ -22,29 +22,57 @@
       <div class="tot tot--sub"><dt>= Valor total del retiro</dt><dd>{{ pesos(cb().kt.D) }}</dd></div>
     </dl>
     <h5 class="jw-o3-sub">Crédito por lo que falta</h5>
+    <!-- Monto del crédito editable con el lápiz: al subirlo, el retiro baja en la misma medida (nunca bajo el mínimo) -->
     <dl>
-      <div><dt>Monto</dt><dd>{{ pesos(cb().M) }}</dd></div>
+      <div class="jw-cmb-monto">
+        <dt>Monto</dt>
+        <dd>
+          @if (editando()) {
+            <span class="jw-campo jw-cmb-campo">
+              <span aria-hidden="true">$</span>
+              <input #montoCr inputmode="numeric" autocomplete="off" aria-label="Monto del crédito" [value]="miles(cb().M)"
+                (input)="escribir($event)" (keydown.enter)="aplicar($event, montoCr.value)" (keydown.escape)="cancelar($event)" (blur)="aplicar($event, montoCr.value)" />
+            </span>
+          } @else {
+            {{ pesos(cb().M) }}
+            @if (cb().mMax > cb().mMin && !ro()) {
+              <button type="button" class="jw-cmb-lapiz" aria-label="Editar el monto del crédito" title="Editar monto" (click)="editar($event)"><svg ncIcono="lapiz"></svg></button>
+            }
+          }
+        </dd>
+      </div>
     </dl>
-    <nc-plazo-credito />
+    @if (editando()) {
+      <small class="jw-cmb-rango">Entre {{ pesos(cb().mMin) }} y {{ pesos(cb().mMax) }}. Enter para aplicar.</small>
+    }
+    @if (cb().minimo) {
+      <p class="jw-o3-nota">El crédito mínimo es <b>{{ pesos(cb().M) }}</b>: el retiro se ajusta para completar lo que necesita.</p>
+    } @else if (cb().M > cb().falta + 0.5) {
+      <p class="jw-o3-nota">Al subir el crédito, el retiro baja para completar lo que necesita.</p>
+    }
+    <nc-plazo-credito [conPersonalizar]="false" />
     <dl>
       <div><dt>Tasa</dt><dd>{{ tasa }}</dd></div>
       <div><dt>Intereses y 4×1000</dt><dd>{{ pesos(cb().cr.costo) }}</dd></div>
       <div class="tot verde"><dt>Recibe</dt><dd>{{ pesos(cb().recibe) }}</dd></div>
     </dl>
     <dl>
-      <div>
-        <dt>
-          Costo de la combinación<small class="jw-imp-nota"
-            >intereses más posible impuesto
-            <button type="button" class="jw-dian jw-ro-ok" aria-label="Impuesto de la DIAN: Skandia no lo cobra" title="Este impuesto lo liquida el cliente en su declaración de renta y lo paga a la DIAN. Skandia no lo cobra.">DIAN</button
-            >{{ imp().nota }} · <button type="button" class="jw-link jw-ro-ok" (click)="$event.preventDefault(); ajustar()">Ajustar</button></small
-          >
-        </dt>
-        <dd>{{ costo() }}</dd>
-      </div>
+      <div><dt>Costo de la combinación</dt><dd>{{ costo() }}</dd></div>
     </dl>
+    <!-- Detalle del costo en una línea continua, a todo el ancho de la caja (antes iba apilado bajo el título) -->
+    <p class="jw-imp-meta">
+      Intereses más posible impuesto
+      <button type="button" class="jw-dian jw-ro-ok" aria-label="Impuesto de la DIAN: Skandia no lo cobra" title="Este impuesto lo liquida el cliente en su declaración de renta y lo paga a la DIAN. Skandia no lo cobra.">DIAN</button>
+      {{ imp().nota }}&nbsp;<span aria-hidden="true">·</span>&nbsp;<button type="button" class="jw-link jw-ro-ok" (click)="$event.preventDefault(); ajustar()">Ajustar</button>
+    </p>
     @if (!cb().cubre) {
       <p class="jw-o3-nota">El crédito disponible ({{ pesos(cb().disp) }}) no cubre lo que falta ({{ pesos(cb().falta) }}).</p>
     }
   </div>
+  <!-- Cierra la caja: abre el detalle con el crédito de la combinación -->
+  <button type="button" class="jw-link jw-ro-ok jw-o3-detalle jw-o3-cierre" (click)="verDetalle($event)"><svg ncIcono="panel"></svg>Ver detalle del crédito</button>
+  <!-- CTA secundario: elige la ficha (igual que el radio); elegida → «Seleccionada» -->
+  <button type="button" class="jw-btn jw-btn--sec jw-sel-cta" [class.on]="st().pref === 'combo'" [attr.aria-pressed]="st().pref === 'combo'" [disabled]="ro()" (click)="$event.preventDefault(); elegir()">
+    @if (st().pref === 'combo') { <svg ncIcono="ok"></svg>Seleccionada } @else { Seleccionar }
+  </button>
 </label>

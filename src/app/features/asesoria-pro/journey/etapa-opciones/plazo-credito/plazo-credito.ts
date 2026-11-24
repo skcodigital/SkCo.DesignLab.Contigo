@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { PLAZOS } from '../../../data/contratos.mock';
 import { ConversacionesStore } from '../../../state/conversaciones.store';
 import { ctId } from '../../../utils/calculos';
@@ -16,16 +16,18 @@ const PLAZO_DEFECTO = 12;
   selector: 'nc-plazo-credito',
   template: `
     <div class="jw-o3-plazo">
-      <p aria-hidden="true">Plazo</p>
+      <p aria-hidden="true">Estimado de pago en:</p>
       <div class="jw-plazo-fila">
-        <div class="jw-chips" role="group" aria-label="Plazo del crédito">
+        <div class="jw-chips" role="group" aria-label="Estimado de pago en">
           @for (p of plazos; track p[0]) {
             <button type="button" [attr.aria-pressed]="marcado() === p[0]" [disabled]="ro()" (click)="elegir($event, p[0])">
               {{ p[1] }}
             </button>
           }
         </div>
-        <button type="button" class="jw-link jw-ro-ok" (click)="personalizar($event)">Personalizar</button>
+        @if (conPersonalizar()) {
+          <button type="button" class="jw-link jw-ro-ok" (click)="personalizar($event)">Personalizar</button>
+        }
       </div>
     </div>
   `,
@@ -35,6 +37,9 @@ const PLAZO_DEFECTO = 12;
 export class PlazoCredito {
   private readonly store = inject(ConversacionesStore);
   private readonly ui = inject(JourneyUiStore);
+
+  /** Muestra el enlace «Personalizar» (la caja Crédito Impulso no lo lleva: ya tiene «Ver detalle del crédito»). */
+  readonly conPersonalizar = input(true);
 
   protected readonly st = this.store.st;
   protected readonly ro = computed(() => soloLectura(this.st()));

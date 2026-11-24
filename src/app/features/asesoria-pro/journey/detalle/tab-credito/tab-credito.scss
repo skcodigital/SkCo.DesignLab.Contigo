@@ -33,3 +33,63 @@ $v: ':host-context(#jm-velo)';
 #{$v} .jw-cr-ct dt{color:var(--tx3)}
 #{$v} .jw-cr-ct dd{margin:0;font-weight:600;color:#fff;text-align:right}
 @media (max-width:640px){#{$v} .jw-cr-datos,#{$v} .jw-cr-cols{grid-template-columns:1fr}}
+
+// ===== Alineado al diseño «Resumen de tu crédito» y «Contrato(s) que va(n) a respaldar tu crédito» =====
+#{$v} .jw-cr-h{margin:10px 0 0;font-family:var(--sk-font-heading);font-size:18px;line-height:26px}
+#{$v} .jw-cr-marco{gap:12px;padding:18px}
+// «Opción seleccionada»
+#{$v} .jw-cr-sel{display:flex;align-items:center;gap:8px;margin:0;font-family:var(--sk-font-heading);font-size:16px;color:var(--sk-color-primary)}
+#{$v} .jw-cr-sel svg{width:20px;height:20px;padding:3px;border:2px solid var(--sk-color-primary);border-radius:50%}
+// Celdas: etiqueta a la izquierda, valor en negrita a la derecha
+#{$v} .jw-cr-datos{gap:10px}
+#{$v} .jw-cr-datos>div{align-items:center;gap:6px 12px;padding:14px 16px;border-radius:10px;background:rgba(255,255,255,.05);font-size:14px}
+#{$v} .jw-cr-datos b{font-size:16px}
+#{$v} .jw-cr-datos small{font-size:12px;line-height:18px}
+#{$v} .jw-cr-datos>div.tasa{background:rgba(0,240,224,.07)}
+// Total a pagar: franja verde suave, etiqueta en negrita y valor claro (no verde)
+#{$v} .jw-cr-total{padding:16px;border-radius:10px;background:rgba(0,199,61,.10)}
+#{$v} .jw-cr-total span{font-family:var(--sk-font-heading);font-size:15px;font-weight:700;color:#fff}
+#{$v} .jw-cr-total b{font-size:16px;color:#fff}
+// ¿Por qué debo tener un respaldo?
+#{$v} .jw-cr-porque{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;margin-top:-4px;padding:0;border:0;background:none;font-size:13px;color:var(--sk-color-info);text-decoration:underline;cursor:pointer}
+#{$v} .jw-cr-porque svg{width:14px;height:14px}
+#{$v} .jw-cr-porque:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:2px;border-radius:4px}
+#{$v} .jw-cr-porque-txt{margin:0}
+// Respaldo requerido: caja verde con el valor y el 130 % debajo, y el texto dentro
+#{$v} .jw-cr-resp{display:flex;flex-direction:column;gap:10px;padding:16px 18px;border-radius:10px;background:rgba(0,199,61,.10)}
+#{$v} .jw-cr-resp-fila{display:flex;align-items:center;justify-content:space-between;gap:12px}
+#{$v} .jw-cr-resp-t{font-family:var(--sk-font-heading);font-size:15px;color:#fff}
+#{$v} .jw-cr-resp-v{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+#{$v} .jw-cr-resp-v b{font-family:var(--sk-font-heading);font-size:16px;color:#fff}
+#{$v} .jw-cr-resp-v span{font-size:14px;color:var(--tx2)}
+#{$v} .jw-cr-resp p{margin:0;font-size:13px;line-height:20px;color:var(--tx2)}
+// Contrato(s) sugerido(s) con «Cambiar» a la derecha
+#{$v} .jw-cr-sug{display:grid;grid-template-columns:auto 1fr auto;align-items:start;gap:4px 10px;margin-top:6px;font-size:15px}
+#{$v} .jw-cr-sug>svg{width:22px;height:22px;margin-top:1px;color:var(--tx)}
+#{$v} .jw-cr-sug>span{display:flex;flex-direction:column;gap:2px}
+#{$v} .jw-cr-sug b{font-family:var(--sk-font-heading);color:#fff}
+#{$v} .jw-cr-sug small{font-size:13px;color:var(--tx2)}
+#{$v} .jw-cr-cambiar{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700}
+// Cada contrato como tarjeta gris: nombre a la izquierda, cifras a la derecha
+#{$v} .jw-cr-ct{flex-wrap:nowrap;align-items:center;padding:16px 18px;border:0;border-radius:12px;background:rgba(255,255,255,.05)}
+#{$v} .jw-cr-ct-nom b{font-size:15px}
+#{$v} .jw-cr-ct-nom small{font-size:13px}
+#{$v} .jw-cr-ct dl{display:grid;grid-template-columns:auto auto;gap:6px 20px;font-size:14px}
+#{$v} .jw-cr-ct dl>div{display:contents}
+#{$v} .jw-cr-ct dt{color:var(--tx2)}
+#{$v} .jw-cr-ct .fuerte dt,#{$v} .jw-cr-ct .fuerte dd{font-weight:700;color:#fff}
+#{$v} .jw-cr-ct dd{font-weight:400}
+@media (max-width:640px){#{$v} .jw-cr-ct{flex-wrap:wrap}}
+// Portafolios admitidos: enlace azul centrado; notas al pie fuera de la tarjeta
+#{$v} .jw-cr-admit{align-self:center;margin-top:4px;font-size:14px;color:var(--sk-color-info);text-decoration:underline}
+#{$v} .jw-cr-admit:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:2px}
+#{$v} .jw-cr-pie{margin:0;font-size:13px;line-height:20px}
+
+// ===== Revisión 2026-11-24: sin contenedor de sección y enlaces en verde brand =====
+// Las secciones van directo sobre el panel (sin borde, fondo ni margen); las tarjetas internas se mantienen
+#{$v} .jw-cr-marco{padding:0;border:0;border-radius:0;background:transparent}
+#{$v} .jw-cr-porque,#{$v} .jw-cr-admit{color:var(--sk-color-primary)}
+#{$v} .jw-cr-porque:focus-visible,#{$v} .jw-cr-admit:focus-visible{outline-color:var(--sk-color-primary)}
+
+#{$v} .jw-cr-de{margin:-6px 0 0;font-size:13px;color:var(--tx2)}
+#{$v} .jw-cr-de b{color:#fff}

@@ -2,7 +2,7 @@ import { Decision, EstadoConv, Motivo, Preferencia, RespuestaRx } from '../inter
 import { TipoCaja } from '../interfaces/calculo';
 
 /** Partes del journey (barra de pasos y resumen). */
-export const PARTES = ['Entendimiento', 'Situación', 'Opciones', 'Decisiones'] as const;
+export const PARTES = ['Situación', 'Opciones', 'Decisión', 'Cierre'] as const;
 /** Nombres de las etapas en la base de datos («Etapas conversadas»). */
 export const ETAPAS_BD = ['Necesidad', 'Lo que tiene y desde dónde', 'Comparador', 'Decisión y cierre'] as const;
 
@@ -114,7 +114,7 @@ export const TEXTOS = {
   viviendaSinRetencion: 'En este caso el retiro no causa retención contingente.',
   penSi: 'Con requisitos de pensión el retiro no causa retención contingente.',
   penSinMarca: 'En Contigo el cliente no tiene la marca de beneficio tributario.',
-  ningunoCubre: (monto: string) => `Ningún contrato cubre ${monto}: elija uno y el Crédito Impulso puede cubrir lo que falta.`,
+  ningunoCubre: (monto: string) => `Ningún contrato cubre ${monto}: elige uno y el Crédito Impulso puede cubrir lo que falta.`,
   alcanzaCredito: (puede: string, monto: string) =>
     `Hoy puede retirar ${puede}. Para cubrir ${monto}, la opción es el Crédito Impulso.`,
   anticipo: (ibc: boolean) =>

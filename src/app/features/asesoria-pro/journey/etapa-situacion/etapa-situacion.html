@@ -1,5 +1,5 @@
 <section class="jw-etapa jw-etapa--ancha" aria-labelledby="jw-t2">
-  <p class="jw-eb">Situación</p>
+  <p class="jw-eb">Opciones</p>
   <h3 class="jw-h" id="jw-t2">¿De qué contrato conviene sacarlo?</h3>
   <!-- Como en Angular: la pregunta de pensión va aquí; no se muestra si el motivo es vivienda -->
   @if (verPension()) {
@@ -96,6 +96,10 @@
           <div class="jw-ct-tot"><dt>Valor total del retiro</dt><dd>{{ f.total }}</dd></div>
         </dl>
         <button type="button" class="jw-link jw-ro-ok" [attr.aria-label]="'Ver detalle de ' + (f.c.nom || 'contrato ' + f.c.num)" (click)="verDetalle($event, f.c.id)">Ver detalle</button>
+        <!-- CTA secundario: elige la ficha (igual que el radio); elegida → «Seleccionada» -->
+        <button type="button" class="jw-btn jw-btn--sec jw-sel-cta" [class.on]="f.marcado" [attr.aria-pressed]="f.marcado" [disabled]="ro()" (click)="$event.preventDefault(); marcar(f.c.id)">
+          @if (f.marcado) { <svg ncIcono="ok"></svg>Seleccionada } @else { Seleccionar }
+        </button>
       </label>
     }
   </div>

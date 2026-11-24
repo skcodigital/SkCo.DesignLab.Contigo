@@ -104,6 +104,14 @@ export class Journey {
   private readonly abiertoDesde = Date.now();
 
   constructor() {
+    // «Salir» desde una etapa (p. ej. tras finalizar fuera de alcance): cierra el journey como «Regresar»
+    let salirAtendido = this.ui.salir();
+    afterRenderEffect(() => {
+      const pedido = this.ui.salir();
+      if (pedido === salirAtendido) return;
+      salirAtendido = pedido;
+      this.cerrarJourney();
+    });
     this.uiPagina.set('jw-abierto', true);
     const body = this.doc.body;
     body.style.overflow = 'hidden';

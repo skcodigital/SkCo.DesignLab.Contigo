@@ -97,6 +97,14 @@ export class EtapaEntender {
     this.store.anotarMotivoFuera((e.target as HTMLTextAreaElement).value);
   }
 
+  protected volverAEditar(): void {
+    this.store.reabrirFueraDeAlcance();
+  }
+
+  protected salir(): void {
+    this.ui.pedirSalir();
+  }
+
   protected cerrarFuera(): void {
     this.store.cerrarFueraDeAlcance();
     this.ui.toast('info', ...TEXTOS.toastFuera);

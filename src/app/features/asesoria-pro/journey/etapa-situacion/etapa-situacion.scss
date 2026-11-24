@@ -157,3 +157,14 @@ $v: ':host-context(#jm-velo)';
 
 // ===== Espaciado entre secciones (revisión 2026-11-24) =====
 .jw-car-nav{margin:0 0 -12px}
+
+// En la ficha, «Ver detalle» queda arriba del CTA
+.jw-ct .jw-link + .jw-sel-cta{margin-top:4px}
+
+// ===== Aire interno de las fichas de contrato (revisión 2026-11-24) =====
+// 16px de margen, 14px entre bloques (encabezado, saldos, saldo total, cifras, CTA) y 8px dentro de cada bloque
+.jw-ct{padding:16px;gap:14px}
+.jw-ct-total{gap:10px;padding:12px 14px}
+.jw-ley{gap:6px}
+.jw-ct-res{gap:8px;padding-top:12px}
+.jw-ct-res .jw-ct-tot{padding-top:8px}

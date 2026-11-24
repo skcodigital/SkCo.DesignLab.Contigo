@@ -52,6 +52,11 @@ export interface Combo {
   cr: Credito;
   recibe: number;
   cubre: boolean;
+  /** El crédito se fijó en el mínimo a desembolsar (lo que faltaba era menor). */
+  minimo: boolean;
+  /** Rango del crédito que el asesor puede elegir (al subirlo, baja el retiro). */
+  mMin: number;
+  mMax: number;
 }
 
 export interface Ficha {

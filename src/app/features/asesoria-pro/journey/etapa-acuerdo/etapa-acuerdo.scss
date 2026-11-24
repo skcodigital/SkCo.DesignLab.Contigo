@@ -13,7 +13,8 @@ $v: ':host-context(#jm-velo)';
 #{$v} .jw-dec .jw-op span{color:var(--sk-color-mission-text-3)}
 #{$v} .jw-a5-msg.ok{background:rgba(0,199,61,.12);color:var(--sk-color-mission-text)}
 #{$v} .jw-dec .jw-op b{color:#fff}
-@media (max-width:900px){.jw-pie5 .jw-btn{flex:1 1 100%;justify-content:center}}
+// Móvil: botones apilados a todo el ancho con su alto completo (antes «flex:1 1 100%» en columna los aplastaba)
+@media (max-width:900px){.jw-pie5 .jw-btn{flex:0 0 auto;width:100%;height:auto;min-height:44px;justify-content:center}}
 // Monto destacado sin fondo: alineado con el título, como la caja del monto en Entender
 #{$v} .jw-destacada{display:flex;flex-direction:column;gap:2px;padding:0;border-radius:0;background:transparent}
 #{$v} .jw-destacada b{font-family:var(--sk-font-heading);font-size:26px;font-weight:700;line-height:32px;color:var(--sk-color-primary)}
@@ -40,3 +41,6 @@ $v: ':host-context(#jm-velo)';
 
 // ===== Espaciado entre secciones (revisión 2026-11-24) =====
 .jw-a5{gap:20px}
+
+// Tarjetas de saldo y rendimientos con el mismo aire que las demás
+.jw-dest-card{padding:16px 18px;gap:6px}

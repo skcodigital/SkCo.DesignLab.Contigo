@@ -42,7 +42,7 @@ describe('acuerdo y texto para el cliente', () => {
     expect(validarCierre({ ...base, tram: 'portal', np: { resumen: true, seguimiento: false } })).toEqual({
       ok: 'Cierre registrado: Retiro. Quedan pendientes: Tramitar por el portal · Enviar resumen de la conversación al cliente.',
     });
-    expect(validarCierre({ ...base, dec: 'pensara' })).toEqual({ ok: 'Cierre registrado: Lo va a pensar.' });
+    expect(validarCierre({ ...base, dec: 'pensara', np: { resumen: false, seguimiento: false } })).toEqual({ ok: 'Cierre registrado: Lo va a pensar.' });
   });
 
   it('etiquetas de para cuándo', () => {

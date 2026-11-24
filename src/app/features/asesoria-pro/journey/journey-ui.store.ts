@@ -13,6 +13,8 @@ export interface ToastJourney {
 export interface DetalleAbierto {
   ct: string;
   tab: TabDetalle;
+  /** «combo»: la pestaña Crédito muestra el crédito de «Retiro + Crédito Impulso». */
+  credito?: 'combo';
 }
 
 const DURACION_TOAST_MS = 5000;
@@ -39,6 +41,14 @@ export class JourneyUiStore {
     this._focoMonto.update((n) => n + 1);
   }
 
+  /** Cada incremento pide al journey cerrarse y volver a la ficha («Salir»). */
+  private readonly _salir = signal(0);
+  readonly salir = this._salir.asReadonly();
+
+  pedirSalir(): void {
+    this._salir.update((n) => n + 1);
+  }
+
   /** Cada incremento pide a Opciones resaltar la pregunta de renta exenta y llevar el foco a ella. */
   private readonly _pedirRx = signal(0);
   readonly pedirRx = this._pedirRx.asReadonly();
@@ -47,8 +57,8 @@ export class JourneyUiStore {
     this._pedirRx.update((n) => n + 1);
   }
 
-  abrirDetalle(ct: string, tab: TabDetalle = 'contrato'): void {
-    this._detalle.set({ ct, tab });
+  abrirDetalle(ct: string, tab: TabDetalle = 'contrato', credito?: 'combo'): void {
+    this._detalle.set(credito ? { ct, tab, credito } : { ct, tab });
   }
 
   elegirContratoDetalle(ct: string): void {

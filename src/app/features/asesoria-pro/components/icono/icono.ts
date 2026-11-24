@@ -50,6 +50,7 @@ const ICONOS = {
   },
   chev: { tam: 18, grosor: 2, formas: [p('m9 18 6-6-6-6')] },
   flecha: { tam: 16, grosor: 2.4, formas: [p('M5 12h14M13 6l6 6-6 6')] },
+  cambiar: { tam: 16, grosor: 2.2, formas: [p('m17 3 4 4-4 4'), p('M21 7H9'), p('m7 21-4-4 4-4'), p('M3 17h12')] },
   regresar: { tam: 18, grosor: 2.2, formas: [p('M19 12H5M12 19l-7-7 7-7')] },
   candado: { tam: 12, grosor: 2.4, formas: [rect(3, 11, 18, 11, 2), p('M7 11V7a5 5 0 0 1 10 0v4')] },
   prohibido: { tam: 16, grosor: 2.2, formas: [circulo(12, 12, 10), p('m4.9 4.9 14.2 14.2')] },

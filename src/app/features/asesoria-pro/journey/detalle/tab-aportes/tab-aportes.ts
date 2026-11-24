@@ -7,6 +7,8 @@ import { VistaAportes } from '../../../interfaces/conversacion';
 import { ConversacionesStore } from '../../../state/conversaciones.store';
 import { aportesDe, tramosQueSalen } from '../../../utils/aportes';
 import { retiro } from '../../../utils/calculos';
+import { xlsxContador } from '../../../utils/texto-cliente';
+import { descargarBlob } from '../../../utils/xlsx';
 import { pesos } from '../../../utils/formato';
 import { JourneyUiStore } from '../../journey-ui.store';
 
@@ -67,7 +69,9 @@ export class TabAportes {
     this.timer = setTimeout(() => this.etiquetaCopiar.set(TEXTOS.copiar), COPIADO_MS);
   }
 
+  /** Descarga el detalle de aportes del contrato de esta pestaña como hoja de Excel (.xlsx). */
   protected descargar(): void {
-    this.ui.toast('info', TEXTOS.toastExcel[0], TEXTOS.toastExcel[1]);
+    const { nombre, blob } = xlsxContador(this.st(), this.contrato());
+    descargarBlob(blob, nombre);
   }
 }

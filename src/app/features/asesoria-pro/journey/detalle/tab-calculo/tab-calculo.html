@@ -1,5 +1,5 @@
 @if (!(st().monto > 0)) {
-  <p class="jw-nodisp"><svg ncIcono="off"></svg><span><b>No disponible</b> · Falta el monto que necesita · Complete «Entendimiento»</span></p>
+  <p class="jw-nodisp"><svg ncIcono="off"></svg><span><b>No disponible</b> · Falta el monto que necesita · Completa «Situación»</span></p>
 } @else {
   @let c = contrato();
   @let r = k();
@@ -9,7 +9,7 @@
     <div><span>+ Retención contingente</span><span>{{ pesos(r.rcA) }}</span></div>
     <div><span>+ Retención sobre rendimientos{{ especial() ? '' : ' (7 %)' }}</span><span>{{ pesos(r.rrA) }}</span></div>
     <div><span>+ 4×1000<em>Estimado</em></span><span>{{ pesos(r.g) }}</span></div>
-    <div class="tot"><span>= Se descuenta del contrato</span><span>{{ pesos(r.D) }}</span></div>
+    <div class="tot"><span>= Valor total del retiro</span><span>{{ pesos(r.D) }}</span></div>
   </div>
   @if (!r.cubre) {
     <p class="jw-nota jw-nota--alerta"><span>Lo disponible no alcanza: faltan <b>{{ pesos(st().monto - r.R) }}</b>.</span></p>

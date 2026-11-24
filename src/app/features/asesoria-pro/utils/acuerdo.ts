@@ -12,7 +12,8 @@ export const esRetiro = (d: Decision | null): boolean => d === 'retiro' || d ===
 /** Lo que sale del contrato con la decisión (null si no se sabe). */
 export function saleDe(d: Decision, v: Cajas): number | null {
   if (d === 'retiro') return v.k.D;
-  if (d === 'total' || d === 'combo') return v.kt.D;
+  if (d === 'combo') return (v.cb?.kt ?? v.kt).D;
+  if (d === 'total') return v.kt.D;
   if (d === 'credito' || d === 'noretira') return 0;
   return null;
 }

@@ -143,6 +143,13 @@ export class ConversacionesStore {
     this.cerrarConversacion(true);
   }
 
+  /** «Volver a editar»: reabre un acompañamiento finalizado como fuera de alcance para cambiar el motivo. */
+  reabrirFueraDeAlcance(): void {
+    if (!this.st().fuera) return;
+    this.patch(() => ({ dec: null, cerrado: false, fuera: false, estado: 'en-curso', segHasta: '', msg: null }));
+    this.sincronizar();
+  }
+
   cambiar(q: PreguntaEntender): void {
     this.patch(() => ({ abierta: q, eligeFecha: false }));
   }
@@ -180,6 +187,11 @@ export class ConversacionesStore {
   }
 
   // ---- Opciones ----
+  /** Monto del crédito en «Retiro + Crédito Impulso»: al subirlo, el retiro baja en la misma medida. */
+  fijarCreditoCombo(m: number): void {
+    this.patchEditable(() => ({ creditoCombo: m }));
+  }
+
   elegirPlazo(m: number): void {
     this.patchEditable(() => ({ plazo: m, cr: null }));
   }

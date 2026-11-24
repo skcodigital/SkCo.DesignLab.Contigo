@@ -2,8 +2,10 @@ import { etiquetaContrato } from '../data/contratos.mock';
 import { CLIENTE, HOY } from '../data/conversaciones.mock';
 import { ADV_USTED, DEC_CAT, ETAPAS_BD, MOTIVO, PROXIMOS_PASOS, RX_TXT, TIPO_CREDITO } from '../constants/textos';
 import { Cajas, Credito, Retiro } from '../interfaces/calculo';
+import { Contrato } from '../interfaces/contrato';
 import { EstadoConversacion } from '../interfaces/conversacion';
 import { saleDe } from './acuerdo';
+import { Celda, crearXlsx } from './xlsx';
 import {
   aniosDe,
   cajas,
@@ -125,19 +127,21 @@ export function textoCliente(st: St): string {
   return L.join('\n');
 }
 
-/** Detalle de aportes para el contador (en Angular es un Excel; aquí un CSV que abre en Excel). */
-export function csvContador(st: St): { nombre: string; contenido: string } {
-  const c = ctSel(st);
+/** Detalle de aportes para el contador, como hoja de Excel (.xlsx). Por defecto, del contrato elegido. */
+export function xlsxContador(st: St, contrato?: Contrato): { nombre: string; blob: Blob } {
+  const c = contrato ?? ctSel(st);
   const k = st.dec === 'retiro' ? retiro(st, c) : retiro(st, c, true);
-  const filas: (string | number)[][] = [
+  const filas: Celda[][] = [
     ['Detalle de aportes para usted o su contador'],
-    ['Generado el ' + fLarga(HOY) + ' · Contratos: ' + c.num],
+    ['Generado el ' + fLarga(HOY) + ' · Contrato: ' + c.num],
     [],
     ['Contrato', 'Año del aporte', 'Valor que sale', 'Estado'],
-    ...aniosDe(c, k).map((a) => [c.num, a[0], a[1], a[0] <= 2016 ? 'Exento' : c.cc > 0 ? 'Con retención contingente' : 'Sin retención al retirar']),
+    ...aniosDe(c, k).map((a): Celda[] => [
+      c.num, a[0], a[1], a[0] <= 2016 ? 'Exento' : c.cc > 0 ? 'Con retención contingente' : 'Sin retención al retirar',
+    ]),
     [],
     ['Cifras de Contigo a la fecha de generación. Es información de apoyo: no reemplaza la asesoría tributaria.'],
   ];
-  const contenido = '﻿' + filas.map((f) => f.map((x) => '"' + String(x).replace(/"/g, '""') + '"').join(';')).join('\r\n');
-  return { nombre: 'detalle-de-aportes-' + iso(HOY) + '.csv', contenido };
+  const blob = crearXlsx({ hoja: 'Detalle de aportes', filas, negrita: [0, 3], anchos: [18, 16, 18, 28], columnasMoneda: [2] });
+  return { nombre: 'detalle-de-aportes-' + iso(HOY) + '.xlsx', blob };
 }

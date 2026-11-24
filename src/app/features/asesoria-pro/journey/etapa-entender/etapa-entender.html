@@ -1,5 +1,5 @@
 <section class="jw-etapa" aria-labelledby="jw-t1">
-  <p class="jw-eb">Entendimiento</p>
+  <p class="jw-eb">Situación</p>
   <h3 class="jw-h" id="jw-t1"><label for="jw-monto">¿Cuánto desea retirar tu cliente?</label></h3>
   <!-- Como en Angular: la señal de Dali Oportunidades todavía no trae el estimado, así que no se muestra -->
   <div class="jw-dest">
@@ -37,12 +37,20 @@
     <p class="jw-nota-i"><svg ncIcono="info"></svg>{{ textos.viviendaSinRetencion }}</p>
   }
 
-  <div class="jw-pie">
-    <!-- Con «Rendimientos o expectativas» el mismo botón cambia a «Finalizar» y cierra el acompañamiento (un solo botón) -->
-    @if (textoFuera() && !ro()) {
-      <button type="button" class="jw-btn" (click)="cerrarFuera()">Finalizar</button>
-    } @else if (!st().fuera) {
-      <button type="button" class="jw-btn" [disabled]="!puedeContinuar()" (click)="continuar()">Continuar a Situación <svg ncIcono="flecha"></svg></button>
-    }
-  </div>
+  @if (st().fuera) {
+    <!-- Finalizado por «Rendimientos o expectativas»: volver a editar el motivo o salir a la ficha -->
+    <div class="jw-pie jw-pie--nav">
+      <button type="button" class="jw-btn jw-btn--sec jw-ro-ok" (click)="volverAEditar()"><svg ncIcono="lapiz"></svg>Volver a editar</button>
+      <button type="button" class="jw-btn jw-ro-ok" (click)="salir()">Salir</button>
+    </div>
+  } @else {
+    <div class="jw-pie">
+      <!-- Con «Rendimientos o expectativas» el mismo botón cambia a «Finalizar» y cierra el acompañamiento (un solo botón) -->
+      @if (textoFuera() && !ro()) {
+        <button type="button" class="jw-btn" (click)="cerrarFuera()">Finalizar</button>
+      } @else {
+        <button type="button" class="jw-btn" [disabled]="!puedeContinuar()" (click)="continuar()">Continuar <svg ncIcono="flecha"></svg></button>
+      }
+    </div>
+  }
 </section>

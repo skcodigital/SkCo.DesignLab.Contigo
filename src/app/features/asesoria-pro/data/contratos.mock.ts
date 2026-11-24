@@ -3,7 +3,7 @@ import { Contrato, Respaldo, Tramo } from '../interfaces/contrato';
 /** Contratos ficticios del prototipo WPP (los 3 contratos de Óscar). */
 export const CONTRATOS: readonly Contrato[] = [
   {
-    id: 'ahorro', nom: 'Mi ahorro', num: '100007012618', prod: 'Skandia Inversion Plus',
+    id: 'ahorro', nom: 'Mi ahorro', num: '100007012618', prod: 'Skandia Inversión Plus',
     saldo: 211306589, disp: 167661397, rcTodo: 19972261, desde: '16 de mar de 2006',
     gan: 118175577, retirado: 217549852, rendSaldo: 71626468, capRet: 171000743, rendRet: 46549109,
     ex: 27472940, sr: 64456893, cc: 83611340, sc: 35765415,
@@ -37,7 +37,7 @@ export const CONTRATOS: readonly Contrato[] = [
     imp: 33124226 / (159588458 - 18557538), impExacto: 33124226, rentTxt: '9,86',
   },
   {
-    id: 'finca', nom: 'Proyecto finca', num: '100007600228', prod: 'Skandia Inversion Plus',
+    id: 'finca', nom: 'Proyecto finca', num: '100007600228', prod: 'Skandia Inversión Plus',
     saldo: 68199040, disp: 16767240, rcTodo: 204835, desde: '6 de oct de 2009',
     gan: 53451225, retirado: 92750189, rendSaldo: 26602361, capRet: 65901325, rendRet: 26848864,
     ex: 62580528, sr: 0, cc: 5618512, sc: 0, rr: 0, rc: 0, cerrados: true,
@@ -82,6 +82,8 @@ export const MONTO_REFERENCIA = 150000000;
 
 export const TASA_CREDITO = 0.1778;
 export const TOPE_CREDITO = 156000000;
+/** Monto mínimo a desembolsar del Crédito Impulso: si se necesita menos, el crédito se fija en este mínimo. */
+export const CREDITO_MIN = 10000000;
 export const PLAZOS: readonly (readonly [number, string])[] = [[3, '3 meses'], [6, '6 meses'], [12, '12 meses']];
 
 /** Contratos que respaldan el Crédito Impulso (en orden de bloqueo). */

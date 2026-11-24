@@ -11,17 +11,24 @@
         <div><dt>Monto</dt><dd>{{ pesos(cr().M) }}</dd></div>
         <div><dt>Respaldo requerido</dt><dd>{{ pesos(cr().resp) }}</dd></div>
       </dl>
-      <nc-plazo-credito />
+      <nc-plazo-credito [conPersonalizar]="false" />
       <dl>
         <div><dt>Tasa</dt><dd>{{ tasa }}</dd></div>
         <div><dt>Intereses y 4×1000</dt><dd>{{ pesos(cr().costo) }}</dd></div>
         <div class="tot"><dt>Total a pagar</dt><dd>{{ pesos(cr().total) }}</dd></div>
       </dl>
+      @if (bajoMinimo()) {
+        <p class="jw-o3-nota">Crédito mínimo a desembolsar: <b>{{ pesos(cr().M) }}</b>. Necesitaba {{ pesos(st().monto) }}.</p>
+      }
       @if (cr().tope) {
         <p class="jw-o3-nota">No alcanza: es el máximo preaprobado; faltan <b>{{ pesos(st().monto - cr().M) }}</b></p>
       }
     </div>
     <!-- Cierra la caja: siempre al fondo, aunque la caja sea más alta que su contenido -->
     <button type="button" class="jw-link jw-ro-ok jw-o3-detalle jw-o3-cierre" (click)="verDetalle($event)"><svg ncIcono="panel"></svg>Ver detalle del crédito</button>
+    <!-- CTA secundario: elige la ficha (igual que el radio); elegida → «Seleccionada» -->
+    <button type="button" class="jw-btn jw-btn--sec jw-sel-cta" [class.on]="st().pref === 'credito'" [attr.aria-pressed]="st().pref === 'credito'" [disabled]="ro() || st().noRepone" (click)="$event.preventDefault(); elegir()">
+      @if (st().pref === 'credito') { <svg ncIcono="ok"></svg>Seleccionada } @else { Seleccionar }
+    </button>
   </label>
 }

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { Icono } from '@features/asesoria-pro/components/icono/icono';
 import { TEXTOS_OPCIONES_ACUERDO } from '../../../constants/textos';
 import { Retiro } from '../../../interfaces/calculo';
 import { ConversacionesStore } from '../../../state/conversaciones.store';
@@ -8,6 +9,7 @@ import { soloLectura } from '../../../utils/validaciones';
 /** Caja «Si no retira» de Opciones (cajaNoRetira del prototipo). */
 @Component({
   selector: 'nc-opcion-no-retira',
+  imports: [Icono],
   template: `
     <!-- Seleccionable como las demás cajas: radio + borde verde al elegirla -->
     <label class="jw-o3 jw-o3--sel" [class.elegida]="st().pref === 'noretira'">
@@ -20,6 +22,10 @@ import { soloLectura } from '../../../utils/validaciones';
         </dl>
         <p class="jw-o3-nota">Estimado con la rentabilidad de los últimos 12 meses. No es una promesa de rendimiento.</p>
       </div>
+      <!-- CTA secundario: elige la ficha (igual que el radio); elegida → «Seleccionada» -->
+      <button type="button" class="jw-btn jw-btn--sec jw-sel-cta" [class.on]="st().pref === 'noretira'" [attr.aria-pressed]="st().pref === 'noretira'" [disabled]="ro()" (click)="$event.preventDefault(); elegir()">
+        @if (st().pref === 'noretira') { <svg ncIcono="ok"></svg>Seleccionada } @else { Seleccionar }
+      </button>
     </label>
   `,
   styleUrl: './opcion-no-retira.scss',

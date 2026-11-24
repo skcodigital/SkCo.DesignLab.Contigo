@@ -105,3 +105,13 @@ $v: ':host-context(#jm-velo)';
 #{$v} .jw-imp-sep{color:var(--tx3)}
 .jw-imp-grupo{display:inline;white-space:normal}
 .jw-imp-grupo .jw-link{display:inline;vertical-align:baseline}
+
+.jw-o3-cierre + .jw-sel-cta{margin-top:8px}
+
+// ===== Aire interno de las cajas de opciones (revisión 2026-11-24) =====
+// 16–18px de margen, 14px entre bloques de la caja y 8px entre filas de cifras
+.jw-o3{padding:16px 18px;gap:14px}
+.jw-o3-cuerpo{gap:14px}
+.jw-o3 dl{gap:8px}
+.jw-o3 .tot{padding-top:10px}
+.jw-o3-plazo{gap:8px}

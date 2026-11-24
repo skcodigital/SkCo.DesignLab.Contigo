@@ -4,6 +4,7 @@ import { TASA_TXT } from '../../../constants/textos';
 import { Credito } from '../../../interfaces/calculo';
 import { ConversacionesStore } from '../../../state/conversaciones.store';
 import { pesos } from '../../../utils/formato';
+import { CREDITO_MIN } from '../../../data/contratos.mock';
 import { ctId } from '../../../utils/calculos';
 import { soloLectura } from '../../../utils/validaciones';
 import { JourneyUiStore } from '../../journey-ui.store';
@@ -26,6 +27,8 @@ export class OpcionCredito {
   protected readonly st = this.store.st;
   protected readonly ro = computed(() => soloLectura(this.st()));
   protected readonly tasa = TASA_TXT;
+  /** Lo que necesita es menor al mínimo a desembolsar: el crédito se fijó en el mínimo. */
+  protected readonly bajoMinimo = computed(() => this.st().monto > 0 && this.st().monto < CREDITO_MIN);
   protected readonly pesos = pesos;
 
   /** Abre la pestaña Crédito del panel de detalle (sin cambiar la opción elegida: está dentro del <label>). */

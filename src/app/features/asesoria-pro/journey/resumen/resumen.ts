@@ -42,7 +42,7 @@ function filasSituacion(st: EstadoConversacion): Fila[] {
   const f: Fila[] = [
     ['Contrato', st.ctConf ? nombreContrato(c) : null, false, st.ctConf ? tagsContrato(st) : []],
     ['Recibe', k ? pesos(k.R) : null, true],
-    ['Se descuenta del contrato', k ? pesos(k.D) : null],
+    ['Valor total del retiro', k ? pesos(k.D) : null],
   ];
   if (st.pen) f.push(['Requisitos de pensión', st.pen === 'si' ? 'Sí' : 'No']);
   return f;

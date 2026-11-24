@@ -3,7 +3,7 @@ import { TASA_TXT, TEXTOS, TEXTOS_OPCIONES_ACUERDO as T } from '../../../constan
 import { Combo } from '../../../interfaces/calculo';
 import { ConversacionesStore } from '../../../state/conversaciones.store';
 import { ctId, esp, impuesto, tocaNoExento } from '../../../utils/calculos';
-import { pesos } from '../../../utils/formato';
+import { miles, pesos, soloDigitos } from '../../../utils/formato';
 import { soloLectura } from '../../../utils/validaciones';
 import { JourneyUiStore } from '../../journey-ui.store';
 import { Icono } from '@features/asesoria-pro/components/icono/icono';
@@ -34,6 +34,12 @@ export class OpcionCombo {
     this.verDesc.update((v) => !v);
   }
 
+  /** Abre la pestaña Crédito con el crédito de la combinación (sin elegir la caja: está dentro del <label>). */
+  protected verDetalle(e: Event): void {
+    e.preventDefault();
+    this.ui.abrirDetalle(ctId(this.st()), 'credito', 'combo');
+  }
+
   protected elegir(): void {
     this.store.elegirPreferencia('combo');
   }
@@ -48,6 +54,35 @@ export class OpcionCombo {
     return im.min === im.max ? pesos(c + im.max) : T.rango(pesos(c + im.min), pesos(c + im.max));
   });
   protected readonly tasa = TASA_TXT;
+
+  /** Edición del monto del crédito con el lápiz (el retiro se recalcula para completar el monto). */
+  protected readonly editando = signal(false);
+  protected readonly miles = miles;
+
+  protected editar(e: Event): void {
+    e.preventDefault(); // dentro del <label> de la caja: no debe elegir la opción
+    this.editando.set(true);
+    setTimeout(() => document.querySelector<HTMLInputElement>('.jw-cmb-campo input')?.select());
+  }
+
+  protected escribir(e: Event): void {
+    const input = e.target as HTMLInputElement;
+    input.value = miles(soloDigitos(input.value));
+  }
+
+  protected aplicar(e: Event, valor: string): void {
+    e.preventDefault();
+    if (!this.editando()) return;
+    const m = soloDigitos(valor);
+    // El cálculo lo deja entre el mínimo y el máximo permitidos
+    if (m > 0) this.store.fijarCreditoCombo(m);
+    this.editando.set(false);
+  }
+
+  protected cancelar(e: Event): void {
+    e.preventDefault();
+    this.editando.set(false);
+  }
   protected readonly pesos = pesos;
 
   /**

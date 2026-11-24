@@ -1,7 +1,7 @@
 @if (k().R <= 0.5) {
   <article class="jw-o3">
     <h4>{{ titulo() }}</h4>
-    <p class="jw-nodisp"><svg ncIcono="off"></svg><span><b>No disponible</b> · Lo disponible para retirar es $0 · Revise el contrato en «Ver detalle»</span></p>
+    <p class="jw-nodisp"><svg ncIcono="off"></svg><span><b>No disponible</b> · Lo disponible para retirar es $0 · Revisa el contrato en «Ver detalle»</span></p>
   </article>
 } @else {
   <!-- Seleccionable como las fichas de Situación: radio + borde verde al elegirla -->
@@ -53,5 +53,9 @@
         <p class="jw-o3-nota">No alcanza: faltan <b>{{ pesos(faltan()) }}</b></p>
       }
     </div>
+    <!-- CTA secundario: elige la ficha (igual que el radio); elegida → «Seleccionada» -->
+    <button type="button" class="jw-btn jw-btn--sec jw-sel-cta" [class.on]="st().pref === tipo()" [attr.aria-pressed]="st().pref === tipo()" [disabled]="ro()" (click)="$event.preventDefault(); elegir()">
+      @if (st().pref === tipo()) { <svg ncIcono="ok"></svg>Seleccionada } @else { Seleccionar }
+    </button>
   </label>
 }

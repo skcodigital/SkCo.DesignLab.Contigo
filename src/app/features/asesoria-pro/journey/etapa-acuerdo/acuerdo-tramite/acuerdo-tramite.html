@@ -40,7 +40,6 @@
 @if (contador()) {
   <div class="jw-p4-acc jw-contador">
     <button type="button" class="jw-btn jw-btn--sec jw-ro-ok" (click)="descargar()"><svg ncIcono="bajar" [tam]="16"></svg>Descargar detalle para el contador</button>
-    <span class="jw-ayuda">en Excel</span>
     <label class="jw-check"><input type="checkbox" [checked]="st().validar" [disabled]="ro()" (change)="validar($event)" /> Le recomendé validarlo</label>
   </div>
 }

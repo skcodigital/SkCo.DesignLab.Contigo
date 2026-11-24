@@ -6,6 +6,7 @@ import {
   RX_NO,
   RX_SI,
   TASA_CREDITO,
+  CREDITO_MIN,
   TOPE_CREDITO,
 } from '../data/contratos.mock';
 import { HOY } from '../data/conversaciones.mock';
@@ -114,7 +115,12 @@ export function ordenFichas(st: St): Ficha[] {
 export const ctId = (st: St): string => st.ctConf || st.ctMarc || ordenFichas(st)[0].c.id;
 export const ctSel = (st: St): Contrato => contratoPorId(ctId(st));
 export const prefEsRetiro = (st: St): boolean => st.pref === 'retiro' || st.pref === 'total' || st.pref === 'combo';
-export const retiroPref = (st: St): Retiro => (st.pref === 'retiro' ? retiro(st, ctSel(st)) : retiro(st, ctSel(st), true));
+export const retiroPref = (st: St): Retiro =>
+  st.pref === 'retiro'
+    ? retiro(st, ctSel(st))
+    : st.pref === 'combo'
+      ? (combo(st, ctSel(st))?.kt ?? retiro(st, ctSel(st), true))
+      : retiro(st, ctSel(st), true);
 export const tocaNoExento = (st: St, k: Retiro): boolean => !esp(st) && k.noEx > 0.5;
 
 function bloqueos(resp: number): { bloq: Bloqueo[]; falta: number } {
@@ -143,21 +149,45 @@ export function credito(st: St, M: number): Credito {
   };
 }
 
-export const cred = (st: St): Credito => credito(st, Math.min(st.monto || 0, TOPE_CREDITO));
+/** Crédito de la caja Crédito Impulso: lo que necesita, con el mínimo a desembolsar y el tope preaprobado. */
+export const cred = (st: St): Credito =>
+  credito(st, st.monto > 0 ? Math.min(Math.max(st.monto, CREDITO_MIN), TOPE_CREDITO) : 0);
 
-/** Retiro + Crédito Impulso: retira todo lo disponible y pide el crédito por lo que falta. */
+/** Paso del ajuste del crédito en la combinación. */
+export const PASO_CREDITO = 500000;
+
+/**
+ * Retiro + Crédito Impulso: retira lo disponible y pide el crédito por lo que falta. El crédito nunca baja del
+ * mínimo a desembolsar: si lo que falta es menor, el crédito queda en el mínimo y el retiro se ajusta (baja) para
+ * que entre los dos sumen exactamente lo que necesita el cliente.
+ */
 export function combo(st: St, c: Contrato): Combo | null {
-  const kt = retiro(st, c, true);
-  const falta = Math.round((st.monto || 0) - kt.R);
-  if (falta <= 0.5 || kt.R <= 0.5) return null;
-  const total = RESPALDO.reduce((a, x) => a + x.disp, 0);
+  const total = retiro(st, c, true);
+  const falta = Math.round((st.monto || 0) - total.R);
+  if (falta <= 0.5 || total.R <= 0.5) return null;
+  // Lo que se retira del contrato que respalda deja menos para bloquear: se descuenta del respaldo disponible
+  const totalResp = RESPALDO.reduce((a, x) => a + x.disp, 0);
   const ent = RESPALDO.find((x) => x.id === c.id);
-  const queda = total - Math.min(ent ? ent.disp : 0, kt.R + kt.g);
+  const queda = totalResp - Math.min(ent ? ent.disp : 0, total.R + total.g);
   const disp = Math.min(TOPE_CREDITO, Math.floor(queda / 1.3 / 1.004));
-  if (disp <= 0) return null;
-  const M = Math.min(falta, disp);
-  const cr = credito(st, M);
-  return { kt, falta, disp, M, cr, recibe: kt.R + M, cubre: M >= falta - 0.5 };
+  // Si el respaldo no alcanza ni para el crédito mínimo, no hay combinación
+  if (disp < CREDITO_MIN) return null;
+  const monto = st.monto || 0;
+  // Crédito base: lo que falta, nunca menos del mínimo; si el respaldo no alcanza, lo que alcance
+  const base = Math.min(Math.max(falta, CREDITO_MIN), disp);
+  if (base < falta - 0.5) {
+    // El respaldo no cubre lo que falta: retiro total y el crédito que alcance (no se puede subir)
+    return { kt: total, falta, disp, M: base, cr: credito(st, base), recibe: total.R + base, cubre: false,
+      minimo: false, mMin: base, mMax: base };
+  }
+  // El asesor puede subir el crédito hasta lo que permite el respaldo, dejando algo por retirar
+  const mMax = Math.max(base, Math.min(disp, Math.floor((monto - PASO_CREDITO) / PASO_CREDITO) * PASO_CREDITO));
+  const M = Math.min(Math.max(st.creditoCombo ?? base, base), mMax);
+  if (monto - M <= 0.5) return null; // con el crédito ya alcanza: no hay combinación con retiro
+  // Si el crédito es justo lo que falta, retiro total; si es más (mínimo o elegido), el retiro baja
+  const kt = Math.abs(M - falta) <= 0.5 ? total : retiro({ ...st, monto: Math.round(monto - M) }, c);
+  return { kt, falta, disp, M, cr: credito(st, M), recibe: kt.R + M, cubre: true,
+    minimo: M === CREDITO_MIN && falta < CREDITO_MIN, mMin: base, mMax };
 }
 
 export function aniosDe(c: Contrato, k: Calculo): [number, number][] {
