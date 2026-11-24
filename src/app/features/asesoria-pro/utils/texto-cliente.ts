@@ -82,13 +82,14 @@ export function textoCliente(st: St): string {
       if (st.pref === 'retiro') txt = 'Retiro por ' + pesos(st.monto) + desc(v.k);
       else if (st.pref === 'total') txt = 'Retiro total' + desc(v.kt);
       else if (st.pref === 'credito')
-        txt = 'Crédito puente: recibe ' + pesos(cr.M) + ', costo estimado ' + pesos(cr.costo) + ' (intereses ' + pesos(cr.int) +
+        txt = 'Crédito Impulso: recibe ' + pesos(cr.M) + ', costo estimado ' + pesos(cr.costo) + ' (intereses ' + pesos(cr.int) +
           ' y 4×1000 ' + pesos(cr.gmf) + '), sigue invertido ' + pesos(c.saldo);
+      else if (st.pref === 'noretira') txt = 'No retirar: sigue invertido ' + pesos(c.saldo);
       else if (v.cb)
-        txt = 'Retiro + crédito puente: retira ' + pesos(v.cb.kt.D) + ' del contrato y recibe ' + pesos(v.cb.kt.R) +
-          '; crédito puente por ' + pesos(v.cb.M) + ', costo estimado ' + pesos(v.cb.cr.costo) + ' (intereses ' + pesos(v.cb.cr.int) +
+        txt = 'Retiro + Crédito Impulso: retira ' + pesos(v.cb.kt.D) + ' del contrato y recibe ' + pesos(v.cb.kt.R) +
+          '; Crédito Impulso por ' + pesos(v.cb.M) + ', costo estimado ' + pesos(v.cb.cr.costo) + ' (intereses ' + pesos(v.cb.cr.int) +
           ' y 4×1000 ' + pesos(v.cb.cr.gmf) + '); recibe en total ' + pesos(v.cb.recibe) + '; sigue invertido ' + sigue(v.cb.kt.D);
-      else txt = 'Retiro + crédito puente';
+      else txt = 'Retiro + Crédito Impulso';
       add('Opción que prefiere', txt);
     }
     if (st.pref === 'credito' || st.pref === 'combo') add('Tipo de crédito', TIPO_CREDITO);

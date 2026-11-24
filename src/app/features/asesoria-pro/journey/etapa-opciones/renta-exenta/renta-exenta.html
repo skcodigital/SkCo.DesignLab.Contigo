@@ -1,5 +1,6 @@
-<div class="jw-rx" [class.jw-rx--pide]="pide()" role="group" aria-label="¿Se usaron como renta exenta?">
-  <span class="jw-rx-t">¿Se usaron como renta exenta?</span>
+@if (parte() !== 'advertencia') {
+<div class="jw-rx" [class.jw-rx--pide]="pide()" role="group" [attr.aria-label]="'¿El valor total del retiro: ' + valor() + ' se usaron como renta exenta?'">
+  <span class="jw-rx-t">¿El valor total del retiro: <b>{{ valor() }}</b> se usaron como renta exenta?</span>
   <button type="button" class="jw-i jw-ro-ok" aria-label="Qué aportes toca el retiro" [attr.aria-expanded]="st().rxInfo" (click)="alternarInfo()">
     <svg ncIcono="info"></svg>
   </button>
@@ -12,6 +13,8 @@
     <p class="jw-pop" role="note">{{ anios() }}</p>
   }
 </div>
+}
+@if (parte() !== 'pregunta') {
 <p class="jw-adv" [class.abierta]="st().lm">
   <svg ncIcono="balanza"></svg>
   @if (st().lm) {
@@ -21,3 +24,4 @@
     <button type="button" class="jw-link jw-ro-ok" (click)="leerMas()">Leer más</button>
   }
 </p>
+}

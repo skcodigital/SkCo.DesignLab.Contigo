@@ -8,7 +8,7 @@ import { bloqueosCredito, creditoPanel, simCredito } from '../../../utils/calcul
 import { deIso, fLarga, iso, masDias, pesos } from '../../../utils/formato';
 import { soloLectura } from '../../../utils/validaciones';
 
-/** Pestaña Crédito: simulador del crédito puente (monto, fecha de pago, abono parcial) y contratos de respaldo. */
+/** Pestaña Crédito: simulador del Crédito Impulso (monto, fecha de pago, abono parcial) y contratos de respaldo. */
 @Component({
   selector: 'nc-tab-credito',
   imports: [Icono],

@@ -15,8 +15,12 @@ $v: ':host-context(#jm-velo)';
 #{$v} .jw-dec .jw-op b{color:#fff}
 @media (max-width:900px){.jw-pie5 .jw-btn{flex:1 1 100%;justify-content:center}}
 #{$v} .jw-destacada{display:flex;flex-direction:column;gap:2px;padding:14px 18px;border-radius:12px;background:var(--sel)}
-#{$v} .jw-destacada b{font-family:var(--sk-font-heading);font-size:26px;font-weight:700;line-height:32px;color:var(--vd)}
+#{$v} .jw-destacada b{font-family:var(--sk-font-heading);font-size:26px;font-weight:700;line-height:32px;color:var(--sk-color-primary)}
 #{$v} .jw-destacada span{font-size:14px;color:var(--tx2)}
 #{$v} .jw-a5-msg.ok{background:var(--sel);color:var(--sk-color-mission-text)}
 
 @include controles.solo-lectura;
+
+// Pie: Atrás a la izquierda, acciones del cierre a la derecha
+.jw-pie5-acc{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:10px}
+@media (max-width:900px){.jw-pie5{flex-direction:column-reverse;align-items:stretch}.jw-pie5-acc{flex-direction:column}}

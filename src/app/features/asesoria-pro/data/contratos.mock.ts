@@ -82,9 +82,9 @@ export const MONTO_REFERENCIA = 150000000;
 
 export const TASA_CREDITO = 0.1778;
 export const TOPE_CREDITO = 156000000;
-export const PLAZOS: readonly (readonly [number, string])[] = [[1, '1 mes'], [3, '3 meses'], [6, '6 meses'], [12, '12 meses']];
+export const PLAZOS: readonly (readonly [number, string])[] = [[3, '3 meses'], [6, '6 meses'], [12, '12 meses']];
 
-/** Contratos que respaldan el crédito puente (en orden de bloqueo). */
+/** Contratos que respaldan el Crédito Impulso (en orden de bloqueo). */
 export const RESPALDO: readonly Respaldo[] = [
   { id: 'pension', disp: 133212571 },
   { id: 'ahorro', disp: 49904770 },

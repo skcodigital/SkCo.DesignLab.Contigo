@@ -1,4 +1,4 @@
-// Cajas de la etapa Opciones (`article.jw-o3`): retiro, crédito puente, combinación y si no retira.
+// Cajas de la etapa Opciones (`article.jw-o3`): retiro, Crédito Impulso, combinación y si no retira.
 // Lo usan los componentes de cada caja (la encapsulación no comparte estilos entre componentes).
 $v: ':host-context(#jm-velo)';
 
@@ -28,7 +28,7 @@ $v: ':host-context(#jm-velo)';
 #{$v} .jw-o3 dd{color:var(--sk-color-mission-text)}
 #{$v} .jw-o3 dt{color:var(--tx2)}
 #{$v} .jw-o3 dt small,#{$v} .jw-o3-nota{color:var(--tx3)}
-#{$v} .jw-o3 .tot.verde dd{color:var(--vd)}
+#{$v} .jw-o3 .tot.verde dd{color:var(--sk-color-primary)}
 #{$v} .jw-o3 .tot{border-color:var(--bd)}
 #{$v} .jw-o3,#{$v} .jw-o3-cuerpo{min-width:0}
 #{$v} .jw-o3-sub{margin:4px 0 0;font-size:12px;font-weight:700;color:#fff}
@@ -74,3 +74,34 @@ $v: ':host-context(#jm-velo)';
 .jw-o3-desp:hover{text-decoration:underline}
 .jw-o3-desp:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:2px;border-radius:4px}
 @media (prefers-reduced-motion:reduce){.jw-o3-desp svg{transition:none}}
+
+// «Ver detalle del crédito» dentro de la caja
+.jw-o3-detalle{align-self:flex-start;padding:0;font-size:13px}
+
+// Tooltip del posible impuesto: anclado a la fila, se abre encima dentro del ancho de la caja
+.jw-o3 .jw-o3-imp{position:relative}
+// Título en línea: el ⓘ queda pegado a la última palabra aunque el título se parta en dos líneas
+.jw-o3-imp-t{display:inline}
+.jw-o3-imp-t .jw-tip{vertical-align:middle;margin-left:2px}
+.jw-tip{position:static;display:inline-flex}
+.jw-tip-btn{display:inline-grid;place-items:center;width:20px;height:20px;padding:0;border:0;border-radius:50%;background:transparent;color:var(--sk-color-text-3);cursor:help}
+.jw-tip-btn svg{width:14px;height:14px}
+.jw-tip-btn:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:1px}
+.jw-tip-txt{position:absolute;z-index:5;left:0;right:0;bottom:calc(100% + 6px);padding:8px 10px;border-radius:8px;background:var(--sk-color-graphite-2);color:#fff;font-size:12px;line-height:16px;font-weight:400;text-align:left;white-space:normal;box-shadow:0 4px 12px rgba(0,0,0,.25);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .15s}
+.jw-tip:hover .jw-tip-txt,.jw-tip-btn:focus-visible+.jw-tip-txt{opacity:1;visibility:visible}
+#{$v} .jw-tip-btn{color:var(--tx2)}
+#{$v} .jw-tip-txt{background:#ffffff;color:var(--sk-color-mission-bg)}
+@media (prefers-reduced-motion:reduce){.jw-tip-txt{transition:none}}
+.jw-o3-cierre{margin-top:auto;padding-top:8px}
+
+// Fila de datos del posible impuesto: DIAN · nota · Ajustar, en una línea que se parte como unidad
+.jw-o3 .jw-o3-imp{align-items:flex-start}
+.jw-o3 .jw-o3-imp dd{padding-top:1px}
+.jw-o3 dt .jw-imp-nota{display:flex;flex-wrap:wrap;align-items:center;gap:2px 6px;margin-top:4px}
+.jw-imp-nota .jw-link{padding:0;font-size:12px;white-space:nowrap}
+.jw-imp-sep{color:var(--sk-color-text-3)}
+#{$v} .jw-imp-nota{gap:2px 6px;margin-top:4px}
+#{$v} .jw-imp-nota .jw-link{font-size:12px}
+#{$v} .jw-imp-sep{color:var(--tx3)}
+.jw-imp-grupo{display:inline;white-space:normal}
+.jw-imp-grupo .jw-link{display:inline;vertical-align:baseline}

@@ -6,11 +6,14 @@ $v: ':host-context(#jm-velo)';
 #{$v} .jw-adv,#{$v} .jw-rx{min-width:0}
 #{$v} .jw-rx{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding-top:8px;border-top:1px solid var(--bd)}
 #{$v} .jw-rx--pide{padding:8px;border-radius:10px;box-shadow:0 0 0 1px var(--lk) inset}
-#{$v} .jw-rx-t{font-size:11px;font-weight:600;color:#fff}
+// Pregunta en 14 px con la tipografía de títulos; el valor del retiro en negrita
+#{$v} .jw-rx-t{font-family:var(--sk-font-heading);font-size:14px;line-height:22px;font-weight:600;color:#fff}
+#{$v} .jw-rx-t b{font-weight:700}
 #{$v} .jw-i{display:grid;place-items:center;width:22px;height:22px;padding:0;border:0;border-radius:50%;background:none;color:var(--tx3);cursor:pointer}
 #{$v} .jw-i:hover{color:#fff}
 #{$v} .jw-chips--xs{display:inline-flex;gap:6px}
-#{$v} .jw-chips--xs button{padding:3px 10px;font-size:12px}
+// Respuestas Sí / No / No sabe en 14 px, como la pregunta
+#{$v} .jw-chips--xs button{padding:5px 14px;font-size:14px;line-height:20px}
 #{$v} .jw-pop{flex-basis:100%;margin:0;padding:8px 10px;border:1px solid var(--sk-color-text-4);border-radius:10px;background:#363636;font-size:12px;line-height:18px;color:var(--tx2)}
 #{$v} .jw-adv{display:flex;align-items:center;gap:6px;margin:0;padding:4px 8px;border:1px solid var(--warnb);border-radius:10px;background:var(--warn);font-size:11px;line-height:16px;color:var(--tx2)}
 #{$v} .jw-adv>span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}

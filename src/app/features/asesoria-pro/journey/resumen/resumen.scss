@@ -1,4 +1,5 @@
 // El host no genera caja: el <aside> es el ítem de la cuadrícula del lienzo (necesario para que sea sticky).
+@use '../styles/controles';
 $v: ':host-context(#jm-velo)';
 
 :host{display:contents}
@@ -41,3 +42,6 @@ $v: ':host-context(#jm-velo)';
 #{$v} .jw-res-nom:disabled{cursor:default}
 #{$v} .jw-res-nom:not(:disabled):hover{text-decoration:underline}
 #{$v} .jw-res-h .jw-res-ed{margin-left:auto}
+
+// Tags del contrato elegido (Cubre / No alcanza / Menor descuento), debajo del nombre
+.jw-res-tags{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px;margin-top:4px}

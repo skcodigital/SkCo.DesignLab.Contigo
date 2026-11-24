@@ -27,20 +27,20 @@
         }
         <div class="tot"><dt>= Valor total del retiro</dt><dd>{{ pesos(k().D) }}</dd></div>
       </dl>
+      <button type="button" class="jw-link jw-ro-ok jw-o3-detalle" (click)="verCalculo($event)"><svg ncIcono="panel"></svg>Ver cálculo</button>
       <!-- Lo que no se descuenta del retiro (renta exenta, posible impuesto, permanencia): va aparte, sin título -->
-      <!-- La respuesta de renta exenta define el posible impuesto: va justo antes -->
-      @if (conRx()) {
-        <nc-renta-exenta [k]="k()" />
-      }
       <dl>
-        <div>
+        <div class="jw-o3-imp">
           <dt>
-            Posible impuesto en la declaración<small class="jw-imp-nota"
+            <span class="jw-o3-imp-t">Posible impuesto en la declaración
+              <span class="jw-tip">
+                <button type="button" class="jw-tip-btn jw-ro-ok" [attr.aria-describedby]="'jw-tip-imp-' + tipo()" aria-label="Sobre el posible impuesto" (click)="$event.preventDefault()"><svg ncIcono="info"></svg></button>
+                <span class="jw-tip-txt" role="tooltip" [id]="'jw-tip-imp-' + tipo()">{{ anticipo() }}</span>
+              </span>
+            </span><small class="jw-imp-nota"
               ><button type="button" class="jw-dian jw-ro-ok" aria-label="Impuesto de la DIAN: Skandia no lo cobra" title="Este impuesto lo liquida el cliente en su declaración de renta y lo paga a la DIAN. Skandia no lo cobra.">DIAN</button
-              >{{ imp().nota }}
-              @if (imp().accion) {
-                · <button type="button" class="jw-link jw-ro-ok" (click)="ajustar()">{{ imp().accion }}</button>
-              }
+              ><!-- La nota puede partirse, pero «· Ajustar» queda pegado a su última palabra (espacios de no separación) -->
+              <span class="jw-imp-grupo">{{ imp().nota }}@if (imp().accion) {&nbsp;<span class="jw-imp-sep" aria-hidden="true">·</span>&nbsp;<button type="button" class="jw-link jw-ro-ok" (click)="$event.preventDefault(); ajustar()">{{ imp().accion }}</button>}</span>
             </small>
           </dt>
           <dd>{{ imp().txt }}</dd>

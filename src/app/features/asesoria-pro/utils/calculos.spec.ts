@@ -89,7 +89,7 @@ describe('calculos', () => {
     expect(ctId(st({ monto: 150000000 }))).toBe('ahorro');
   });
 
-  it('crédito puente: tope preaprobado, 12 meses por defecto y respaldo del 130 %', () => {
+  it('Crédito Impulso: tope preaprobado, 12 meses por defecto y respaldo del 130 %', () => {
     const c = cred(st({ monto: 200000000 }));
     expect(c.M).toBe(TOPE_CREDITO);
     expect(c.tope).toBe(true);

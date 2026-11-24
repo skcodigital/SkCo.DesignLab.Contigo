@@ -55,7 +55,7 @@ export interface Contrato {
   rentTxt: string;
 }
 
-/** Contrato que respalda el crédito puente y su disponible para bloquear. */
+/** Contrato que respalda el Crédito Impulso y su disponible para bloquear. */
 export interface Respaldo {
   id: string;
   disp: number;

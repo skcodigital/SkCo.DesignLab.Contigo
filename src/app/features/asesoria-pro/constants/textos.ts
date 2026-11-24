@@ -49,16 +49,16 @@ export const RX_TXT: Readonly<Record<RespuestaRx, string>> = { si: 'Sí', no: 'N
 
 export const NOM_CAJA: Readonly<Record<TipoCaja, string>> = {
   retiro: 'Retiro',
-  credito: 'Crédito puente',
+  credito: 'Crédito Impulso',
   total: 'Retiro total',
-  combo: 'Retiro + crédito puente',
+  combo: 'Retiro + Crédito Impulso',
 };
 
 export const DEC_NOM: Readonly<Record<Decision, string>> = {
   retiro: 'Retiro',
   total: 'Retiro total',
-  combo: 'Retiro + crédito puente',
-  credito: 'Crédito puente',
+  combo: 'Retiro + Crédito Impulso',
+  credito: 'Crédito Impulso',
   noretira: 'No retira',
   pensara: 'Lo va a pensar',
   fuera: 'Fuera de alcance',
@@ -67,8 +67,8 @@ export const DEC_NOM: Readonly<Record<Decision, string>> = {
 export const DEC_CAT: Readonly<Record<Decision, string>> = {
   retiro: 'Retiro parcial',
   total: 'Retiro total',
-  combo: 'Retiro + crédito puente',
-  credito: 'Toma el crédito puente',
+  combo: 'Retiro + Crédito Impulso',
+  credito: 'Toma el Crédito Impulso',
   noretira: 'No retira',
   pensara: 'Lo va a pensar',
   fuera: 'Fuera de alcance',
@@ -79,6 +79,7 @@ export const PREF_A_DECISION: Readonly<Record<Preferencia, Decision>> = {
   total: 'total',
   combo: 'combo',
   credito: 'credito',
+  noretira: 'noretira',
 };
 
 export const PROXIMOS_PASOS = {
@@ -114,9 +115,9 @@ export const TEXTOS = {
   viviendaSinRetencion: 'En este caso el retiro no causa retención contingente.',
   penSi: 'Con requisitos de pensión el retiro no causa retención contingente.',
   penSinMarca: 'En Contigo el cliente no tiene la marca de beneficio tributario.',
-  ningunoCubre: (monto: string) => `Ningún contrato cubre ${monto}: elija uno y el crédito puente puede cubrir lo que falta.`,
+  ningunoCubre: (monto: string) => `Ningún contrato cubre ${monto}: elija uno y el Crédito Impulso puede cubrir lo que falta.`,
   alcanzaCredito: (puede: string, monto: string) =>
-    `Hoy puede retirar ${puede}. Para cubrir ${monto}, la opción es el crédito puente.`,
+    `Hoy puede retirar ${puede}. Para cubrir ${monto}, la opción es el Crédito Impulso.`,
   anticipo: (ibc: boolean) =>
     `Lo que se retiene hoy es un anticipo: se descuenta del impuesto en la declaración de renta. El posible impuesto es una estimación orientativa${ibc ? ' con el IBC' : ''}: no reemplaza la declaración de renta.`,
   notaIbc: 'estimado con el IBC',

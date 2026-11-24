@@ -7,7 +7,6 @@ $v: ':host-context(#jm-velo)';
 // El h3 trae margin-top:-8px para pegarse al antetítulo; en esta fila lo lleva el contenedor y los tags quedan centrados con el texto
 .jw-op-tit .jw-h{margin:0}
 .jw-op-tags{display:inline-flex;flex-wrap:wrap;gap:6px}
-.jw-links3{display:flex;flex-wrap:wrap;gap:18px}
 @media (max-width:1180px) and (min-width:901px){.jw-ops3{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:900px){.jw-ops3{grid-template-columns:1fr}}
 
@@ -20,3 +19,30 @@ $v: ':host-context(#jm-velo)';
 @media (max-width:900px){#{$v} .jw-ops3{grid-template-columns:minmax(0,1fr)}}
 
 @include controles.solo-lectura;
+
+// ===== Carrusel de cajas (desde 4), igual al de las fichas de Situación =====
+.jw-ops3.jw-ops3--car,#{$v} .jw-ops3.jw-ops3--car{display:flex;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;padding:2px;margin:-2px;scrollbar-width:none}
+.jw-ops3--car::-webkit-scrollbar{display:none}
+.jw-ops3--car ::ng-deep .jw-o3{flex:0 0 calc((100% - 3 * 12px) / 3.2);min-width:240px;scroll-snap-align:start}
+@media (max-width:1180px) and (min-width:901px){.jw-ops3--car ::ng-deep .jw-o3{flex-basis:calc((100% - 2 * 12px) / 2.2)}}
+@media (max-width:900px){.jw-ops3--car ::ng-deep .jw-o3{flex-basis:calc((100% - 12px) / 1.15)}}
+.jw-car-nav{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin:0 0 8px}
+.jw-car-pos{margin-right:4px;font-size:12px;line-height:16px;color:var(--sk-color-text-2)}
+.jw-car-btn{display:grid;place-items:center;width:32px;height:32px;padding:0;border:1px solid var(--sk-color-primary);border-radius:50%;background:transparent;color:var(--sk-color-primary-dark);cursor:pointer;transition:background-color .15s}
+.jw-car-btn svg{width:18px;height:18px}
+.jw-car-btn .jw-car-izq{transform:rotate(180deg)}
+.jw-car-btn:hover:not(:disabled){background:var(--sk-color-brand-light)}
+.jw-car-btn:disabled{border-color:var(--sk-color-border-2);color:var(--sk-color-placeholder);cursor:default}
+.jw-car-btn:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:2px}
+#{$v} .jw-car-pos{color:var(--tx2)}
+#{$v} .jw-car-btn{border-color:var(--lk);color:var(--lk)}
+#{$v} .jw-car-btn:hover:not(:disabled){background:var(--sel)}
+#{$v} .jw-car-btn:disabled{border-color:var(--bd2);color:var(--sk-color-mission-text-3);opacity:.5}
+@media (prefers-reduced-motion:reduce){.jw-car-btn{transition:none}}
+
+// Pregunta de renta exenta fuera de las cajas: bloque propio sobre las opciones
+.jw-rx-caja{margin:0 0 12px;padding:10px 14px;border:1px solid var(--sk-color-border-2);border-radius:8px;background:var(--sk-color-surface-2)}
+.jw-rx-caja ::ng-deep .jw-rx{padding-top:0;border-top:0}
+#{$v} .jw-rx-caja{background:var(--sf2);border-color:var(--bd)}
+// Advertencia de renta exenta: al final, debajo de las cajas
+.jw-adv-pie{margin-top:12px}

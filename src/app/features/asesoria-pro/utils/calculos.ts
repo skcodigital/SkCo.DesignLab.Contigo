@@ -126,7 +126,7 @@ function bloqueos(resp: number): { bloq: Bloqueo[]; falta: number } {
   return { bloq, falta };
 }
 
-/** Crédito puente por `M` con el plazo elegido (sin plazo, 12 meses). */
+/** Crédito Impulso por `M` con el plazo elegido (sin plazo, 12 meses). */
 export function credito(st: St, M: number): Credito {
   const meses = st.plazo && !st.noRepone ? st.plazo : 12;
   const dias = meses * 30;
@@ -144,7 +144,7 @@ export function credito(st: St, M: number): Credito {
 
 export const cred = (st: St): Credito => credito(st, Math.min(st.monto || 0, TOPE_CREDITO));
 
-/** Retiro + crédito puente: retira todo lo disponible y pide el crédito por lo que falta. */
+/** Retiro + Crédito Impulso: retira todo lo disponible y pide el crédito por lo que falta. */
 export function combo(st: St, c: Contrato): Combo | null {
   const kt = retiro(st, c, true);
   const falta = Math.round((st.monto || 0) - kt.R);
@@ -231,7 +231,7 @@ export function cajas(st: St): Cajas {
 
 /** Caja de Opciones que lleva la pregunta de renta exenta. */
 export const cajaRx = (st: St, list: readonly TipoCaja[]): TipoCaja | undefined =>
-  prefEsRetiro(st) && st.pref ? st.pref : list.find((x) => x !== 'credito');
+  prefEsRetiro(st) && st.pref ? (st.pref as TipoCaja) : list.find((x) => x !== 'credito');
 
 /** Cajas que se pueden elegir (con algo que ofrecer). */
 export function elegibles(st: St, v: Cajas, cr: Credito): TipoCaja[] {

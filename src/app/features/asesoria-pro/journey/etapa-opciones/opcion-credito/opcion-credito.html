@@ -1,11 +1,11 @@
 @if (!(cr().M > 0)) {
   <article class="jw-o3">
-    <h4>Crédito puente</h4>
+    <h4>Crédito Impulso</h4>
     <p class="jw-nodisp"><svg ncIcono="off"></svg><span><b>No disponible</b> · No tiene crédito preaprobado con respaldo del fondo</span></p>
   </article>
 } @else {
   <label class="jw-o3 jw-o3--sel" [class.off]="st().noRepone" [class.elegida]="st().pref === 'credito'">
-    <span class="jw-o3-top"><input type="radio" name="jw-pref" [value]="'credito'" [checked]="st().pref === 'credito'" [disabled]="ro() || st().noRepone" (change)="elegir()" /><h4>Crédito puente</h4></span>
+    <span class="jw-o3-top"><input type="radio" name="jw-pref" [value]="'credito'" [checked]="st().pref === 'credito'" [disabled]="ro() || st().noRepone" (change)="elegir()" /><h4>Crédito Impulso</h4></span>
     <div class="jw-o3-cuerpo">
       <dl>
         <div><dt>Monto</dt><dd>{{ pesos(cr().M) }}</dd></div>
@@ -21,11 +21,7 @@
         <p class="jw-o3-nota">No alcanza: es el máximo preaprobado; faltan <b>{{ pesos(st().monto - cr().M) }}</b></p>
       }
     </div>
-    <button type="button" class="jw-norep" [attr.aria-pressed]="st().noRepone" [disabled]="ro()" (click)="alternarNoRepone()">
-      @if (st().noRepone) {
-        <svg ncIcono="check"></svg>
-      }
-      No lo repondría
-    </button>
+    <!-- Cierra la caja: siempre al fondo, aunque la caja sea más alta que su contenido -->
+    <button type="button" class="jw-link jw-ro-ok jw-o3-detalle jw-o3-cierre" (click)="verDetalle($event)"><svg ncIcono="panel"></svg>Ver detalle del crédito</button>
   </label>
 }

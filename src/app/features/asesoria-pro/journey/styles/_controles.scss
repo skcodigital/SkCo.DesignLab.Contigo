@@ -64,7 +64,8 @@ $v: ':host-context(#jm-velo)';
 // ---- Journey en oscuro suave (superficies grafito del modo misión) ----
 #{$v} .jw-q,#{$v} .jw-op,#{$v} .jw-caja{background:var(--sf2);border-color:var(--bd);box-shadow:none}
 #{$v} .jw-op:hover{border-color:var(--lk)}
-#{$v} .jw-op[aria-pressed="true"]{background:var(--sel);border-color:var(--lk);box-shadow:0 0 0 1px var(--lk) inset}
+// Opción elegida sin fondo de color (como las fichas y cajas): solo borde verde
+#{$v} .jw-op[aria-pressed="true"]{background:var(--sf2);border-color:var(--lk);box-shadow:0 0 0 1px var(--lk) inset}
 // Caja del monto sin fondo (antes un verde suave): el campo queda alineado con la pregunta
 #{$v} .jw-dest{background:transparent;padding:0}
 #{$v} .jw-hecho,#{$v} .jw-proximo,#{$v} .jw-nota{background:rgba(255,255,255,.06);border-color:var(--bd);color:var(--tx2)}

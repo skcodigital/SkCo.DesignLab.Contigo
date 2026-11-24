@@ -14,7 +14,16 @@
           @for (f of s.filas; track f[0]) {
             <div>
               <dt>{{ f[0] }}</dt>
-              <dd [class.vacio]="f[1] === null" [class.verde]="f[1] !== null && f[2]">{{ f[1] ?? porDefinir }}</dd>
+              <dd [class.vacio]="f[1] === null" [class.verde]="f[1] !== null && f[2]">
+                {{ f[1] ?? porDefinir }}
+                @if (f[3]?.length) {
+                  <span class="jw-res-tags">
+                    @for (t of f[3]; track t.txt) {
+                      <span class="jw-tg" [class]="'jw-tg jw-tg--' + t.tipo">{{ t.txt }}</span>
+                    }
+                  </span>
+                }
+              </dd>
             </div>
           }
         </dl>

@@ -21,10 +21,13 @@
       @if (st().msg; as m) {
         <p class="jw-proximo jw-a5-msg" [class.ok]="!!m.ok" aria-live="polite">{{ m.t }}</p>
       }
-      <div class="jw-pie jw-pie5">
-        @if (!ro()) {
-          <button type="button" class="jw-btn jw-btn--sec" (click)="cambiarDecision()"><svg ncIcono="lapiz" [tam]="16" [grosor]="2.2"></svg>Cambiar decisión</button>
-        }
+    </div>
+  }
+  <!-- Pie como el de las demás etapas: Atrás a la izquierda; enviar y registrar el cierre a la derecha (con decisión) -->
+  <div class="jw-pie jw-pie--nav jw-pie5">
+    <button type="button" class="jw-btn jw-btn--sec jw-ro-ok" (click)="atras()"><svg ncIcono="flecha" class="jw-atras-ico"></svg>Atrás</button>
+    @if (conDecision()) {
+      <div class="jw-pie5-acc">
         <button type="button" class="jw-btn jw-btn--sec jw-ro-ok" (click)="enviar()"><svg ncIcono="enviar"></svg>Enviar resumen al cliente</button>
         <button #cierre type="button" class="jw-btn" [class.jw-cerrado]="ro()" [disabled]="ro()" (click)="registrarCierre()">
           @if (ro()) {
@@ -35,6 +38,6 @@
           {{ textoCierre() }}
         </button>
       </div>
-    </div>
-  }
+    }
+  </div>
 </section>

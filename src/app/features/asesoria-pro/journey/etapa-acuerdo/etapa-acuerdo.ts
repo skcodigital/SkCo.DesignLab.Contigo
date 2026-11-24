@@ -90,11 +90,8 @@ export class EtapaAcuerdo {
     this.store.elegirDecision(d);
   }
 
-  protected cambiarDecision(): void {
-    const reducido = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const h = this.titulo().nativeElement;
-    h.scrollIntoView({ behavior: reducido ? 'auto' : 'smooth', block: 'center' });
-    (this.botonesDec()[0]?.nativeElement ?? h).focus({ preventScroll: true });
+  protected atras(): void {
+    this.store.irEtapa(3);
   }
 
   protected enviar(): void {
