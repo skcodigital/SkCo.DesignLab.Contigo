@@ -35,11 +35,14 @@ $v: ':host-context(#jm-velo)';
 .jw-ct-res .jw-ct-tot dt{color:var(--sk-color-text);font-weight:600}
 .jw-ct-res .jw-ct-tot dd{font-size:16px}
 // Tooltip de «Descuentos»
-.jw-tip{position:relative;display:inline-flex}
+// Anclado a la fila (no al ícono): el carrusel recorta lo que sobresale de la ficha, así que el tooltip se abre
+// dentro del ancho de la ficha, alineado a la izquierda
+.jw-ct-res>div{position:relative}
+.jw-tip{position:static;display:inline-flex}
 .jw-tip-btn{display:inline-grid;place-items:center;width:20px;height:20px;padding:0;border:0;border-radius:50%;background:transparent;color:var(--sk-color-text-3);cursor:help}
 .jw-tip-btn svg{width:14px;height:14px}
 .jw-tip-btn:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:1px}
-.jw-tip-txt{position:absolute;z-index:5;left:50%;bottom:calc(100% + 6px);transform:translateX(-50%);width:max-content;max-width:240px;padding:8px 10px;border-radius:8px;background:var(--sk-color-graphite-2);color:#fff;font-size:12px;line-height:16px;font-weight:400;text-align:left;box-shadow:0 4px 12px rgba(0,0,0,.25);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .15s}
+.jw-tip-txt{position:absolute;z-index:5;left:0;right:0;bottom:calc(100% + 6px);width:auto;max-width:none;padding:8px 10px;border-radius:8px;background:var(--sk-color-graphite-2);color:#fff;font-size:12px;line-height:16px;font-weight:400;text-align:left;box-shadow:0 4px 12px rgba(0,0,0,.25);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .15s}
 .jw-tip:hover .jw-tip-txt,.jw-tip-btn:focus-visible+.jw-tip-txt{opacity:1;visibility:visible}
 .jw-ct .jw-link{align-self:flex-start;margin-top:auto;font-size:13px}
 @media (hover:none){.jw-ct:hover{border-color:var(--sk-color-border-2)}.jw-ct:has(input:checked):hover{border-color:var(--sk-color-primary)}}
@@ -91,11 +94,6 @@ $v: ':host-context(#jm-velo)';
 .jw-ct-saldos-c{display:flex;flex-direction:column;gap:4px;min-width:0}
 .jw-ct-saldos .jw-ct-tags{flex-direction:column;align-items:flex-end;gap:4px;padding-top:2px}
 
-// Línea de antigüedad y rendimientos generados, bajo «Nombre | # contrato»
-.jw-ct-gan{grid-column:2;font-size:12px;line-height:16px;color:var(--sk-color-text-2)}
-.jw-ct-gan b{font-weight:600;color:var(--sk-color-text)}
-:host-context(#jm-velo) .jw-ct-gan{color:var(--tx2)}
-:host-context(#jm-velo) .jw-ct-gan b{color:var(--tx)}
 
 // «Ver distribución»: enlace pequeño bajo la barra que despliega la leyenda
 .jw-dist{align-self:flex-start;display:inline-flex;align-items:center;gap:2px;margin-top:-4px;padding:2px 0;border:0;background:transparent;font-family:var(--sk-font-body);font-size:12px;line-height:16px;font-weight:600;color:var(--sk-color-primary-dark);cursor:pointer}
@@ -131,3 +129,28 @@ $v: ':host-context(#jm-velo)';
 :host-context(#jm-velo) .jw-car-btn:hover:not(:disabled){background:var(--sel)}
 :host-context(#jm-velo) .jw-car-btn:disabled{border-color:var(--bd2);color:var(--sk-color-mission-text-3);opacity:.5}
 @media (prefers-reduced-motion:reduce){.jw-car-btn{transition:none}}
+
+// Alerta informativa azul bajo las fichas (rendimientos generados por el contrato marcado)
+// Alerta informativa sólida, igual a la del modo claro (pf-aviso del DS)
+.jw-info-azul{display:flex;gap:8px;align-items:flex-start;padding:10px 14px;border:1px solid rgba(0,153,222,.45);border-radius:8px;background:var(--sk-color-info-light);font-size:14px;line-height:20px;font-weight:400;color:var(--sk-color-text);margin:0}
+.jw-info-azul svg{flex:none;margin-top:2px;color:var(--sk-color-info)}
+.jw-info-azul b{font-weight:700;color:var(--sk-color-text)}
+// En modo misión: mismo fondo que las fichas, borde azul y texto claro
+:host-context(#jm-velo) .jw-info-azul{background:var(--sf2);border-color:color-mix(in srgb,var(--sk-color-info) 60%,var(--sk-color-graphite-2));color:var(--sk-color-mission-text)}
+:host-context(#jm-velo) .jw-info-azul svg{color:#4fc3ff}
+:host-context(#jm-velo) .jw-info-azul b{color:#fff}
+
+// ===== Unidad «Saldo total»: saldo + barra + distribución en un bloque, para leer que los valores son del total =====
+.jw-ct-total{display:flex;flex-direction:column;gap:8px;padding:10px 12px;border:1px solid var(--sk-color-border-2);border-radius:8px;background:var(--sk-color-surface-2)}
+.jw-ct-total-h{margin:0;display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:12px;line-height:16px;color:var(--sk-color-text-2)}
+.jw-ct-total-h b{font-family:var(--sk-font-heading);font-size:14px;font-weight:700;color:var(--sk-color-text)}
+.jw-ct-total .jw-dist{margin-top:0}
+.jw-barra{position:relative}
+.jw-barra .jw-barra-cerr{position:absolute;top:0;right:0;bottom:0}
+.jw-ley-incl{padding-top:4px;border-top:1px dashed var(--sk-color-border-2)}
+.jw-ley-incl small{display:block;font-size:11px;line-height:14px;color:var(--sk-color-text-3)}
+:host-context(#jm-velo) .jw-ct-total{background:rgba(255,255,255,.03);border-color:var(--bd)}
+:host-context(#jm-velo) .jw-ct-total-h{color:var(--tx2)}
+:host-context(#jm-velo) .jw-ct-total-h b{color:var(--tx)}
+:host-context(#jm-velo) .jw-ley-incl{border-color:var(--bd2)}
+:host-context(#jm-velo) .jw-ley-incl small{color:var(--tx3)}

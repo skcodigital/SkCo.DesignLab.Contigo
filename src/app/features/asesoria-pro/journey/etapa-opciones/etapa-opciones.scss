@@ -3,13 +3,18 @@
 $v: ':host-context(#jm-velo)';
 
 .jw-ops3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:stretch}
-.jw-pref{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.jw-op-tit{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-top:-8px}
+// El h3 trae margin-top:-8px para pegarse al antetítulo; en esta fila lo lleva el contenedor y los tags quedan centrados con el texto
+.jw-op-tit .jw-h{margin:0}
+.jw-op-tags{display:inline-flex;flex-wrap:wrap;gap:6px}
 .jw-links3{display:flex;flex-wrap:wrap;gap:18px}
 @media (max-width:1180px) and (min-width:901px){.jw-ops3{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:900px){.jw-ops3{grid-template-columns:1fr}}
 
-#{$v} .jw-info{display:flex;gap:8px;align-items:flex-start;margin:0 0 12px;padding:10px 14px;border:1px solid rgba(0,153,222,.3);border-radius:10px;background:rgba(0,153,222,.1);font-size:14px;font-weight:600;color:var(--sk-color-mission-text)}
-#{$v} .jw-info svg{flex:none;margin-top:3px;color:var(--sk-color-info)}
+// Alerta informativa en oscuro: mismo fondo que las fichas (blanco muy suave), borde azul y texto claro
+#{$v} .jw-info{display:flex;gap:8px;align-items:flex-start;padding:10px 14px;border:1px solid rgba(0,153,222,.45);border-radius:8px;background:var(--sk-color-info-light);font-size:14px;line-height:20px;font-weight:400;color:var(--sk-color-text);margin:0 0 12px;background:var(--sf2);border-color:color-mix(in srgb,var(--sk-color-info) 60%,var(--sk-color-graphite-2));color:var(--sk-color-mission-text)}
+#{$v} .jw-info svg{flex:none;margin-top:3px;color:#4fc3ff}
+#{$v} .jw-info b{color:#fff}
 #{$v} .jw-ops3{grid-template-columns:repeat(3,minmax(0,1fr))}
 @media (max-width:1180px){#{$v} .jw-ops3{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:900px){#{$v} .jw-ops3{grid-template-columns:minmax(0,1fr)}}

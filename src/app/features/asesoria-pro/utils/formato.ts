@@ -59,3 +59,14 @@ export function fechaCorta(d: Date): string {
 export function millones(n: number): string {
   return '$' + (n / 1e6).toLocaleString('es-CO', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' M';
 }
+
+const MESES: Readonly<Record<string, string>> = {
+  ene: 'enero', feb: 'febrero', mar: 'marzo', abr: 'abril', may: 'mayo', jun: 'junio',
+  jul: 'julio', ago: 'agosto', sep: 'septiembre', oct: 'octubre', nov: 'noviembre', dic: 'diciembre',
+};
+
+/** Fecha de apertura de los contratos: «16 de mar de 2006» → «marzo del 2006». */
+export function mesAnio(desde: string): string {
+  const m = desde.match(/de (\w+) de (\d{4})/);
+  return m ? `${MESES[m[1]] ?? m[1]} del ${m[2]}` : desde;
+}

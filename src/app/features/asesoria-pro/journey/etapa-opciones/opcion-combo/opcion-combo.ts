@@ -4,6 +4,7 @@ import { Combo } from '../../../interfaces/calculo';
 import { ConversacionesStore } from '../../../state/conversaciones.store';
 import { ctId, esp, impuesto } from '../../../utils/calculos';
 import { pesos } from '../../../utils/formato';
+import { soloLectura } from '../../../utils/validaciones';
 import { JourneyUiStore } from '../../journey-ui.store';
 import { PlazoCredito } from '../plazo-credito/plazo-credito';
 import { RentaExenta } from '../renta-exenta/renta-exenta';
@@ -25,6 +26,11 @@ export class OpcionCombo {
   readonly conRx = input(false);
 
   protected readonly st = this.store.st;
+  protected readonly ro = computed(() => soloLectura(this.st()));
+
+  protected elegir(): void {
+    this.store.elegirPreferencia('combo');
+  }
   protected readonly imp = computed(() => impuesto(this.st(), this.cb().kt));
   /** Costo de la combinación: intereses más posible impuesto. */
   protected readonly costo = computed(() => {

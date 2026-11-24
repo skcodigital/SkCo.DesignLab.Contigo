@@ -22,7 +22,8 @@ $v: ':host-context(#jm-velo)';
 .jw-o3-nota{margin:0;font-size:11px;line-height:16px;color:var(--sk-color-text-3)}
 
 #{$v} .jw-o3{background:var(--sf2);border-color:var(--bd);box-shadow:none}
-#{$v} .jw-o3.elegida{background:var(--sel);border-color:var(--lk);box-shadow:0 0 0 1px var(--lk) inset}
+// Elegida como en Situación: sin fondo de color, solo borde verde y radio
+#{$v} .jw-o3.elegida{background:var(--sf2);border-color:var(--lk);box-shadow:0 0 0 1px var(--lk) inset}
 #{$v} .jw-o3 h4,#{$v} .jw-o3 .tot dt{color:var(--tx)}
 #{$v} .jw-o3 dd{color:var(--sk-color-mission-text)}
 #{$v} .jw-o3 dt{color:var(--tx2)}
@@ -36,3 +37,40 @@ $v: ':host-context(#jm-velo)';
 #{$v} .jw-imp-nota .jw-link{padding:0;font-size:11px}
 #{$v} .jw-dian{padding:0 5px;border:1px solid var(--bd2);border-radius:4px;background:transparent;font-family:var(--sk-font-heading);font-size:9px;font-weight:700;letter-spacing:.04em;line-height:14px;color:var(--tx2);cursor:help}
 #{$v} .jw-o3-nota b{color:#fff}
+
+// ===== Cajas seleccionables con radio (misma anatomía que las fichas de contrato de Situación) =====
+.jw-o3-top{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;align-items:center}
+.jw-o3--sel{cursor:pointer}
+.jw-o3--sel:hover{border-color:var(--sk-color-primary)}
+.jw-o3--sel:has(input:focus-visible){outline:2px solid var(--sk-color-info);outline-offset:2px}
+.jw-o3--sel:has(input:disabled){cursor:default}
+.jw-o3 input[type=radio]{appearance:none;width:18px;height:18px;margin:0;border:1.5px solid var(--sk-color-placeholder);border-radius:50%;background:#fff;display:grid;place-items:center;cursor:pointer}
+.jw-o3 input[type=radio]:checked{border-color:var(--sk-color-primary)}
+.jw-o3 input[type=radio]:checked::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--sk-color-primary)}
+.jw-o3 input[type=radio]:disabled{cursor:default;opacity:.6}
+@media (hover:none){.jw-o3--sel:hover{border-color:var(--sk-color-border-2)}.jw-o3--sel.elegida:hover{border-color:var(--sk-color-primary)}}
+#{$v} .jw-o3--sel:hover{border-color:var(--lk)}
+#{$v} .jw-o3 input[type=radio]{background:transparent;border-color:var(--sk-color-mission-text-3)}
+#{$v} .jw-o3 input[type=radio]:checked{border-color:var(--lk)}
+@media (hover:none){#{$v} .jw-o3--sel:hover{border-color:var(--bd)}#{$v} .jw-o3--sel.elegida:hover{border-color:var(--lk)}}
+
+// ===== Narrativa de la caja Retiro: Recibe + Descuentos de hoy = Valor total del retiro =====
+.jw-o3 .jw-o3-recibe dt{font-weight:700;color:var(--sk-color-text)}
+.jw-o3 .jw-o3-recibe dd{font-family:var(--sk-font-heading);font-size:18px;font-weight:700;color:var(--sk-color-primary-dark)}
+.jw-o3 .jw-o3-recibe--sub dd{font-size:15px}
+.jw-o3 .jw-o3-desc dt,.jw-o3 .jw-o3-desc dd{font-weight:600;color:var(--sk-color-text)}
+// Desglose de los descuentos: sangría y texto secundario
+.jw-o3 .jw-o3-det dt{padding-left:12px;font-size:12px;line-height:16px}
+.jw-o3 .jw-o3-det dd{font-size:12px;font-weight:400;color:var(--sk-color-text-2)}
+.jw-o3 .tot--sub dd{font-size:15px}
+#{$v} .jw-o3 .jw-o3-recibe dt,#{$v} .jw-o3 .jw-o3-desc dt,#{$v} .jw-o3 .jw-o3-desc dd{color:var(--tx)}
+#{$v} .jw-o3 .jw-o3-recibe dd{color:var(--sk-color-primary)}
+#{$v} .jw-o3 .jw-o3-det dd{color:var(--tx2)}
+
+// «+ Descuentos de hoy» como botón que despliega el desglose
+.jw-o3-desp{display:inline-flex;align-items:center;gap:2px;padding:0;border:0;background:transparent;font:inherit;font-weight:600;color:inherit;cursor:pointer}
+.jw-o3-desp svg{width:14px;height:14px;transform:rotate(90deg);transition:transform .15s}
+.jw-o3-desp.abierto svg{transform:rotate(-90deg)}
+.jw-o3-desp:hover{text-decoration:underline}
+.jw-o3-desp:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:2px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){.jw-o3-desp svg{transition:none}}

@@ -17,7 +17,7 @@ import { TipoTramo } from '../../interfaces/contrato';
 import { SiNo } from '../../interfaces/conversacion';
 import { ConversacionesStore } from '../../state/conversaciones.store';
 import { esp, ordenFichas } from '../../utils/calculos';
-import { millones, pesos } from '../../utils/formato';
+import { mesAnio, millones, pesos } from '../../utils/formato';
 import { etapa1Completa, habilitada, soloLectura } from '../../utils/validaciones';
 import { JourneyUiStore } from '../journey-ui.store';
 
@@ -103,12 +103,10 @@ export class EtapaSituacion {
       const base: [TipoTramo, number][] = e
         ? [['ex', c.ex + c.sr + c.cc], ['sr', 0], ['cc', 0], ['sc', c.sc]]
         : TRAMOS.map((t) => [t.tipo, c[t.tipo]] as [TipoTramo, number]);
-      // Portafolios cerrados: lo que no es disponible ni está sin certificar (mismo cálculo que la pestaña Contrato)
-      const cerrados = Math.max(0, c.saldo - c.sc - c.disp);
-      const valores: [TipoBarra, number][] = [...base, ['cerr', cerrados] as [TipoBarra, number]];
-      const tot = valores.reduce((a, t) => a + t[1], 0) || 1;
-      const tramos: TramoFicha[] = valores.map(([tipo, v]) => {
-        const def = tipo === 'cerr' ? CERRADOS : (TRAMOS.find((t) => t.tipo === tipo) ?? TRAMOS[0]);
+      // La barra es del saldo total: los cuatro tramos de retención lo suman completo
+      const tot = base.reduce((a, t) => a + t[1], 0) || 1;
+      const tramos: TramoFicha[] = base.map(([tipo, v]) => {
+        const def = TRAMOS.find((t) => t.tipo === tipo) ?? TRAMOS[0];
         return {
           tipo, nombre: def.nombre, descripcion: def.descripcion, valor: pesos(v),
           // Con valor, proporcional (mínimo 2 % para que se vea); en $0, el CSS le da una marca fija (.jw-barra-cero)
@@ -116,19 +114,29 @@ export class EtapaSituacion {
           cero: v <= 0.5,
         };
       });
+      // Portafolios cerrados: lo que no es disponible ni está sin certificar (mismo cálculo que la pestaña Contrato).
+      // Es parte del saldo total, no un tramo más: va rayado encima de la barra y en la leyenda como «incluido».
+      const cerrados = Math.max(0, c.saldo - c.sc - c.disp);
+      const cerr: TramoFicha = {
+        tipo: 'cerr', nombre: CERRADOS.nombre, descripcion: CERRADOS.descripcion, valor: pesos(cerrados),
+        ancho: cerrados > 0.5 ? Math.max(2, (cerrados / tot) * 100).toFixed(2) + '%' : '', cero: cerrados <= 0.5,
+      };
       return {
-        c, varias, tramos, cubre: k.cubre, marcado: c.id === marcado,
+        c, varias, tramos, cerr, cubre: k.cubre, marcado: c.id === marcado,
         menor: varias && ix === 0 && k.cubre,
         // Recibe: el monto de Entender (o lo máximo que alcanza); Total: lo que sale del contrato (el disponible si no alcanza)
         recibe: pesos(k.R), descuentos: pesos(k.D - k.R), total: pesos(k.D),
         disp: pesos(c.disp),
         saldo: pesos(c.saldo),
-        // Antigüedad y rendimientos generados desde la apertura (incluye los ya retirados): «16 de mar de 2006» → «mar 2006»
-        desde: c.desde.replace(/^\d+ de /, '').replace(' de ', ' '),
-        generado: millones(c.gan),
-        generadoExacto: pesos(c.gan),
       };
     });
+  });
+  /** Rendimientos generados desde la apertura por el contrato marcado (incluye los ya retirados). */
+  protected readonly generado = computed(() => {
+    const f = this.fichas().find((x) => x.marcado);
+    if (!f) return null;
+    // «El contrato Mi ahorro …»; sin nombre personalizado, solo el número
+    return { contrato: f.c.nom || f.c.num, monto: millones(f.c.gan), exacto: pesos(f.c.gan), desde: mesAnio(f.c.desde) };
   });
   protected readonly ninguno = computed(() =>
     this.ver() && !ordenFichas(this.st()).some((f) => f.k.cubre) ? TEXTOS.ningunoCubre(pesos(this.st().monto)) : null,

@@ -4,18 +4,35 @@
     <p class="jw-nodisp"><svg ncIcono="off"></svg><span><b>No disponible</b> · Lo disponible para retirar es $0 · Revise el contrato en «Ver detalle»</span></p>
   </article>
 } @else {
-  <article class="jw-o3" [class.elegida]="st().pref === tipo()">
-    <h4>{{ titulo() }}</h4>
+  <!-- Seleccionable como las fichas de Situación: radio + borde verde al elegirla -->
+  <label class="jw-o3 jw-o3--sel" [class.elegida]="st().pref === tipo()">
+    <span class="jw-o3-top"><input type="radio" name="jw-pref" [value]="tipo()" [checked]="st().pref === tipo()" [disabled]="ro()" (change)="elegir()" /><h4>{{ titulo() }}</h4></span>
     <div class="jw-o3-cuerpo">
+      <!-- Narrativa como una cuenta (igual que la ficha de Situación): Recibe + Descuentos de hoy = Valor total del retiro -->
       <dl>
-        <div><dt>Se descuenta del contrato</dt><dd>{{ pesos(k().D) }}</dd></div>
-        <div><dt>Retención contingente</dt><dd>{{ pesos(k().rcA) }}</dd></div>
-        <div><dt>Retención sobre rendimientos</dt><dd>{{ pesos(k().rrA) }}</dd></div>
-        <div><dt>4×1000</dt><dd>{{ pesos(k().g) }}</dd></div>
-        @if (k().perm > 0.5) {
-          <div><dt>Cobro por permanencia<small>capital más seguro · estimado</small></dt><dd>{{ pesos(k().perm) }}</dd></div>
+        <div class="jw-o3-recibe"><dt>Recibe</dt><dd>{{ pesos(k().R) }}</dd></div>
+        <!-- Desglose plegable: «+ Descuentos de hoy» abre y cierra el detalle (no cambia la opción elegida) -->
+        <div class="jw-o3-desc">
+          <dt>
+            <button type="button" class="jw-o3-desp jw-ro-ok" [class.abierto]="verDesc()" [attr.aria-expanded]="verDesc()" [attr.aria-controls]="'jw-desc-' + tipo()" (click)="alternarDesc($event)">
+              + Descuentos de hoy<svg ncIcono="chev"></svg>
+            </button>
+          </dt>
+          <dd>{{ pesos(k().D - k().R) }}</dd>
+        </div>
+        @if (verDesc()) {
+          <div class="jw-o3-det" [id]="'jw-desc-' + tipo()"><dt>Retención contingente</dt><dd>{{ pesos(k().rcA) }}</dd></div>
+          <div class="jw-o3-det"><dt>Retención sobre rendimientos</dt><dd>{{ pesos(k().rrA) }}</dd></div>
+          <div class="jw-o3-det"><dt>4×1000</dt><dd>{{ pesos(k().g) }}</dd></div>
         }
-        <div class="tot verde"><dt>Recibe</dt><dd>{{ pesos(k().R) }}</dd></div>
+        <div class="tot"><dt>= Valor total del retiro</dt><dd>{{ pesos(k().D) }}</dd></div>
+      </dl>
+      <!-- Lo que no se descuenta del retiro (renta exenta, posible impuesto, permanencia): va aparte, sin título -->
+      <!-- La respuesta de renta exenta define el posible impuesto: va justo antes -->
+      @if (conRx()) {
+        <nc-renta-exenta [k]="k()" />
+      }
+      <dl>
         <div>
           <dt>
             Posible impuesto en la declaración<small class="jw-imp-nota"
@@ -28,13 +45,13 @@
           </dt>
           <dd>{{ imp().txt }}</dd>
         </div>
+        @if (k().perm > 0.5) {
+          <div><dt>Cobro por permanencia<small>capital más seguro · estimado · lo deja de recibir, no se descuenta</small></dt><dd>{{ pesos(k().perm) }}</dd></div>
+        }
       </dl>
-      @if (conRx()) {
-        <nc-renta-exenta [k]="k()" />
-      }
       @if (faltan() > 0.5) {
         <p class="jw-o3-nota">No alcanza: faltan <b>{{ pesos(faltan()) }}</b></p>
       }
     </div>
-  </article>
+  </label>
 }

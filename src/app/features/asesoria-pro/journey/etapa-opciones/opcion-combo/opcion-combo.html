@@ -1,12 +1,14 @@
-<article class="jw-o3" [class.elegida]="st().pref === 'combo'">
-  <h4>Retiro + crédito puente</h4>
+<label class="jw-o3 jw-o3--sel" [class.elegida]="st().pref === 'combo'">
+  <span class="jw-o3-top"><input type="radio" name="jw-pref" [value]="'combo'" [checked]="st().pref === 'combo'" [disabled]="ro()" (change)="elegir()" /><h4>Retiro + crédito puente</h4></span>
   <div class="jw-o3-cuerpo">
     <h5 class="jw-o3-sub">Retiro</h5>
+    <!-- Misma narrativa que la caja Retiro: Recibe + Descuentos de hoy = Valor total del retiro -->
     <dl>
-      <div><dt>Se descuenta del contrato</dt><dd>{{ pesos(cb().kt.D) }}</dd></div>
-      <div><dt>Retenciones</dt><dd>{{ pesos(cb().kt.rcA + cb().kt.rrA) }}</dd></div>
-      <div><dt>4×1000</dt><dd>{{ pesos(cb().kt.g) }}</dd></div>
-      <div><dt>Recibe</dt><dd>{{ pesos(cb().kt.R) }}</dd></div>
+      <div class="jw-o3-recibe jw-o3-recibe--sub"><dt>Recibe del retiro</dt><dd>{{ pesos(cb().kt.R) }}</dd></div>
+      <div class="jw-o3-desc"><dt>+ Descuentos de hoy</dt><dd>{{ pesos(cb().kt.D - cb().kt.R) }}</dd></div>
+      <div class="jw-o3-det"><dt>Retenciones</dt><dd>{{ pesos(cb().kt.rcA + cb().kt.rrA) }}</dd></div>
+      <div class="jw-o3-det"><dt>4×1000</dt><dd>{{ pesos(cb().kt.g) }}</dd></div>
+      <div class="tot tot--sub"><dt>= Valor total del retiro</dt><dd>{{ pesos(cb().kt.D) }}</dd></div>
     </dl>
     <h5 class="jw-o3-sub">Crédito por lo que falta</h5>
     <dl>
@@ -17,6 +19,12 @@
       <div><dt>Tasa</dt><dd>{{ tasa }}</dd></div>
       <div><dt>Intereses y 4×1000</dt><dd>{{ pesos(cb().cr.costo) }}</dd></div>
       <div class="tot verde"><dt>Recibe</dt><dd>{{ pesos(cb().recibe) }}</dd></div>
+    </dl>
+    <!-- La respuesta de renta exenta define el posible impuesto del costo: va justo antes -->
+    @if (conRx()) {
+      <nc-renta-exenta [k]="cb().kt" />
+    }
+    <dl>
       <div>
         <dt>
           Costo de la combinación<small class="jw-imp-nota"
@@ -28,11 +36,8 @@
         <dd>{{ costo() }}</dd>
       </div>
     </dl>
-    @if (conRx()) {
-      <nc-renta-exenta [k]="cb().kt" />
-    }
     @if (!cb().cubre) {
       <p class="jw-o3-nota">El crédito disponible ({{ pesos(cb().disp) }}) no cubre lo que falta ({{ pesos(cb().falta) }}).</p>
     }
   </div>
-</article>
+</label>

@@ -95,7 +95,7 @@ export const TEXTOS = {
   /** Tarjeta de misión: mismo título y texto que la misión destacada del dashboard. */
   guiaTitulo: (nombre: string) => `Revisa con ${nombre.split(' ')[0]} su portafolio y sus objetivos.`,
   guiaTexto:
-    'Nuestro modelo indica que tu cliente podría retirar su Fondo Voluntario de Pensión en los próximos 60 días. Contáctalo sin mencionar esta señal; si decide retirar, acompaña su decisión con Planeación Pro.',
+    'Nuestro modelo indica que tu cliente podría retirar dinero de su Fondo Voluntario de Pensión en los próximos 60 días. Contáctalo sin mencionar esta señal, si decide retirar, acompaña su decisión con Planeación Pro.',
   iniciar: 'Iniciar acompañamiento',
   continuar: 'Continuar acompañamiento',
   progreso: 'de 1 completada esta semana',

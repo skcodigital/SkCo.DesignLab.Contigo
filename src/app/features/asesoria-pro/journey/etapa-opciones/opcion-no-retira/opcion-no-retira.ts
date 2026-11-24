@@ -9,7 +9,7 @@ import { pct, pesos } from '../../../utils/formato';
   selector: 'nc-opcion-no-retira',
   template: `
     <article class="jw-o3">
-      <h4>Si no retira</h4>
+      <span class="jw-o3-top"><span></span><h4>Si no retira</h4></span>
       <div class="jw-o3-cuerpo">
         <dl>
           <div><dt>Seguiría invertido</dt><dd>{{ pesos(k().D) }}</dd></div>

@@ -38,17 +38,11 @@
             }
             <span class="jw-ct-num">{{ f.c.num }}</span>
           </span>
-          <!-- Lo generado desde la apertura: dato del contrato, en texto secundario (sin color de éxito, para no sesgar la decisión) -->
-          <span class="jw-ct-gan" [title]="'Rendimientos generados desde la apertura: ' + f.generadoExacto + ' (incluye los ya retirados)'">
-            Desde {{ f.desde }} · ha generado <b>{{ f.generado }}</b> en rendimientos
-          </span>
         </span>
         <!-- Saldos a la izquierda; tags en el espacio libre de la derecha -->
         <div class="jw-ct-saldos">
           <div class="jw-ct-saldos-c">
             <p class="jw-ct-disp"><span>Saldo disponible</span><b>{{ f.disp }}</b></p>
-            <!-- Saldo total ≠ disponible: incluye lo sin certificar y lo que está en portafolios cerrados -->
-            <p class="jw-ct-saldo">Saldo total <b>{{ f.saldo }}</b></p>
           </div>
           <span class="jw-ct-tags">
             @if (f.cubre) {
@@ -61,23 +55,32 @@
             }
           </span>
         </div>
-        <span class="jw-barra" aria-hidden="true">
-          <!-- Los cinco conceptos siempre en la barra: los de $0 como una marca mínima de su color -->
-          @for (t of f.tramos; track t.tipo) {
-            <i [class]="'c-' + t.tipo" [class.jw-barra-cero]="t.cero" [style.width]="t.ancho" [title]="t.nombre + ': ' + t.valor"></i>
+        <!-- Unidad «Saldo total»: la barra y su distribución son del saldo total (no del disponible) -->
+        <div class="jw-ct-total">
+          <p class="jw-ct-total-h"><span>Saldo total</span><b>{{ f.saldo }}</b></p>
+          <span class="jw-barra" aria-hidden="true">
+            <!-- Los cuatro tramos de retención suman el saldo total; los de $0 quedan como marca mínima de su color -->
+            @for (t of f.tramos; track t.tipo) {
+              <i [class]="'c-' + t.tipo" [class.jw-barra-cero]="t.cero" [style.width]="t.ancho" [title]="t.nombre + ': ' + t.valor"></i>
+            }
+            <!-- Portafolios cerrados: parte del mismo saldo, rayada encima del final de la barra (no se suma aparte) -->
+            @if (!f.cerr.cero) {
+              <i class="c-cerr jw-barra-cerr" [style.width]="f.cerr.ancho" [title]="f.cerr.nombre + ': ' + f.cerr.valor"></i>
+            }
+          </span>
+          <!-- Distribución plegable: se abre en todas las fichas a la vez para comparar contratos -->
+          <button type="button" class="jw-dist" [class.abierta]="verDist()" [attr.aria-expanded]="verDist()" [attr.aria-controls]="'jw-ley-' + f.c.id" (click)="alternarDist($event)">
+            {{ verDist() ? 'Ocultar distribución' : 'Ver distribución' }}<svg ncIcono="chev"></svg>
+          </button>
+          @if (verDist()) {
+            <ul class="jw-ley" [id]="'jw-ley-' + f.c.id">
+              @for (t of f.tramos; track t.tipo) {
+                <li [title]="t.descripcion" [class.jw-ley-cero]="t.cero"><span class="jw-cuad" [class]="'jw-cuad c-' + t.tipo"></span>{{ t.nombre }} <b>{{ t.valor }}</b></li>
+              }
+              <li class="jw-ley-incl" [title]="f.cerr.descripcion"><span class="jw-cuad c-cerr"></span><span>{{ f.cerr.nombre }}<small>incluido en el saldo</small></span> <b>{{ f.cerr.valor }}</b></li>
+            </ul>
           }
-        </span>
-        <!-- Distribución plegable: se abre en todas las fichas a la vez para comparar contratos -->
-        <button type="button" class="jw-dist" [class.abierta]="verDist()" [attr.aria-expanded]="verDist()" [attr.aria-controls]="'jw-ley-' + f.c.id" (click)="alternarDist($event)">
-          {{ verDist() ? 'Ocultar distribución' : 'Ver distribución' }}<svg ncIcono="chev"></svg>
-        </button>
-        @if (verDist()) {
-        <ul class="jw-ley" [id]="'jw-ley-' + f.c.id">
-          @for (t of f.tramos; track t.tipo) {
-            <li [title]="t.descripcion" [class.jw-ley-cero]="t.cero"><span class="jw-cuad" [class]="'jw-cuad c-' + t.tipo"></span>{{ t.nombre }} <b>{{ t.valor }}</b></li>
-          }
-        </ul>
-        }
+        </div>
         <dl class="jw-ct-res">
           <div><dt>Recibe</dt><dd>{{ f.recibe }}</dd></div>
           <div>
@@ -96,6 +99,12 @@
       </label>
     }
   </div>
+  <!-- Alerta informativa (azul) con lo generado por el contrato marcado; cambia al marcar otra ficha -->
+  @if (generado(); as g) {
+    <p class="jw-info-azul" role="status" [title]="'Valor exacto: ' + g.exacto + ' (incluye los rendimientos ya retirados)'">
+      <svg ncIcono="info"></svg><span>El contrato {{ g.contrato }} ha generado <b>{{ g.monto }}</b> en rendimientos desde su apertura: {{ g.desde }}.</span>
+    </p>
+  }
   @if (ninguno(); as txt) {
     <p class="jw-aviso" role="status"><svg ncIcono="info"></svg><span>{{ txt }}</span></p>
   }

@@ -65,7 +65,8 @@ $v: ':host-context(#jm-velo)';
 #{$v} .jw-q,#{$v} .jw-op,#{$v} .jw-caja{background:var(--sf2);border-color:var(--bd);box-shadow:none}
 #{$v} .jw-op:hover{border-color:var(--lk)}
 #{$v} .jw-op[aria-pressed="true"]{background:var(--sel);border-color:var(--lk);box-shadow:0 0 0 1px var(--lk) inset}
-#{$v} .jw-dest{background:var(--sel)}
+// Caja del monto sin fondo (antes un verde suave): el campo queda alineado con la pregunta
+#{$v} .jw-dest{background:transparent;padding:0}
 #{$v} .jw-hecho,#{$v} .jw-proximo,#{$v} .jw-nota{background:rgba(255,255,255,.06);border-color:var(--bd);color:var(--tx2)}
 #{$v} .jw-aviso,#{$v} .jw-nota--alerta{background:var(--warn);border-color:var(--warnb);color:var(--tx2)}
 #{$v} .jw-h,#{$v} .jw-qt,#{$v} .jw-op b,#{$v} .jw-hecho b{color:var(--tx)}
@@ -92,7 +93,7 @@ $v: ':host-context(#jm-velo)';
 #{$v} .jw-nodisp{display:flex;gap:6px;align-items:flex-start;margin:0;font-size:12px;color:var(--tx3)}
 #{$v} .jw-nodisp b{font-weight:600;color:var(--tx2)}
 #{$v} .jw-nodisp svg{flex:none;margin-top:2px}
-#{$v} .jw-dest.jw-nodisp{padding:14px 18px;border-radius:12px}
+#{$v} .jw-dest.jw-nodisp{padding:14px 18px;border-radius:12px;background:var(--sf2)}
 #{$v} .jw-seg{display:inline-flex;flex-wrap:wrap;align-items:center;gap:4px}
 #{$v} .jw-seg-t{margin-right:4px;font-size:12px;color:var(--tx3)}
 #{$v} .jw-seg button{padding:4px 12px;border:1px solid var(--bd2);border-radius:9999px;background:transparent;font-family:var(--sk-font-body);font-size:12px;color:var(--sk-color-mission-text);cursor:pointer}

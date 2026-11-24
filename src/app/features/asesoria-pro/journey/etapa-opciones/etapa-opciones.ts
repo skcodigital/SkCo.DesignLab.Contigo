@@ -1,20 +1,19 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { Icono } from '@features/asesoria-pro/components/icono/icono';
-import { NOM_CAJA, TEXTOS } from '../../constants/textos';
-import { TipoCaja } from '../../interfaces/calculo';
+import { TEXTOS } from '../../constants/textos';
 import { ConversacionesStore } from '../../state/conversaciones.store';
 import {
   cajaRx,
   cajas,
   cred,
   ctId,
-  elegibles,
   impuesto,
+  ordenFichas,
   prefEsRetiro,
   retiroPref,
   tocaNoExento,
 } from '../../utils/calculos';
-import { pesos } from '../../utils/formato';
+import { mesAnio, millones, pesos } from '../../utils/formato';
 import { etapa3Completa, habilitada, soloLectura } from '../../utils/validaciones';
 import { JourneyUiStore } from '../journey-ui.store';
 import { OpcionCombo } from './opcion-combo/opcion-combo';
@@ -24,7 +23,7 @@ import { OpcionRetiro } from './opcion-retiro/opcion-retiro';
 
 /**
  * Etapa 3 · Opciones (v5 del journey): cajas de retiro, crédito puente, retiro total, combinación y «Si no retira»;
- * la pregunta de renta exenta va en la caja del retiro. Termina con la preferencia del cliente.
+ * la pregunta de renta exenta va en la caja del retiro. La preferencia del cliente se marca con el radio de cada caja.
  */
 @Component({
   selector: 'nc-etapa-opciones',
@@ -66,21 +65,32 @@ export class EtapaOpciones {
       .every((t) => impuesto(st, t === 'retiro' ? v.k : v.kt).nota === TEXTOS.notaIbc);
     return TEXTOS.anticipo(ibc);
   });
-  protected readonly elegibles = computed(() => elegibles(this.st(), this.v(), this.cr()));
   protected readonly verCredito = computed(() => !this.v().viv && this.cr().M > 0);
   protected readonly pie = computed(() => etapa3Completa(this.st()) || this.ro());
-  protected readonly nomCaja = NOM_CAJA;
-
-  protected elegirPreferencia(t: TipoCaja): void {
-    this.store.elegirPreferencia(t);
-  }
-
   protected verCalculo(): void {
     this.ui.abrirDetalle(ctId(this.st()), 'calculo');
   }
 
   protected verDetalleCredito(): void {
     this.ui.abrirDetalle(ctId(this.st()), 'credito');
+  }
+
+  /** Nombre personalizado del contrato o, si no tiene, su número (va en negrita en el título). */
+  protected readonly contratoTit = computed(() => this.v().c.nom || this.v().c.num);
+  /** Mismo criterio que la ficha de Situación: es el primero del orden, cubre y hay más de un contrato. */
+  protected readonly menor = computed(() => {
+    const orden = ordenFichas(this.st());
+    return orden.length > 1 && orden[0].c.id === this.v().c.id && orden[0].k.cubre;
+  });
+
+  /** Rendimientos generados desde la apertura por el contrato elegido (como la alerta de Situación). */
+  protected readonly generado = computed(() => {
+    const c = this.v().c;
+    return { contrato: c.nom || c.num, monto: millones(c.gan), exacto: pesos(c.gan), desde: mesAnio(c.desde) };
+  });
+
+  protected atras(): void {
+    this.store.irEtapa(2);
   }
 
   protected continuar(): void {

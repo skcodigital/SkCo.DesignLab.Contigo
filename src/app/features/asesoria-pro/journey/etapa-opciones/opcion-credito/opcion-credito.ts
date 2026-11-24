@@ -25,6 +25,10 @@ export class OpcionCredito {
   protected readonly tasa = TASA_TXT;
   protected readonly pesos = pesos;
 
+  protected elegir(): void {
+    this.store.elegirPreferencia('credito');
+  }
+
   protected alternarNoRepone(): void {
     this.store.alternarNoRepone();
   }

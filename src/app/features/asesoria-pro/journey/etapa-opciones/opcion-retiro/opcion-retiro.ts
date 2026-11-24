@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
 import { Icono } from '@features/asesoria-pro/components/icono/icono';
 import { NOM_CAJA } from '../../../constants/textos';
 import { Retiro, TipoCaja } from '../../../interfaces/calculo';
 import { ConversacionesStore } from '../../../state/conversaciones.store';
 import { ctId, impuesto } from '../../../utils/calculos';
+import { soloLectura } from '../../../utils/validaciones';
 import { pesos } from '../../../utils/formato';
 import { JourneyUiStore } from '../../journey-ui.store';
 import { RentaExenta } from '../renta-exenta/renta-exenta';
@@ -30,6 +31,19 @@ export class OpcionRetiro {
   protected readonly imp = computed(() => impuesto(this.st(), this.k()));
   protected readonly faltan = computed(() => (this.st().monto || 0) - this.k().R);
   protected readonly pesos = pesos;
+  protected readonly ro = computed(() => soloLectura(this.st()));
+
+  /** Desglose de «Descuentos de hoy», plegado por defecto. */
+  protected readonly verDesc = signal(false);
+
+  protected alternarDesc(e: Event): void {
+    e.preventDefault(); // está dentro del <label> de la caja: no debe elegir la opción
+    this.verDesc.update((v) => !v);
+  }
+
+  protected elegir(): void {
+    this.store.elegirPreferencia(this.tipo());
+  }
 
   protected ajustar(): void {
     this.ui.abrirDetalle(ctId(this.st()), 'impuestos');

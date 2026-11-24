@@ -4,8 +4,8 @@
     <p class="jw-nodisp"><svg ncIcono="off"></svg><span><b>No disponible</b> · No tiene crédito preaprobado con respaldo del fondo</span></p>
   </article>
 } @else {
-  <article class="jw-o3" [class.off]="st().noRepone" [class.elegida]="st().pref === 'credito'">
-    <h4>Crédito puente</h4>
+  <label class="jw-o3 jw-o3--sel" [class.off]="st().noRepone" [class.elegida]="st().pref === 'credito'">
+    <span class="jw-o3-top"><input type="radio" name="jw-pref" [value]="'credito'" [checked]="st().pref === 'credito'" [disabled]="ro() || st().noRepone" (change)="elegir()" /><h4>Crédito puente</h4></span>
     <div class="jw-o3-cuerpo">
       <dl>
         <div><dt>Monto</dt><dd>{{ pesos(cr().M) }}</dd></div>
@@ -27,5 +27,5 @@
       }
       No lo repondría
     </button>
-  </article>
+  </label>
 }

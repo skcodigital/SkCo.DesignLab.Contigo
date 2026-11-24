@@ -1,16 +1,38 @@
 <section class="jw-etapa jw-etapa--ancha" aria-labelledby="jw-t3">
   <p class="jw-eb">Opciones</p>
-  <h3 class="jw-h" id="jw-t3">¿Qué puede hacer?</h3>
+  <!-- Título con el contrato elegido en Situación y sus mismos tags -->
+  <div class="jw-op-tit">
+    <h3 class="jw-h jw-op-h" id="jw-t3">Con <b>{{ contratoTit() }}</b>, ¿qué puede hacer?</h3>
+    @if (!falta()) {
+      <span class="jw-op-tags">
+        @if (v().k.cubre) {
+          <span class="jw-tg jw-tg--ok">Cubre</span>
+        } @else {
+          <span class="jw-tg jw-tg--no">No alcanza</span>
+        }
+        @if (menor()) {
+          <span class="jw-tg jw-tg--menor">Menor descuento</span>
+        }
+      </span>
+    }
+  </div>
   @if (falta()) {
     <div class="jw-dest jw-nodisp">
       <svg ncIcono="off"></svg><span><b>No disponible</b> · Falta el monto que necesita · Respóndalo en «Entender»</span>
     </div>
   } @else {
     <div>
+      <!-- Misma alerta de Situación: rendimientos generados por el contrato elegido -->
+      @if (generado(); as g) {
+        <p class="jw-info" role="status" [title]="'Valor exacto: ' + g.exacto + ' (incluye los rendimientos ya retirados)'">
+          <svg ncIcono="info"></svg><span>El contrato {{ g.contrato }} ha generado <b>{{ g.monto }}</b> en rendimientos desde su apertura: {{ g.desde }}.</span>
+        </p>
+      }
       @if (alcanza(); as txt) {
         <p class="jw-info" role="status"><svg ncIcono="info"></svg><span>{{ txt }}</span></p>
       }
-      <div class="jw-ops3">
+      <!-- Sin pregunta visible: el grupo conserva su nombre para lectores de pantalla -->
+      <div class="jw-ops3" role="radiogroup" aria-label="Opción que prefiere el cliente">
         @for (t of v().list; track t) {
           @switch (t) {
             @case ('credito') {
@@ -31,16 +53,6 @@
         }
       </div>
       <p class="jw-ayuda">{{ anticipo() }}</p>
-      <div class="jw-pref">
-        <p class="jw-qt" id="jw-pref-t">¿Cuál prefiere el cliente?</p>
-        <div class="jw-chips" role="group" aria-labelledby="jw-pref-t">
-          @for (t of elegibles(); track t) {
-            <button type="button" [attr.aria-pressed]="st().pref === t" [disabled]="(t === 'credito' && st().noRepone) || ro()" (click)="elegirPreferencia(t)">
-              {{ nomCaja[t] }}
-            </button>
-          }
-        </div>
-      </div>
       <div class="jw-links3">
         <button type="button" class="jw-link jw-ro-ok" (click)="verCalculo()"><svg ncIcono="panel"></svg>Ver cálculo</button>
         @if (verCredito()) {
@@ -48,12 +60,10 @@
         }
       </div>
     </div>
-    @if (pie()) {
-      <div class="jw-pie">
-        <button type="button" class="jw-btn jw-ro-ok" (click)="continuar()">
-          Continuar a Acuerdo <svg ncIcono="flecha"></svg>
-        </button>
-      </div>
-    }
   }
+  <!-- Mismo pie que Situación: Atrás (secundario) y Continuar (principal, activo al elegir una opción) -->
+  <div class="jw-pie jw-pie--nav">
+    <button type="button" class="jw-btn jw-btn--sec jw-ro-ok" (click)="atras()"><svg ncIcono="flecha" class="jw-atras-ico"></svg>Atrás</button>
+    <button type="button" class="jw-btn jw-ro-ok" [disabled]="!pie()" (click)="continuar()">Continuar <svg ncIcono="flecha"></svg></button>
+  </div>
 </section>
