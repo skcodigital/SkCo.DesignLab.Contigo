@@ -26,7 +26,8 @@ const fechaIcs = (d: Date): string =>
 const textoIcs = (t: string): string => t.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
 
 /**
- * Calendario de iOS: no tiene enlace web para crear eventos, así que se descarga un .ics que abre Calendario.
+ * «Otros» (solo en móvil): no hay enlace web para el calendario del celular, así que se descarga un .ics que abre
+ * el calendario de iOS o Android.
  * El .ics exige una fecha: se propone el siguiente día hábil a las 9:00 (30 min) y el asesor la cambia allí.
  */
 export function icsSeguimiento(titulo: string, detalle: string, ahora: Date = new Date()): string {

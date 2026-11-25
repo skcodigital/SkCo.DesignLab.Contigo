@@ -9,6 +9,8 @@ import { combo, cred, ctSel, enAlcance, ordenFichas, retiro } from '../../utils/
 import { deIso, fLarga, pesos } from '../../utils/formato';
 import { completa, ETAPAS, habilitada, soloLectura } from '../../utils/validaciones';
 
+const mayuscula = (t: string): string => t.charAt(0).toUpperCase() + t.slice(1);
+
 /** Tag de una fila del resumen (mismo estilo que en las fichas de Situación). */
 interface TagFila {
   txt: string;
@@ -69,7 +71,7 @@ function filasAcuerdo(st: EstadoConversacion): Fila[] {
   // La reunión agendada se registra aunque aún no se haya cerrado el acompañamiento
   const a = st.agenda;
   if (a && a.estado !== 'no') {
-    f.push(['Reunión de seguimiento', agendada(a) ? cuandoAgenda(a) + ' · ' + AGENDA_NOM[a.via] : 'Por confirmar fecha y hora']);
+    f.push(['Reunión de seguimiento', agendada(a) ? cuandoAgenda(a) + ' · ' + mayuscula(AGENDA_NOM[a.via]) : 'Por confirmar fecha y hora']);
   }
   if (reg) f.push(['En seguimiento hasta', fLarga(deIso(st.segHasta))]);
   return f;

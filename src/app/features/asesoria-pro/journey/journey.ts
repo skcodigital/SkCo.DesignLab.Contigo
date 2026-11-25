@@ -57,7 +57,7 @@ export class Journey {
 
   protected readonly textos = TEXTOS;
   protected readonly titulo = `${TEXTOS.tituloJourney} · ${CLIENTE.nombre}`;
-  /** Título centrado bajo el encabezado «Regresar · Acompañamiento al retirar · …», encima de los pasos. */
+  /** Título centrado bajo el encabezado «Salir · Acompañamiento al retirar · …», encima de los pasos. */
   protected readonly intro = TEXTOS.introJourney;
   protected readonly st = this.store.st;
   protected readonly ro = computed(() => soloLectura(this.st()));
@@ -104,7 +104,7 @@ export class Journey {
   private readonly abiertoDesde = Date.now();
 
   constructor() {
-    // «Salir» desde una etapa (p. ej. tras finalizar fuera de alcance): cierra el journey como «Regresar»
+    // «Salir» desde una etapa (p. ej. tras finalizar fuera de alcance): cierra el journey como «Salir» del encabezado
     let salirAtendido = this.ui.salir();
     afterRenderEffect(() => {
       const pedido = this.ui.salir();

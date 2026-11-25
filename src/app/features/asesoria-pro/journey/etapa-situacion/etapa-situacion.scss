@@ -168,3 +168,12 @@ $v: ':host-context(#jm-velo)';
 .jw-ley{gap:6px}
 .jw-ct-res{gap:8px;padding-top:12px}
 .jw-ct-res .jw-ct-tot{padding-top:8px}
+
+// Saldo disponible y tags: si no caben lado a lado, los tags bajan (nunca se montan sobre el monto)
+.jw-ct-saldos{flex-wrap:wrap}
+.jw-ct-saldos-c{flex:0 0 auto}
+.jw-ct-disp b{white-space:nowrap}
+@media (max-width:600px){
+  .jw-ct-saldos{flex-direction:column;align-items:stretch;gap:8px}
+  .jw-ct-saldos .jw-ct-tags{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:6px;padding-top:0}
+}

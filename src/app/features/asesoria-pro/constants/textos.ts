@@ -86,7 +86,8 @@ export const PREF_A_DECISION: Readonly<Record<Preferencia, Decision>> = {
 export const AGENDA_NOM = {
   google: 'Google Calendar',
   teams: 'Microsoft Teams',
-  ios: 'Calendario de iOS',
+  // Móvil: «Otros» descarga un .ics que abre el calendario del celular (iOS o Android)
+  ios: 'el calendario del celular',
 } as const;
 
 export const PROXIMOS_PASOS = {
