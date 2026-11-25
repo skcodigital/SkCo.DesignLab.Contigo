@@ -7,6 +7,7 @@
       role="tab"
       tabindex="0"
       [class.on]="p.id === activa()"
+      [class.tab-con-nov]="p.id === 'copiloto' && novedad()"
       [attr.aria-selected]="p.id === activa()"
       [attr.data-panel]="p.id"
       (click)="elegir.emit(p.id)"
@@ -37,6 +38,9 @@
       }
       @if (p.titulo) {
         <span [title]="p.titulo">{{ p.etiqueta }}</span>
+      } @else if (p.id === 'copiloto' && novedad()) {
+        <!-- Móvil: solo el tag «Nuevo» junto al nombre (el globo es de escritorio) -->
+        <span class="tab-l1"><span>{{ p.etiqueta }}</span><span class="tab-tag">Nuevo</span></span>
       } @else {
         {{ p.etiqueta }}
       }
@@ -58,7 +62,7 @@
       [style.--fx-globo-x]="pos ? pos.flecha + 'px' : null"
     >
       <button type="button" class="fx-globo-ir" (click)="irANovedad()">
-        <svg class="fx-globo-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 11 18-5v12L3 14v-3z" /><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" /></svg>Ahora en Contigo: <b>Herramientas de acompañamiento</b>
+        <svg class="fx-globo-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 11 18-5v12L3 14v-3z" /><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" /></svg>Ahora en Contigo
       </button>
       <button type="button" class="fx-globo-x" aria-label="Cerrar aviso" (click)="novedades.apagarPlaneacionPro()">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>

@@ -1,4 +1,5 @@
-import { afterRenderEffect, ChangeDetectionStrategy, Component, computed, ElementRef, model, signal, viewChild } from '@angular/core';
+import { afterRenderEffect, ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, model, signal, untracked, viewChild } from '@angular/core';
+import { UiStore } from '@core/state/ui.store';
 
 /** Pasos de la intro de Planeación Pro. */
 const PASOS = [
@@ -42,6 +43,13 @@ export class IntroPlaneacion {
   private volverA: HTMLElement | null = null;
 
   constructor() {
+    // Con la modal abierta no se desplaza la página de fondo (sobre todo en móvil)
+    const ui = inject(UiStore);
+    // untracked: `set` lee el estado de la UI; sin esto, choca con el efecto de la modal «Descartar» (ciclo infinito)
+    effect(() => {
+      const abierta = this.abierta();
+      untracked(() => ui.set('pp-md-abierta', abierta));
+    });
     // Al abrir: empieza en el paso 1, foco en el botón principal y se recuerda a dónde devolverlo.
     afterRenderEffect(() => {
       if (!this.abierta()) return;

@@ -1,17 +1,4 @@
-import {
-  afterRenderEffect,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  effect,
-  ElementRef,
-  inject,
-  input,
-  model,
-  output,
-  signal,
-  viewChild,
-} from '@angular/core';
+import { afterRenderEffect, ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, input, model, output, signal, untracked, viewChild } from '@angular/core';
 import { Descarte, ETIQUETA_MOTIVO, MotivoDescarte } from '@core/state/misiones.store';
 import { UiStore } from '@core/state/ui.store';
 
@@ -60,7 +47,11 @@ export class DescartarMisionModal {
   private volverA: HTMLElement | null = null;
 
   constructor() {
-    effect(() => this.ui.set('pp-md-abierta', this.abierta()));
+    // untracked: `set` lee el estado de la UI; así no se re-ejecuta (ni pisa) cuando otra modal lo cambia
+    effect(() => {
+      const abierta = this.abierta();
+      untracked(() => this.ui.set('pp-md-abierta', abierta));
+    });
     // Al abrir: foco en la primera opción y se recuerda a dónde devolver el foco al cerrar.
     afterRenderEffect(() => {
       if (!this.abierta()) return;

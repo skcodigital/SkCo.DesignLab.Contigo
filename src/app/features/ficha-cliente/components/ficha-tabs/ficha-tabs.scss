@@ -295,3 +295,32 @@
     display: none !important;
   }
 }
+
+// Novedad en la fila móvil de Planeación Pro: solo el tag «Nuevo» (como en «Composición y saldos»)
+.tab-l1 {
+  display: contents;
+}
+.tab-tag {
+  display: none;
+}
+@media (max-width: 600px) {
+  .tab-con-nov .tab-l1 {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+  .tab-con-nov .tab-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 8px;
+    border-radius: 8px;
+    background: var(--sk-color-info-light);
+    color: var(--sk-color-info);
+    font-family: var(--sk-font-heading);
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 700;
+  }
+}

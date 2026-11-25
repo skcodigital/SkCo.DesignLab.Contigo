@@ -4,13 +4,11 @@ import {
   Component,
   computed,
   DestroyRef,
-  effect,
   ElementRef,
   inject,
   input,
   output,
   signal,
-  untracked,
   viewChild,
   viewChildren,
 } from '@angular/core';
@@ -27,7 +25,7 @@ interface PosicionGlobo {
 
 /**
  * Pestañas de la ficha (en móvil se ven como filas que abren cada sección como pantalla aparte) y el globo
- * de novedad «Ahora en Contigo: Herramientas de acompañamiento» sobre Planeación Pro.
+ * de novedad «Ahora en Contigo» sobre Planeación Pro.
  */
 @Component({
   selector: 'nc-ficha-tabs',
@@ -42,8 +40,8 @@ export class FichaTabs {
 
   protected readonly pestanas = PESTANAS_FICHA;
   protected readonly novedades = inject(NovedadesStore);
-  /** El globo se ve mientras no se haya cerrado ni abierto Planeación Pro. */
-  protected readonly novedad = computed(() => this.novedades.planeacionPro() && this.activa() !== 'copiloto');
+  /** El globo (y el tag «Nuevo» en móvil) se ve hasta que el asesor lo cierra con la X, también dentro de Planeación Pro. */
+  protected readonly novedad = computed(() => this.novedades.planeacionPro());
   protected readonly posicion = signal<PosicionGlobo | null>(null);
 
   private readonly envoltura = viewChild.required<ElementRef<HTMLElement>>('envoltura');
@@ -51,10 +49,6 @@ export class FichaTabs {
   private readonly tabs = viewChildren<ElementRef<HTMLElement>>('tab');
 
   constructor() {
-    // Abrir Planeación Pro cuenta como usar la novedad
-    effect(() => {
-      if (this.activa() === 'copiloto') untracked(() => this.novedades.apagarPlaneacionPro());
-    });
     const destroyRef = inject(DestroyRef);
     afterNextRender(() => {
       const observador = new ResizeObserver(() => this.ubicarGlobo());
@@ -70,8 +64,8 @@ export class FichaTabs {
     this.elegir.emit(id);
   }
 
+  /** Lleva a Planeación Pro; el globo solo se apaga con la X. */
   protected irANovedad(): void {
-    this.novedades.apagarPlaneacionPro();
     this.elegir.emit('copiloto');
   }
 
