@@ -158,7 +158,7 @@ export const TEXTOS = {
   toastFuera: ['Acompañamiento finalizado', 'Queda registrado con el motivo: rendimientos o expectativas no cumplidas.'],
   toastRentaExentaPrimero: [
     'Primero responde la renta exenta',
-    'Antes de ajustar el IBC, indica si el valor total del retiro se usó como renta exenta.',
+    'Antes de ajustar el IBC, indica si tu cliente declaró esos aportes como renta exenta.',
   ] as const,
   toastCierrePrimero: ['Registra el cierre primero', 'El resumen se genera al registrar la decisión.'],
   toastEnviado: ['Resumen enviado al cliente', 'Queda registrado el envío; el envío real al cliente aún no está conectado.'],

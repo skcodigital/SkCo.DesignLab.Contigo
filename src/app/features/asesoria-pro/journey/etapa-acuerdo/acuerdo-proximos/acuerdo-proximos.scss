@@ -12,6 +12,7 @@ $v: ':host-context(#jm-velo)';
 .jw-agenda-op .jw-agenda-ext{width:14px;height:14px;opacity:.7}
 .jw-agenda-op:hover{border-color:var(--sk-color-primary)}
 .jw-agenda-op:focus-visible{outline:2px solid var(--sk-color-info);outline-offset:2px}
+.jw-agenda-ops--off .jw-agenda-op{opacity:.45;pointer-events:none;cursor:default}
 .jw-agenda-op.on{border-color:var(--sk-color-primary);box-shadow:inset 0 0 0 1px var(--sk-color-primary)}
 .jw-agenda-conf{display:flex;flex-direction:column;gap:8px;margin-top:4px}
 .jw-agenda-p{margin:0;font-size:14px;line-height:20px;color:var(--sk-color-text)}

@@ -42,6 +42,9 @@ export class OpcionRetiro {
 
   protected elegir(): void {
     this.store.elegirPreferencia(this.tipo());
+    // Con aportes no exentos y sin respuesta, se pregunta la renta exenta en la modal
+    const st = this.st();
+    if (!st.cerrado && tocaNoExento(st, this.k()) && !st.rx) this.ui.pedirRentaExenta();
   }
 
   /** Abre la pestaña Cálculo del panel de detalle (sin cambiar la opción elegida: está dentro del <label>). */
@@ -51,8 +54,8 @@ export class OpcionRetiro {
   }
 
   /**
-   * «Ajustar» el IBC: si el retiro toca aportes no exentos y aún no se respondió la renta exenta, avisa y lleva
-   * a la pregunta (sobre las cajas, resaltada) en lugar de abrir el panel de Impuestos.
+   * «Ajustar» el IBC: si el retiro toca aportes no exentos y aún no se respondió la renta exenta, abre la modal
+   * de renta exenta en lugar del panel de Impuestos.
    */
   protected ajustar(): void {
     const st = this.st();

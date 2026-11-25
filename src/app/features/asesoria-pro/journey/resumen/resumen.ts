@@ -4,7 +4,7 @@ import { AGENDA_NOM, DEC_CAT, MOTIVO, NOM_CAJA, PARTES, TEXTOS } from '../../con
 import { nombreContrato } from '../../data/contratos.mock';
 import { Etapa, EstadoConversacion } from '../../interfaces/conversacion';
 import { ConversacionesStore } from '../../state/conversaciones.store';
-import { agendada, cuandoAgenda } from '../../utils/agenda';
+import { agendada, conVia, cuandoAgenda } from '../../utils/agenda';
 import { combo, cred, ctSel, enAlcance, ordenFichas, retiro } from '../../utils/calculos';
 import { deIso, fLarga, pesos } from '../../utils/formato';
 import { completa, ETAPAS, habilitada, soloLectura } from '../../utils/validaciones';
@@ -70,7 +70,7 @@ function filasAcuerdo(st: EstadoConversacion): Fila[] {
   const f: Fila[] = [['Decisión', reg && st.dec ? DEC_CAT[st.dec] : null]];
   // La reunión agendada se registra aunque aún no se haya cerrado el acompañamiento
   const a = st.agenda;
-  if (a && a.estado !== 'no') {
+  if (conVia(a) && a.estado !== 'no') {
     f.push(['Reunión de seguimiento', agendada(a) ? cuandoAgenda(a) + ' · ' + mayuscula(AGENDA_NOM[a.via]) : 'Por confirmar fecha y hora']);
   }
   if (reg) f.push(['En seguimiento hasta', fLarga(deIso(st.segHasta))]);
@@ -108,7 +108,7 @@ export class Resumen {
         est: on ? 'on' : ok ? 'ok' : 'pend',
         hab: habilitada(st, n),
         editar: (ro ? 'Ver ' : 'Editar ') + nombre,
-        filas: on || ok || (n === 4 && !!st.agenda && st.agenda.estado !== 'no') ? FILAS[n](st) : [],
+        filas: on || ok || (n === 4 && conVia(st.agenda) && st.agenda.estado !== 'no') ? FILAS[n](st) : [],
       };
     });
   });

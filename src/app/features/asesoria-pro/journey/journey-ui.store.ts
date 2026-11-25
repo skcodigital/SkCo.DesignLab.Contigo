@@ -49,12 +49,16 @@ export class JourneyUiStore {
     this._salir.update((n) => n + 1);
   }
 
-  /** Cada incremento pide a Opciones resaltar la pregunta de renta exenta y llevar el foco a ella. */
-  private readonly _pedirRx = signal(0);
-  readonly pedirRx = this._pedirRx.asReadonly();
+  /** Modal de renta exenta (al elegir un retiro o desde «Ajustar» del IBC sin respuesta). */
+  private readonly _rxModal = signal(false);
+  readonly rxModal = this._rxModal.asReadonly();
 
   pedirRentaExenta(): void {
-    this._pedirRx.update((n) => n + 1);
+    this._rxModal.set(true);
+  }
+
+  cerrarRentaExenta(): void {
+    this._rxModal.set(false);
   }
 
   abrirDetalle(ct: string, tab: TabDetalle = 'contrato', credito?: 'combo'): void {

@@ -216,20 +216,22 @@ export class ConversacionesStore {
   }
 
   // ---- Reunión de seguimiento (también con el acompañamiento cerrado o sin cerrar) ----
-  /** Abrió la herramienta: queda pendiente confirmar si la agendó. */
-  registrarAgenda(via: HerramientaAgenda): void {
-    this.patch((s) => ({ agenda: { via, estado: 'pendiente', fecha: s.agenda?.fecha ?? '', hora: s.agenda?.hora ?? '' } }));
-  }
-
-  /** ¿La agendaste? Sí → pide fecha y hora; No → queda sin agendar. */
-  responderAgenda(si: boolean): void {
-    // Hora por defecto (10:00 a. m.): el asesor solo la cambia si quedó a otra hora
-    this.patch((s) => (s.agenda ? { agenda: { ...s.agenda, estado: si ? 'si' : 'no', hora: s.agenda.hora || HORA_AGENDA } } : {}));
-  }
-
-  /** Fecha u hora que indica el asesor: se guardan al escribirlas (con ambas, queda agendada). */
+  /** Fecha u hora elegidas (primero se eligen, luego la herramienta). Si ya se había agendado, hay que agendarla de nuevo. */
   fijarAgenda(campo: 'fecha' | 'hora', valor: string): void {
-    this.patch((s) => (s.agenda ? { agenda: { ...s.agenda, [campo]: valor } } : {}));
+    this.patch((s) => {
+      const base = s.agenda ?? { via: null, estado: 'borrador' as const, fecha: '', hora: HORA_AGENDA };
+      return { agenda: { ...base, [campo]: valor, via: null, estado: 'borrador' as const } };
+    });
+  }
+
+  /** Abrió la herramienta con la fecha y la hora elegidas: queda pendiente confirmar si la agendó. */
+  registrarAgenda(via: HerramientaAgenda): void {
+    this.patch((s) => (s.agenda?.fecha ? { agenda: { ...s.agenda, via, estado: 'pendiente' } } : {}));
+  }
+
+  /** ¿La agendaste? Sí → queda agendada; No → se puede intentar de nuevo. */
+  responderAgenda(si: boolean): void {
+    this.patch((s) => (s.agenda?.via ? { agenda: { ...s.agenda, estado: si ? 'si' : 'no' } } : {}));
   }
 
   anotarNotas(txt: string): void {

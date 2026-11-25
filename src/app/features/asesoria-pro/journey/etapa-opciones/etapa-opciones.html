@@ -16,14 +16,14 @@
           <svg ncIcono="info"></svg><span>El contrato {{ g.contrato }} ha generado <b>{{ g.monto }}</b> en rendimientos desde su apertura: {{ g.desde }}.</span>
         </p>
       }
-      <!-- Renta exenta: es un dato del cliente, se responde una vez y vale para todas las cajas (ninguna caja cambia otra) -->
+      <!-- Renta exenta: la pregunta vive en una modal (se abre al elegir un retiro); aquí solo la respuesta -->
       @if (conRx()) {
-        <div #rxCaja class="jw-rx-caja" [class.jw-rx-caja--falta]="rxFalta()" [class.jw-rx-caja--pide]="rxPedida()">
-          @if (rxPedida()) {
-            <p class="jw-rx-pide" role="alert"><svg ncIcono="alerta"></svg>Responde esta pregunta para poder ajustar el IBC.</p>
-          }
-          <nc-renta-exenta [k]="kRx()" parte="pregunta" />
-        </div>
+        <p class="jw-info jw-rx-res" role="status">
+          <svg ncIcono="info"></svg>
+          <span>Renta exenta: <b>{{ rxTxt() }}</b>&nbsp;·&nbsp;<button type="button" class="jw-link jw-ro-ok" (click)="abrirRx()">{{ st().rx ? 'Cambiar' : 'Responder' }}</button></span>
+        </p>
+      } @else if (rxNoAplica()) {
+        <p class="jw-info jw-rx-na" role="note"><svg ncIcono="info"></svg><span>Los aportes de este retiro ya cumplen: no aplica la pregunta de renta exenta.</span></p>
       }
       <!-- Desde 4 cajas, carrusel como las fichas de Situación (flechas y contador solo si hay más de las que caben) -->
       @if (carrusel() && hayMas()) {
@@ -66,3 +66,5 @@
     <button type="button" class="jw-btn jw-ro-ok" [disabled]="!pie()" (click)="continuar()">Continuar <svg ncIcono="flecha"></svg></button>
   </div>
 </section>
+<!-- Modal de renta exenta -->
+<nc-renta-exenta-modal [k]="kRx()" />

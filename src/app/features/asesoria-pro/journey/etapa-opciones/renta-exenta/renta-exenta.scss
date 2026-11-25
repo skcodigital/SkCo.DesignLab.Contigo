@@ -24,3 +24,14 @@ $v: ':host-context(#jm-velo)';
 #{$v} .jw-glosa{text-decoration:underline dotted;text-underline-offset:3px;cursor:help}
 
 @include controles.solo-lectura;
+
+// Desglose del retiro bajo la pregunta: qué parte entra en la renta exenta
+#{$v} .jw-rx-des{flex-basis:100%;display:flex;flex-direction:column;gap:6px;margin:4px 0 0;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.05);font-size:13px;line-height:18px}
+#{$v} .jw-rx-des>div{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+#{$v} .jw-rx-des dt{display:flex;flex-direction:column;color:var(--tx2)}
+#{$v} .jw-rx-des dt small{font-size:11px;line-height:15px;color:var(--tx3)}
+#{$v} .jw-rx-des dd{margin:0;font-weight:600;color:var(--tx);white-space:nowrap}
+#{$v} .jw-rx-des--clave dt{color:#fff;font-weight:600}
+#{$v} .jw-rx-des--clave dt small{color:var(--sk-color-primary);font-weight:600}
+#{$v} .jw-rx-des--tot{padding-top:6px;border-top:1px solid var(--bd)}
+#{$v} .jw-rx-des--tot dt{color:#fff;font-weight:600}

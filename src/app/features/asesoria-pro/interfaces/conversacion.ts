@@ -15,21 +15,25 @@ export type VistaAportes = 'resumen' | 'tabla';
 export type PeriodoRent = 'inicio' | '12' | '6' | '3';
 export type OrigenConv = 'mision' | 'catalogo' | 'historial';
 export type ProximoPaso = 'resumen';
-/** Herramienta donde el asesor agenda la reunión de seguimiento (la fecha y la hora se eligen allí). */
+/** Herramienta donde el asesor agenda la reunión de seguimiento (con la fecha y la hora que ya eligió). */
 export type HerramientaAgenda = 'google' | 'teams' | 'ios';
 /**
- * Como las herramientas no devuelven la fecha, el asesor la confirma:
- * pendiente (¿la agendaste?) → «si» (fecha y hora, se guardan solas) o «no».
+ * borrador (fecha y hora elegidas) → pendiente (abrió la herramienta: ¿la agendaste?) → «si» o «no».
+ * Si cambia la fecha o la hora después, vuelve a borrador: hay que agendarla de nuevo.
  */
-export type EstadoAgenda = 'pendiente' | 'si' | 'no';
+export type EstadoAgenda = 'borrador' | 'pendiente' | 'si' | 'no';
 
 export interface AgendaSeguimiento {
-  via: HerramientaAgenda;
+  /** Herramienta elegida; `null` mientras solo hay fecha y hora. */
+  via: HerramientaAgenda | null;
   estado: EstadoAgenda;
-  /** `AAAA-MM-DD` y `HH:MM` que indicó el asesor. */
+  /** `AAAA-MM-DD` y `HH:MM` que eligió el asesor (se envían a la herramienta). */
   fecha: string;
   hora: string;
 }
+
+/** Reunión con herramienta elegida. */
+export type AgendaConVia = AgendaSeguimiento & { via: HerramientaAgenda };
 
 export interface EstadoImpuestos {
   metodo: MetodoImpuesto;

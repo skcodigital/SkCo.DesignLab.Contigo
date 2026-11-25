@@ -11,13 +11,14 @@ import {
   viewChild,
 } from '@angular/core';
 import { Icono } from '@features/asesoria-pro/components/icono/icono';
-import { TEXTOS } from '../../constants/textos';
+import { RX_TXT, TEXTOS } from '../../constants/textos';
 import { ConversacionesStore } from '../../state/conversaciones.store';
 import {
   cajas,
   cred,
   prefEsRetiro,
   retiroPref,
+  esp,
   tocaNoExento,
 } from '../../utils/calculos';
 import { mesAnio, millones, pesos } from '../../utils/formato';
@@ -27,6 +28,7 @@ import { OpcionCredito } from './opcion-credito/opcion-credito';
 import { OpcionNoRetira } from './opcion-no-retira/opcion-no-retira';
 import { OpcionRetiro } from './opcion-retiro/opcion-retiro';
 import { RentaExenta } from './renta-exenta/renta-exenta';
+import { RentaExentaModal } from './renta-exenta-modal/renta-exenta-modal';
 import { JourneyUiStore } from '../journey-ui.store';
 
 /**
@@ -35,7 +37,7 @@ import { JourneyUiStore } from '../journey-ui.store';
  */
 @Component({
   selector: 'nc-etapa-opciones',
-  imports: [Icono, OpcionRetiro, OpcionCredito, OpcionCombo, OpcionNoRetira, RentaExenta],
+  imports: [Icono, OpcionRetiro, OpcionCredito, OpcionCombo, OpcionNoRetira, RentaExenta, RentaExentaModal],
   templateUrl: './etapa-opciones.html',
   styleUrl: './etapa-opciones.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -67,16 +69,6 @@ export class EtapaOpciones {
   });
 
   constructor() {
-    afterRenderEffect(() => {
-      const pedido = this.ui.pedirRx();
-      if (pedido === this.atendido) return;
-      this.atendido = pedido;
-      this.pedidaEn.set(pedido);
-      const caja = this.rxCaja()?.nativeElement;
-      if (!caja) return;
-      caja.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
-      caja.querySelector<HTMLButtonElement>('.jw-chips button:not(:disabled)')?.focus({ preventScroll: true });
-    });
     afterRenderEffect(() => {
       this.v();
       this.carrusel();
@@ -128,19 +120,22 @@ export class EtapaOpciones {
   /** Retiro sobre el que se pregunta la renta exenta (el elegido o, si no hay, el del monto). */
   protected readonly kRx = computed(() => (prefEsRetiro(this.st()) ? retiroPref(this.st()) : this.v().k));
   /** La pregunta de renta exenta se muestra si el retiro toca aportes no exentos. */
-  // ---- Pedido de responder la renta exenta (desde «Ajustar» del IBC) ----
-  private readonly rxCaja = viewChild<ElementRef<HTMLElement>>('rxCaja');
-  private readonly pedidaEn = signal(0);
-  /** La pregunta queda resaltada desde que se pide hasta que se responde. */
-  protected readonly rxPedida = computed(() => this.pedidaEn() > 0 && !this.st().rx);
-  /** Eligió una opción con retiro y aún no responde la renta exenta (se marca en verde). */
-  protected readonly rxFalta = computed(() => prefEsRetiro(this.st()) && !this.st().rx && !this.ro());
-  private atendido = this.ui.pedirRx();
+  /** Respuesta de la renta exenta para el resumen sobre las cajas. */
+  protected readonly rxTxt = computed(() => {
+    const rx = this.st().rx;
+    return rx ? RX_TXT[rx] : 'Sin responder';
+  });
+
+  protected abrirRx(): void {
+    this.ui.pedirRentaExenta();
+  }
 
   protected readonly conRx = computed(() => {
     const st = this.st();
     return tocaNoExento(st, prefEsRetiro(st) ? retiroPref(st) : this.v().k);
   });
+  /** Sin aportes por los que preguntar (y sin condición especial): se avisa que no aplica. */
+  protected readonly rxNoAplica = computed(() => !this.conRx() && !esp(this.st()));
   protected readonly pie = computed(() => etapa3Completa(this.st()) || this.ro());
   /** Nombre personalizado del contrato o, si no tiene, su número (va en negrita en el título). */
   protected readonly contratoTit = computed(() => this.v().c.nom || this.v().c.num);

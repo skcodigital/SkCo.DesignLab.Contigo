@@ -1,0 +1,115 @@
+// Modal de renta exenta: misma caja grafito que las modales del modo misión.
+.rxm-velo {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(28, 28, 28, 0.82);
+}
+.rxm {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 560px;
+  max-width: 100%;
+  max-height: calc(100% - 32px);
+  overflow: auto;
+  padding: 28px 28px 24px;
+  border: 1px solid var(--sk-color-text-4);
+  border-radius: 16px;
+  background: #363636;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  font-family: var(--sk-font-body);
+  color: var(--sk-color-mission-text);
+
+  h2 {
+    margin: -6px 0 0;
+    font-family: var(--sk-font-heading);
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 700;
+    color: #fff;
+  }
+}
+.rxm-x {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  padding: 2px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: var(--sk-color-primary);
+  cursor: pointer;
+}
+.rxm-eb {
+  margin: 0;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--sk-color-primary);
+}
+.rxm-adv {
+  margin: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--warnb, rgba(240, 181, 74, 0.45));
+  border-radius: 10px;
+  background: var(--warn, rgba(240, 181, 74, 0.08));
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--sk-color-mission-text);
+}
+.rxm-pie {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 4px;
+}
+.rxm-ok,
+.rxm-sec {
+  min-height: 36px;
+  padding: 6px 20px;
+  border-radius: 9999px;
+  font-family: var(--sk-font-heading);
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.rxm-ok {
+  border: 0;
+  background: var(--sk-color-primary);
+  color: var(--sk-color-mission-bg, #1b1b1b);
+}
+.rxm-ok:disabled {
+  background: var(--sk-color-text-4);
+  color: var(--sk-color-mission-text-2, #cfcfcf);
+  cursor: default;
+}
+.rxm-sec {
+  border: 1px solid var(--sk-color-primary);
+  background: transparent;
+  color: var(--sk-color-primary);
+}
+.rxm-x:focus-visible,
+.rxm-ok:focus-visible,
+.rxm-sec:focus-visible {
+  outline: 2px solid var(--sk-color-info);
+  outline-offset: 2px;
+}
+@media (max-width: 600px) {
+  .rxm {
+    padding: 28px 16px 20px;
+  }
+  .rxm-pie button {
+    flex: 1 1 0;
+    min-height: 44px;
+  }
+}

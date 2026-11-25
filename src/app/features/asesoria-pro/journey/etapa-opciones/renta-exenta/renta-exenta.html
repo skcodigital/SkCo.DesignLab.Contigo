@@ -1,17 +1,19 @@
 @if (parte() !== 'advertencia') {
-<div class="jw-rx" [class.jw-rx--pide]="pide()" role="group" [attr.aria-label]="'¿El valor total del retiro: ' + valor() + ' se usaron como renta exenta?'">
-  <span class="jw-rx-t">¿El valor total del retiro: <b>{{ valor() }}</b> se usaron como renta exenta?</span>
-  <button type="button" class="jw-i jw-ro-ok" aria-label="Qué aportes toca el retiro" [attr.aria-expanded]="st().rxInfo" (click)="alternarInfo()">
-    <svg ncIcono="info"></svg>
-  </button>
+<!-- Se pregunta solo por los aportes que pueden haberse declarado como renta exenta (2017 en adelante, sin rendimientos) -->
+<div class="jw-rx" [class.jw-rx--pide]="pide()" role="group" [attr.aria-label]="pregunta()">
+  <span class="jw-rx-t">¿Tu cliente declaró como renta exenta los aportes{{ anios() ? ' de ' + anios() : '' }} (<b>{{ montoPregunta() }}</b>) que salen en este retiro?</span>
   <span class="jw-chips jw-chips--xs">
     @for (o of opciones; track o[0]) {
       <button type="button" [attr.aria-pressed]="st().rx === o[0]" [disabled]="ro()" (click)="responder(o[0])">{{ o[1] }}</button>
     }
   </span>
-  @if (st().rxInfo) {
-    <p class="jw-pop" role="note">{{ anios() }}</p>
-  }
+  <!-- De qué está hecho el retiro: solo una parte entra en la pregunta -->
+  <dl class="jw-rx-des">
+    @for (d of desglose(); track d.t) {
+      <div [class.jw-rx-des--clave]="d.clave"><dt>{{ d.t }}<small>{{ d.nota }}</small></dt><dd>{{ d.v }}</dd></div>
+    }
+    <div class="jw-rx-des--tot"><dt>Valor total del retiro</dt><dd>{{ total() }}</dd></div>
+  </dl>
 </div>
 }
 @if (parte() !== 'pregunta') {
