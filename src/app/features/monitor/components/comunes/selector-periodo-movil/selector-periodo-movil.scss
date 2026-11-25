@@ -1,0 +1,89 @@
+@use '../estilos/produccion' as prod;
+
+:host {
+  display: block;
+}
+
+// `d-flex gap-1 justify-content-center align-items-center position-relative w-100`
+.fila {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+// `sk-btn sk-b3 pill-period`
+.pildora {
+  @include prod.sk-btn;
+  border: 1px solid var(--sk-color-primary);
+  border-radius: 20px;
+  padding: 4px 8px;
+  font-size: 12px;
+  color: var(--sk-color-primary);
+  background: white;
+  white-space: nowrap;
+  flex: 1;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+
+  &.activa {
+    background: #ecfdf3;
+    color: var(--sk-color-primary);
+    border: 1px solid var(--sk-color-primary);
+  }
+}
+
+.boton-icono {
+  @include prod.boton-icono;
+}
+
+// `.icon-circle-outline`
+.circulo {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  background-color: white;
+  color: var(--sk-color-primary);
+  border: 1px solid var(--sk-color-primary);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+// `.mobile-options-dropdown`
+.opciones {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  z-index: 1000;
+  min-width: 200px;
+  overflow: hidden;
+}
+
+// `.mobile-option-item`
+.opcion {
+  font-family: var(--sk-font-body);
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  text-align: left;
+  background: white;
+  border: none;
+  font-size: 13px;
+  color: var(--sk-color-text);
+  cursor: pointer;
+
+  &:hover,
+  &.activa {
+    background: #f3fce3;
+    font-weight: 400;
+  }
+}

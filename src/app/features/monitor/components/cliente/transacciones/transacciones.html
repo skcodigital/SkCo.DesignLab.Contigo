@@ -1,0 +1,108 @@
+@let f = fila();
+<nc-mon-modal variante="contigo" etiqueta="transactions" (cerrar)="cerrar.emit()">
+  <div class="contenido">
+    <button type="button" class="cerrar" aria-label="Cerrar" (click)="cerrar.emit()">
+      <nc-mon-icono nombre="cerrar" />
+    </button>
+
+    <div class="tarjeta">
+      <div class="cabecera">
+        <div class="resumen">
+          <p class="titulo">
+            Comportamiento del portafolio:
+            <b>{{ f.nombre }}</b>
+          </p>
+          <div class="valores">
+            @if (f.vupCompra !== null) {
+              <p class="valor">
+                <span class="sigla" ncMonTooltip="Valor promedio de compra" tooltipPosicion="bottom">VUPC:</span>
+                ${{ valor(f.vupCompra) }}
+                @if (f.variacionCompra) {
+                  <span
+                    class="variacion"
+                    [class.positiva]="f.variacionCompra > 0"
+                    [class.negativa]="f.variacionCompra < 0"
+                    ncMonTooltip="Variación del valor promedio de compra vs el valor de unidad actual. Indica si la posición está en ganancia o pérdida."
+                    tooltipPosicion="bottom"
+                  >
+                    {{ variacion(f.variacionCompra) }}%
+                    <nc-mon-icono class="flecha" [nombre]="f.variacionCompra > 0 ? 'flecha-sube' : 'flecha-baja'" />
+                  </span>
+                }
+              </p>
+            }
+            @if (f.vupVenta !== null) {
+              <p class="valor">
+                <span class="sigla" ncMonTooltip="Valor promedio de venta" tooltipPosicion="bottom">VUPV:</span>
+                ${{ valor(f.vupVenta) }}
+                @if (f.variacionVenta) {
+                  <span
+                    class="variacion"
+                    [class.positiva]="f.variacionVenta > 0"
+                    [class.negativa]="f.variacionVenta < 0"
+                    ncMonTooltip="Variación del valor promedio de venta vs el valor promedio de compra. Refleja el desempeño histórico de los retiros."
+                    tooltipPosicion="bottom"
+                  >
+                    {{ variacion(f.variacionVenta) }}%
+                    <nc-mon-icono class="flecha" [nombre]="f.variacionVenta > 0 ? 'flecha-sube' : 'flecha-baja'" />
+                  </span>
+                }
+              </p>
+            }
+            <p class="valor">
+              <span class="sigla" ncMonTooltip="Valor unidad actual" tooltipPosicion="bottom">VUA:</span>
+              ${{ valor(f.valorUnidad) }}
+            </p>
+          </div>
+        </div>
+
+        <div class="herramientas">
+          @if (conDevoluciones()) {
+            <div class="devoluciones">
+              <p class="texto-devoluciones">Ocultar devoluciones</p>
+              <div class="interruptor">
+                <input
+                  class="casilla"
+                  type="checkbox"
+                  role="switch"
+                  aria-label="Ocultar devoluciones"
+                  [checked]="ocultarDevoluciones()"
+                  (change)="ocultarDevoluciones.set(!ocultarDevoluciones())"
+                />
+              </div>
+            </div>
+          }
+          <nc-mon-personalizar-columnas [grupo]="casillas" [(columnasVisibles)]="columnas" />
+          <button type="button" class="copiar" aria-label="Copiar tabla" ncMonTooltip="Copiar tabla" (click)="copiar()">
+            <nc-mon-icono nombre="copiar" />
+          </button>
+          <button
+            type="button"
+            class="orientacion"
+            aria-label="Cambiar orientación"
+            ncMonTooltip="Cambiar orientación"
+            [class.girado]="!horizontal()"
+            (click)="horizontal.set(!horizontal())"
+          >
+            <nc-mon-icono nombre="intercambiar" />
+          </button>
+        </div>
+      </div>
+
+      <div class="cuerpo" [class.horizontal]="horizontal()">
+        @if (sinDatos()) {
+          <div class="contenedor-grafica vacio">
+            <p class="sin-datos">Sin información para el período seleccionado</p>
+          </div>
+        } @else {
+          <div class="contenedor-grafica">
+            <nc-mon-grafica class="grafica" [opciones]="opcionesGrafica()" />
+          </div>
+        }
+        <div class="contenedor-tabla">
+          <nc-mon-tabla [opciones]="opcionesTabla()" />
+        </div>
+      </div>
+    </div>
+  </div>
+</nc-mon-modal>

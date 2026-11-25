@@ -28,6 +28,8 @@ visual que se lleva a producción. Cómo correrlo, el despliegue y la estructura
 | `features/asesoria-pro`: la pestaña en modo misión       | Pestaña Planeación Pro de la ficha: `SkCo.WealthPlanning.Contigo.Angular`   |
 | `features/asesoria-pro/journey`: «Acompañamiento en el retiro» | El acompañamiento: `SkCo.WealthPlanningJourney.Contigo.Angular`       |
 | `shared/components/descartar-mision-modal`               | La misma especificación en la pestaña y en el widget del Home              |
+| `features/monitor`: Monitor del cliente (`/ficha/monitor`) | `SkCo.Monitor.Contigo.Angular` (Azure DevOps). Brief: [docs/MONITOR.md](docs/MONITOR.md) |
+| `features/monitor`: Monitor exterior (`/monitor`)        | `SkCo.MonitorExterior.Contigo.Angular` (Azure DevOps)                       |
 | `features/ficha-cliente`, `features/login`, `features/radiografia` | Fuera de Planeación Pro: los equipos dueños de esos módulos en Contigo |
 
 1. Diseño cierra el ajuste en `laboratory`, se revisa en Pages y pasa a `main` por PR.

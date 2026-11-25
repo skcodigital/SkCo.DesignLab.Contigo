@@ -1,0 +1,35 @@
+@let d = datos();
+<div class="fila">
+  <div class="tarjeta composicion">
+    <p class="titulo">Clase de activos</p>
+    <nc-mon-composicion-clases [porciones]="d.composicion" [vista]="vista()" />
+  </div>
+
+  <div class="tarjeta tendencia">
+    <div class="cabecera-tendencia">
+      <p class="titulo">Tendencia</p>
+      <div class="selectores">
+        <nc-mon-seleccion
+          [opciones]="opcionesPeriodo"
+          [seleccionado]="seleccionado()"
+          [vista]="vista()"
+          (seleccion)="seleccionado.set(+$event)"
+        />
+        <nc-mon-selector-fechas
+          [class.oculto]="seleccionado() !== personalizado"
+          [rangoInicial]="rango()"
+          [hoy]="hoy()"
+          [vista]="vista()"
+          (rangoCambio)="rango.set($event)"
+        />
+      </div>
+    </div>
+    <nc-mon-grafica-lineas-compacta
+      [etiquetas]="d.etiquetas"
+      [series]="d.series"
+      [yMin]="d.yMin"
+      [yMax]="d.yMax"
+      [vista]="vista()"
+    />
+  </div>
+</div>

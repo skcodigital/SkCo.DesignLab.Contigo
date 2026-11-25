@@ -1,0 +1,164 @@
+@use 'sass:map';
+@use '../estilos/produccion' as prod;
+
+:host {
+  display: block;
+}
+
+// `.content.d-flex.align-items-center` + `mt-3` (o `mt-0` con el chevron a la derecha)
+.contenido {
+  display: flex;
+  align-items: center;
+
+  &.con-margen {
+    margin-top: 16px;
+  }
+}
+
+// El Monitor del cliente deja `mb-2` bajo el encabezado.
+:host(.vista-cliente) .contenido {
+  margin-bottom: 8px;
+}
+
+// Ícono de la sección (`sk-gray icon-custom`, 23px de ancho)
+.icono-izquierda {
+  width: 23px;
+  color: var(--sk-color-text);
+  cursor: pointer;
+}
+
+// `d-flex justify-content-between w-100 cursor-pointer`
+.cabecera {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  cursor: pointer;
+}
+
+// `d-inline-flex align-items-center gap-1 sk-b1 fw-bold m-0`
+.grupo-titulo {
+  @include prod.sk-b1;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 700;
+}
+
+// `a.text-decoration-none.btn-no-hover.sk-gray.d-flex.align-items-center`
+.enlace {
+  display: flex;
+  align-items: center;
+  color: var(--sk-color-text);
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+// `p.sk-b2.fw-bold.mb-0.me-2.text-grey-sk-00`
+.titulo {
+  @include prod.sk-b2;
+  font-weight: 700;
+  margin-right: 8px;
+  color: var(--sk-color-text);
+}
+
+// `p.text-body-3.mb-0.me-2.sk-gray`
+.subtitulo {
+  @include prod.texto-cuerpo-3;
+  margin-right: 8px;
+  color: var(--sk-color-text);
+}
+
+// Chevron verde (`sk-green ms-1 icon-custom`)
+.chevron {
+  display: flex;
+  margin-left: 4px;
+  color: var(--sk-color-primary);
+  cursor: pointer;
+}
+
+.chevron-titulo {
+  font-size: 8px;
+}
+
+.chevron-derecha {
+  font-size: 13px;
+}
+
+.derecha {
+  display: flex;
+}
+
+// `tag-badge text-body-3 bold bg-{tipo}-sk text-{tipo}-sk p-1 ms-2`
+.etiqueta {
+  @include prod.texto-cuerpo-3;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 4px;
+  margin-left: 8px;
+}
+
+@each $tipo, $fondo in prod.$fondos-aviso {
+  .tipo-#{$tipo} {
+    background-color: $fondo;
+    color: map.get(prod.$textos-aviso, $tipo);
+  }
+}
+
+// `.dropdown-new-dot.ms-1`
+.punto-nuevo {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  vertical-align: middle;
+  margin-bottom: 2px;
+  margin-left: 4px;
+  background-color: var(--sk-color-info);
+  animation: latido 1.8s ease-in-out infinite;
+}
+
+@keyframes latido {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.6);
+    opacity: 0.55;
+  }
+}
+
+// `.sk-collapse`
+.colapsable {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.abierto {
+    overflow: visible;
+    max-height: 1500px;
+    opacity: 1;
+  }
+}
+
+// `.card.card-body.border-0.p-0`
+.tarjeta {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  border-radius: 0.375rem;
+}

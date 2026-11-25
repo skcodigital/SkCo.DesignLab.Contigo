@@ -1,0 +1,35 @@
+<div class="selectores">
+  <div class="ancho">
+    <nc-mon-seleccion [opciones]="clasificaciones()" [seleccionado]="clasificacion()" (seleccion)="clasificacion.set('' + $event)" />
+  </div>
+  <div class="ancho">
+    <nc-mon-seleccion [opciones]="perfiles()" [seleccionado]="perfil()" (seleccion)="perfil.set('' + $event)" />
+  </div>
+</div>
+
+<div class="inactivos">
+  <div class="texto-inactivos">
+    <span class="texto">Mostrar desactualizados y/o inactivos</span>
+    <nc-mon-icono
+      class="icono-info"
+      nombre="circulo-exclamacion"
+      [ncMonTooltip]="'Fondos cuya última fecha de valor unitario supera los 30 días calendario'"
+    />
+  </div>
+  <div class="interruptor">
+    <input
+      class="casilla"
+      type="checkbox"
+      role="switch"
+      aria-label="Mostrar desactualizados y/o inactivos"
+      [checked]="mostrarInactivos()"
+      (change)="mostrarInactivos.set(!mostrarInactivos())"
+    />
+  </div>
+</div>
+
+<div class="buscador">
+  <nc-mon-buscador placeholder="Busca portafolios" (criterio)="termino.set($event)" />
+</div>
+
+<nc-mon-casillas-tarjeta [grupo]="grupo()" [filtro]="termino()" [valores]="valores()" (valoresChange)="marcar($event)" />

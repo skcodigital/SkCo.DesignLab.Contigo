@@ -1,0 +1,49 @@
+<div class="contenido" [class.con-margen]="!iconoDerecha()">
+  @if (icono(); as nombre) {
+    <span class="icono-izquierda" [style.font-size]="tamanoIcono()">
+      <nc-mon-icono [nombre]="nombre" />
+    </span>
+  }
+
+  <div class="cabecera" (click)="alternar()">
+    <div class="grupo-titulo">
+      <a class="enlace" role="button">
+        <div class="textos">
+          <p class="titulo">{{ titulo() }}</p>
+          @if (subtitulo()) {
+            <p class="subtitulo">{{ subtitulo() }}</p>
+          }
+        </div>
+
+        @if (!iconoDerecha()) {
+          <span class="chevron chevron-titulo">
+            <nc-mon-icono [nombre]="colapsado() ? 'chevron-abajo' : 'chevron-arriba'" />
+          </span>
+        }
+
+        @if (etiqueta(); as e) {
+          @if (mostrarEtiqueta()) {
+            <span class="etiqueta" [class]="'tipo-' + e.tipo">{{ e.texto }}</span>
+          }
+        }
+
+        @if (conPunto()) {
+          <span class="punto-nuevo"></span>
+        }
+      </a>
+    </div>
+    <div class="derecha">
+      @if (iconoDerecha()) {
+        <span class="chevron chevron-derecha">
+          <nc-mon-icono [nombre]="colapsado() ? 'chevron-derecha' : 'chevron-izquierda'" />
+        </span>
+      }
+    </div>
+  </div>
+</div>
+
+<div class="colapsable" [class.abierto]="!colapsado()">
+  <div class="tarjeta">
+    <ng-content />
+  </div>
+</div>

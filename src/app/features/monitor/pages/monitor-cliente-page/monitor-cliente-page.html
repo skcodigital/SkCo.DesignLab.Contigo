@@ -1,0 +1,220 @@
+@let contratos = store.esContratos();
+@let periodo = store.periodoActual();
+
+<!-- Solo en móvil (≤576px) -->
+<div class="mensaje-movil">
+  <nc-mon-icono class="icono-pc" nombre="portatil" />
+  <p class="texto-movil">
+    Para tu mayor comodidad encuentra la información completa sobre la composición y comportamiento de los
+    {{ contratos ? 'contratos' : 'portafolios' }} en la versión de escritorio.
+  </p>
+</div>
+
+<div class="contenido">
+  @if (contratos) {
+    <div class="fila-aviso">
+      <nc-mon-aviso-cliente>
+        <p class="aviso-negrita">
+          En la gráfica de comportamiento e indicadores de contrato visualizarás únicamente los productos MFUND y FICS.
+        </p>
+        <p class="aviso-texto">En Portafolios encontrarás los demás productos disponibles.</p>
+      </nc-mon-aviso-cliente>
+    </div>
+  }
+
+  <div class="fila fila-controles">
+    <div class="col-cambio">
+      <nc-mon-cambio-vista [esContratos]="contratos" (cambiar)="store.cambiarVista()" />
+    </div>
+    <div class="col-acciones">
+      @if (!esMovil()) {
+        <nc-mon-acciones-periodo
+          [periodo]="periodo.periodo"
+          [insignia]="store.insignia()"
+          [rangoPersonalizado]="periodo.personalizado"
+          [hoy]="store.hoy"
+          (periodoCambio)="store.elegirPeriodo($event)"
+          (rangoCambio)="store.elegirRango($event)"
+        />
+      }
+      @if (!contratos) {
+        <nc-mon-filtro-portafolios
+          class="solo-escritorio"
+          [grupos]="datos.gruposFiltro()"
+          (filtrar)="store.filtrar($event)"
+        />
+      }
+      @if (!esMovil()) {
+        <nc-mon-boton-comparar
+          [seleccion]="store.borrador()"
+          [hoy]="store.hoy"
+          (seleccionCambio)="store.editarBorrador($event)"
+          (aplicar)="store.aplicarComparacion()"
+          (borrar)="store.borrarComparacion()"
+        />
+      }
+      <div class="pantallazo solo-escritorio">
+        <button
+          type="button"
+          class="boton-pantallazo"
+          [attr.aria-label]="textos.tooltipPantallazo"
+          [ncMonTooltip]="textos.tooltipPantallazo"
+          tooltipPosicion="bottom"
+          (click)="sinDescargas()"
+        >
+          <nc-mon-icono nombre="camara" />
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gráficas -->
+  <div class="fila">
+    <div class="col-torta">
+      @if (store.conError()) {
+        <nc-mon-error-servicio />
+      } @else {
+        <div class="tarjeta-torta">
+          @if (contratos) {
+            <nc-mon-grafica-torta [datos]="datos.tortaContratos()" />
+          } @else {
+            <nc-mon-grafica-torta [datos]="datos.tortaPortafolios()" titulo="Composición" />
+          }
+        </div>
+      }
+    </div>
+
+    @if (esMovil()) {
+      <div class="acciones-movil">
+        <nc-mon-acciones-periodo
+          [periodo]="periodo.periodo"
+          [insignia]="store.insignia()"
+          [rangoPersonalizado]="periodo.personalizado"
+          [hoy]="store.hoy"
+          (periodoCambio)="store.elegirPeriodo($event)"
+          (rangoCambio)="store.elegirRango($event)"
+        />
+        <nc-mon-boton-comparar
+          [seleccion]="store.borrador()"
+          [hoy]="store.hoy"
+          (seleccionCambio)="store.editarBorrador($event)"
+          (aplicar)="store.aplicarComparacion()"
+          (borrar)="store.borrarComparacion()"
+        />
+      </div>
+    }
+
+    <div class="col-lineas">
+      @if (store.conError()) {
+        <nc-mon-error-servicio />
+      } @else if (contratos) {
+        <nc-mon-grafica-contratos
+          [contratos]="datos.contratosGrafica()"
+          [modoTasa]="store.modoTasa()"
+          [sinProductos]="datos.sinProductos()"
+          [mensajeSinProductos]="datos.mensajeSinProductos()"
+          [detallePunto]="store.detallePunto"
+          [hoy]="store.hoy"
+          (quitarSerie)="store.retirarActivo($event)"
+          (seriesOcultas)="store.ocultarSeries($event)"
+        />
+      } @else {
+        @let g = datos.datosGraficaPortafolios();
+        <div class="contenedor-portafolios">
+          <nc-mon-grafica-lineas
+            [etiquetas]="g.etiquetas"
+            [series]="g.series"
+            [yMin]="g.yMin"
+            [yMax]="g.yMax"
+            [esPortafolio]="true"
+            (quitarSerie)="store.retirarActivo($event)"
+            (seriesOcultas)="store.ocultarSeries($event)"
+          />
+          @if (datos.sinPortafolios()) {
+            <nc-mon-grafica-sin-datos [mensaje]="textos.sinPortafolios" />
+          }
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Tablas -->
+  @if (!store.conError()) {
+    <div class="fila fila-tablas">
+      @if (datos.tablaMezclas(); as mezclas) {
+        <nc-mon-seccion-comparados
+          [titulo]="datos.tituloMezclas()"
+          [opciones]="mezclas"
+          [conDescripcion]="!contratos"
+          [avisoNormalizacion]="store.modoTasa()"
+          [notaCdt]="datos.hayCdtEnTabla()"
+          (accionCelda)="alNombreComparado($event)"
+          (accionFila)="alRetirar($event)"
+        />
+      }
+
+      @if (contratos) {
+        <nc-mon-seccion-indicadores
+          vista="contratos"
+          [opciones]="datos.tablaContratos()"
+          [titulo]="store.titulo()"
+          [etiquetaPeriodo]="store.etiquetaPeriodo()"
+          [casillas]="datos.casillasContratos()"
+          [columnas]="store.columnas().contratos"
+          [tirCero]="datos.tirCero()"
+          (aplicarColumnas)="store.guardarColumnas($event)"
+          (accionCelda)="alNombreContrato($event)"
+          (accionFila)="alRetirar($event)"
+        />
+      } @else {
+        @if (datos.tablaCompararPortafolios(); as comparar) {
+          <nc-mon-seccion-comparados
+            titulo="Indicadores para comparar"
+            [opciones]="comparar"
+            [conDescripcion]="true"
+            (accionCelda)="alNombrePortafolioComparado($event)"
+            (accionFila)="alRetirar($event)"
+          />
+        }
+        <nc-mon-seccion-indicadores
+          vista="portafolios"
+          [opciones]="datos.tablaPortafolios()"
+          [titulo]="store.titulo()"
+          [etiquetaPeriodo]="store.etiquetaPeriodo()"
+          [casillas]="casillasPortafolios"
+          [columnas]="store.columnas().portafolios"
+          [fechaCorte]="datos.fechaCorte()"
+          (aplicarColumnas)="store.guardarColumnas($event)"
+          (accionCelda)="alCeldaPortafolio($event)"
+          (accionFila)="alAccionPortafolio($event)"
+        />
+      }
+    </div>
+  }
+</div>
+
+<div class="legales">
+  <p class="legal">
+    La información de portafolios del mercado proviene de fuentes públicas disponibles. Las comparaciones se realizan
+    con base en valores de unidad publicados, los cuales pueden reflejar metodologías, comisiones, gastos y políticas
+    de inversión diferentes entre administradores. Esta información es descriptiva y no constituye una recomendación de
+    inversión.
+  </p>
+  <br />
+  <p class="legal">{{ contratos ? textos.disclaimers.contratos : textos.disclaimers.portafolios }}</p>
+</div>
+
+@if (store.detalle(); as d) {
+  <nc-mon-detalle [activo]="d.activo" [ocultarTir]="d.ocultarTir" [hoy]="store.hoy" (cerrar)="store.cerrarDetalle()" />
+}
+
+@if (transaccion(); as t) {
+  <nc-mon-transacciones
+    [portafolio]="t.portafolio"
+    [fila]="t.fila"
+    [rango]="store.periodos().portafolios.rango"
+    [productos]="store.productos"
+    [hoy]="store.hoy"
+    (cerrar)="store.cerrarTransacciones()"
+  />
+}

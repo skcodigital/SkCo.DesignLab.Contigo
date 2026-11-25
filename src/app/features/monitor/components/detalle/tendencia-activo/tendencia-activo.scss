@@ -1,0 +1,59 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+// `content w-100 d-flex`
+.fila {
+  display: flex;
+  width: 100%;
+}
+
+// `container-default d-flex flex-column gap-2 p-16-24`
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-radius: 16px;
+  padding: 16px 24px;
+  background: var(--sk-color-surface-2);
+}
+
+@media (max-width: 767px) {
+  .tarjeta {
+    border-radius: 0;
+    background: transparent;
+  }
+}
+
+.composicion {
+  width: 40%;
+}
+
+.tendencia {
+  width: 60%;
+}
+
+// `title-h4`
+.titulo {
+  font-family: var(--sk-font-heading);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 26px;
+}
+
+.cabecera-tendencia {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.selectores {
+  display: flex;
+  gap: 8px;
+}
+
+.oculto {
+  display: none;
+}

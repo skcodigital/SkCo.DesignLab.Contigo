@@ -1,0 +1,57 @@
+<div class="cabecera">
+  <div>
+    <p class="periodo">
+      <nc-mon-icono class="calendario" nombre="calendario" />
+      Periodo seleccionado: {{ nombrePeriodo() }}
+    </p>
+  </div>
+  <div class="acciones">
+    <nc-mon-personalizar-columnas
+      [grupo]="casillas"
+      [siempreVisibles]="siempreVisibles"
+      [(columnasVisibles)]="columnas"
+    />
+    <button type="button" class="copiar" [ncMonTooltip]="textoCopiar" (click)="copiar()">
+      <nc-mon-icono nombre="copiar" />
+    </button>
+  </div>
+</div>
+
+@if (conCdt()) {
+  <div class="aviso-cdt">
+    <nc-mon-icono class="icono-aviso" nombre="circulo-exclamacion" />
+    <p class="texto-aviso">{{ avisoCdt }}</p>
+  </div>
+}
+
+<!-- Escritorio: tabla completa -->
+<div class="contenedor-tabla">
+  <nc-mon-tabla
+    #tabla
+    vista="exterior"
+    [opciones]="opciones()"
+    (accionCelda)="alAccionCelda($event)"
+    (accionFila)="alAccionFila($event)"
+  />
+</div>
+
+<!-- Móvil: listado -->
+<div class="lista-movil">
+  @for (f of filas(); track f.clave) {
+    <nc-mon-item-comparacion
+      [fila]="f"
+      [expandido]="expandido(f.clave)"
+      [conDetalle]="conDetalle(f.clave)"
+      [conCdt]="conCdt()"
+      (alternar)="alternar(f.clave)"
+      (masInformacion)="verDetalle.emit(f.clave)"
+    />
+  }
+</div>
+
+@if (conCdt()) {
+  <span class="disclaimer">
+    Los valores iniciales y finales de CDTs corresponden al cálculo de la tasa promedio ponderada. Los demás cálculos
+    presentados en la tabla se realizan con base en estos valores.
+  </span>
+}

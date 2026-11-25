@@ -1,0 +1,41 @@
+@use '../../comunes/estilos/produccion' as prod;
+@use '../estilos/listas';
+
+:host {
+  display: block;
+}
+
+// `list-group box-grid`: en el cliente 4 columnas con 5px de separación y sin scroll (el `overflow: hidden` de
+// la grilla gana al de la lista).
+.lista {
+  @include listas.lista(30vh);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  overflow: hidden;
+}
+
+// Exterior: `mt-3` y la grilla global de 3 columnas con 8px; el scroll de la lista gana.
+:host(.vista-exterior) {
+  margin-top: 16px;
+
+  .lista {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
+
+// `list-group-item list-group-item-action d-flex align-items-center mb-2 p-2 box-default`
+.item {
+  @include listas.item;
+  align-items: center;
+}
+
+// `sk-b3 sk-gray m-0` (`text-grey-sk-00` en el cliente: el mismo #404040)
+.texto-item {
+  @include prod.sk-b3;
+  color: var(--sk-color-text);
+  text-align: left;
+}

@@ -1,0 +1,91 @@
+<div class="panel">
+  <div class="cabecera">
+    <h3 class="titulo">Asistente</h3>
+    <!-- Propio del laboratorio: en producción el asistente es del portal y se cierra desde allá. -->
+    <button type="button" class="cerrar" aria-label="Cerrar asistente" (click)="cerrar.emit()">
+      <nc-mon-icono nombre="cerrar" />
+    </button>
+  </div>
+
+  <div #contenido class="contenido">
+    @if (mensajes().length === 0) {
+      <div class="bienvenida">
+        <div class="destello">
+          <span>✨</span>
+        </div>
+        <h4 class="titulo-bienvenida">Hola, ¿qué quieres hacer hoy?</h4>
+        <p class="descripcion">
+          Soy tu asistente y te puedo ayudar a comparar, graficar y analizar portafolios, mezclas, divisas e
+          indicadores.
+        </p>
+      </div>
+
+      <div class="acciones">
+        @for (accion of acciones; track accion.clave) {
+          <button type="button" class="accion" (click)="accionRapida(accion)">
+            <nc-mon-icono class="icono-accion" [nombre]="accion.icono" />
+            <span class="texto-accion">{{ accion.texto }}</span>
+          </button>
+        }
+      </div>
+    } @else {
+      <div class="mensajes">
+        @for (mensaje of mensajes(); track mensaje.id) {
+          @if (mensaje.remitente === 'usuario') {
+            <div class="fila de-usuario">
+              <div class="burbuja burbuja-usuario">
+                <p class="texto-mensaje">{{ mensaje.texto }}</p>
+              </div>
+            </div>
+          } @else {
+            <div class="fila de-asistente">
+              <div class="burbuja burbuja-asistente">
+                <p class="texto-mensaje">{{ mensaje.texto }}</p>
+              </div>
+            </div>
+          }
+        }
+        @if (escribiendo()) {
+          <div class="fila de-asistente">
+            <div class="escribiendo">
+              <div class="texto-escribiendo">
+                <span>Escribiendo</span>
+                <span class="puntos">
+                  <span class="punto"></span>
+                  <span class="punto"></span>
+                  <span class="punto"></span>
+                </span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="pie">
+    <div class="envoltura">
+      <textarea
+        #campo
+        class="campo"
+        rows="1"
+        aria-label="Mensaje para el asistente"
+        placeholder="Ejemplo: Grafica el IBR, Dólar y Bonos Colombia Plus..."
+        [value]="texto()"
+        [disabled]="escribiendo()"
+        (input)="texto.set(campo.value)"
+        (keydown.enter)="alEnter($event)"
+      ></textarea>
+      <button
+        type="button"
+        class="enviar"
+        aria-label="Enviar"
+        [class.activo]="!!texto()"
+        [disabled]="escribiendo()"
+        (click)="enviarTexto()"
+      >
+        <nc-mon-icono nombre="flecha-arriba" />
+      </button>
+    </div>
+  </div>
+</div>

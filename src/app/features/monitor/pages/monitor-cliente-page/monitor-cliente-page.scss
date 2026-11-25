@@ -1,0 +1,195 @@
+@use '../../components/comunes/estilos/produccion' as prod;
+
+// Página del Monitor del cliente (`page.component.scss` de producción). Las filas y columnas de Bootstrap se
+// expresan con flex y los mismos anchos (`col-md-5/7`, `col-md-4/8`) y espaciados.
+
+:host {
+  display: block;
+  color: var(--sk-color-text);
+}
+
+// `chart-mobile-message d-flex mb-2 m-2` (solo ≤576px)
+.mensaje-movil {
+  display: none;
+  margin: 8px;
+  padding: 16px;
+  border-radius: 16px;
+  background-color: var(--sk-color-info-light);
+  font-size: 14px;
+  text-align: center;
+}
+
+// `icon-Laptop-line icon-pc`
+.icono-pc {
+  margin-top: 3vh;
+  font-size: 27px;
+  flex-shrink: 0;
+}
+
+// `p.sk-gris` alineado a la izquierda
+.texto-movil {
+  padding-left: 10px;
+  text-align: left;
+  font-family: var(--sk-font-body);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--sk-color-text);
+}
+
+// `content-main m-2 p-1 bg-mobile`
+.contenido {
+  margin: 8px;
+  padding: 4px;
+}
+
+// `row mb-2 mx-0 mobile` con el aviso de MFUND y FICS
+.fila-aviso {
+  margin-bottom: 8px;
+}
+
+// `sk-b2 fw-bold p-0 m-0` / `sk-b2 p-0 m-0` en `#404040`
+.aviso-negrita {
+  @include prod.sk-b2;
+  font-weight: 700;
+}
+
+.aviso-texto {
+  @include prod.sk-b2;
+}
+
+// `.row.mx-0`
+.fila {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+// `row mb-3 mx-0 mb-mobile`
+.fila-controles {
+  margin-bottom: 16px;
+}
+
+// `col-12 col-md-5` de 40px de alto
+.col-cambio {
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+}
+
+// `col-12 col-md-7 d-flex gap-2 justify-content-end align-items-center` de 40px de alto
+.col-acciones {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+}
+
+// `icon d-flex mobile justify-content-end`
+.pantallazo {
+  display: flex;
+  justify-content: flex-end;
+}
+
+// `sk-btn ms-1 ms-sm-0 p-0 border-none mt-1` con `icon-camera-line sk-green` de 20px y `pt-2`
+.boton-pantallazo {
+  @include prod.boton-icono;
+  display: inline-flex;
+  margin-top: 4px;
+  padding-top: 8px;
+  font-size: 20px;
+  color: var(--sk-color-primary);
+}
+
+// `col-12 col-md-4 p-1`
+.col-torta {
+  width: 100%;
+  padding: 4px;
+}
+
+// `skeleton-circle-container text-center w-100`
+.tarjeta-torta {
+  width: 100%;
+  height: 52vh;
+  overflow: hidden;
+  border-radius: 16px;
+  background-color: var(--sk-color-surface-2);
+  text-align: center;
+}
+
+// `d-flex d-md-none justify-content-between w-100 m-0 p-0`
+.acciones-movil {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+// `col-12 col-md-8 p-1`
+.col-lineas {
+  width: 100%;
+  padding: 4px;
+}
+
+// `div[style="position: relative"]` de la gráfica de portafolios
+.contenedor-portafolios {
+  position: relative;
+}
+
+// `row mt-1 mx-0`
+.fila-tablas {
+  margin-top: 4px;
+}
+
+// `m-3 mt-4` con `sk-b3` justificado en `#40404087`
+.legales {
+  margin: 24px 16px 16px;
+}
+
+.legal {
+  @include prod.sk-b3;
+  text-align: justify;
+  color: #40404087;
+}
+
+@media (min-width: 768px) {
+  .col-cambio {
+    width: 41.666667%;
+  }
+
+  .col-acciones {
+    width: 58.333333%;
+  }
+
+  .col-torta {
+    width: 33.333333%;
+  }
+
+  .col-lineas {
+    width: 66.666667%;
+  }
+}
+
+@media (max-width: 576px) {
+  .mensaje-movil {
+    display: flex;
+  }
+
+  // `.bg-mobile`
+  .contenido {
+    border-radius: 16px;
+    background-color: var(--sk-color-surface-2);
+  }
+
+  // `.alert` y `.mobile` se ocultan
+  .fila-aviso,
+  .solo-escritorio {
+    display: none;
+  }
+
+  // `.mb-mobile`
+  .fila-controles {
+    margin-bottom: 0;
+    margin-top: 20px;
+  }
+}

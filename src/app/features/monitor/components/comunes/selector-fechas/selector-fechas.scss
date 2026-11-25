@@ -1,0 +1,165 @@
+@use '../estilos/produccion' as prod;
+
+:host {
+  display: block;
+}
+
+// `.input-group` de Bootstrap con el ancho y alto de producción
+.grupo {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 160px;
+  height: 39px;
+}
+
+// `.form-control.text-center` con los ajustes de producción
+.campo {
+  @include prod.campo-texto;
+  position: relative;
+  flex: 1 1 auto;
+  width: 1%;
+  min-width: 0;
+  text-align: center;
+  font-size: 12px;
+  padding: 0.57rem 0.4rem;
+  background-color: white;
+  border: 1px solid #ededed;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &::placeholder {
+    font-size: 11px;
+  }
+}
+
+// `ngb-datepicker.dropdown-menu.show`
+.calendario {
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 0;
+  z-index: 1000;
+  min-width: max-content;
+  padding: 0;
+  font-size: 1rem;
+  color: #212529;
+  text-align: left;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.175);
+  border-radius: 0.375rem;
+}
+
+// `.ngb-dp-header` en verde (producción)
+.encabezado {
+  border-bottom: 0;
+  border-radius: 0.375rem 0.375rem 0 0;
+  padding-top: 0.25rem;
+  background-color: #5cb85c;
+  color: white;
+}
+
+.navegacion {
+  display: flex;
+  align-items: center;
+}
+
+.flecha {
+  display: flex;
+  flex: 1 1 auto;
+  padding: 0;
+  margin: 0;
+  width: 2rem;
+  height: 2rem;
+
+  &.siguiente {
+    justify-content: flex-end;
+  }
+}
+
+// `.btn.btn-link.ngb-dp-arrow-btn`
+.boton-flecha {
+  padding: 0 0.25rem;
+  margin: 0 0.5rem;
+  border: none;
+  background-color: transparent;
+  z-index: 1;
+  font-size: 1rem;
+  line-height: 1.5;
+  cursor: pointer;
+  color: #fff;
+
+  &:disabled {
+    opacity: 0.65;
+    pointer-events: none;
+  }
+}
+
+// `.ngb-dp-navigation-chevron` (blanco en producción)
+.chevron {
+  border-style: solid;
+  border-width: 0.2em 0.2em 0 0;
+  display: inline-block;
+  width: 0.75em;
+  height: 0.75em;
+  margin-left: 0.25em;
+  margin-right: 0.15em;
+  transform: rotate(-135deg);
+  color: #fff;
+}
+
+.siguiente .chevron {
+  transform: rotate(45deg);
+  margin-left: 0.15em;
+  margin-right: 0.25em;
+}
+
+// `ngb-datepicker-navigation-select`
+.selects {
+  display: flex;
+  flex: 1 1 9rem;
+}
+
+.lista {
+  @include prod.campo-lista;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  background-position: right 0.75rem center;
+  background-size: 16px 12px;
+  flex: 1 1 auto;
+  padding: 0 0.5rem;
+  font-size: 0.875rem;
+  height: 1.85rem;
+
+  &:focus {
+    z-index: 1;
+  }
+}
+
+.meses {
+  display: flex;
+}
+
+.mes {
+  pointer-events: none;
+}
+
+// `.ngb-dp-month-name` en verde (producción)
+.nombre-mes {
+  font-size: larger;
+  height: 2rem;
+  line-height: 2rem;
+  text-align: center;
+  background-color: #5cb85c;
+  color: white;
+}
+
+.siguiente-mes .nombre-mes {
+  padding-left: 1rem;
+}
+
+@media (max-width: 576px) {
+  .grupo {
+    width: 100%;
+  }
+}

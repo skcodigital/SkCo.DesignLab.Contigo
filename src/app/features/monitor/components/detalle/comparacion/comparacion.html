@@ -1,0 +1,147 @@
+@if (conError()) {
+  <nc-mon-error-servicio vista="exterior" />
+} @else {
+  <div class="contenido">
+    @if (!sinSeleccion()) {
+      <div class="compara-movil">
+        <button type="button" class="boton-compara" (click)="abrirComparar.emit()">Compara</button>
+      </div>
+
+      <div class="barra">
+        <div class="contenedor-botones">
+          <div class="grupo-botones">
+            <button
+              type="button"
+              class="boton-pestana"
+              [class.activa]="pestana() === 'tendencia'"
+              (click)="pestana.set('tendencia')"
+            >
+              Tendencia
+            </button>
+            <button
+              type="button"
+              class="boton-pestana"
+              [class.activa]="pestana() === 'riesgo-retorno'"
+              (click)="pestana.set('riesgo-retorno')"
+            >
+              Riesgo/Retorno
+            </button>
+          </div>
+        </div>
+        <div class="selectores">
+          @if (!esMovil()) {
+            <nc-mon-seleccion
+              vista="exterior"
+              [opciones]="opcionesPeriodo"
+              [seleccionado]="periodo()"
+              (seleccion)="elegirPeriodo($event)"
+            />
+            <nc-mon-selector-fechas
+              vista="exterior"
+              [class.oculto]="periodo() !== personalizado"
+              [rangoInicial]="rango()"
+              [hoy]="hoy()"
+              (rangoCambio)="rango.set($event)"
+            />
+          } @else {
+            <div class="pildoras-movil">
+              <nc-mon-selector-periodo-movil
+                vista="exterior"
+                [seleccionado]="periodo()"
+                [rango]="rango()"
+                [hoy]="hoy()"
+                (seleccion)="elegirPeriodo($event)"
+                (rangoCambio)="rango.set($event)"
+              />
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (sinSeleccion()) {
+    <div class="sin-seleccion">
+      <!-- En producción es una ilustración del portal (imagen externa): aquí, un dibujo equivalente en SVG. -->
+      <svg class="ilustracion" viewBox="0 0 120 120" aria-hidden="true">
+        <circle cx="60" cy="60" r="58" fill="var(--sk-color-primary-soft)" />
+        <rect x="30" y="34" width="60" height="44" rx="6" fill="white" stroke="var(--sk-color-primary)" stroke-width="2.5" />
+        <path d="M38 68l12-12 9 8 14-16 9 8" fill="none" stroke="var(--sk-color-primary)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M48 86h24" stroke="var(--sk-color-primary)" stroke-width="3" stroke-linecap="round" />
+      </svg>
+      <p class="titulo-sin-seleccion">¡Selecciona la información que quieras graficar!</p>
+      <p class="texto-sin-seleccion">
+        Realiza comparaciones entre portafolios, mezclas, competencia, divisas o indicadores y visualiza los
+        resultados.
+      </p>
+      <div class="selecciona-movil">
+        <button type="button" class="boton-selecciona" (click)="abrirComparar.emit()">Selecciona ahora</button>
+      </div>
+    </div>
+  }
+
+  @if (mensajeSinDatos() && !sinSeleccion()) {
+    <div class="aviso-sin-datos">
+      <nc-mon-icono class="icono-alerta" nombre="triangulo-alerta" />
+      <div class="texto-columna">
+        <p class="texto-aviso">
+          En el periodo seleccionado ({{ nombrePeriodo() }}), los siguientes fondos no presentan datos:
+          {{ mensajeSinDatos() }}.
+        </p>
+      </div>
+    </div>
+  }
+
+  <div class="grafica">
+    @if (sinDatosGrafica()) {
+      <nc-mon-grafica-sin-datos [mensaje]="textoSinDatosGrafica" />
+    }
+    <nc-mon-grafica-tendencia
+      [class.oculto]="pestana() !== 'tendencia' || sinSeleccion()"
+      [datos]="tendencia()"
+      [conCdt]="conCdt()"
+      [ocultas]="ocultas()"
+      [visible]="pestana() === 'tendencia'"
+      (alternar)="alternarSerie($event)"
+      (quitar)="quitar.emit($event)"
+    />
+    <div class="riesgo" [class.oculto]="sinSeleccion()">
+      <nc-mon-grafica-riesgo-retorno
+        [class.oculto]="pestana() !== 'riesgo-retorno'"
+        [datos]="riesgoRetorno()"
+        [visible]="pestana() === 'riesgo-retorno'"
+        (alternar)="alternarSerie($event)"
+        (quitar)="quitar.emit($event)"
+      />
+    </div>
+  </div>
+
+  @if (esMovil() && pestana() === 'tendencia' && !sinSeleccion() && !sinDatosGrafica()) {
+    <div class="rango-movil">
+      <span>{{ rangoMovil().inicio }}</span>
+      <span>{{ rangoMovil().fin }}</span>
+    </div>
+  }
+
+  @if (filas().length) {
+    <nc-mon-tabla-comparacion
+      [filas]="filas()"
+      [activos]="activos()"
+      [conCdt]="conCdt()"
+      [nombrePeriodo]="nombrePeriodo()"
+      (verDetalle)="verDetalle($event)"
+      (quitar)="quitar.emit($event)"
+    />
+  }
+}
+
+@if (detalle(); as d) {
+  <nc-mon-detalle
+    vista="exterior"
+    [activo]="d"
+    [periodo]="periodo()"
+    [rango]="rango()"
+    [hoy]="hoy()"
+    (cerrar)="detalle.set(null)"
+  />
+}

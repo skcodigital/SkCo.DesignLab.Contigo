@@ -1,0 +1,62 @@
+@let f = fila();
+<div class="cabecera" (click)="alternar.emit()">
+  <span class="punto" [style.background-color]="f.color"></span>
+  <span class="nombre">
+    {{ plazo()?.base ?? f.nombre }}
+    @if (plazo()?.plazo; as p) {
+      <span class="plazo">{{ p }}</span>
+    }
+  </span>
+  <nc-mon-icono class="chevron" [class.girado]="expandido()" nombre="chevron-abajo" />
+</div>
+
+<div class="medidas">
+  <div class="medida">
+    <div class="etiqueta">Variación</div>
+    <div class="valor">
+      {{ numero(f.variacion) }} %
+      @if (flecha(f.variacion); as s) {
+        <nc-mon-icono class="flecha" [class]="s" [nombre]="s === 'sube' ? 'flecha-sube' : 'flecha-baja'" />
+      }
+    </div>
+  </div>
+  <div class="medida">
+    <div class="etiqueta">TEA</div>
+    <div class="valor">
+      {{ numero(f.tea) }} %
+      @if (flecha(f.tea); as s) {
+        <nc-mon-icono class="flecha" [class]="s" [nombre]="s === 'sube' ? 'flecha-sube' : 'flecha-baja'" />
+      }
+    </div>
+  </div>
+</div>
+
+@if (expandido()) {
+  <div class="panel">
+    <div class="medida">
+      <div class="etiqueta">Valor inicial</div>
+      <div class="valor">$ {{ dinero(f.valorInicial) }}</div>
+    </div>
+    <div class="medida">
+      <div class="etiqueta">Valor final</div>
+      <div class="valor">
+        $ {{ dinero(f.valorFinal) }}
+        @if (flecha(f.valorFinal); as s) {
+          <nc-mon-icono class="flecha" [class]="s" [nombre]="s === 'sube' ? 'flecha-sube' : 'flecha-baja'" />
+        }
+      </div>
+    </div>
+    <div class="medida">
+      <div class="etiqueta">Volatilidad</div>
+      <div class="valor">{{ f.tipo !== 'cdt' && f.volatilidad ? numero(f.volatilidad) + '%' : '-' }}</div>
+    </div>
+    <div class="medida">
+      <div class="etiqueta">Retorno</div>
+      <div class="valor">{{ f.retorno ? numero(f.retorno) + '%' : '-' }}</div>
+    </div>
+  </div>
+
+  @if (conDetalle()) {
+    <button type="button" class="mas-informacion" (click)="masInformacion.emit()">Más información</button>
+  }
+}

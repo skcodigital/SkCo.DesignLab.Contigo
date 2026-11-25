@@ -1,0 +1,17 @@
+<div class="fondo"></div>
+<div
+  #ventana
+  class="ventana"
+  role="dialog"
+  aria-modal="true"
+  tabindex="-1"
+  [attr.aria-label]="etiqueta() || null"
+  (mousedown)="alPresionar($event)"
+  (mouseup)="alSoltar($event)"
+>
+  <div class="dialogo" [class]="'variante-' + variante()" [class.completa-en-movil]="completaEnMovil()">
+    <div class="contenido">
+      <ng-content />
+    </div>
+  </div>
+</div>

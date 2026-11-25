@@ -44,6 +44,8 @@ Build local con el base href de Pages: `npm run build:pages` (raíz). Las imáge
 | `/ficha` | Ficha de Óscar Camilo Hernández Ramírez (`?tab=copiloto\|productos\|…`) | `?p=ficha` |
 | `/ficha/producto` | Ficha del producto «Potencializar mi inversión» | — |
 | `/radiografia` | Radiografía de Empresa ABC S.A. (`?plan=sin`, `?rol=dueno\|fp`, `?tab=…`) | `?p=radiografia&…` |
+| `/monitor` | Monitor Contigo exterior (`?estado=ejemplo\|ejemplo-cdt\|error`) | — |
+| `/ficha/monitor` | Monitor Contigo de Óscar (`?estado=error\|sin-datos`) | — |
 
 Como en el prototipo, un enlace directo a cualquier vista entra sin pasar por el login (`entrarDirectoGuard`), y la raíz `/` abre el login o la última vista de la sesión.
 
@@ -60,6 +62,7 @@ src/app/
     ficha-cliente/ ficha del cliente, productos, ficha del producto, retiros en curso
     asesoria-pro/  pestaña Planeación Pro en modo misión + journey «Acompañamiento al retirar»
     radiografia/   radiografía de empresa (con y sin plan de ahorro corporativo)
+    monitor/       Monitor Contigo del cliente y exterior, convertidos de producción (ver docs/MONITOR.md)
 src/styles/    _tokens.scss (tokens --sk-*) y _base.scss (reset, utilidades, modo misión)
 docs/          prototipo original de referencia y brief de conversión
 ```

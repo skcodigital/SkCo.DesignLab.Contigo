@@ -1,0 +1,25 @@
+<div class="semana dias-semana">
+  @for (dia of dias(); track dia) {
+    <div class="dia-semana">{{ dia }}</div>
+  }
+</div>
+@for (semana of semanas(); track $index) {
+  <div class="semana">
+    @for (d of semana; track d.fecha.getTime()) {
+      <div class="dia" [class.deshabilitado]="deshabilitado(d)" [class.oculto]="d.fuera">
+        @if (!d.fuera) {
+          <span
+            class="dia-propio"
+            [class.rango]="extremo(d.fecha) || adentro(d.fecha) || enHover(d.fecha)"
+            [class.atenuado]="enHover(d.fecha) || adentro(d.fecha)"
+            (mouseenter)="sobreCambio.emit(d.fecha)"
+            (mouseleave)="sobreCambio.emit(null)"
+            (click)="elegir.emit(d.fecha)"
+          >
+            {{ d.fecha.getDate() }}
+          </span>
+        }
+      </div>
+    }
+  </div>
+}

@@ -1,0 +1,186 @@
+@use '../../comunes/estilos/produccion' as prod;
+@use '../estilos/listas';
+
+:host {
+  display: block;
+}
+
+// `content d-flex mt-2 mb-2`
+.contenido {
+  display: flex;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.tarjeta {
+  @include listas.tarjeta;
+}
+
+// `d-flex gap-2 p-2 align-items-center bg-info-sk disclaimer-cdt-info`
+.aviso {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  align-items: center;
+  background-color: var(--sk-color-info-light);
+  border: 1px solid #5cd5ff;
+  border-radius: 8px;
+  text-wrap: initial;
+}
+
+// `icon-circle-exclamation-line flex-shrink-0` de 24px
+.icono-aviso {
+  flex-shrink: 0;
+  font-size: 24px;
+}
+
+// `text-body-3 m-0`
+.texto-aviso {
+  @include prod.texto-cuerpo-3;
+}
+
+// `btn-conoce-mas text-info-sk bold`
+.conoce-mas {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-size: inherit;
+  font-weight: 700;
+  color: var(--sk-color-info);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+// `list-group mt-2`
+.lista {
+  @include listas.lista(25vh);
+  margin-top: 8px;
+}
+
+// `list-group-item … d-flex align-items-center justify-content-between mb-2 p-2 box-default`
+.item {
+  @include listas.item;
+  align-items: center;
+  justify-content: space-between;
+
+  &.activo {
+    color: inherit;
+  }
+}
+
+// `d-flex align-items-center gap-2`
+.nombre-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+// `.cdt-color-dot`
+.punto {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  min-width: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+// `sk-b3 sk-gray m-0`
+.texto-item {
+  @include prod.sk-b3;
+  color: var(--sk-color-text);
+}
+
+// ── Modal: `modal-body cdt-info-modal-body p-4 d-flex flex-column align-items-center text-center` ──
+.info {
+  position: relative;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px;
+  overflow-y: auto;
+  max-height: 85vh;
+}
+
+// `.cdt-modal-icon.mb-3` con el ícono azul de 20px
+.icono-info {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: #e8f4fd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  font-size: 20px;
+  color: var(--sk-color-info);
+}
+
+// `sk-b2 fw-bold mb-2`
+.titulo-info {
+  @include prod.sk-b2;
+  font-weight: 700;
+  margin-bottom: 8px !important;
+}
+
+// `text-body-3`
+.texto-info {
+  @include prod.texto-cuerpo-3;
+  text-align: start;
+  width: 100%;
+
+  &.gris {
+    color: var(--sk-color-text);
+  }
+
+  &.negrita {
+    font-weight: 700;
+  }
+
+  &.separado {
+    margin-bottom: 8px !important;
+  }
+
+  &.poco {
+    margin-bottom: 4px !important;
+  }
+
+  &.en-linea {
+    display: inline;
+    width: auto;
+  }
+}
+
+// La primera descripción lleva `mb-3`
+.titulo-info + .texto-info {
+  margin-bottom: 16px !important;
+}
+
+// `w-100 mb-3 text-start` / `w-100 mb-4 text-start`
+.bloque-info {
+  width: 100%;
+  margin-bottom: 16px;
+  text-align: start;
+
+  &.fuente {
+    margin-bottom: 24px;
+  }
+}
+
+// `text-body-3 text-info-sk text-decoration-none fw-semibold` (sin enlace en el laboratorio)
+.enlace {
+  @include prod.texto-cuerpo-3;
+  color: var(--sk-color-info);
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+// `sk-btn sk-btn-primary w-100 p-2`
+.regresar {
+  @include prod.boton-primario;
+  width: 100%;
+  padding: 8px;
+}

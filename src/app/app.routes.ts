@@ -33,6 +33,14 @@ export const routes: Routes = [
         loadComponent: () =>
           import('@features/radiografia/pages/radiografia-page/radiografia-page').then((m) => m.RadiografiaPage),
       },
+      {
+        path: RUTAS.monitor,
+        title: 'Monitor Contigo · Portal Contigo',
+        loadComponent: () =>
+          import('@features/monitor/pages/monitor-exterior-page/monitor-exterior-page').then(
+            (m) => m.MonitorExteriorPage,
+          ),
+      },
     ],
   },
   { path: '**', redirectTo: '' },

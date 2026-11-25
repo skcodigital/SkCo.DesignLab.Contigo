@@ -1,0 +1,60 @@
+@use '../../comunes/estilos/produccion' as prod;
+@use '../../detalle/estilos/listas';
+
+:host {
+  display: block;
+}
+
+// `d-flex gap-1 justify-content-between`
+.selectores {
+  display: flex;
+  gap: 4px;
+  justify-content: space-between;
+}
+
+.ancho {
+  width: 100%;
+}
+
+// `toggle-inactive d-flex align-items-center justify-content-between mt-2 px-2 py-1 rounded-2`
+.inactivos {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  padding: 4px 8px;
+  border-radius: 0.375rem;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+}
+
+// `d-flex align-items-center gap-1`
+.texto-inactivos {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+// `text-body-3 sk-gray`
+.texto {
+  @include prod.texto-cuerpo-3;
+  color: var(--sk-color-text);
+}
+
+// `icon-circle-exclamation-line text-info-sk toggle-info-icon`
+.icono-info {
+  font-size: 13px;
+  cursor: help;
+  color: var(--sk-color-info);
+}
+
+// `form-check form-switch mb-0 ms-2 d-flex align-items-center`
+.interruptor {
+  @include listas.interruptor;
+  margin-left: 8px;
+}
+
+// `mb-2 mt-2`
+.buscador {
+  margin: 8px 0;
+}

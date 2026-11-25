@@ -1,0 +1,368 @@
+@use '../estilos/produccion' as prod;
+
+:host {
+  display: block;
+  min-width: 0;
+}
+
+// `.full-table-container`
+.contenedor-tabla {
+  @include prod.barra-desplazamiento;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  overflow-x: auto;
+  min-width: 0;
+  max-width: 100%;
+}
+
+// Con `altoMaximo`: scroll vertical y encabezado fijo.
+.contenedor-tabla.con-scroll {
+  display: block;
+  overflow-y: auto;
+
+  .envoltura {
+    overflow: visible !important;
+  }
+
+  .tabla {
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  thead tr {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: var(--sk-color-surface-2);
+  }
+}
+
+// `.table-container.w-100`
+.envoltura {
+  width: 100%;
+}
+
+// `.contigo-full-table`
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+  margin: 0;
+  display: table;
+
+  thead {
+    height: max-content;
+  }
+
+  tbody tr:hover {
+    background-color: #f3fce3;
+  }
+}
+
+.th,
+.td {
+  padding: 8px 4px;
+  text-align: center;
+  border: none;
+  vertical-align: middle;
+
+  // Cada celda lleva su contenido en una caja blanca.
+  div {
+    background: white;
+    padding: 4px 8px;
+    border-radius: 5px;
+    border: 1px solid var(--sk-color-surface-2);
+    min-height: 28px;
+  }
+}
+
+.td {
+  font-size: 10px;
+}
+
+// `.contigo-full-table-head-content.w-name-portfolios`
+.contenido-encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+
+  &.sin-fondo {
+    background-color: transparent;
+    border: none;
+  }
+
+  &.oculto {
+    display: none;
+  }
+}
+
+.ordenable {
+  cursor: pointer;
+}
+
+// `span.text-body-4.bold` (los span del encabezado van a 12px y `line-height: normal`)
+.etiqueta {
+  @include prod.texto-cuerpo-4;
+  font-size: 12px;
+  line-height: normal;
+  font-weight: 700;
+}
+
+.negrita {
+  font-size: 12px;
+  line-height: normal;
+  font-weight: 700;
+}
+
+.alinear-center {
+  text-align: center;
+}
+
+.alinear-start {
+  text-align: left;
+}
+
+.alinear-end {
+  text-align: right;
+}
+
+// Encabezados con tooltip en azul (solo el Monitor del cliente)
+:host(.vista-cliente) .con-tooltip-encabezado {
+  color: var(--sk-color-info);
+  cursor: help;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// `.sort-icon.ms-2`
+.ordenar {
+  margin-left: 8px;
+  font-size: 12px;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(0.5);
+  }
+}
+
+// `.icon-container`
+.contenedor-icono {
+  display: flex;
+  gap: 5px;
+
+  &.con-tooltip {
+    cursor: pointer;
+  }
+}
+
+// `.d-flex.align-items-center.contigo-full-table-td-content`
+.contenido-celda {
+  display: flex;
+  align-items: center;
+}
+
+.justificar-center {
+  justify-content: center;
+}
+
+.justificar-start {
+  justify-content: flex-start;
+}
+
+.justificar-end {
+  justify-content: flex-end;
+}
+
+// `p.text-body-3.m-0`
+.valor {
+  @include prod.texto-cuerpo-3;
+}
+
+// El exterior corta el texto largo con puntos suspensivos.
+:host(:not(.vista-cliente)) .contenido-celda {
+  min-width: 0;
+
+  .valor {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.accion-celda {
+  cursor: pointer;
+  color: #00c83c;
+
+  &:hover {
+    text-decoration: underline;
+    color: var(--sk-color-primary-strong);
+  }
+}
+
+// `.contigo-full-table-td-subtitle`
+.subtitulo {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 10px;
+}
+
+.centrado {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// `.point`
+.punto {
+  width: 8px !important;
+  height: 8px !important;
+  background-color: #b7b7b7;
+  border-radius: 50% !important;
+  padding: 5px !important;
+  min-height: 8px !important;
+}
+
+// Columna verde fija a la derecha con el menú de acciones (`.actions-th`)
+.th-acciones {
+  position: sticky;
+  right: 0;
+  background-color: #00c83c !important;
+  z-index: 1;
+  min-width: 40px;
+  cursor: pointer;
+  border: none !important;
+  transition: all 0.2s ease-in;
+
+  &:hover {
+    background-color: #01922d !important;
+  }
+}
+
+.filtro {
+  color: var(--sk-color-ink);
+  font-size: 12px;
+}
+
+// `.actions-column`
+.columna-acciones {
+  position: sticky;
+  right: 0;
+  background-color: #fff !important;
+  z-index: 1;
+  min-width: 40px;
+  cursor: pointer;
+}
+
+// `.btn.btn-icon` con la flecha verde
+.boton-ir {
+  display: inline-flex;
+  border: none;
+  background-color: transparent;
+  font-size: 18px;
+  cursor: pointer;
+  color: #00c83c;
+  font-weight: bold;
+  outline: none;
+
+  &:disabled {
+    color: #c2c2c2;
+    cursor: default;
+  }
+}
+
+// `.contigo-full-table-row-actions.d-flex.gap-1`
+.acciones-fila {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+}
+
+// `.row-action-btn`
+.boton-fila {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--sk-color-primary);
+
+  &:hover {
+    color: #01922d;
+  }
+}
+
+@media (max-width: 768px) {
+  .boton-ir {
+    font-size: 16px;
+  }
+}
+
+// Columnas fijas (la página del Monitor del cliente las activaba solo sobre 576px)
+@media (min-width: 577px) {
+  .fija {
+    position: sticky;
+    background-color: var(--sk-color-surface-2);
+  }
+
+  thead .fija {
+    z-index: 3;
+  }
+
+  tbody .fija {
+    z-index: 1;
+  }
+
+  // El título sobre la columna de puntos desborda sobre la segunda columna fija.
+  thead th:first-child.fija {
+    z-index: 4;
+  }
+
+  :host(.variante-portafolios) thead .th-indice::after {
+    content: attr(data-titulo);
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    color: var(--sk-color-text);
+    pointer-events: none;
+    font-family: var(--sk-font-body) !important;
+  }
+}
+
+// Tabla de portafolios del Monitor del cliente (`app-full-table.tablePortFolio` en su página)
+:host(.variante-portafolios) {
+  .envoltura {
+    border: 1px solid var(--sk-color-surface-5);
+    border-radius: 8px;
+    overflow-x: auto;
+  }
+
+  .th,
+  .td {
+    border: none !important;
+    border-bottom: 1px solid var(--sk-color-surface-5) !important;
+  }
+
+  .th .con-tooltip-encabezado {
+    text-decoration: underline;
+  }
+
+  tbody tr:hover td {
+    background-color: #f3fce3 !important;
+  }
+}

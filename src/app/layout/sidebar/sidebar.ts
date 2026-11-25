@@ -4,7 +4,7 @@ import { MQ_MOBILE } from '@core/constants/breakpoints';
 import { RUTAS } from '@core/constants/rutas';
 import { injectMediaQuery } from '@core/utils/media-query';
 import { Bell } from '../bell/bell';
-import { ASESOR, PIE_MENU, SeccionMenu, SUBMENUS } from '../data/menu';
+import { ASESOR, PIE_MENU, RUTAS_MENU, SeccionMenu, SUBMENUS } from '../data/menu';
 import { IaSwitch } from '../ia-switch/ia-switch';
 import { NavStore } from '../nav.store';
 
@@ -26,9 +26,11 @@ export class Sidebar {
 
   protected readonly movil = injectMediaQuery(MQ_MOBILE);
   protected readonly submenus = SUBMENUS;
+  protected readonly rutasMenu = RUTAS_MENU;
   protected readonly pie = PIE_MENU;
   protected readonly asesor = ASESOR;
   protected readonly rutaInicio = `/${RUTAS.inicio}`;
+  protected readonly rutaMonitor = `/${RUTAS.monitor}`;
 
   constructor() {
     // Al pasar a escritorio se cierra el menú móvil (y viceversa con el drawer).

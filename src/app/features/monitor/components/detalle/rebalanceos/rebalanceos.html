@@ -1,0 +1,57 @@
+<div class="contenedor">
+  <div class="cabecera">
+    <div class="nombre">
+      <p class="titulo">Histórico de rebalanceos</p>
+      <nc-mon-icono class="icono-rebalanceo" nombre="intercambiar" />
+    </div>
+    <div class="fecha">
+      <p>Select Date</p>
+    </div>
+  </div>
+
+  @for (r of vistas(); track r.fecha) {
+    <div class="cuerpo">
+      <nc-mon-desplegable
+        [titulo]="r.fecha"
+        subtitulo="Rebalanceo"
+        tamanoIcono="13px"
+        [iconoDerecha]="true"
+        [vista]="vista()"
+      >
+        <div class="tortas">
+          <div class="mitad">
+            <div class="caja-grafica">
+              <p class="titulo-torta">Estaba en:</p>
+              <nc-mon-grafica-torta-compacta [datos]="r.antes" />
+            </div>
+            <div class="puntos">
+              @for (item of r.antes; track item.nombre) {
+                <span class="punto-clase">
+                  <span class="punto" [style.background-color]="item.color"></span>
+                  <span class="porcentaje">{{ porcentaje(item.valor) }}</span>
+                  {{ item.nombre }}
+                </span>
+              }
+            </div>
+          </div>
+          <div class="mitad">
+            <div class="caja-grafica">
+              <!-- En producción esta etiqueta tiene la clase `ttitle-h5` (sin estilo): queda con la letra heredada. -->
+              <p class="titulo-torta-sin-estilo">Cambió a:</p>
+              <nc-mon-grafica-torta-compacta [datos]="r.despues" />
+            </div>
+            <div class="puntos">
+              @for (item of r.despues; track item.nombre) {
+                <span class="punto-clase">
+                  <span class="punto" [style.background-color]="item.color"></span>
+                  <span class="porcentaje">{{ porcentaje(item.valor) }}</span>
+                  {{ item.nombre }}
+                </span>
+              }
+            </div>
+          </div>
+        </div>
+      </nc-mon-desplegable>
+    </div>
+  }
+</div>

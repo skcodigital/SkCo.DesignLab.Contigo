@@ -1,0 +1,215 @@
+@use '../../comunes/estilos/produccion' as prod;
+
+:host {
+  display: block;
+}
+
+.oculto {
+  display: none !important;
+}
+
+// `content w-100`
+.contenido {
+  width: 100%;
+}
+
+// `w-100 d-flex justify-content-center d-md-none mb-3`
+.compara-movil {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+@media (min-width: 768px) {
+  .compara-movil {
+    display: none;
+  }
+}
+
+// `sk-btn sk-btn-primary mb-3 w-100 p-2` con `font-size: 15px !important`
+.boton-compara,
+.boton-selecciona {
+  @include prod.boton-primario;
+  width: 100%;
+  padding: 8px;
+  font-size: 15px;
+}
+
+.boton-compara {
+  margin-bottom: 16px;
+}
+
+// `toolbar d-flex flex-wrap align-items-center gap-2 justify-content-between`
+.barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+// `btns-content d-flex justify-content-center align-items-center`
+.contenedor-botones {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// `.ground-btns`
+.grupo-botones {
+  background-color: #ffffff;
+  border-radius: 28px;
+}
+
+// `sk-btn sk-b1 fw-bold mobile-custom sk-custom` + `sk-degrade` (activa) o `sk-gray-medium`
+.boton-pestana {
+  @include prod.sk-btn;
+  @include prod.sk-b1;
+  font-weight: 700;
+  line-height: 14px !important;
+  padding: 12px 24px;
+  border-radius: 28px;
+  background: transparent;
+  color: var(--sk-color-placeholder);
+
+  &.activa {
+    background: linear-gradient(270deg, #8fe000 0%, #00c73d 100%) !important;
+    color: var(--sk-color-surface);
+  }
+}
+
+// `select d-flex gap-2 flex-shrink-0 justify-content-end`
+.selectores {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+  justify-content: flex-end;
+}
+
+// Móvil: píldoras con `mt-3 mb-2 w-100`
+.pildoras-movil {
+  width: 100%;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+  .boton-pestana {
+    width: 100%;
+    font-size: 12px !important;
+    padding: 10px 20px !important;
+  }
+
+  .contenedor-botones {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .grupo-botones {
+    display: flex;
+    width: 100%;
+  }
+
+  .selectores {
+    width: 100%;
+  }
+}
+
+// `.no-data.d-flex.flex-column.text-center.justify-content-center.align-items-center`
+.sin-seleccion {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  background-color: white;
+  border-radius: 16px;
+}
+
+@media (max-width: 767px) {
+  .sin-seleccion {
+    justify-content: flex-start;
+  }
+}
+
+// La imagen de producción (`mb-4 mt-3`)
+.ilustracion {
+  width: 160px;
+  height: 160px;
+  margin-top: 16px;
+  margin-bottom: 24px;
+}
+
+// `sk-h4 fw-bold mb-2`
+.titulo-sin-seleccion {
+  @include prod.sk-h4;
+  font-weight: 700;
+  margin-bottom: 8px !important;
+}
+
+// `sk-b2 pb-3`
+.texto-sin-seleccion {
+  @include prod.sk-b2;
+  padding-bottom: 16px;
+}
+
+// `w-100 d-flex justify-content-center d-md-none mt-3`
+.selecciona-movil {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 16px;
+}
+
+@media (min-width: 768px) {
+  .selecciona-movil {
+    display: none;
+  }
+}
+
+// `empty-data-container d-flex align-items-center gap-2 p-2 mt-3 mb-3`
+.aviso-sin-datos {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  border: 1px solid #ffae08;
+  background-color: #fff3e0eb;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.icono-alerta {
+  color: #ffae08;
+}
+
+.texto-columna {
+  display: flex;
+  flex-direction: column;
+}
+
+// `text-body-2`
+.texto-aviso {
+  @include prod.texto-cuerpo-2;
+}
+
+// `chart w-100` (posición relativa para el aviso sin datos)
+.grafica {
+  position: relative;
+  width: 100%;
+}
+
+// `d-flex justify-content-between d-md-none mt-2 mb-3 px-1` con `text-body-3 sk-gray`
+.rango-movil {
+  @include prod.texto-cuerpo-3;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  padding: 0 4px;
+  color: var(--sk-color-text);
+}

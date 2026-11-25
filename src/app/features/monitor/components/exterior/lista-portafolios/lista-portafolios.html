@@ -1,0 +1,84 @@
+<div class="contenido">
+  <div class="tarjeta">
+    @if (conError()) {
+      <nc-mon-error-servicio vista="exterior" />
+    } @else {
+      <div class="selectores">
+        <div class="ancho">
+          <nc-mon-seleccion
+            vista="exterior"
+            [opciones]="clasificaciones()"
+            [seleccionado]="clasificacion() || textoClasificacion"
+            (seleccion)="clasificacion.set($event)"
+          />
+        </div>
+        <div class="ancho">
+          <nc-mon-seleccion
+            vista="exterior"
+            [opciones]="perfiles()"
+            [seleccionado]="perfil() || textoPerfil"
+            (seleccion)="perfil.set($event)"
+          />
+        </div>
+      </div>
+
+      <div class="inactivos">
+        <div class="texto-inactivos">
+          <span class="texto">Mostrar desactualizados y/o inactivos</span>
+          <nc-mon-icono
+            class="icono-info"
+            nombre="circulo-exclamacion"
+            [ncMonTooltip]="'Fondos cuya última fecha de valor unitario supera los 30 días calendario'"
+          />
+        </div>
+        <div class="interruptor">
+          <input
+            class="casilla"
+            type="checkbox"
+            role="switch"
+            aria-label="Mostrar desactualizados y/o inactivos"
+            [checked]="mostrarInactivos()"
+            (change)="mostrarInactivos.set(!mostrarInactivos())"
+          />
+        </div>
+      </div>
+
+      <div class="buscador">
+        <nc-mon-buscador placeholder="Busca portafolios" vista="exterior" (criterio)="termino.set($event)" />
+      </div>
+
+      <div class="lista">
+        @if (filtrados().length > 0) {
+          @for (p of filtrados(); track p.clave) {
+            <button
+              type="button"
+              class="item"
+              [class.activo]="seleccionados().includes(p.clave)"
+              (click)="alternar(p.clave)"
+            >
+              <div>
+                <p class="texto-item">{{ p.nombre }}</p>
+              </div>
+              @if (desactualizado(p)) {
+                <div class="alerta">
+                  <nc-mon-icono
+                    class="icono-alerta"
+                    nombre="circulo-exclamacion"
+                    tooltipPosicion="left"
+                    [ncMonTooltip]="tooltipDesactualizado(p)"
+                  />
+                </div>
+              }
+            </button>
+          }
+        } @else if (termino()) {
+          <div class="sin-resultados">
+            <nc-mon-icono nombre="buscar" />
+            <p class="lo-sentimos">Lo sentimos</p>
+            <p class="no-coincide">"{{ termino() }}" no coincide con ningún resultado.</p>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

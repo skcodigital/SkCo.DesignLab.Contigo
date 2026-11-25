@@ -1,0 +1,19 @@
+<div class="tarjetas">
+  <div>
+    @for (o of opciones(); track o.valor) {
+      <div class="tarjeta" [class.marcada]="!!valores()[o.valor]" (click)="alternar(o.valor)">
+        <p class="nombre">{{ o.nombre }}</p>
+        @if (o.avisoDesactualizado) {
+          <span
+            class="alerta"
+            [ncMonTooltip]="o.avisoDesactualizado"
+            tooltipPosicion="left"
+            (click)="$event.stopPropagation()"
+          >
+            <nc-mon-icono nombre="circulo-exclamacion" />
+          </span>
+        }
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="cabecera">
+  <div>
+    <p class="titulo">{{ titulo() }}</p>
+    @if (conDescripcion()) {
+      <p class="descripcion">
+        A continuación te mostramos los indicadores que seleccionaste en "Compara", ten en cuenta que estos no
+        aparecerán en la opción de "Filtro".
+      </p>
+    }
+  </div>
+  <button type="button" class="copiar" [ncMonTooltip]="copiarTooltip" (click)="copiar()">
+    <nc-mon-icono nombre="copiar" />
+  </button>
+</div>
+
+@if (avisoNormalizacion()) {
+  <div class="aviso">
+    <nc-mon-icono class="icono-aviso" nombre="circulo-exclamacion" />
+    <p class="texto-aviso">{{ textoNormalizacion }}</p>
+  </div>
+}
+
+@if (opciones().datos.length) {
+  <nc-mon-tabla [opciones]="opciones()" (accionCelda)="accionCelda.emit($event)" (accionFila)="accionFila.emit($event)" />
+}
+
+@if (notaCdt()) {
+  <p class="nota">
+    Los valores iniciales y finales de CDTs corresponden al cálculo de la tasa promedio ponderada. Los demás cálculos
+    presentados en la tabla se realizan con base en estos valores.
+  </p>
+}

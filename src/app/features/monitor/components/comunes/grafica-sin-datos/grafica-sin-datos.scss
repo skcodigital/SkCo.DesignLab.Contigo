@@ -1,0 +1,31 @@
+// `.empty-msg-container` / `.empty-msg`
+.contenedor {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  pointer-events: all;
+  height: 53vh;
+}
+
+.mensaje {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  gap: 8px;
+  border-radius: 8px;
+  background-color: var(--sk-color-info-light);
+  font-size: 12px;
+  padding: 8px;
+}
+
+.icono {
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+}

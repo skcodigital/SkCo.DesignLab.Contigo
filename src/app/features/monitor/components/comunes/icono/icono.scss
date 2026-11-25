@@ -1,0 +1,49 @@
+// Como un glifo de la fuente de íconos: en línea, 1em y del color del texto.
+:host {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  vertical-align: -0.125em;
+  flex-shrink: 0;
+}
+
+svg {
+  width: 1em;
+  height: 1em;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.solido {
+  fill: currentColor;
+  stroke: none;
+}
+
+// Íconos de color fijo (imágenes en producción).
+.fondo-verde,
+.fondo-rojo,
+.fondo-azul {
+  stroke: none;
+}
+
+.fondo-verde {
+  fill: var(--sk-color-primary);
+}
+
+.fondo-rojo {
+  fill: #e03430;
+}
+
+.fondo-azul {
+  fill: var(--sk-color-info);
+}
+
+.trazo-blanco {
+  stroke: var(--sk-color-surface);
+}

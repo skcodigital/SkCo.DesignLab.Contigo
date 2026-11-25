@@ -1,0 +1,224 @@
+@use '../../comunes/estilos/produccion' as prod;
+
+// En la modal de móvil el scroll lo lleva `.lateral` (95vh): el host solo es un bloque.
+:host {
+  display: block;
+}
+
+// `d-md-flex align-items-start`
+@media (min-width: 768px) {
+  .marco {
+    display: flex;
+    align-items: flex-start;
+  }
+}
+
+// `btn-icon-custom`
+.boton-icono,
+.restablecer {
+  @include prod.boton-icono;
+}
+
+// `btn-icon-custom d-none d-md-block` (abrir el panel plegado)
+.abrir {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .abrir {
+    display: block;
+  }
+}
+
+// `icon-circle-custom`: círculo verde de 32px con el ícono blanco de 12px
+.circulo {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--sk-color-primary);
+  color: var(--sk-color-surface);
+  border: 1px solid var(--sk-color-primary);
+  font-size: 12px;
+  cursor: pointer;
+
+  // `.icon-circle-inactive`
+  &.inactivo {
+    background-color: var(--sk-color-placeholder);
+    border-color: var(--sk-color-placeholder);
+    color: var(--sk-color-surface);
+  }
+}
+
+// `sidebar-collapse position-relative d-flex flex-column` (ancho 300px / 0 con transición)
+.lateral {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: width 0.5s ease-in-out;
+  white-space: nowrap;
+}
+
+// `.hide-mobile`: en móvil el panel solo se ve dentro de la modal.
+@media (max-width: 767.98px) {
+  :host(:not(.en-modal)) .lateral {
+    display: none;
+  }
+}
+
+// `.modal-full`
+:host(.en-modal) .lateral {
+  height: 95vh;
+  padding: 1rem;
+  padding-bottom: 140px;
+  overflow-y: auto;
+
+  .contenido {
+    overflow: visible;
+  }
+}
+
+// `content-inside flex-grow-1 overflow-auto`
+.contenido {
+  flex-grow: 1;
+  overflow: auto;
+}
+
+// `d-flex gap-2 p-2 align-items-center bg-info-sk disclaimer-info`
+.aviso {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  align-items: center;
+  background-color: var(--sk-color-info-light);
+  border: 1px solid #5cd5ff;
+  border-radius: 8px;
+  text-wrap: initial;
+  margin-bottom: 32px;
+}
+
+// `icon-circle-exclamation-line` de 24px
+.icono-aviso {
+  font-size: 24px;
+}
+
+// `d-flex flex-column`
+.textos-aviso {
+  display: flex;
+  flex-direction: column;
+}
+
+// `text-body-2 bold`
+.titulo-aviso {
+  @include prod.texto-cuerpo-2;
+  font-weight: 700;
+}
+
+// `text-body-3`
+.texto-aviso {
+  @include prod.texto-cuerpo-3;
+}
+
+// `d-flex justify-content-between align-items-center`
+.cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+// `sk-b1 fw-bold m-0`
+.titulo {
+  @include prod.sk-b1;
+  font-weight: 700;
+}
+
+// `d-flex gap-3 align-items-center`
+.botones {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+// `btn-icon-custom d-none d-md-block sk-green mt-1` con `icon-Refresh-line` de 25px
+.restablecer {
+  margin-top: 4px;
+  color: var(--sk-color-primary);
+  font-size: 25px;
+
+  // `.disabled-custom-btn`
+  &.deshabilitado {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+}
+
+.solo-escritorio {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .solo-escritorio {
+    display: block;
+  }
+
+  .solo-movil {
+    display: none;
+  }
+}
+
+// `btn-icon-custom d-md-none mt-1` con `icon-Refresh-solid` de 16px
+.restablecer-movil {
+  margin-top: 4px;
+
+  .circulo {
+    font-size: 16px;
+  }
+}
+
+// `btn-mobile-fixed d-md-none bg-white p-2 shadow-sm d-flex flex-column gap-2`
+.botones-movil {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 1056;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  padding: 8px;
+  background-color: var(--sk-color-surface);
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+@media (min-width: 768px) {
+  .botones-movil {
+    display: none;
+  }
+}
+
+// `sk-btn sk-btn-primary w-100 p-2` con `font-size: 15px`
+.graficar {
+  @include prod.boton-primario;
+  width: 100%;
+  padding: 8px;
+  font-size: 15px;
+
+  // `.btn-graph-inactive`
+  &.inactivo {
+    background-color: var(--sk-color-placeholder);
+    border-color: var(--sk-color-placeholder);
+    color: var(--sk-color-surface);
+    pointer-events: none;
+  }
+}
+
+// `sk-btn sk-btn-outline-primary w-100 p-2` con `font-size: 15px`
+.salir {
+  @include prod.boton-contorno;
+  width: 100%;
+  padding: 8px;
+  font-size: 15px;
+}

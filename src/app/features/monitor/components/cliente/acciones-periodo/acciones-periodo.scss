@@ -1,0 +1,33 @@
+@use '../../comunes/estilos/produccion' as prod;
+
+// `d-flex gap-2`
+:host {
+  display: flex;
+  gap: 8px;
+}
+
+// `d-flex align-items-center`
+.contenedor-insignia {
+  display: flex;
+  align-items: center;
+}
+
+// `sk-b2 sk-gray mobile`
+.insignia {
+  @include prod.sk-b2;
+  display: flex;
+  align-items: center;
+  color: var(--sk-color-text);
+  white-space: nowrap;
+}
+
+// `icon-Calendar-line me-1`
+.calendario {
+  margin-right: 4px;
+}
+
+@media (max-width: 576px) {
+  .insignia {
+    display: none;
+  }
+}

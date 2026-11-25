@@ -1,0 +1,23 @@
+<div class="formulario">
+  @for (g of visibles(); track $index) {
+    <div class="grupo">
+      @if (g.titulo) {
+        <h2 class="titulo">{{ g.titulo }}</h2>
+      }
+      <div class="contenedor">
+        @for (o of g.opciones; track o.valor) {
+          <div class="opcion">
+            <p class="nombre">{{ o.nombre }}</p>
+            <input
+              #casilla
+              class="casilla"
+              type="checkbox"
+              [checked]="!!valores()[o.valor]"
+              (change)="cambiar(o.valor, casilla.checked)"
+            />
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

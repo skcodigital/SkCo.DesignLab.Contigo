@@ -1,0 +1,51 @@
+<ng-template #rejilla>
+  <div class="lista">
+    @for (i of items(); track i.clave) {
+      <button
+        type="button"
+        class="item"
+        [class.activo]="esSeleccionado(i.tipo, i.clave)"
+        (click)="alternar(i.tipo, i.clave)"
+      >
+        <p class="texto-item">{{ i.nombre }}</p>
+      </button>
+    }
+  </div>
+</ng-template>
+
+@if (modo() === 'divisas') {
+  @if (conError()) {
+    <nc-mon-error-servicio vista="exterior" />
+  } @else {
+    <div class="divisas">
+      <ng-container [ngTemplateOutlet]="rejilla" />
+    </div>
+  }
+} @else {
+  <div class="pestanas">
+    <button
+      type="button"
+      class="pestana"
+      [class.activa]="pestana() === 'economicos'"
+      (click)="pestana.set('economicos')"
+    >
+      Económicos
+    </button>
+    <button type="button" class="pestana con-etiqueta" [class.activa]="pestana() === 'cdts'" (click)="pestana.set('cdts')">
+      CDTs
+      <span class="nuevo">Nuevo</span>
+    </button>
+  </div>
+
+  @if (pestana() === 'economicos') {
+    @if (conError()) {
+      <nc-mon-error-servicio vista="exterior" />
+    } @else {
+      <div class="economicos">
+        <ng-container [ngTemplateOutlet]="rejilla" />
+      </div>
+    }
+  } @else {
+    <nc-mon-lista-cdt [plazos]="plazos()" [seleccionados]="cdts()" [conError]="conError()" (seleccionadosChange)="cdts.set($event)" />
+  }
+}

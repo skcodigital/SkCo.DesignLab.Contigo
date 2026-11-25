@@ -1,0 +1,27 @@
+<div class="contenedor">
+  @if (documentos() === null) {
+    <div class="completo">
+      <nc-mon-error-servicio [vista]="vista()" />
+    </div>
+  } @else {
+    <div class="tarjetas" [class.columna]="esMovil()">
+      @for (t of tarjetas(); track t.tipo) {
+        <div class="tarjeta">
+          <div class="textos">
+            <p class="etiqueta">{{ t.etiqueta }}</p>
+            @if (t.fecha) {
+              <p class="fecha">{{ t.fecha }}</p>
+            }
+          </div>
+          <div class="acciones">
+            @if (t.documento) {
+              <button type="button" class="descargar" (click)="descargar()">
+                <nc-mon-icono nombre="descargar" />
+              </button>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

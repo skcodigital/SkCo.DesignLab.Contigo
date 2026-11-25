@@ -1,0 +1,164 @@
+<div class="marco">
+  @if (!desplegado()) {
+    <button type="button" class="boton-icono abrir" aria-label="Abrir Selecciona y compara" (click)="alternar.emit()">
+      <span class="circulo"><nc-mon-icono nombre="barra-lateral" /></span>
+    </button>
+  }
+
+  <div class="lateral" [style.width]="ancho()">
+    @if (desplegado()) {
+      <div class="contenido">
+        <div class="aviso">
+          <nc-mon-icono class="icono-aviso" nombre="circulo-exclamacion" />
+          <div class="textos-aviso">
+            <p class="titulo-aviso">Antes de comparar...</p>
+            <p class="texto-aviso">
+              Cada activo puede tener políticas de inversión, niveles de riesgo, horizontes, comisiones y gastos
+              diferentes. Usa esta información como referencia y consulta las fichas técnicas para profundizar.
+            </p>
+          </div>
+        </div>
+
+        <div class="cabecera">
+          <p class="titulo">Selecciona y compara</p>
+          <div class="botones">
+            <button
+              type="button"
+              class="restablecer solo-escritorio"
+              aria-label="Restablecer"
+              [class.deshabilitado]="!conSeleccion()"
+              [ncMonTooltip]="'Restablece todo lo seleccionado en la gráfica.'"
+              (click)="restablecerSiHay()"
+            >
+              <nc-mon-icono nombre="refrescar" />
+            </button>
+            <button
+              type="button"
+              class="boton-icono solo-escritorio"
+              aria-label="Plegar Selecciona y compara"
+              (click)="alternar.emit()"
+            >
+              <span class="circulo"><nc-mon-icono nombre="barra-lateral" /></span>
+            </button>
+            <button
+              type="button"
+              class="boton-icono solo-movil restablecer-movil"
+              aria-label="Restablecer"
+              [disabled]="!conSeleccion()"
+              [ncMonTooltip]="'Restablece todo lo seleccionado en la gráfica.'"
+              (click)="restablecerSiHay()"
+            >
+              <span class="circulo" [class.inactivo]="!conSeleccion()"><nc-mon-icono nombre="refrescar" /></span>
+            </button>
+          </div>
+        </div>
+
+        <nc-mon-desplegable
+          #seccionPortafolios
+          vista="exterior"
+          titulo="Portafolios SK"
+          icono="flecha-sube"
+          tamanoIcono="10px"
+          [abiertoInicial]="true"
+          (abierto)="cerrarOtras(seccionPortafolios)"
+        >
+          <nc-mon-lista-portafolios
+            [portafolios]="portafolios"
+            [seleccionados]="seleccion().portafolios"
+            [conError]="conError()"
+            [hoy]="hoy()"
+            (seleccionadosChange)="cambio.emit({ portafolios: $event })"
+          />
+        </nc-mon-desplegable>
+
+        <nc-mon-desplegable
+          #seccionMezclas
+          vista="exterior"
+          titulo="Mezclas Invest-ed"
+          icono="cohete"
+          tamanoIcono="12px"
+          (abierto)="cerrarOtras(seccionMezclas)"
+        >
+          <nc-mon-lista-mezclas
+            vista="exterior"
+            [catalogo]="mezclas"
+            [seleccionadas]="seleccion().mezclas"
+            [conError]="conError()"
+            (seleccionadasChange)="cambio.emit({ mezclas: $event })"
+          />
+        </nc-mon-desplegable>
+
+        <nc-mon-desplegable
+          #seccionCompetencia
+          vista="exterior"
+          titulo="Competencia"
+          icono="globo"
+          tamanoIcono="14px"
+          [mostrarEtiqueta]="true"
+          [etiqueta]="etiquetaBeta"
+          (abierto)="cerrarOtras(seccionCompetencia)"
+        >
+          <nc-mon-lista-referencias
+            vista="exterior"
+            [companias]="companias"
+            [seleccionados]="seleccion().referencias"
+            [conError]="conError()"
+            [hoy]="hoy()"
+            (seleccionadosChange)="cambio.emit({ referencias: $event })"
+          />
+        </nc-mon-desplegable>
+
+        <nc-mon-desplegable
+          #seccionDivisas
+          vista="exterior"
+          titulo="Divisas"
+          icono="circulo-dolar"
+          tamanoIcono="14px"
+          (abierto)="cerrarOtras(seccionDivisas)"
+        >
+          <nc-mon-divisas-indicadores
+            modo="divisas"
+            [catalogo]="indicadores"
+            [seleccionados]="seleccion().indicadores"
+            [conError]="conError()"
+            (seleccionadosChange)="cambio.emit({ indicadores: $event })"
+          />
+        </nc-mon-desplegable>
+
+        <nc-mon-desplegable
+          #seccionIndicadores
+          vista="exterior"
+          titulo="Indicadores"
+          icono="grafica-barras"
+          tamanoIcono="14px"
+          [conPunto]="true"
+          (abierto)="cerrarOtras(seccionIndicadores)"
+        >
+          <nc-mon-divisas-indicadores
+            modo="indicadores"
+            [catalogo]="indicadores"
+            [seleccionados]="seleccion().indicadores"
+            [plazos]="plazos"
+            [cdts]="seleccion().cdts"
+            [conError]="conError()"
+            (seleccionadosChange)="cambio.emit({ indicadores: $event })"
+            (cdtsChange)="cambio.emit({ cdts: $event })"
+          />
+        </nc-mon-desplegable>
+      </div>
+    }
+
+    <div class="botones-movil">
+      <button
+        type="button"
+        class="graficar"
+        [class.inactivo]="!conSeleccion()"
+        [disabled]="!conSeleccion()"
+        (click)="graficar.emit()"
+      >
+        Graficar selección
+      </button>
+      <button type="button" class="salir" (click)="salir.emit()">Salir</button>
+    </div>
+  </div>
+</div>

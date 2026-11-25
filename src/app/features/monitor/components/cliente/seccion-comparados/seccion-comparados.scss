@@ -1,0 +1,88 @@
+@use '../../comunes/estilos/produccion' as prod;
+
+// `mb-3 table-custom p-5`
+:host {
+  display: block;
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 48px;
+  border-radius: 16px;
+  background-color: var(--sk-color-surface-2);
+}
+
+// `d-flex justify-content-between`
+.cabecera {
+  display: flex;
+  justify-content: space-between;
+}
+
+// `sk-h3 fw-bold mb-1 mobile-text`
+.titulo {
+  @include prod.sk-h3;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+// `sk-b2 mobile`
+.descripcion {
+  @include prod.sk-b2;
+}
+
+// `sk-btn p-0 border-none` con `icon-Copy` de 20px
+.copiar {
+  @include prod.boton-icono;
+  display: inline-flex;
+  align-self: flex-start;
+  font-size: 20px;
+  color: inherit;
+}
+
+// `d-flex gap-2 p-2 mb-2 align-items-center bg-info-sk disclaimer-cdt-comparison`
+.aviso {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  margin-bottom: 8px;
+  align-items: center;
+  background-color: var(--sk-color-info-light);
+  border: 1px solid #5cd5ff;
+  border-radius: 8px;
+  text-wrap: initial;
+}
+
+// `icon-circle-exclamation-line flex-shrink-0` de 24px
+.icono-aviso {
+  flex-shrink: 0;
+  font-size: 24px;
+}
+
+// `sk-b3 m-0`
+.texto-aviso {
+  @include prod.sk-b3;
+}
+
+// `.disclaimer`
+.nota {
+  font-family: var(--sk-font-body);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  vertical-align: middle;
+  color: var(--sk-color-placeholder);
+  text-align: justify;
+}
+
+@media (max-width: 576px) {
+  .titulo {
+    font-size: 12px;
+    padding-top: 6px;
+  }
+
+  .descripcion {
+    display: none;
+  }
+
+  .copiar {
+    font-size: 22px;
+  }
+}

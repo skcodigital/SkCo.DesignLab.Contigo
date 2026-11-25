@@ -1,0 +1,43 @@
+@use '../estilos/produccion' as prod;
+
+:host {
+  display: block;
+}
+
+// `grey-default-card text-center p-4`
+.tarjeta {
+  @include prod.tarjeta-gris;
+  text-align: center;
+  padding: 24px;
+}
+
+:host(.vista-exterior) .tarjeta {
+  white-space: break-spaces;
+}
+
+// `.icon-exclamation-custom.mb-2`
+.icono {
+  display: inline-block;
+  margin-bottom: 8px;
+  border-radius: 60px;
+  padding: 20px;
+  background-color: #fff5f4;
+  color: #de423e;
+  font-size: 20px;
+  line-height: 1;
+}
+
+// `p.sk-h4.fw-bold.mt-2`
+.titulo {
+  @include prod.sk-h4;
+  font-weight: 700;
+  margin-top: 8px;
+  color: var(--sk-color-text);
+}
+
+// `p.text-body-2.mt-2`
+.descripcion {
+  @include prod.texto-cuerpo-2;
+  margin-top: 8px;
+  color: var(--sk-color-text);
+}

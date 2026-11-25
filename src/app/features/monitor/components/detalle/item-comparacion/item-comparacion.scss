@@ -1,0 +1,119 @@
+@use '../../comunes/estilos/produccion' as prod;
+
+// `.mobile-list-item.mb-2`
+:host {
+  display: block;
+  box-shadow: var(--sk-shadow-card-2);
+  border-radius: 16px;
+  padding: 12px;
+  background: white;
+  margin-bottom: 8px;
+}
+
+// `d-flex align-items-center gap-2` (con cursor)
+.cabecera {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+// `.mobile-list-dot`
+.punto {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+// `sk-b2 flex-grow-1 text-truncate` con `min-width: 0`
+.nombre {
+  @include prod.sk-b2;
+  flex-grow: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// `d-block text-truncate sk-b3`
+.plazo {
+  @include prod.sk-b3;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// `mobile-chevron sk-green icon-Chevron-down-line ms-2`
+.chevron {
+  font-size: 8px;
+  color: var(--sk-color-primary);
+  margin-left: 8px;
+  transition: transform 0.2s ease;
+
+  &.girado {
+    transform: rotate(180deg);
+  }
+}
+
+// `mobile-metrics-row d-flex mt-2`
+.medidas {
+  display: flex;
+  margin-top: 8px;
+
+  .medida {
+    flex: 1;
+  }
+}
+
+// `sk-b3` color #888
+.etiqueta {
+  @include prod.sk-b3;
+  color: #888;
+}
+
+// `sk-b2 fw-bold`
+.valor {
+  @include prod.sk-b2;
+  font-weight: 700;
+}
+
+// `icon-increase-arrow` / `icon-decrease-arrow` (10px por la regla global del exterior)
+.flecha {
+  font-size: 10px;
+
+  &.sube {
+    color: var(--sk-color-primary);
+  }
+
+  &.baja {
+    color: #e03430;
+  }
+}
+
+// `.mobile-expanded-panel.mt-2`
+.panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  background: var(--sk-color-surface-3);
+  border-radius: 8px;
+  padding: 8px;
+  margin-top: 8px;
+}
+
+// `.mobile-more-info-btn.mt-2`
+.mas-informacion {
+  display: block;
+  width: 100%;
+  border-radius: 999px;
+  border: 1px solid var(--sk-color-primary);
+  background: white;
+  color: var(--sk-color-primary);
+  font-weight: 700;
+  font-size: 14px;
+  padding: 8px;
+  cursor: pointer;
+  margin-top: 8px;
+}

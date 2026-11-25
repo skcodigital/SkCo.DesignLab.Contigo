@@ -1,0 +1,123 @@
+<div class="fondo" (click)="cerrar.emit()"></div>
+<div #lienzo class="lienzo" role="dialog" aria-modal="true" aria-label="Selecciona y compara" tabindex="-1">
+  <div class="aviso">
+    <nc-mon-icono class="icono-aviso" nombre="circulo-exclamacion" />
+    <div class="textos-aviso">
+      <p class="titulo-aviso">Antes de comparar...</p>
+      <p class="texto-aviso">
+        Cada activo puede tener políticas de inversión, niveles de riesgo, horizontes, comisiones y gastos
+        diferentes. Usa esta información como referencia y consulta las fichas técnicas para profundizar.
+      </p>
+    </div>
+  </div>
+
+  <div class="cabecera">
+    <p class="titulo">Selecciona y compara</p>
+    <button type="button" class="cerrar" aria-label="Cerrar" (click)="cerrar.emit()">
+      <nc-mon-icono nombre="cerrar" />
+    </button>
+  </div>
+
+  <div class="cuerpo">
+    <nc-mon-desplegable titulo="Portafolios SK" icono="flecha-sube" tamanoIcono="10px" (abierto)="abrirSeccion(0)">
+      <nc-mon-comparar-fondos
+        [fondos]="fondos"
+        [hoy]="hoy()"
+        [seleccionados]="seleccion().portafolios"
+        (seleccionadosChange)="cambiar({ portafolios: $event })"
+      />
+    </nc-mon-desplegable>
+
+    <nc-mon-desplegable
+      titulo="Mezclas Invest-ed"
+      icono="cohete"
+      tamanoIcono="10px"
+      [abiertoInicial]="false"
+      (abierto)="abrirSeccion(1)"
+    >
+      <nc-mon-lista-mezclas
+        [catalogo]="mezclas"
+        [seleccionadas]="seleccion().mezclas"
+        (seleccionadasChange)="cambiar({ mezclas: $event })"
+      />
+    </nc-mon-desplegable>
+
+    <nc-mon-desplegable
+      titulo="Competencia"
+      icono="globo"
+      tamanoIcono="14px"
+      [abiertoInicial]="false"
+      [mostrarEtiqueta]="true"
+      [etiqueta]="beta"
+      (abierto)="abrirSeccion(2)"
+    >
+      <nc-mon-lista-referencias
+        [companias]="companias"
+        [hoy]="hoy()"
+        [seleccionados]="seleccion().referencias"
+        (seleccionadosChange)="cambiar({ referencias: $event })"
+      />
+    </nc-mon-desplegable>
+
+    <nc-mon-desplegable
+      titulo="Divisas"
+      icono="circulo-dolar"
+      tamanoIcono="14px"
+      [abiertoInicial]="false"
+      (abierto)="abrirSeccion(3)"
+    >
+      <nc-mon-grupo-botones
+        [opciones]="divisas"
+        [seleccionados]="seleccion().divisas"
+        (seleccionadosChange)="cambiar({ divisas: $event })"
+      />
+    </nc-mon-desplegable>
+
+    <nc-mon-desplegable
+      titulo="Indicadores"
+      icono="grafica-barras"
+      tamanoIcono="14px"
+      [abiertoInicial]="false"
+      [conPunto]="true"
+      (abierto)="abrirSeccion(4)"
+    >
+      <div class="pestanas">
+        <button
+          type="button"
+          class="pestana"
+          [class.activa]="pestana() === 'economicos'"
+          (click)="pestana.set('economicos')"
+        >
+          Económicos
+        </button>
+        <button
+          type="button"
+          class="pestana con-etiqueta"
+          [class.activa]="pestana() === 'cdt'"
+          (click)="pestana.set('cdt')"
+        >
+          CDTs
+          <span class="nuevo">Nuevo</span>
+        </button>
+      </div>
+      @if (pestana() === 'economicos') {
+        <nc-mon-grupo-botones
+          [opciones]="indicadores"
+          [seleccionados]="seleccion().indicadores"
+          (seleccionadosChange)="cambiar({ indicadores: $event })"
+        />
+      } @else {
+        <nc-mon-lista-cdt
+          [plazos]="plazos"
+          [seleccionados]="seleccion().cdt"
+          (seleccionadosChange)="cambiar({ cdt: $event })"
+        />
+      }
+    </nc-mon-desplegable>
+  </div>
+
+  <div class="acciones">
+    <button type="button" class="aplicar" (click)="aplicar.emit()">Aplicar</button>
+    <button type="button" class="borrar" (click)="borrar.emit()">Borrar</button>
+  </div>
+</div>

@@ -1,0 +1,101 @@
+<div class="contenido">
+  <div class="tarjeta">
+    @if (conError()) {
+      <nc-mon-error-servicio [vista]="vista()" />
+    } @else {
+      <div class="selectores">
+        <div class="ancho">
+          <nc-mon-seleccion
+            [opciones]="entidades()"
+            [seleccionado]="entidad() || todos"
+            [vista]="vista()"
+            (seleccion)="entidad.set($event)"
+          />
+        </div>
+        <div class="ancho">
+          <nc-mon-seleccion
+            [opciones]="tipos()"
+            [seleccionado]="tipo() || tipoAhorro"
+            [vista]="vista()"
+            (seleccion)="tipo.set($event)"
+          />
+        </div>
+      </div>
+
+      <div class="inactivos">
+        <div class="texto-inactivos">
+          <span class="texto">Mostrar desactualizados y/o inactivos</span>
+          <nc-mon-icono
+            class="icono-info"
+            nombre="circulo-exclamacion"
+            [ncMonTooltip]="'Portafolios cuya última fecha de datos es anterior al año en curso'"
+          />
+        </div>
+        <div class="interruptor">
+          <input
+            class="casilla"
+            type="checkbox"
+            role="switch"
+            aria-label="Mostrar desactualizados y/o inactivos"
+            [checked]="mostrarInactivos()"
+            (change)="mostrarInactivos.set(!mostrarInactivos())"
+          />
+        </div>
+      </div>
+
+      <div class="buscador">
+        <nc-mon-buscador placeholder="Busca portafolio competencia" [vista]="vista()" (criterio)="termino.set($event)" />
+      </div>
+
+      <div class="lista">
+        @if (filtrados().length > 0) {
+          @for (item of filtrados(); track item.idCompania + '_' + item.id) {
+            <button
+              #ayuda="ncMonTooltip"
+              type="button"
+              class="item"
+              [class.activo]="esSeleccionado(item)"
+              [ncMonTooltip]="tooltip(item)"
+              (click)="alternar(item)"
+            >
+              <div class="fila-item">
+                <div class="nombre-item">
+                  @if (vista() === 'exterior' || item.imagenCompania) {
+                    <img
+                      class="logo"
+                      [src]="item.imagenCompania"
+                      [alt]="item.nombreCompania"
+                      [title]="item.nombreCompania"
+                    />
+                  }
+                  <p class="texto-item">
+                    {{ capitalizar(item.nombrePortafolio) }}
+                    <span class="compania-movil">- {{ capitalizar(item.nombreCompania) }}</span>
+                  </p>
+                </div>
+                @if (desactualizado(item)) {
+                  <div class="alerta">
+                    <nc-mon-icono
+                      class="icono-alerta"
+                      nombre="circulo-exclamacion"
+                      [ncMonTooltip]="tooltipDesactualizado(item.fechaMaxima)"
+                      [tooltipPosicion]="vista() === 'cliente' ? 'left' : 'right'"
+                      (mouseenter)="ayuda.ocultar()"
+                      (mouseleave)="ayuda.mostrar()"
+                    />
+                  </div>
+                }
+              </div>
+            </button>
+          }
+        } @else if (termino()) {
+          <div class="sin-resultados">
+            <nc-mon-icono nombre="buscar" />
+            <p class="lo-sentimos">Lo sentimos</p>
+            <p class="no-coincide">"{{ termino() }}" no coincide con ningún resultado.</p>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

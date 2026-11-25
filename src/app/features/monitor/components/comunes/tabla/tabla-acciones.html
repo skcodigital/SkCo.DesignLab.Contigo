@@ -1,0 +1,34 @@
+<nc-mon-popover [ancla]="ancla()" [(abierto)]="menuAbierto" posicion="left" [corrimiento]="10">
+  <div class="menu" (mouseleave)="menuAbierto.set(false)">
+    @for (a of acciones(); track a.clave) {
+      <div
+        class="accion"
+        [class.deshabilitada]="deshabilitada(a)"
+        [ncMonTooltip]="a.tooltip"
+        tooltipPosicion="left"
+        (click)="elegir(a)"
+      >
+        @if (icono(a); as nombre) {
+          <nc-mon-icono class="icono-accion" [nombre]="nombre" />
+        } @else if (imagen(a); as src) {
+          <img class="icono-accion imagen" [src]="src" [alt]="a.nombre" />
+        }
+        {{ a.nombre }}
+        @if (deshabilitada(a)) {
+          <span class="pregunta" [ncMonTooltip]="a.textoDeshabilitada" tooltipPosicion="left">
+            <nc-mon-icono nombre="circulo-pregunta" />
+          </span>
+        }
+      </div>
+    }
+  </div>
+</nc-mon-popover>
+
+<nc-mon-popover [ancla]="ancla()" [(abierto)]="personalizarAbierto" posicion="left" [corrimiento]="-10">
+  <div class="columnas">
+    @if (casillas(); as grupo) {
+      <nc-mon-casillas [grupos]="grupo" [(valores)]="borrador" />
+    }
+    <button type="button" class="aplicar" (click)="aplicar()">Aplicar</button>
+  </div>
+</nc-mon-popover>

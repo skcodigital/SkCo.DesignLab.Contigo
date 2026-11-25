@@ -1,0 +1,21 @@
+<!-- Solo móvil -->
+<p class="titulo titulo-movil">{{ titulo() }}</p>
+
+<div class="fila">
+  <div class="textos">
+    <p class="titulo">{{ titulo() }}</p>
+    <p class="periodo">Fecha seleccionada: {{ etiquetaPeriodo() }}</p>
+  </div>
+  <div class="botones">
+    <nc-mon-personalizar-columnas
+      [grupo]="casillas()"
+      [siempreVisibles]="['nombre']"
+      [columnasVisibles]="columnas()"
+      (aplicar)="aplicarColumnas.emit($event)"
+    />
+    <button type="button" class="copiar" (click)="copiar.emit()">
+      <p class="texto-copiar">Copiar tabla</p>
+      <nc-mon-icono nombre="copiar" />
+    </button>
+  </div>
+</div>

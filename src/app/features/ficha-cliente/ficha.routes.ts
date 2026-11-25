@@ -15,6 +15,14 @@ export const FICHA_ROUTES: Routes = [
         path: RUTAS.producto,
         loadComponent: () => import('./pages/producto-page/producto-page').then((m) => m.ProductoPage),
       },
+      {
+        // Monitor Contigo del cliente (feature monitor), dentro del layout de la ficha
+        path: RUTAS.monitor,
+        loadComponent: () =>
+          import('@features/monitor/pages/monitor-cliente-page/monitor-cliente-page').then(
+            (m) => m.MonitorClientePage,
+          ),
+      },
     ],
   },
 ];

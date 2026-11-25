@@ -1,0 +1,64 @@
+@use '../estilos/produccion' as prod;
+
+:host {
+  display: block;
+}
+
+// `d-flex gap-2 align-items-center btn-table`
+.boton-tabla {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+// `button.d-flex.gap-1.align-items-center.p-1.action-custom`
+.personalizar {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 4px;
+  border: 1px solid var(--sk-color-border-3);
+  background-color: #ffffff;
+  border-radius: 8px;
+  height: 40px;
+  color: var(--sk-color-text-2);
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+// `p.sk-b2.p-0.m-1.d-none.d-sm-block`
+.texto {
+  @include prod.sk-b2;
+  margin: 4px;
+}
+
+.lapiz {
+  color: var(--sk-color-primary);
+}
+
+.columnas {
+  display: flex;
+  flex-direction: column;
+}
+
+// `sk-btn w-100 sk-btn-primary p-2`
+.aplicar {
+  @include prod.boton-primario;
+  width: 100%;
+  padding: 8px;
+}
+
+@media (max-width: 575.98px) {
+  .texto {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .personalizar {
+    border: none;
+    background-color: var(--sk-color-surface-2);
+    font-size: 22px;
+  }
+}

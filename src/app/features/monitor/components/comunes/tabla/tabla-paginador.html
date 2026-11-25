@@ -1,0 +1,30 @@
+<div class="paginador">
+  <button type="button" aria-label="Previous page" [disabled]="pagina() === 1" (click)="irA.emit(pagina() - 1)">
+    <nc-mon-icono nombre="chevron-izquierda" />
+  </button>
+
+  @for (p of paginas(); track $index) {
+    @if (p !== '...') {
+      <span class="pagina" [class.activa]="pagina() === p" (click)="irA.emit(p)">{{ p }}</span>
+    } @else {
+      <span class="pagina">...</span>
+    }
+  }
+
+  <button
+    type="button"
+    aria-label="Next page"
+    [disabled]="pagina() === totalPaginas()"
+    (click)="irA.emit(pagina() + 1)"
+  >
+    <nc-mon-icono nombre="chevron-derecha" />
+  </button>
+</div>
+
+<div class="tamano">
+  <select #lista class="lista" (change)="cambiarTamano.emit(+lista.value)">
+    @for (t of tamanos(); track t) {
+      <option [value]="t" [selected]="t === tamano()">{{ t }}</option>
+    }
+  </select>
+</div>

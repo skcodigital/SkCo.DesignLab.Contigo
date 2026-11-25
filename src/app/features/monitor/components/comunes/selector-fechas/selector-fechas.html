@@ -1,0 +1,83 @@
+<div class="grupo">
+  <input class="campo" [placeholder]="placeholder" [value]="texto()" (click)="alternar()" readonly />
+
+  @if (abierto()) {
+    <div class="calendario">
+      <div class="encabezado">
+        <div class="navegacion">
+          <div class="flecha">
+            <button
+              type="button"
+              class="boton-flecha"
+              title="Previous month"
+              aria-label="Previous month"
+              [disabled]="anteriorDeshabilitado()"
+              (click)="navegar(-1)"
+            >
+              <span class="chevron"></span>
+            </button>
+          </div>
+          <div class="selects">
+            <select
+              #listaMes
+              class="lista"
+              title="Select month"
+              aria-label="Select month"
+              (change)="cambiarMes(listaMes.value)"
+            >
+              @for (m of mesesDelAnio(); track m) {
+                <option [value]="m" [selected]="m === meses()[0].mes">{{ nombres().mesesCortos[m] }}</option>
+              }
+            </select>
+            <select
+              #listaAnio
+              class="lista"
+              title="Select year"
+              aria-label="Select year"
+              (change)="cambiarAnio(listaAnio.value)"
+            >
+              @for (a of anios(); track a) {
+                <option [value]="a" [selected]="a === meses()[0].anio">{{ a }}</option>
+              }
+            </select>
+          </div>
+          <div class="flecha siguiente">
+            <button
+              type="button"
+              class="boton-flecha"
+              title="Next month"
+              aria-label="Next month"
+              [disabled]="siguienteDeshabilitado()"
+              (click)="navegar(1)"
+            >
+              <span class="chevron"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="meses">
+        @for (m of meses(); track m.anio * 12 + m.mes; let primero = $first, ultimo = $last) {
+          <div class="mes" [class.siguiente-mes]="!primero">
+            @if (meses().length > 1) {
+              <div class="nombre-mes">{{ nombres().mesesLargos[m.mes] }} {{ m.anio }}</div>
+            }
+            <nc-mon-calendario-mes
+              [anio]="m.anio"
+              [mes]="m.mes"
+              [formato]="formato()"
+              [maximo]="hoy()"
+              [desde]="desde()"
+              [hasta]="hasta()"
+              [sobre]="sobre()"
+              [primero]="primero"
+              [ultimo]="ultimo"
+              (elegir)="elegir($event)"
+              (sobreCambio)="sobre.set($event)"
+            />
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

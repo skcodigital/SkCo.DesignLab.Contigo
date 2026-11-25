@@ -1,0 +1,32 @@
+<div class="fila">
+  @for (p of pildoras(); track p.valor) {
+    <button type="button" class="pildora" [class.activa]="esActivo(p.valor)" (click)="elegir(p.valor)">
+      {{ p.etiqueta }}
+    </button>
+  }
+  <button type="button" class="boton-icono" (click)="mostrarOpciones.set(!mostrarOpciones())">
+    <!-- En producción la clase de «lleno» quedaba pisada por la del contorno: el círculo no cambia. -->
+    <div class="circulo" [class.lleno]="mostrarOpciones() || esActivo(personalizado)">
+      <nc-mon-icono nombre="calendario" />
+    </div>
+  </button>
+
+  @if (mostrarOpciones()) {
+    <div class="opciones">
+      @for (o of opciones(); track o.valor) {
+        <button type="button" class="opcion" [class.activa]="esActivo(o.valor)" (click)="elegir(o.valor)">
+          {{ o.nombre }}
+        </button>
+      }
+    </div>
+  }
+</div>
+
+@if (esActivo(personalizado)) {
+  <nc-mon-selector-fechas
+    [rangoInicial]="rango()"
+    [hoy]="hoy()"
+    [vista]="vista()"
+    (rangoCambio)="rangoCambio.emit($event)"
+  />
+}

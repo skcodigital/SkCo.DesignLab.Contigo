@@ -1,0 +1,253 @@
+// Equivalencias de las clases globales que usa el Monitor de producción: las de su `styles.scss` (copiadas con
+// sus valores) y las de la guía de estilos del portal (según la tabla de docs/MONITOR.md).
+// Uso: `@use '<ruta>/comunes/estilos/produccion' as prod;` y `@include prod.texto-cuerpo-3;`.
+
+// ── Colores (`sk-green`, `text-*-sk`, `bg-*-sk`) ──
+$verde: var(--sk-color-primary); // #00c73d
+$verde-hover: #01922d;
+$verde-acciones: #00c83c;
+$gris: var(--sk-color-text); // #404040 (sk-gray, text-grey-sk-00)
+$gris-oscuro: var(--sk-color-text-2); // #666666
+$gris-medio: var(--sk-color-placeholder); // #a5a5a5
+$azul: var(--sk-color-info); // #0099de
+$rojo: #e03430;
+$amarillo: var(--sk-color-warning-strong); // #ffae08
+$fondo-tarjeta: var(--sk-color-surface-2); // #fafafa (grey-default-card)
+$sombra-caja: 0px 0px 4px 0px #3d4b5c26; // box-default
+
+$fondos-aviso: (
+  success: #ecfdf3,
+  error: #fff5f4,
+  info: var(--sk-color-info-light),
+  warning: #fce1b7,
+);
+$textos-aviso: (
+  success: var(--sk-color-primary),
+  error: #e03430,
+  info: var(--sk-color-info),
+  warning: var(--sk-color-warning-strong),
+);
+
+// ── Tipografía del styles.scss de producción ──
+@mixin texto-cuerpo-1 {
+  font-family: var(--sk-font-body);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+@mixin texto-cuerpo-2 {
+  font-family: var(--sk-font-body);
+  font-size: 14px;
+  line-height: 22px;
+  vertical-align: middle;
+}
+
+@mixin texto-cuerpo-3 {
+  font-family: var(--sk-font-body);
+  font-size: 12px;
+  line-height: 20px;
+}
+
+@mixin texto-cuerpo-4 {
+  font-family: var(--sk-font-body);
+  font-size: 12px;
+  line-height: 20px;
+  text-align: center;
+}
+
+@mixin texto-cuerpo-5 {
+  font-family: var(--sk-font-body);
+  font-size: 10px;
+  line-height: 20px;
+  text-align: center;
+}
+
+// ── Guía de estilos del portal (aproximadas, ver docs/MONITOR.md) ──
+@mixin sk-h3 {
+  font-family: var(--sk-font-heading);
+  font-size: 24px;
+}
+
+@mixin sk-h4 {
+  font-family: var(--sk-font-heading);
+  font-size: 20px;
+}
+
+@mixin sk-h5 {
+  font-family: var(--sk-font-heading);
+  font-size: 18px;
+}
+
+@mixin sk-b1 {
+  font-family: var(--sk-font-body);
+  font-size: 16px;
+}
+
+@mixin sk-b2 {
+  font-family: var(--sk-font-body);
+  font-size: 14px;
+}
+
+@mixin sk-b3 {
+  font-family: var(--sk-font-body);
+  font-size: 12px;
+}
+
+@mixin sk-b4 {
+  font-family: var(--sk-font-body);
+  font-size: 10px;
+}
+
+// `sk-btn` del portal: base de los botones (sin valores en el código del Monitor).
+@mixin sk-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: var(--sk-font-heading);
+  font-size: inherit;
+  font-weight: 700;
+  line-height: 20px;
+}
+
+// `sk-btn sk-btn-primary`
+@mixin boton-primario {
+  @include sk-btn;
+  background-color: var(--sk-color-primary);
+  border-color: var(--sk-color-primary);
+  color: var(--sk-color-surface);
+
+  &:hover {
+    background-color: var(--sk-color-primary-hover);
+    border-color: var(--sk-color-primary-hover);
+  }
+}
+
+// `sk-btn sk-btn-outline-primary`
+@mixin boton-contorno {
+  @include sk-btn;
+  background-color: var(--sk-color-surface);
+  border-color: var(--sk-color-primary);
+  color: var(--sk-color-primary);
+}
+
+// `btn-icon-custom` del styles.scss de producción
+@mixin boton-icono {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+// `grey-default-card` del styles.scss de producción
+@mixin tarjeta-gris {
+  border-radius: 16px;
+  background-color: $fondo-tarjeta;
+}
+
+// `shared/styles/scrollbar.scss` de producción
+@mixin barra-desplazamiento {
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 6px;
+    background: #f1f1f1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background: #888;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #00c83c;
+  }
+}
+
+// `.form-control` de Bootstrap 5.3 (campos de texto)
+@mixin campo-texto {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 0.375rem;
+  appearance: none;
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+
+  &::placeholder {
+    color: rgba(33, 37, 41, 0.75);
+  }
+
+  &:focus {
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  }
+}
+
+// `.form-select` de Bootstrap 5.3 (listas desplegables)
+@mixin campo-lista {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  border: 1px solid #dee2e6;
+  border-radius: 0.375rem;
+  appearance: none;
+
+  &:focus {
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  }
+
+  &:disabled {
+    background-color: #e9ecef;
+  }
+}
+
+// `.form-check-input[type=checkbox]` de Bootstrap 5.3
+@mixin casilla {
+  flex-shrink: 0;
+  width: 1em;
+  height: 1em;
+  margin-top: 0.25em;
+  vertical-align: top;
+  appearance: none;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25em;
+  cursor: pointer;
+
+  &:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
+  }
+
+  &:focus {
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  }
+}
