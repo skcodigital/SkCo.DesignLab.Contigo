@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { Icono } from '../../components/icono/icono';
-import { DEC_CAT, MOTIVO, NOM_CAJA, PARTES, TEXTOS } from '../../constants/textos';
+import { AGENDA_NOM, DEC_CAT, MOTIVO, NOM_CAJA, PARTES, TEXTOS } from '../../constants/textos';
 import { nombreContrato } from '../../data/contratos.mock';
 import { Etapa, EstadoConversacion } from '../../interfaces/conversacion';
 import { ConversacionesStore } from '../../state/conversaciones.store';
+import { agendada, cuandoAgenda } from '../../utils/agenda';
 import { combo, cred, ctSel, enAlcance, ordenFichas, retiro } from '../../utils/calculos';
 import { deIso, fLarga, pesos } from '../../utils/formato';
 import { completa, ETAPAS, habilitada, soloLectura } from '../../utils/validaciones';
@@ -65,7 +66,12 @@ function filasOpciones(st: EstadoConversacion): Fila[] {
 function filasAcuerdo(st: EstadoConversacion): Fila[] {
   const reg = st.cerrado && !st.fuera;
   const f: Fila[] = [['Decisión', reg && st.dec ? DEC_CAT[st.dec] : null]];
-  if (reg) f.push(['Seguimiento', fLarga(deIso(st.segHasta))]);
+  // La llamada agendada se registra aunque aún no se haya cerrado el acompañamiento
+  const a = st.agenda;
+  if (a && a.estado !== 'no') {
+    f.push(['Llamada de seguimiento', agendada(a) ? cuandoAgenda(a) + ' · ' + AGENDA_NOM[a.via] : 'Por confirmar fecha y hora']);
+  }
+  if (reg) f.push(['En seguimiento hasta', fLarga(deIso(st.segHasta))]);
   return f;
 }
 
@@ -100,7 +106,7 @@ export class Resumen {
         est: on ? 'on' : ok ? 'ok' : 'pend',
         hab: habilitada(st, n),
         editar: (ro ? 'Ver ' : 'Editar ') + nombre,
-        filas: on || ok ? FILAS[n](st) : [],
+        filas: on || ok || (n === 4 && !!st.agenda && st.agenda.estado !== 'no') ? FILAS[n](st) : [],
       };
     });
   });

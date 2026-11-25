@@ -1,3 +1,4 @@
+import { fLarga } from './formato';
 import { CONVERSACION_ANTERIOR, nuevaConversacion } from '../data/conversaciones.mock';
 import { EstadoConversacion } from '../interfaces/conversacion';
 import { listaDecisiones, validarCierre } from './acuerdo';
@@ -39,10 +40,13 @@ describe('acuerdo y texto para el cliente', () => {
 
   it('el cierre de un retiro pide el trámite y arma los pendientes', () => {
     expect(validarCierre(base)).toEqual({ error: 'Elige cómo se tramita el retiro antes de registrar el cierre.' });
-    expect(validarCierre({ ...base, tram: 'portal', np: { resumen: true, seguimiento: false } })).toEqual({
+    expect(validarCierre({ ...base, tram: 'portal', np: { resumen: true } })).toEqual({
       ok: 'Cierre registrado: Retiro. Quedan pendientes: Tramitar por el portal · Enviar resumen de la conversación al cliente.',
     });
-    expect(validarCierre({ ...base, dec: 'pensara', np: { resumen: false, seguimiento: false } })).toEqual({ ok: 'Cierre registrado: Lo va a pensar.' });
+    expect(validarCierre({ ...base, dec: 'pensara', np: { resumen: false } })).toEqual({ ok: 'Cierre registrado: Lo va a pensar.' });
+    expect(validarCierre({ ...base, dec: 'pensara', np: { resumen: false }, agenda: { via: 'teams', estado: 'si', fecha: '2026-11-28', hora: '10:00' } })).toEqual({
+      ok: 'Cierre registrado: Lo va a pensar. Llamada de seguimiento agendada en Microsoft Teams para el ' + fLarga(new Date(2026, 10, 28)) + ', 10:00 a. m.',
+    });
   });
 
   it('etiquetas de para cuándo', () => {

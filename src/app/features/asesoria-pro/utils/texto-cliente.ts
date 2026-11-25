@@ -5,6 +5,7 @@ import { Cajas, Credito, Retiro } from '../interfaces/calculo';
 import { Contrato } from '../interfaces/contrato';
 import { EstadoConversacion } from '../interfaces/conversacion';
 import { saleDe } from './acuerdo';
+import { agendada, cuandoAgenda } from './agenda';
 import { Celda, crearXlsx } from './xlsx';
 import {
   aniosDe,
@@ -120,9 +121,8 @@ export function textoCliente(st: St): string {
   if (st.dec) add('Decisión del cliente', DEC_CAT[st.dec]);
   const np: string[] = [];
   if (st.np.resumen) np.push(PROXIMOS_PASOS.resumen);
-  if (st.np.seguimiento) np.push(PROXIMOS_PASOS.seguimiento);
   if (np.length) add('Próximos pasos', np.join('; '));
-  if (st.fseg) add('Seguimiento', fLarga(deIso(st.fseg)));
+  if (agendada(st.agenda)) add('Llamada de seguimiento', cuandoAgenda(st.agenda));
   if (st.notas.trim()) add('Notas', st.notas.trim());
   return L.join('\n');
 }

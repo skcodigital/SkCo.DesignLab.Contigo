@@ -18,7 +18,7 @@ export function nuevaConversacion(): EstadoConversacion {
     etapa: 1, visitadas: [1], monto: 0, motivo: null, otro: '', cuando: null, fecha: '', fechaTipo: null,
     abierta: null, eligeFecha: false, pen: null, ctMarc: null, ctConf: null,
     pref: null, plazo: null, noRepone: false, rx: null, rxInfo: false, lm: false, dec: null, tram: null,
-    np: { resumen: true, seguimiento: true }, fseg: '', notas: '', validar: false, msg: null,
+    np: { resumen: true }, agenda: null, notas: '', validar: false, msg: null,
     cerrado: false, fuera: false, estado: 'en-curso', resultado: null, segHasta: '', enviado: false, segundos: 0,
     imp: { metodo: 'preguntas', paso: 1, ingreso: 18500000, benef: null, otros: null, otrosTmp: 0, dep: null, tarifa: '' },
     cr: null, creditoCombo: null, apVista: 'resumen', rentPer: 'inicio', verCalc: false,
@@ -35,7 +35,7 @@ export const CONVERSACION_ANTERIOR: Conversacion = {
     ...nuevaConversacion(),
     etapa: 4, visitadas: [1, 2, 3, 4], monto: 150000000, motivo: 'liquidez', cuando: 'este-mes', fecha: '2026-10-31',
     ctMarc: 'ahorro', ctConf: 'ahorro', pref: 'retiro', rx: 'no', dec: 'retiro', tram: 'portal',
-    np: { resumen: true, seguimiento: false }, cerrado: true, estado: 'finalizada', resultado: 'Retiro parcial',
+    np: { resumen: true }, cerrado: true, estado: 'finalizada', resultado: 'Retiro parcial',
     segHasta: '2026-11-27', segundos: 720,
   },
 };

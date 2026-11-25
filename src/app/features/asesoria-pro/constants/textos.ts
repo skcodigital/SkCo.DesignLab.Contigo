@@ -81,9 +81,15 @@ export const PREF_A_DECISION: Readonly<Record<Preferencia, Decision>> = {
   noretira: 'noretira',
 };
 
+/** Herramientas para agendar la llamada de seguimiento. */
+export const AGENDA_NOM = {
+  google: 'Google Calendar',
+  teams: 'Microsoft Teams',
+  ios: 'Calendario de iOS',
+} as const;
+
 export const PROXIMOS_PASOS = {
   resumen: 'Enviar resumen de la conversación al cliente',
-  seguimiento: 'Agendar llamada de seguimiento',
 } as const;
 
 /** Avisos, mensajes y etiquetas dinámicas que arma el TS. */
@@ -140,7 +146,8 @@ export const TEXTOS = {
   accionPortal: 'Tramitar por el portal',
   accionCredito: 'Solicitar el crédito',
   cierreRegistrado: (dec: string) => `Cierre registrado: ${dec}.`,
-  cierrePendientes: (p: string, seg: string) => ` Quedan pendientes: ${p}${seg ? ` (seguimiento el ${seg})` : ''}.`,
+  cierrePendientes: (p: string) => ` Quedan pendientes: ${p}.`,
+  llamadaAgendada: (via: string, cuando: string) => `Llamada de seguimiento agendada en ${via} para el ${cuando}`,
   registrarCierre: 'Registrar cierre',
   cierreHecho: 'Cierre registrado',
   copiar: 'Copiar',

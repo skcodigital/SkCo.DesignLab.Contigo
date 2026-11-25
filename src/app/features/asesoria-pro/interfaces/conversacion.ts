@@ -14,7 +14,22 @@ export type MetodoImpuesto = 'preguntas' | 'tarifa';
 export type VistaAportes = 'resumen' | 'tabla';
 export type PeriodoRent = 'inicio' | '12' | '6' | '3';
 export type OrigenConv = 'mision' | 'catalogo' | 'historial';
-export type ProximoPaso = 'resumen' | 'seguimiento';
+export type ProximoPaso = 'resumen';
+/** Herramienta donde el asesor agenda la llamada de seguimiento (la fecha y la hora se eligen allí). */
+export type HerramientaAgenda = 'google' | 'teams' | 'ios';
+/**
+ * Como las herramientas no devuelven la fecha, el asesor la confirma:
+ * pendiente (¿la agendaste?) → «si» (fecha y hora, se guardan solas) o «no».
+ */
+export type EstadoAgenda = 'pendiente' | 'si' | 'no';
+
+export interface AgendaSeguimiento {
+  via: HerramientaAgenda;
+  estado: EstadoAgenda;
+  /** `AAAA-MM-DD` y `HH:MM` que indicó el asesor. */
+  fecha: string;
+  hora: string;
+}
 
 export interface EstadoImpuestos {
   metodo: MetodoImpuesto;
@@ -67,7 +82,8 @@ export interface EstadoConversacion {
   dec: Decision | null;
   tram: Tramite | null;
   np: Readonly<Record<ProximoPaso, boolean>>;
-  fseg: string;
+  /** Dónde se agendó la llamada de seguimiento (queda registrada aunque no se cierre el acompañamiento). */
+  agenda: AgendaSeguimiento | null;
   notas: string;
   validar: boolean;
   msg: MensajeCierre | null;

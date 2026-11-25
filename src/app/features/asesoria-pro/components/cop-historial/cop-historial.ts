@@ -2,7 +2,8 @@ import { ChangeDetectionStrategy, Component, computed, input, output } from '@an
 import { TEXTOS, TONO_HISTORIAL } from '../../constants/textos';
 import { Conversacion } from '../../interfaces/conversacion';
 import { estadoDe } from '../../state/conversaciones.store';
-import { fNumerica } from '../../utils/formato';
+import { agendada } from '../../utils/agenda';
+import { deIso, fNumerica, horaTxt } from '../../utils/formato';
 
 /** Historial de conversaciones de la ficha (clicable: la conversación se abre, en solo lectura si ya se cerró). */
 @Component({
@@ -29,7 +30,9 @@ export class CopHistorial {
     this.conversaciones().map((cv) => {
       const [estado, tono] = TONO_HISTORIAL[estadoDe(cv)];
       const min = cv.st.segundos > 0 ? Math.max(1, Math.round(cv.st.segundos / 60)) : 0;
-      return { id: cv.id, estado, tono, detalle: TEXTOS.conversacionDel(fNumerica(cv.creada), min) };
+      const a = cv.st.agenda;
+      const agenda = agendada(a) ? ' · Llamada el ' + fNumerica(deIso(a.fecha)) + ' a las ' + horaTxt(a.hora) : '';
+      return { id: cv.id, estado, tono, detalle: TEXTOS.conversacionDel(fNumerica(cv.creada), min) + agenda };
     }),
   );
 }

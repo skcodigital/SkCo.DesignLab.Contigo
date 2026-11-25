@@ -2,29 +2,13 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { MisionesStore } from '@core/state/misiones.store';
 import { PREF_A_DECISION } from '../constants/textos';
 import { CLIENTE, CONVERSACION_ANTERIOR, HOY, nuevaConversacion } from '../data/conversaciones.mock';
-import {
-  Conversacion,
-  Cuando,
-  Decision,
-  Etapa,
-  EstadoConv,
-  EstadoConversacion,
-  MetodoImpuesto,
-  OrigenConv,
-  PeriodoRent,
-  Preferencia,
-  PreguntaEntender,
-  ProximoPaso,
-  RespuestaRx,
-  SiNo,
-  SimCredito,
-  Tramite,
-  VistaAportes,
-  Motivo,
-} from '../interfaces/conversacion';
+import { Conversacion, Cuando, Decision, EstadoConv, EstadoConversacion, Etapa, HerramientaAgenda, MetodoImpuesto, Motivo, OrigenConv, PeriodoRent, Preferencia, PreguntaEntender, ProximoPaso, RespuestaRx, SimCredito, SiNo, Tramite, VistaAportes } from '../interfaces/conversacion';
 import { validarCierre } from '../utils/acuerdo';
 import { enAlcance, ordenFichas, simCredito } from '../utils/calculos';
 import { iso, masDias } from '../utils/formato';
+
+/** Hora por defecto de la llamada de seguimiento. */
+const HORA_AGENDA = '10:00';
 import { etapa1Completa, etapasCompletas } from '../utils/validaciones';
 
 type St = EstadoConversacion;
@@ -231,8 +215,21 @@ export class ConversacionesStore {
     this.patch((s) => ({ np: { ...s.np, [k]: on } }));
   }
 
-  definirSeguimiento(fecha: string): void {
-    this.patch(() => ({ fseg: fecha }));
+  // ---- Llamada de seguimiento (también con el acompañamiento cerrado o sin cerrar) ----
+  /** Abrió la herramienta: queda pendiente confirmar si la agendó. */
+  registrarAgenda(via: HerramientaAgenda): void {
+    this.patch((s) => ({ agenda: { via, estado: 'pendiente', fecha: s.agenda?.fecha ?? '', hora: s.agenda?.hora ?? '' } }));
+  }
+
+  /** ¿La agendaste? Sí → pide fecha y hora; No → queda sin agendar. */
+  responderAgenda(si: boolean): void {
+    // Hora por defecto (10:00 a. m.): el asesor solo la cambia si quedó a otra hora
+    this.patch((s) => (s.agenda ? { agenda: { ...s.agenda, estado: si ? 'si' : 'no', hora: s.agenda.hora || HORA_AGENDA } } : {}));
+  }
+
+  /** Fecha u hora que indica el asesor: se guardan al escribirlas (con ambas, queda agendada). */
+  fijarAgenda(campo: 'fecha' | 'hora', valor: string): void {
+    this.patch((s) => (s.agenda ? { agenda: { ...s.agenda, [campo]: valor } } : {}));
   }
 
   anotarNotas(txt: string): void {
@@ -266,7 +263,7 @@ export class ConversacionesStore {
 
   private cerrarConversacion(fuera: boolean): void {
     this.patch((s) => ({
-      cerrado: true, fuera, estado: 'cerrada-seguimiento', segHasta: s.fseg || iso(masDias(30)), abierta: null,
+      cerrado: true, fuera, estado: 'cerrada-seguimiento', segHasta: iso(masDias(30)), abierta: null,
     }));
     this.sincronizar();
   }

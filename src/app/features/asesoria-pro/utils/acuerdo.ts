@@ -1,9 +1,10 @@
-import { DEC_NOM, PROXIMOS_PASOS, TEXTOS } from '../constants/textos';
+import { AGENDA_NOM, DEC_NOM, PROXIMOS_PASOS, TEXTOS } from '../constants/textos';
 import { Cajas, Credito } from '../interfaces/calculo';
 import { Decision, EstadoConversacion } from '../interfaces/conversacion';
 import { nombreContrato } from '../data/contratos.mock';
+import { agendada, cuandoAgenda } from './agenda';
 import { elegibles } from './calculos';
-import { deIso, fLarga, pesos } from './formato';
+import { fLarga, pesos } from './formato';
 
 type St = EstadoConversacion;
 
@@ -72,8 +73,7 @@ export function validarCierre(st: St): { error: string } | { ok: string } {
   const accion = ret ? (st.tram === 'especificado' ? TEXTOS.accionEspecificado : TEXTOS.accionPortal) : esCr ? TEXTOS.accionCredito : '';
   const pasos: string[] = [];
   if (st.np.resumen) pasos.push(PROXIMOS_PASOS.resumen);
-  if (st.np.seguimiento) pasos.push(PROXIMOS_PASOS.seguimiento);
   const pend = [accion, ...pasos].filter(Boolean);
-  const seg = st.np.seguimiento && st.fseg ? fLarga(deIso(st.fseg)) : '';
-  return { ok: TEXTOS.cierreRegistrado(DEC_NOM[dec]) + (pend.length ? TEXTOS.cierrePendientes(pend.join(' · '), seg) : '') };
+  const agenda = agendada(st.agenda) ? ' ' + TEXTOS.llamadaAgendada(AGENDA_NOM[st.agenda.via], cuandoAgenda(st.agenda)) : '';
+  return { ok: TEXTOS.cierreRegistrado(DEC_NOM[dec]) + (pend.length ? TEXTOS.cierrePendientes(pend.join(' · ')) : '') + agenda };
 }
