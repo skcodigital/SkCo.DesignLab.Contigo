@@ -93,3 +93,33 @@ $v: ':host-context(#jm-velo)';
 
 #{$v} .jw-cr-de{margin:-6px 0 0;font-size:13px;color:var(--tx2)}
 #{$v} .jw-cr-de b{color:#fff}
+
+// ===== Revisión 2026-11-25: tipografía con la misma escala de las demás pestañas del detalle =====
+// Títulos de sección 15px (fuente de texto, como «Impuestos»); etiquetas 13px; valores 14px en negrita;
+// cifras clave (total y respaldo) 16px con la fuente de títulos; notas 11–12px.
+#{$v} .jw-cr-h{margin:8px 0 0;font-family:var(--sk-font-body);font-size:15px;line-height:22px;font-weight:700}
+#{$v} .jw-cr-de,#{$v} .jw-cr-porque{font-size:13px}
+#{$v} .jw-cr-sel{font-family:var(--sk-font-body);font-size:14px;font-weight:700}
+#{$v} .jw-cr-sel svg{width:18px;height:18px}
+#{$v} .jw-cr-datos>div{padding:12px 14px;font-size:13px}
+#{$v} .jw-cr-datos b{font-size:14px}
+#{$v} .jw-cr-datos small{font-size:11px;line-height:16px}
+#{$v} .jw-cr-total{padding:12px 14px}
+#{$v} .jw-cr-total span{font-family:var(--sk-font-body);font-size:14px}
+#{$v} .jw-cr-total b{font-family:var(--sk-font-heading);font-size:16px}
+#{$v} .jw-cr-resp{padding:12px 14px;gap:8px}
+#{$v} .jw-cr-resp-t{font-family:var(--sk-font-body);font-size:14px}
+#{$v} .jw-cr-resp-v b{font-size:16px}
+#{$v} .jw-cr-resp-v span{font-size:12px;color:var(--tx3)}
+#{$v} .jw-cr-resp p{font-size:13px}
+#{$v} .jw-cr-sug{font-size:13px}
+#{$v} .jw-cr-sug>svg{width:18px;height:18px}
+#{$v} .jw-cr-sug b{font-family:var(--sk-font-body);font-size:14px}
+#{$v} .jw-cr-sug small{font-size:12px}
+#{$v} .jw-cr-cambiar{font-size:13px;font-weight:600}
+#{$v} .jw-cr-ct{padding:12px 14px}
+#{$v} .jw-cr-ct-nom b{font-size:14px}
+#{$v} .jw-cr-ct-nom small{font-size:12px}
+#{$v} .jw-cr-ct dl{font-size:13px;gap:4px 16px}
+#{$v} .jw-cr-admit{font-size:13px}
+#{$v} .jw-cr-pie{font-size:11px;line-height:16px}

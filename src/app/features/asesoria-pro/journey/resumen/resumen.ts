@@ -66,10 +66,10 @@ function filasOpciones(st: EstadoConversacion): Fila[] {
 function filasAcuerdo(st: EstadoConversacion): Fila[] {
   const reg = st.cerrado && !st.fuera;
   const f: Fila[] = [['Decisión', reg && st.dec ? DEC_CAT[st.dec] : null]];
-  // La llamada agendada se registra aunque aún no se haya cerrado el acompañamiento
+  // La reunión agendada se registra aunque aún no se haya cerrado el acompañamiento
   const a = st.agenda;
   if (a && a.estado !== 'no') {
-    f.push(['Llamada de seguimiento', agendada(a) ? cuandoAgenda(a) + ' · ' + AGENDA_NOM[a.via] : 'Por confirmar fecha y hora']);
+    f.push(['Reunión de seguimiento', agendada(a) ? cuandoAgenda(a) + ' · ' + AGENDA_NOM[a.via] : 'Por confirmar fecha y hora']);
   }
   if (reg) f.push(['En seguimiento hasta', fLarga(deIso(st.segHasta))]);
   return f;

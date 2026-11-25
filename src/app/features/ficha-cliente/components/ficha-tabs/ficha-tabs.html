@@ -1,6 +1,8 @@
+<div class="tabs-w" #envoltura>
 <div class="tabs" role="tablist">
   @for (p of pestanas; track p.id) {
     <div
+      #tab
       class="tab"
       role="tab"
       tabindex="0"
@@ -39,6 +41,28 @@
         {{ p.etiqueta }}
       }
       <svg class="m-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+    </div>
+  }
+</div>
+
+  <!-- Novedad sobre Planeación Pro (mismo globo que «Saldos a otras fechas»); solo escritorio -->
+  @if (novedad()) {
+    @let pos = posicion();
+    <div
+      #globo
+      class="fx-globo"
+      role="status"
+      [style.visibility]="pos ? null : 'hidden'"
+      [style.left.px]="pos?.left"
+      [style.top.px]="pos?.top"
+      [style.--fx-globo-x]="pos ? pos.flecha + 'px' : null"
+    >
+      <button type="button" class="fx-globo-ir" (click)="irANovedad()">
+        <svg class="fx-globo-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 11 18-5v12L3 14v-3z" /><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" /></svg>Ahora en Contigo: <b>Herramientas de acompañamiento</b>
+      </button>
+      <button type="button" class="fx-globo-x" aria-label="Cerrar aviso" (click)="novedades.apagarPlaneacionPro()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+      </button>
     </div>
   }
 </div>

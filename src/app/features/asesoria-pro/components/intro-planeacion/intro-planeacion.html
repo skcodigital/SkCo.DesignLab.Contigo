@@ -1,0 +1,56 @@
+@if (abierta()) {
+  <div class="ip-velo" (keydown)="atraparFoco($event)">
+    <div #caja class="ip" role="dialog" aria-modal="true" aria-labelledby="ip-tit" aria-describedby="ip-txt">
+      <button type="button" class="ip-x" aria-label="Cerrar" (click)="cerrar()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+      </button>
+
+      <!-- Ilustración de cada paso -->
+      <div class="ip-ilu" aria-hidden="true">
+        @switch (paso()) {
+          @case (0) {
+            <span class="ip-sami"><img src="assets/sami-cabeza.png" alt="" width="72" height="53" /></span>
+          }
+          @case (1) {
+            <!-- Genérico: las etapas cambian según la misión -->
+            <ol class="ip-etapas">
+              @for (e of etapas; track e) {
+                <li><span>{{ e }}</span></li>
+              }
+              <li class="ip-etapas-mas"><span>…</span></li>
+            </ol>
+          }
+          @case (2) {
+            <div class="ip-cierre">
+              <span class="ip-chip">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg>Resumen al cliente
+              </span>
+              <span class="ip-chip">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" /></svg>Reunión de seguimiento
+              </span>
+            </div>
+          }
+        }
+      </div>
+
+      <p class="ip-paso">Paso {{ paso() + 1 }} de {{ pasos.length }}</p>
+      <h2 id="ip-tit">{{ actual().titulo }}</h2>
+      <p id="ip-txt" class="ip-txt">{{ actual().texto }}</p>
+
+      <div class="ip-puntos" role="group" aria-label="Pasos de la intro">
+        @for (p of pasos; track p.titulo; let i = $index) {
+          <button type="button" [class.on]="i === paso()" [attr.aria-label]="'Ir al paso ' + (i + 1)" [attr.aria-current]="i === paso() ? 'step' : null" (click)="ir(i)"></button>
+        }
+      </div>
+
+      <div class="ip-pie">
+        @if (paso() === 0) {
+          <button type="button" class="ip-sec" (click)="cerrar()">Omitir</button>
+        } @else {
+          <button type="button" class="ip-sec" (click)="atras()">Atrás</button>
+        }
+        <button #principal type="button" class="ip-ok" (click)="siguiente()">{{ ultimo() ? 'Entendido' : 'Siguiente' }}</button>
+      </div>
+    </div>
+  </div>
+}

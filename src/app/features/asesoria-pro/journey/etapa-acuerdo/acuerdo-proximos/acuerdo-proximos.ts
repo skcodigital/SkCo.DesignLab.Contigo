@@ -38,7 +38,7 @@ export class AcuerdoProximos {
     this.store.marcarProximoPaso(k, (e.target as HTMLInputElement).checked);
   }
 
-  // ---- Agendar la llamada de seguimiento ----
+  // ---- Agendar la reunión de seguimiento ----
   protected readonly nombre = AGENDA_NOM;
   private readonly titulo = tituloAgenda();
   private readonly detalle = computed(() => detalleAgenda(this.st()));

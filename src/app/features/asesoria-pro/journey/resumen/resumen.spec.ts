@@ -4,7 +4,7 @@ import { fLarga } from '../../utils/formato';
 import { textoCliente } from '../../utils/texto-cliente';
 import { Resumen } from './resumen';
 
-describe('Resumen · llamada de seguimiento', () => {
+describe('Resumen · reunión de seguimiento', () => {
   let store: ConversacionesStore;
   const cuando = fLarga(new Date(2026, 10, 28)) + ', 2:30 p. m.';
 
@@ -26,7 +26,7 @@ describe('Resumen · llamada de seguimiento', () => {
   });
 
   it('pide confirmar y registra fecha y hora sin cerrar el acompañamiento, aunque salga y vuelva', () => {
-    expect(pintar()).not.toContain('Llamada de seguimiento');
+    expect(pintar()).not.toContain('Reunión de seguimiento');
     store.registrarAgenda('teams');
     expect(pintar()).toContain('Por confirmar fecha y hora');
     store.responderAgenda(true);
@@ -40,12 +40,12 @@ describe('Resumen · llamada de seguimiento', () => {
     store.cerrarJourney(60);
     store.abrirMision();
     expect(pintar()).toContain(cuando + ' · Microsoft Teams');
-    expect(textoCliente(store.st())).toContain('Llamada de seguimiento: ' + cuando);
+    expect(textoCliente(store.st())).toContain('Reunión de seguimiento: ' + cuando);
   });
 
   it('si responde que no la agendó, no queda en el resumen', () => {
     store.registrarAgenda('google');
     store.responderAgenda(false);
-    expect(pintar()).not.toContain('Llamada de seguimiento');
+    expect(pintar()).not.toContain('Reunión de seguimiento');
   });
 });

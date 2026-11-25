@@ -7,7 +7,7 @@ import { validarCierre } from '../utils/acuerdo';
 import { enAlcance, ordenFichas, simCredito } from '../utils/calculos';
 import { iso, masDias } from '../utils/formato';
 
-/** Hora por defecto de la llamada de seguimiento. */
+/** Hora por defecto de la reunión de seguimiento. */
 const HORA_AGENDA = '10:00';
 import { etapa1Completa, etapasCompletas } from '../utils/validaciones';
 
@@ -215,7 +215,7 @@ export class ConversacionesStore {
     this.patch((s) => ({ np: { ...s.np, [k]: on } }));
   }
 
-  // ---- Llamada de seguimiento (también con el acompañamiento cerrado o sin cerrar) ----
+  // ---- Reunión de seguimiento (también con el acompañamiento cerrado o sin cerrar) ----
   /** Abrió la herramienta: queda pendiente confirmar si la agendó. */
   registrarAgenda(via: HerramientaAgenda): void {
     this.patch((s) => ({ agenda: { via, estado: 'pendiente', fecha: s.agenda?.fecha ?? '', hora: s.agenda?.hora ?? '' } }));

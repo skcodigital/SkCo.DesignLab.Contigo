@@ -9,7 +9,7 @@ export const tituloAgenda = (): string => 'Seguimiento ' + TEXTOS.tituloJourney.
 /** Descripción del evento (sin cifras del cliente: viaja a herramientas externas). */
 export function detalleAgenda(st: EstadoConversacion): string {
   const dec = st.dec && st.dec !== 'fuera' ? ' Decisión del cliente: ' + DEC_CAT[st.dec] + '.' : '';
-  return 'Llamada de seguimiento de Planeación Pro.' + dec;
+  return 'Reunión de seguimiento de Planeación Pro.' + dec;
 }
 
 /** Google Calendar: abre el evento nuevo; el asesor elige fecha y hora allí. */
@@ -48,7 +48,7 @@ export function icsSeguimiento(titulo: string, detalle: string, ahora: Date = ne
 
 export const nombreAgenda = AGENDA_NOM;
 
-/** Llamada confirmada por el asesor (con fecha y hora). */
+/** Reunión confirmada por el asesor (con fecha y hora). */
 export const agendada = (a: AgendaSeguimiento | null): a is AgendaSeguimiento => a?.estado === 'si' && !!a.fecha && !!a.hora;
 
 /** `28 nov 2026, 10:00 a. m.` */

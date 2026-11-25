@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, model, output } from '@angular/core';
 
 export type VistaPlaneacion = 'journeys' | 'historial';
 
@@ -10,11 +10,13 @@ export type VistaPlaneacion = 'journeys' | 'historial';
       <div class="cop-cab">
         <h3 class="cop-mis-tit cop-punto">Tu misión esta semana con Óscar</h3>
         <div class="cop-hud">
-          @if (verSenal()) {
-            <span>Señal detectada el <b>{{ senal() }}</b></span>
+          <!-- «Señal detectada el …» omitido por ahora (las entradas verSenal/senal se conservan) -->
+          <!-- Sin fecha de última interacción no se muestra -->
+          @if (ultima()) {
+            <span>Última interacción <b>{{ ultima() }}</b></span>
           }
-          <span>Última conversación <b>{{ ultima() }}</b></span>
-          <span class="cop-prog"><i><i [style.width.%]="hechas() * 100"></i></i><b>{{ hechas() }}</b> <span>de 1 completada esta semana</span></span>
+          <span><button type="button" class="cop-que" aria-haspopup="dialog" (click)="queEs.emit()">¿Qué es Planeación Pro?</button></span>
+          <!-- Avance «n de 1 completada esta semana» omitido por ahora (la entrada hechas se conserva) -->
         </div>
       </div>
       <div class="cop-seg" role="tablist" aria-label="Vista de Planeación Pro">
@@ -33,4 +35,6 @@ export class CopCabecera {
   readonly ultima = input('');
   /** Misiones completadas esta semana (0 o 1). */
   readonly hechas = input(0);
+  /** Abre la intro de Planeación Pro. */
+  readonly queEs = output<void>();
 }

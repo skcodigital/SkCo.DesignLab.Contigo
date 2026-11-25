@@ -45,7 +45,7 @@ describe('acuerdo y texto para el cliente', () => {
     });
     expect(validarCierre({ ...base, dec: 'pensara', np: { resumen: false } })).toEqual({ ok: 'Cierre registrado: Lo va a pensar.' });
     expect(validarCierre({ ...base, dec: 'pensara', np: { resumen: false }, agenda: { via: 'teams', estado: 'si', fecha: '2026-11-28', hora: '10:00' } })).toEqual({
-      ok: 'Cierre registrado: Lo va a pensar. Llamada de seguimiento agendada en Microsoft Teams para el ' + fLarga(new Date(2026, 10, 28)) + ', 10:00 a. m.',
+      ok: 'Cierre registrado: Lo va a pensar. Reunión de seguimiento agendada en Microsoft Teams para el ' + fLarga(new Date(2026, 10, 28)) + ', 10:00 a. m.',
     });
   });
 
@@ -60,7 +60,7 @@ describe('acuerdo y texto para el cliente', () => {
     expect(txt).toContain('Motivo: Necesidad de liquidez');
     expect(txt).toContain('Contrato elegido: Mi ahorro · 100007012618 ($211.306.589)');
     expect(txt).toContain('Opción que prefiere: Retiro por $150.000.000: se descuentan $157.195.585 del contrato');
-    expect(txt).toContain('Etapas conversadas: Necesidad → Lo que tiene y desde dónde → Comparador → Decisión y cierre');
+    expect(txt).toContain('Etapas conversadas: Necesidad, Situación, Opciones, Decisión y Cierre');
     expect(txt).toContain('Decisión del cliente: Retiro parcial');
   });
 });

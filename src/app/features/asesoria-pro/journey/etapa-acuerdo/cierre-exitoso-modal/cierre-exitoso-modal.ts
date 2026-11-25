@@ -1,4 +1,4 @@
-import { afterRenderEffect, ChangeDetectionStrategy, Component, ElementRef, model, viewChild } from '@angular/core';
+import { afterRenderEffect, ChangeDetectionStrategy, Component, ElementRef, input, model, viewChild } from '@angular/core';
 
 /**
  * Modal de éxito al registrar el cierre del acompañamiento (Acuerdo). Mismo diseño que la modal
@@ -17,7 +17,13 @@ import { afterRenderEffect, ChangeDetectionStrategy, Component, ElementRef, mode
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10" /></svg>
           </span>
           <h2 id="pp-cierre-tit">Gracias a tu acompañamiento, tu cliente tomará mejores decisiones.</h2>
-          <p id="pp-cierre-d">Hemos enviado a tu cliente un resumen de la conversación de hoy a su correo.</p>
+          <p id="pp-cierre-d">
+            @if (alCliente()) {
+              Hemos enviado a ti y a tu cliente un resumen de la conversación de hoy a sus respectivos correos registrados.
+            } @else {
+              Te hemos enviado el resumen de la conversación de hoy a tu correo.
+            }
+          </p>
           <button #ok type="button" class="pp-md-ok" (click)="cerrar()">Entendido</button>
         </div>
       </div>
@@ -29,6 +35,8 @@ import { afterRenderEffect, ChangeDetectionStrategy, Component, ElementRef, mode
 })
 export class CierreExitosoModal {
   readonly abierta = model(false);
+  /** «Enviar resumen de la conversación al cliente» marcado en Próximos pasos. */
+  readonly alCliente = input(false);
 
   private readonly caja = viewChild<ElementRef<HTMLElement>>('caja');
   private readonly ok = viewChild<ElementRef<HTMLButtonElement>>('ok');

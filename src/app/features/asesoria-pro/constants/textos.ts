@@ -4,7 +4,8 @@ import { TipoCaja } from '../interfaces/calculo';
 /** Partes del journey (barra de pasos y resumen). */
 export const PARTES = ['Situación', 'Opciones', 'Decisión', 'Cierre'] as const;
 /** Nombres de las etapas en la base de datos («Etapas conversadas»). */
-export const ETAPAS_BD = ['Necesidad', 'Lo que tiene y desde dónde', 'Comparador', 'Decisión y cierre'] as const;
+/** «Etapas conversadas» del texto para el cliente: el paso 1 cubre la necesidad y la situación. */
+export const ETAPAS_BD = [['Necesidad', 'Situación'], ['Opciones'], ['Decisión'], ['Cierre']] as const;
 
 export const MOTIVO: Readonly<Record<Motivo, string>> = {
   liquidez: 'Necesidad de liquidez',
@@ -81,7 +82,7 @@ export const PREF_A_DECISION: Readonly<Record<Preferencia, Decision>> = {
   noretira: 'noretira',
 };
 
-/** Herramientas para agendar la llamada de seguimiento. */
+/** Herramientas para agendar la reunión de seguimiento. */
 export const AGENDA_NOM = {
   google: 'Google Calendar',
   teams: 'Microsoft Teams',
@@ -98,10 +99,10 @@ export const TEXTOS = {
   avisoDescarte: (nombre: string) => `Descartaste la misión de ${nombre.split(' ')[0]}. Registramos el motivo.`,
   sinMotivo: '—',
   misionEnCurso: (n: number) => `En curso · ${n} de 4 etapas`,
-  /** Tarjeta de misión: mismo título y texto que la misión destacada del dashboard. */
-  guiaTitulo: (nombre: string) => `Revisa con ${nombre.split(' ')[0]} su portafolio y sus objetivos.`,
+  /** Tarjeta de misión de la ficha (Planeación Pro). El dashboard tiene su propio texto. */
+  guiaTitulo: (nombre: string) => `Acompaña a ${nombre.split(' ')[0]} a tomar las mejores decisiones a la hora de retirar.`,
   guiaTexto:
-    'Nuestro modelo indica que tu cliente podría retirar dinero de su Fondo Voluntario de Pensión en los próximos 60 días. Contáctalo sin mencionar esta señal, si decide retirar, acompaña su decisión con Planeación Pro.',
+    'Si tu cliente ha decidido o tiene pensado realizar un retiro en Multifund puedes realizar acompañamiento a través de las etapas de Planeación Pro.',
   iniciar: 'Iniciar acompañamiento',
   continuar: 'Continuar acompañamiento',
   progreso: 'de 1 completada esta semana',
@@ -147,7 +148,7 @@ export const TEXTOS = {
   accionCredito: 'Solicitar el crédito',
   cierreRegistrado: (dec: string) => `Cierre registrado: ${dec}.`,
   cierrePendientes: (p: string) => ` Quedan pendientes: ${p}.`,
-  llamadaAgendada: (via: string, cuando: string) => `Llamada de seguimiento agendada en ${via} para el ${cuando}`,
+  llamadaAgendada: (via: string, cuando: string) => `Reunión de seguimiento agendada en ${via} para el ${cuando}`,
   registrarCierre: 'Registrar cierre',
   cierreHecho: 'Cierre registrado',
   copiar: 'Copiar',

@@ -14,7 +14,7 @@
     </svg>
   </div>
   <div class="cop">
-    <nc-cop-cabecera [(vista)]="vista" [verSenal]="!gestionada()" [senal]="senal" [ultima]="ultima()" [hechas]="hechas()" />
+    <nc-cop-cabecera [(vista)]="vista" [verSenal]="!gestionada()" [senal]="senal" [ultima]="ultima()" [hechas]="hechas()" (queEs)="bienvenida.set(true)" />
 
     @if (vista() === 'journeys') {
       <div class="cop-b">
@@ -23,21 +23,17 @@
                que hoy no trae monto ni probabilidad -->
           @if (verTarjeta()) {
             <article class="mis mis-urg" [class.mis--curso]="enCurso()" (click)="abrirMision()">
-              <span class="mis-cat">Necesita atención</span>
+              <span class="mis-cat">Sugerido</span>
               @if (enCurso()) {
                 <p class="mis-estado">{{ estadoMision() }}</p>
               }
-              <!-- Mismo título y texto que la misión destacada del dashboard -->
               <div class="mis-guia">
                 <h4 class="mis-t">{{ textos.guiaTitulo(nombre) }}</h4>
                 <p class="mis-d">{{ textos.guiaTexto }}</p>
               </div>
               <button class="mis-btn" type="button" (click)="$event.stopPropagation(); abrirMision()">{{ enCurso() ? textos.continuar : textos.iniciar }}</button>
               <p class="mis-conv">Conversación: <b>Acompañamiento al retirar</b></p>
-              <!-- Como en Angular: no se descarta una misión iniciada -->
-              @if (!enCurso()) {
-                <button class="mis-desc" type="button" aria-haspopup="dialog" (click)="pedirDescarte($event)">Descartar</button>
-              }
+              <!-- «Descartar» omitido por ahora (la modal y la lógica siguen en el componente) -->
             </article>
           }
         </div>
@@ -66,3 +62,6 @@
   @case ('cargando') { <nc-journey-carga (lista)="fase.set('abierto')" /> }
   @case ('abierto') { <nc-journey (cerrar)="cerrarJourney($event)" /> }
 }
+
+<!-- Intro «¿Qué es Planeación Pro?»: sola la primera vez; luego desde la cabecera -->
+<nc-intro-planeacion [(abierta)]="bienvenida" />

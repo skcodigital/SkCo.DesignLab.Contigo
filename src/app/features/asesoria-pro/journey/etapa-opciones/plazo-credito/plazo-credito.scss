@@ -14,3 +14,7 @@ $v: ':host-context(#jm-velo)';
 .jw-plazo-fila{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px}
 .jw-plazo-fila .jw-link{padding:0;font-size:13px}
 #{$v} .jw-o3-plazo p{color:var(--tx2)}
+
+// Nota bajo los chips: los periodos son un supuesto de pago (el crédito siempre es a 12 meses)
+.jw-o3-plazo .jw-plazo-nota{font-size:11px;line-height:16px;font-weight:400;color:var(--sk-color-text-3)}
+#{$v} .jw-o3-plazo .jw-plazo-nota{color:var(--tx3)}

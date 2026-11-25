@@ -31,7 +31,7 @@ export class CopHistorial {
       const [estado, tono] = TONO_HISTORIAL[estadoDe(cv)];
       const min = cv.st.segundos > 0 ? Math.max(1, Math.round(cv.st.segundos / 60)) : 0;
       const a = cv.st.agenda;
-      const agenda = agendada(a) ? ' · Llamada el ' + fNumerica(deIso(a.fecha)) + ' a las ' + horaTxt(a.hora) : '';
+      const agenda = agendada(a) ? ' · Reunión el ' + fNumerica(deIso(a.fecha)) + ' a las ' + horaTxt(a.hora) : '';
       return { id: cv.id, estado, tono, detalle: TEXTOS.conversacionDel(fNumerica(cv.creada), min) + agenda };
     }),
   );

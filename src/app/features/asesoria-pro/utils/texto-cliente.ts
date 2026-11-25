@@ -1,6 +1,6 @@
 import { etiquetaContrato } from '../data/contratos.mock';
 import { CLIENTE, HOY } from '../data/conversaciones.mock';
-import { ADV_USTED, DEC_CAT, ETAPAS_BD, MOTIVO, PROXIMOS_PASOS, RX_TXT, TIPO_CREDITO } from '../constants/textos';
+import { ADV_USTED, DEC_CAT, ETAPAS_BD, MOTIVO, RX_TXT, TIPO_CREDITO } from '../constants/textos';
 import { Cajas, Credito, Retiro } from '../interfaces/calculo';
 import { Contrato } from '../interfaces/contrato';
 import { EstadoConversacion } from '../interfaces/conversacion';
@@ -117,12 +117,10 @@ export function textoCliente(st: St): string {
     if (s != null) add('Sigue invertido', pesos(c.saldo - s));
   }
   if (st.validar) add('Validación tributaria', 'Se le recomendó validarlo antes de retirar, usted o con su contador. ' + ADV_USTED);
-  add('Etapas conversadas', st.visitadas.map((n) => ETAPAS_BD[n - 1]).join(' → '));
+  const etapas: string[] = [...st.visitadas].sort().flatMap((n) => ETAPAS_BD[n - 1]);
+  add('Etapas conversadas', etapas.length > 1 ? etapas.slice(0, -1).join(', ') + ' y ' + etapas[etapas.length - 1] : etapas.join(''));
   if (st.dec) add('Decisión del cliente', DEC_CAT[st.dec]);
-  const np: string[] = [];
-  if (st.np.resumen) np.push(PROXIMOS_PASOS.resumen);
-  if (np.length) add('Próximos pasos', np.join('; '));
-  if (agendada(st.agenda)) add('Llamada de seguimiento', cuandoAgenda(st.agenda));
+  if (agendada(st.agenda)) add('Reunión de seguimiento', cuandoAgenda(st.agenda));
   if (st.notas.trim()) add('Notas', st.notas.trim());
   return L.join('\n');
 }

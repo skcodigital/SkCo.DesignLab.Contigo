@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, signa
 import { AvisoStore } from '@core/state/aviso.store';
 import { Descarte, MisionesStore, textoMotivo } from '@core/state/misiones.store';
 import { UiStore } from '@core/state/ui.store';
-import { guardarSesion, leerSesion } from '@core/utils/safe-storage';
+import { guardarLocal, guardarSesion, leerLocal, leerSesion } from '@core/utils/safe-storage';
 import { DescartarMisionModal } from '@shared/components/descartar-mision-modal/descartar-mision-modal';
 import { TEXTOS } from '../../constants/textos';
 import { CLIENTE, HOY } from '../../data/conversaciones.mock';
@@ -14,11 +14,14 @@ import { CopCabecera, VistaPlaneacion } from '../cop-cabecera/cop-cabecera';
 import { CopHistorial } from '../cop-historial/cop-historial';
 import { CopOtras } from '../cop-otras/cop-otras';
 import { Icono } from '../icono/icono';
+import { IntroPlaneacion } from '../intro-planeacion/intro-planeacion';
 
 /** Solo la primera vez que se abre Planeación Pro en la sesión se muestra el loading introductorio. */
 const INTRO_VISTA_KEY = 'nc-asesoria-intro';
 const INTRO_MS = 1350;
 const INTRO_CORTA_MS = 400;
+/** La intro «¿Qué es Planeación Pro?» se muestra sola solo la primera vez que el asesor entra (en este navegador). */
+const BIENVENIDA_KEY = 'nc-planeacion-intro-vista';
 
 type Fase = 'cerrado' | 'cargando' | 'abierto';
 
@@ -28,7 +31,7 @@ type Fase = 'cerrado' | 'cargando' | 'abierto';
  */
 @Component({
   selector: 'nc-copiloto-panel',
-  imports: [CopCabecera, CopOtras, CopHistorial, Icono, DescartarMisionModal, JourneyCarga, Journey],
+  imports: [CopCabecera, CopOtras, CopHistorial, Icono, DescartarMisionModal, JourneyCarga, Journey, IntroPlaneacion],
   templateUrl: './copiloto-panel.html',
   styleUrl: './copiloto-panel.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -46,6 +49,9 @@ export class CopilotoPanel {
   // ---- Loading introductorio (clases `intro` / `revela`) ----
   protected readonly intro = signal(false);
   protected readonly revela = signal(false);
+
+  /** Intro de 3 pasos de Planeación Pro. */
+  protected readonly bienvenida = signal(false);
 
   // ---- Vista y misión ----
   protected readonly vista = signal<VistaPlaneacion>('journeys');
@@ -72,6 +78,7 @@ export class CopilotoPanel {
     const destroyRef = inject(DestroyRef);
     if (leerSesion(INTRO_VISTA_KEY) === '1') {
       this.revela.set(true);
+      this.mostrarBienvenida();
     } else {
       guardarSesion(INTRO_VISTA_KEY, '1');
       const corto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -81,10 +88,18 @@ export class CopilotoPanel {
         this.intro.set(false);
         this.ui.set('cop-cargando', false);
         this.revela.set(true);
+        this.mostrarBienvenida();
       }, corto ? INTRO_CORTA_MS : INTRO_MS);
       destroyRef.onDestroy(() => clearTimeout(t));
     }
     destroyRef.onDestroy(() => this.ui.set('cop-cargando', false));
+  }
+
+  /** Primera vez: abre la intro y la deja marcada como vista. */
+  private mostrarBienvenida(): void {
+    if (leerLocal(BIENVENIDA_KEY) === '1') return;
+    guardarLocal(BIENVENIDA_KEY, '1');
+    this.bienvenida.set(true);
   }
 
   protected abrirMision(): void {

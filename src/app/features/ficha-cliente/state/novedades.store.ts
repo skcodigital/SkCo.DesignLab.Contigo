@@ -10,6 +10,15 @@ export class NovedadesStore {
   private readonly _saldosOtrasFechas = signal(true);
   readonly saldosOtrasFechas = this._saldosOtrasFechas.asReadonly();
 
+  /** «Ahora en Contigo: Herramientas de acompañamiento» sobre la pestaña Planeación Pro. */
+  private readonly _planeacionPro = signal(true);
+  readonly planeacionPro = this._planeacionPro.asReadonly();
+
+  /** Se apaga al cerrarla o al abrir Planeación Pro. */
+  apagarPlaneacionPro(): void {
+    this._planeacionPro.set(false);
+  }
+
   /** Se apaga al cerrarla o al usar la función (calendario o En proceso / Efectivo). */
   apagarSaldosOtrasFechas(): void {
     this._saldosOtrasFechas.set(false);

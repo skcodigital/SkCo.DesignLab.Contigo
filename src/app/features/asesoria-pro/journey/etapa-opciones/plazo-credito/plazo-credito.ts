@@ -29,6 +29,7 @@ const PLAZO_DEFECTO = 12;
           <button type="button" class="jw-link jw-ro-ok" (click)="personalizar($event)">Personalizar</button>
         }
       </div>
+      <p class="jw-plazo-nota">Estos periodos no reflejan el plazo a diferir, sino un supuesto del tiempo en que el cliente pagaría el crédito, ya que este solamente se da en un plazo de 12 meses.</p>
     </div>
   `,
   styleUrl: './plazo-credito.scss',

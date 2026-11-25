@@ -197,3 +197,101 @@
     padding: 0 18px;
   }
 }
+
+// Globo de novedad sobre Planeación Pro (mismo estilo que «Saldos a otras fechas»)
+.tabs-w {
+  position: relative;
+}
+.fx-globo {
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0 2px 0 0;
+  border-radius: 8px;
+  background: var(--sk-color-text);
+  color: #fff;
+  font-family: var(--sk-font-body);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  animation: fxGlobo 0.35s ease-out both;
+}
+.fx-globo::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: var(--fx-globo-x, 50%);
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--sk-color-text);
+}
+.fx-globo-ir {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 28px;
+  padding: 4px 4px 4px 10px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.fx-globo-ico {
+  flex: none;
+  margin-right: 2px;
+  color: var(--sk-color-primary);
+}
+.fx-globo-ir b {
+  font-weight: 700;
+  color: var(--sk-color-primary);
+}
+.fx-globo-x {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.fx-globo-ir:hover b {
+  text-decoration: underline;
+}
+.fx-globo-x:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.fx-globo-ir:focus-visible,
+.fx-globo-x:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 1px;
+  border-radius: 6px;
+}
+@keyframes fxGlobo {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fx-globo {
+    animation: none;
+  }
+}
+// Móvil: las pestañas son filas; sin globo flotante
+@media (max-width: 600px) {
+  .fx-globo {
+    display: none !important;
+  }
+}

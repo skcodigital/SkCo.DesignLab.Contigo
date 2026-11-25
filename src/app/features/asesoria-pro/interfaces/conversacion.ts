@@ -15,7 +15,7 @@ export type VistaAportes = 'resumen' | 'tabla';
 export type PeriodoRent = 'inicio' | '12' | '6' | '3';
 export type OrigenConv = 'mision' | 'catalogo' | 'historial';
 export type ProximoPaso = 'resumen';
-/** Herramienta donde el asesor agenda la llamada de seguimiento (la fecha y la hora se eligen allí). */
+/** Herramienta donde el asesor agenda la reunión de seguimiento (la fecha y la hora se eligen allí). */
 export type HerramientaAgenda = 'google' | 'teams' | 'ios';
 /**
  * Como las herramientas no devuelven la fecha, el asesor la confirma:
@@ -82,7 +82,7 @@ export interface EstadoConversacion {
   dec: Decision | null;
   tram: Tramite | null;
   np: Readonly<Record<ProximoPaso, boolean>>;
-  /** Dónde se agendó la llamada de seguimiento (queda registrada aunque no se cierre el acompañamiento). */
+  /** Dónde se agendó la reunión de seguimiento (queda registrada aunque no se cierre el acompañamiento). */
   agenda: AgendaSeguimiento | null;
   notas: string;
   validar: boolean;
