@@ -1,0 +1,57 @@
+<nc-mon-modal variante="pantalla-completa" [etiqueta]="nombre()" (cerrar)="cerrar.emit()">
+  <div class="envoltura">
+    <div class="cabecera">
+      <button type="button" class="volver" aria-label="Volver" (click)="cerrar.emit()">
+        <span class="circulo">
+          <nc-mon-icono nombre="chevron-izquierda" />
+        </span>
+      </button>
+    </div>
+
+    <p class="titulo">{{ nombre() }}</p>
+    <p class="descripcion">Desempeño del fondo en diferentes periodos:</p>
+
+    <div class="encabezado-tea">TEA (%)</div>
+
+    @if (periodos() === null) {
+      <nc-mon-error-servicio vista="exterior" />
+    }
+
+    @for (p of periodos() ?? []; track p.periodo) {
+      <div class="tarjeta">
+        <div class="fila-periodo">
+          <div class="periodo">
+            <nc-mon-icono class="reloj" nombre="reloj" />
+            <span class="texto">{{ p.periodo }}</span>
+          </div>
+          <span class="texto">
+            @if (!p.tea) {
+              -
+            } @else {
+              {{ numero(p.tea) }}%
+            }
+          </span>
+        </div>
+        <div class="medidas">
+          @for (m of medidas(p); track m.etiqueta) {
+            <div class="medida">
+              <span class="etiqueta">{{ m.etiqueta }}</span>
+              <span class="texto negrita">
+                @if (m.valor != null) {
+                  {{ numero(m.valor) }}%
+                  @if (m.valor > 0) {
+                    <nc-mon-icono class="flecha sube" nombre="flecha-sube" />
+                  } @else if (m.valor < 0) {
+                    <nc-mon-icono class="flecha baja" nombre="flecha-baja" />
+                  }
+                } @else {
+                  -
+                }
+              </span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</nc-mon-modal>

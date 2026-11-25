@@ -1,0 +1,26 @@
+<button #ancla type="button" class="filtrar" (click)="abierto.set(!abierto())">
+  <p class="texto">Filtrar</p>
+  <nc-mon-icono class="icono" nombre="filtro" />
+</button>
+
+<nc-mon-popover [ancla]="ancla" [(abierto)]="abierto" posicion="bottom" [conFlecha]="true">
+  <div class="contenido">
+    <nc-mon-casillas [grupos]="grupos()" [(valores)]="valores" />
+
+    <div class="todos">
+      <p class="texto-todos">{{ todos() ? textos.deseleccionarTodo : textos.seleccionarTodo }}</p>
+      <div class="interruptor">
+        <input
+          class="casilla"
+          type="checkbox"
+          role="switch"
+          [attr.aria-label]="textos.seleccionarTodo"
+          [checked]="todos()"
+          (click)="alternarTodos()"
+        />
+      </div>
+    </div>
+
+    <button type="button" class="aplicar" (click)="aplicar()">Aplicar</button>
+  </div>
+</nc-mon-popover>

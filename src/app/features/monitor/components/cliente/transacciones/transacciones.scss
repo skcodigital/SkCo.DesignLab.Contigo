@@ -1,0 +1,236 @@
+@use '../../comunes/estilos/produccion' as prod;
+@use '../../detalle/estilos/listas';
+
+:host {
+  display: block;
+}
+
+// `:host` de producción (scroll dentro de la modal) + `d-flex flex-column gap-3 p-3`
+.contenido {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+// `close-btn d-flex justify-content-end` (12px, verde)
+.cerrar {
+  display: flex;
+  justify-content: flex-end;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 12px;
+  color: var(--sk-color-primary);
+  cursor: pointer;
+}
+
+// `d-flex flex-column grey-default-card gap-3` (16px 24px)
+.tarjeta {
+  @include prod.tarjeta-gris;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 24px;
+}
+
+// `align-items-md-end align-items-start d-flex flex-column flex-md-row gap-3 justify-content-between`
+.cabecera {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+// `d-flex flex-column gap-2 justify-content-start`
+.resumen {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+// `title-h4`
+.titulo {
+  font-family: var(--sk-font-heading);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 26px;
+}
+
+// `.values-row`
+.valores {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 16px;
+  align-items: center;
+}
+
+// `title-h6 d-flex align-items-center gap-1 fw-bold`
+.valor {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--sk-font-heading);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 22px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+// `text-info-sk fw-bold cursor-pointer`
+.sigla {
+  color: var(--sk-color-info);
+  cursor: pointer;
+}
+
+// `d-flex align-items-center gap-1 fw-bold cursor-pointer` en verde o rojo
+.variacion {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+
+  &.positiva {
+    color: var(--sk-color-primary);
+  }
+
+  &.negativa {
+    color: #e03430;
+  }
+}
+
+.flecha {
+  font-size: 12px;
+}
+
+// `d-flex gap-2 align-items-center justify-content-end`
+.herramientas {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+// `devolucion-toggle d-flex align-items-center gap-2 cursor-pointer p-2`
+.devoluciones {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--sk-color-border-3);
+  border-radius: 8px;
+  background-color: var(--sk-color-surface);
+  user-select: none;
+  cursor: pointer;
+}
+
+// `sk-b2 text-grey-sk-00`
+.texto-devoluciones {
+  @include prod.sk-b2;
+  color: var(--sk-color-text);
+}
+
+.interruptor {
+  @include listas.interruptor;
+}
+
+// `.copy-btn`
+.copiar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  color: var(--sk-color-primary);
+  cursor: pointer;
+}
+
+// `change-view-btn d-lg-block d-none bg-blue-sk`
+.orientacion {
+  display: none;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50px;
+  outline: none;
+  background-color: var(--sk-color-info);
+  color: var(--sk-color-surface);
+  font-size: 12px;
+  cursor: pointer;
+  transition: transform 1s ease;
+
+  &:hover {
+    filter: grayscale(0.2);
+  }
+
+  &.girado {
+    transform: rotate(90deg);
+  }
+}
+
+// `d-flex justify-content-between flex-column` (+ `flex-lg-row` en horizontal)
+.cuerpo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+// `chart-transaction-container d-flex justify-content-center align-items-start w-100`
+.contenedor-grafica {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+
+  &.vacio {
+    align-items: center;
+  }
+}
+
+// `#chart-transaction`
+.grafica {
+  width: 100%;
+  height: 445px;
+}
+
+// `text-grey-sk text-body-3 m-0`
+.sin-datos {
+  @include prod.texto-cuerpo-3;
+  color: var(--sk-color-placeholder);
+}
+
+// `p-3 table-container w-100`
+.contenedor-tabla {
+  width: 100%;
+  padding: 16px;
+  overflow-x: auto;
+}
+
+@media (min-width: 768px) {
+  .cabecera {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+}
+
+@media (min-width: 992px) {
+  .orientacion {
+    display: block;
+  }
+
+  .cuerpo.horizontal {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 576px) {
+  .valores {
+    gap: 8px;
+    font-size: 13px;
+  }
+}

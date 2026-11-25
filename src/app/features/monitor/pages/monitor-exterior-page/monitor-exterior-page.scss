@@ -1,0 +1,252 @@
+@use '../../components/comunes/estilos/produccion' as prod;
+
+// El texto sin color propio toma el gris de Contigo (en producción lo daba la guía de estilos del portal).
+:host {
+  display: block;
+  color: var(--sk-color-text);
+}
+
+.oculto {
+  display: none !important;
+}
+
+// `d-flex`
+.pagina {
+  display: flex;
+}
+
+// `m-2 flex-grow-1 min-w-0 overflow-hidden`
+.principal {
+  flex-grow: 1;
+  min-width: 0;
+  margin: 8px;
+  overflow: hidden;
+}
+
+// ── Migas: `d-md-flex gap-2 mb-4 align-items-center d-none` ──
+
+.migas {
+  display: none;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+@media (min-width: 768px) {
+  .migas {
+    display: flex;
+  }
+}
+
+// `icon-ic_outline-arrow-back cursor-pointer` de 20px
+.volver {
+  display: flex;
+  font-size: 20px;
+  color: inherit;
+  cursor: pointer;
+}
+
+// `text-body-3 cursor-pointer`
+.miga {
+  @include prod.texto-cuerpo-3;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+
+  // `text-body-3 sk-green fw-bold`
+  &.actual {
+    color: var(--sk-color-primary);
+    font-weight: 700;
+    cursor: default;
+  }
+}
+
+// ── Volver en móvil: `d-flex justify-content-between align-items-center mb-3 d-md-none` ──
+
+.volver-movil {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+@media (min-width: 768px) {
+  .volver-movil {
+    display: none;
+  }
+}
+
+// `btn-icon-custom`
+.boton-icono {
+  @include prod.boton-icono;
+  display: inline-flex;
+}
+
+// `icon-circle-custom` con `icon-Chevron-left-solid sk-white`
+.circulo {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--sk-color-primary);
+  color: var(--sk-color-surface);
+  border: 1px solid var(--sk-color-primary);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+// ── Encabezado: `justify-content-between align-items-center d-none d-md-flex` ──
+
+.encabezado {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .encabezado {
+    display: flex;
+  }
+}
+
+// `sk-h3 fw-bold mb-1`
+.titulo {
+  @include prod.sk-h3;
+  font-weight: 700;
+  margin-bottom: 4px !important;
+}
+
+// `sk-b2 m-0`
+.subtitulo {
+  @include prod.sk-b2;
+}
+
+// `d-flex gap-3`
+.acciones {
+  display: flex;
+  gap: 16px;
+}
+
+// `sk-btn sk-btn-outline-primary btn-custom-size`
+.monitor-antiguo {
+  @include prod.boton-contorno;
+  padding: 6px 16px;
+  height: max-content;
+}
+
+// `icon-Chart-line-up-line me-2`
+.icono-antiguo {
+  margin-right: 8px;
+}
+
+// `sk-btn btn-custom-size assistant-btn`
+.asistente {
+  @include prod.sk-btn;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: max-content;
+  padding: 6px 16px;
+  border-radius: 50px;
+  background: var(--sk-color-brand-light);
+  color: var(--sk-color-primary);
+  font-weight: 700;
+  box-shadow: var(--sk-shadow-card-2);
+
+  &:hover {
+    background: #f0fdf4;
+  }
+}
+
+// `sk-b1 fw-bold`
+.texto-asistente {
+  @include prod.sk-b1;
+  font-weight: 700;
+}
+
+// `sk-btn p-0 border-none`
+.pantallazo {
+  @include prod.sk-btn;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+// `icon-camera-line sk-green pt-2` de 20px
+.icono-pantallazo {
+  display: flex;
+  padding-top: 8px;
+  font-size: 20px;
+  color: var(--sk-color-primary);
+}
+
+// ── Cuerpo: `d-flex mt-3 gap-2` ──
+
+.cuerpo {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+// `d-none d-md-block me-2`
+.lateral {
+  display: none;
+  margin-right: 8px;
+}
+
+@media (min-width: 768px) {
+  .lateral {
+    display: block;
+  }
+}
+
+// `container-default w-100 min-w-0` con `height: fit-content`
+.comparacion {
+  width: 100%;
+  min-width: 0;
+  height: fit-content;
+  padding: 16px;
+  border-radius: 16px;
+  background: var(--sk-color-surface-2);
+}
+
+@media (max-width: 767px) {
+  .comparacion {
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+}
+
+// ── Asistente: `assistant-sidebar d-none d-md-flex` ──
+
+.barra-asistente {
+  display: none;
+  flex: 0 0 320px;
+  width: 330px;
+  min-width: 310px;
+  max-width: 320px;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+@media (min-width: 768px) {
+  .barra-asistente {
+    display: flex;
+  }
+}
+
+// ── Aviso legal: `mt-4 p-3` con `sk-b4` en #666666 ──
+
+.aviso-legal {
+  margin-top: 24px;
+  padding: 16px;
+}
+
+.texto-legal {
+  @include prod.sk-b4;
+  color: var(--sk-color-text-2);
+}

@@ -1,0 +1,41 @@
+@use '../../comunes/estilos/produccion' as prod;
+
+// `content-btn d-flex`
+:host {
+  display: flex;
+}
+
+// `.content-bottom`
+.fondo {
+  display: flex;
+  width: 70%;
+  border-radius: 25px;
+  background-color: var(--sk-color-surface-3);
+}
+
+// `sk-btn sk-btn-primary p-0` con el degradado de la página
+.boton {
+  @include prod.sk-btn;
+  width: 50%;
+  height: 42px;
+  padding: 0;
+  border: none;
+  font-family: var(--sk-font-body);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--sk-color-surface);
+  background: linear-gradient(270deg, #8fe000 0%, #00c73d 100%);
+}
+
+// `.disabled-btn`
+.inactivo {
+  cursor: pointer;
+  background: var(--sk-color-surface-3);
+  color: var(--sk-color-placeholder);
+}
+
+@media (max-width: 576px) {
+  .fondo {
+    width: 100%;
+  }
+}

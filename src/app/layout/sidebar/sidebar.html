@@ -21,7 +21,7 @@
       </a>
     </li>
     <li>
-      <a class="item">
+      <a class="item" [routerLink]="rutaMonitor">
         <svg class="ico ico-fill ico-26" viewBox="0 0 32 32" aria-hidden="true"><path d="M7.0625 22.5312C7.0625 23.1328 7.49219 23.5625 8.09375 23.5625H25.9688C26.5273 23.5625 27 24.0352 27 24.5938C27 25.1953 26.5273 25.625 25.9688 25.625H8.09375C6.375 25.625 5 24.25 5 22.5312V7.40625C5 6.84766 5.42969 6.375 6.03125 6.375C6.58984 6.375 7.0625 6.84766 7.0625 7.40625V22.5312ZM19.7812 10.5H24.5938C25.1523 10.5 25.625 10.9727 25.625 11.5312V16.3438C25.625 16.9453 25.1523 17.375 24.5938 17.375C23.9922 17.375 23.5625 16.9453 23.5625 16.3438V14.0234L18.75 18.793C18.3633 19.2227 17.7188 19.2227 17.332 18.793L13.8945 15.3984L11.1875 18.1055C10.8008 18.5352 10.1562 18.5352 9.76953 18.1055C9.33984 17.7188 9.33984 17.0742 9.76953 16.6445L13.207 13.207C13.5938 12.8203 14.2383 12.8203 14.625 13.207L18.0625 16.6445L22.1016 12.5625H19.7812C19.1797 12.5625 18.75 12.1328 18.75 11.5312C18.75 10.9727 19.1797 10.5 19.7812 10.5Z" /></svg>Monitor
       </a>
     </li>
@@ -32,7 +32,7 @@
       @if (movil()) {
         <div class="m-sub">
           @for (enlace of submenus['f-afil'].enlaces; track $index) {
-            <a href="" (click)="$event.preventDefault()">{{ enlace }}</a>
+            @if (rutasMenu[enlace]; as ruta) {<a [routerLink]="ruta" (click)="nav.cerrarTodo()">{{ enlace }}</a>} @else {<a href="" (click)="$event.preventDefault()">{{ enlace }}</a>}
           }
         </div>
       }
@@ -49,7 +49,7 @@
       @if (movil()) {
         <div class="m-sub">
           @for (enlace of submenus['f-com'].enlaces; track $index) {
-            <a href="" (click)="$event.preventDefault()">{{ enlace }}</a>
+            @if (rutasMenu[enlace]; as ruta) {<a [routerLink]="ruta" (click)="nav.cerrarTodo()">{{ enlace }}</a>} @else {<a href="" (click)="$event.preventDefault()">{{ enlace }}</a>}
           }
         </div>
       }
@@ -61,7 +61,7 @@
       @if (movil()) {
         <div class="m-sub">
           @for (enlace of submenus['f-ope'].enlaces; track $index) {
-            <a href="" (click)="$event.preventDefault()">{{ enlace }}</a>
+            @if (rutasMenu[enlace]; as ruta) {<a [routerLink]="ruta" (click)="nav.cerrarTodo()">{{ enlace }}</a>} @else {<a href="" (click)="$event.preventDefault()">{{ enlace }}</a>}
           }
         </div>
       }
@@ -81,7 +81,7 @@
     <div class="dr-sec">
       <h3>{{ submenus[id].titulo }}</h3>
       @for (enlace of submenus[id].enlaces; track $index) {
-        <a href="" (click)="$event.preventDefault()">{{ enlace }}</a>
+        @if (rutasMenu[enlace]; as ruta) {<a [routerLink]="ruta" (click)="nav.cerrarTodo()">{{ enlace }}</a>} @else {<a href="" (click)="$event.preventDefault()">{{ enlace }}</a>}
       }
     </div>
   }

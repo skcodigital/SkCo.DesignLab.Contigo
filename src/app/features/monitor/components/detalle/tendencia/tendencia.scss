@@ -1,0 +1,144 @@
+@use '../../comunes/estilos/produccion' as prod;
+
+:host {
+  display: block;
+}
+
+// `d-flex flex-column gap-3`
+.columna {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+// `content w-100 d-flex`
+.fila {
+  display: flex;
+  width: 100%;
+}
+
+// `container-default`
+.tarjeta {
+  border-radius: 16px;
+  padding: 16px;
+  background: var(--sk-color-surface-2);
+}
+
+@media (max-width: 767px) {
+  .tarjeta {
+    border-radius: 0;
+    padding: 0;
+    background: transparent;
+  }
+}
+
+// `container-default me-1` al 40 %
+.composicion {
+  width: 40%;
+  margin-right: 4px;
+}
+
+// `container-default d-flex flex-column gap-2` al 60 %
+.tendencia {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+// `container-default d-flex flex-column gap-3`
+.tabla {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+// `title-h4`
+.titulo {
+  font-family: var(--sk-font-heading);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 26px;
+}
+
+// `align-items-center d-flex justify-content-between`
+.cabecera-tendencia {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// `select d-flex gap-2`
+.selectores {
+  display: flex;
+  gap: 8px;
+}
+
+.oculto {
+  display: none;
+}
+
+// `d-flex justify-content-between align-items-center`
+.cabecera-tabla {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+// `sk-b2 align-items-center d-flex gap-1`
+.periodo {
+  @include prod.sk-b2;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+// `icon-Calendar-line me-1`
+.calendario {
+  margin-right: 4px;
+}
+
+.negrita {
+  font-weight: 700;
+}
+
+// `text-body-2`
+.fechas {
+  @include prod.texto-cuerpo-2;
+}
+
+// `d-flex gap-2 align-items-center`
+.acciones {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+// `sk-btn p-0 copy-btn d-flex align-items-center justify-content-center` con `icon-Copy` de 12px
+.copiar {
+  @include prod.sk-btn;
+  padding: 0;
+  border: 1px solid var(--sk-color-primary);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  background: transparent;
+  color: var(--sk-color-text);
+  font-size: 12px;
+}
+
+// Móvil: `content` y `content d-flex flex-column gap-2`
+.comportamiento {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+// `d-flex justify-content-between mt-1` con `text-body-3 sk-gray`
+.rango-movil {
+  @include prod.texto-cuerpo-3;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+  color: var(--sk-color-text);
+}

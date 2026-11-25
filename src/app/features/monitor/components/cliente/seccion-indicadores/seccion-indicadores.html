@@ -1,0 +1,42 @@
+<nc-mon-encabezado-tabla
+  [titulo]="titulo()"
+  [etiquetaPeriodo]="etiquetaPeriodo()"
+  [casillas]="casillas()"
+  [columnas]="columnas()"
+  (aplicarColumnas)="aplicarColumnas.emit($event)"
+  (copiar)="copiar()"
+/>
+
+@if (vista() === 'contratos') {
+  @if (tirCero()) {
+    <nc-mon-aviso-cliente>
+      <p class="texto-aviso">{{ avisoTir }}</p>
+    </nc-mon-aviso-cliente>
+  }
+  <nc-mon-tabla [opciones]="opciones()" (accionCelda)="accionCelda.emit($event)" (accionFila)="accionFila.emit($event)" />
+} @else {
+  <div class="grupos">
+    <div class="grupo">
+      <span class="marca marca-posicion"></span>
+      <p class="texto-grupo">Indicadores de posición — foto actual del cliente</p>
+    </div>
+    <div class="grupo">
+      <span class="marca marca-rentabilidad"></span>
+      <p class="texto-grupo">Indicadores de rentabilidad — calculados según período seleccionado</p>
+    </div>
+  </div>
+  <!-- Las 4 primeras columnas (punto, acción, % y nombre) quedan fijas al hacer scroll horizontal. -->
+  <nc-mon-tabla
+    variante="portafolios"
+    [columnasFijas]="4"
+    [opciones]="opciones()"
+    (accionCelda)="accionCelda.emit($event)"
+    (accionFila)="accionFila.emit($event)"
+  />
+  @if (fechaCorte(); as fecha) {
+    <div class="corte">
+      <nc-mon-icono class="reloj" nombre="reloj" />
+      <p class="texto-corte">Fecha de corte: {{ fechaVisible(fecha) }}</p>
+    </div>
+  }
+}

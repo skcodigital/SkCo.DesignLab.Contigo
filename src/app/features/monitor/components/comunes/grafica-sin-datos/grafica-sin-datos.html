@@ -1,0 +1,10 @@
+<div class="contenedor">
+  <div class="mensaje">
+    @if (imagen(); as src) {
+      <img class="icono" [src]="src" alt="Icono de mensaje vacío" />
+    } @else {
+      <nc-mon-icono class="icono" nombre="info" />
+    }
+    <p>{{ mensaje() }}</p>
+  </div>
+</div>

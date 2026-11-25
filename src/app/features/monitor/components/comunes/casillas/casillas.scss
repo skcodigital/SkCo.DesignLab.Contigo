@@ -1,0 +1,57 @@
+@use '../estilos/produccion' as prod;
+
+:host {
+  display: block;
+}
+
+// `form.p-1.form-check`
+.formulario {
+  display: block;
+  min-height: 1.5rem;
+  margin-bottom: 0.125rem;
+  padding: 4px;
+}
+
+// `div.mb-3`
+.grupo {
+  margin-bottom: 16px;
+}
+
+// `h2.sk-b3.bold`
+.titulo {
+  @include prod.sk-b3;
+  font-weight: 700;
+}
+
+// `.p-2.container-checkbox`
+.contenedor {
+  @include prod.barra-desplazamiento;
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #dedede;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 220px;
+}
+
+// `d-flex justify-content-between ms-2 me-2 check-option`
+.opcion {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 8px;
+  min-width: 160px;
+}
+
+// `p.sk-b3.mb-1`
+.nombre {
+  @include prod.sk-b3;
+  margin-bottom: 4px;
+  width: 85%;
+  white-space: break-spaces;
+}
+
+// `.form-check-input` de Bootstrap
+.casilla {
+  @include prod.casilla;
+}

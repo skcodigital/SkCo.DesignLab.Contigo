@@ -1,0 +1,16 @@
+@if (abierto()) {
+  <div
+    class="popover"
+    [class.abajo]="posicion() === 'bottom'"
+    [class.izquierda]="posicion() === 'left'"
+    [style.top.px]="punto().top"
+    [style.left.px]="punto().left"
+  >
+    @if (conFlecha()) {
+      <span class="flecha"></span>
+    }
+    <div class="cuerpo">
+      <ng-content />
+    </div>
+  </div>
+}

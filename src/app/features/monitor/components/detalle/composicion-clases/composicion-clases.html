@@ -1,0 +1,10 @@
+<nc-mon-grafica-torta-compacta [datos]="porciones()" />
+<div class="puntos">
+  @for (p of porciones(); track p.nombre) {
+    <span class="punto-clase">
+      <span class="punto" [style.background-color]="p.color"></span>
+      <span class="porcentaje">{{ porcentaje(p.valor) }}%</span>
+      {{ p.nombre }}
+    </span>
+  }
+</div>

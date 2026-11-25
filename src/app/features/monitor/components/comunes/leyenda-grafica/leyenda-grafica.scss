@@ -1,0 +1,151 @@
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+.envoltura {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.leyenda {
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  white-space: nowrap;
+  width: 100%;
+  margin-left: 4px;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 7px;
+  border: 1px solid;
+  border-radius: 16px;
+  background: var(--sk-color-surface);
+  cursor: pointer;
+  font-size: 11px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+
+  &:hover {
+    background: var(--sk-color-surface-3);
+  }
+}
+
+.texto {
+  font-size: 11px;
+}
+
+.punto {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.guion {
+  display: inline-block;
+  width: 16px;
+  height: 0;
+  border-top: 2px dashed;
+  flex-shrink: 0;
+}
+
+.chip.deshabilitado {
+  opacity: 0.45;
+  border-color: #ccc !important;
+  background: var(--sk-color-surface-6);
+
+  .punto {
+    background: #aaa !important;
+  }
+
+  .retirar {
+    pointer-events: none;
+  }
+}
+
+// Solo el Monitor del cliente apaga también el guion de las series punteadas.
+:host(:not(.vista-exterior)) .chip.deshabilitado .guion {
+  border-top-color: #aaa !important;
+}
+
+.retirar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 2px;
+  font-size: 14px;
+  color: var(--sk-color-text);
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: #01922d;
+  }
+}
+
+.imagen {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+
+.flecha {
+  display: inline-flex;
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 18px;
+  color: #666666a6;
+  user-select: none;
+
+  &:hover {
+    color: var(--sk-color-primary);
+  }
+
+  &.izquierda {
+    margin-left: 4px;
+  }
+
+  &.derecha {
+    margin-left: 8px;
+  }
+}
+
+// Monitor exterior: más margen arriba, chips que no se encogen y letra Open Sans.
+:host(.vista-exterior) {
+  .envoltura {
+    margin-top: 8px;
+  }
+
+  .leyenda {
+    flex: 1;
+    min-width: 0;
+    width: auto;
+  }
+
+  .chip {
+    flex: 0 0 auto;
+    font-family: var(--sk-font-body);
+  }
+
+  .flecha.derecha {
+    margin-right: 4px;
+  }
+}

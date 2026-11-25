@@ -1,0 +1,116 @@
+@use '../../comunes/estilos/produccion' as prod;
+
+:host {
+  display: block;
+}
+
+// `d-none d-md-flex justify-content-between mb-2 mt-4 align-items-center`
+.cabecera {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+
+@media (min-width: 768px) {
+  .cabecera {
+    display: flex;
+  }
+}
+
+// `sk-b2 fw-bold`
+.periodo {
+  @include prod.sk-b2;
+  font-weight: 700;
+}
+
+// `icon-Calendar-line me-1`
+.calendario {
+  margin-right: 4px;
+}
+
+// `d-flex gap-2`
+.acciones {
+  display: flex;
+  gap: 8px;
+}
+
+// `sk-btn p-0 border-none` con `icon-Copy` de 20px
+.copiar {
+  @include prod.sk-btn;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--sk-color-text);
+  font-size: 20px;
+}
+
+// `d-flex gap-2 p-2 align-items-center bg-info-sk disclaimer-cdt-comparison mb-2`
+.aviso-cdt {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+  background-color: var(--sk-color-info-light);
+  border: 1px solid #5cd5ff;
+  border-radius: 8px;
+  text-wrap: initial;
+}
+
+// `icon-circle-exclamation-line flex-shrink-0` de 24px
+.icono-aviso {
+  flex-shrink: 0;
+  font-size: 24px;
+}
+
+// `text-body-3 m-0`
+.texto-aviso {
+  @include prod.texto-cuerpo-3;
+}
+
+// `table-container d-none d-md-block`
+.contenedor-tabla {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .contenedor-tabla {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  .contenedor-tabla {
+    width: 80vw;
+    min-width: 300px;
+    overflow-x: auto;
+  }
+}
+
+// `d-block d-md-none` con margen de 24px
+.lista-movil {
+  display: block;
+  margin-top: 24px;
+}
+
+@media (min-width: 768px) {
+  .lista-movil {
+    display: none;
+  }
+}
+
+// `.disclaimer` global del exterior
+.disclaimer {
+  display: block;
+  font-size: 10px;
+  font-family: var(--sk-font-heading);
+  color: var(--sk-color-text-2);
+  width: 100%;
+  margin-top: 6px;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}

@@ -1,0 +1,11 @@
+<select
+  #lista
+  class="lista"
+  [class.atenuada]="deshabilitado() && vista() === 'cliente'"
+  [disabled]="deshabilitado()"
+  (change)="cambiar(lista.value)"
+>
+  @for (o of opciones(); track o.valor) {
+    <option [value]="o.valor" [selected]="esSeleccionado(o)">{{ o.nombre }}</option>
+  }
+</select>

@@ -1,0 +1,84 @@
+@use 'sass:map';
+@use '../estilos/produccion' as prod;
+
+:host {
+  display: block;
+}
+
+// `grey-default-card text-center p-4`
+.tarjeta {
+  @include prod.tarjeta-gris;
+  text-align: center;
+  padding: 24px;
+}
+
+.fila-pronto {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+// `.coming-soon.text-body-3` (la clase venía del portal; aquí solo el texto)
+.pronto {
+  @include prod.texto-cuerpo-3;
+}
+
+// `.icon-exclamation-custom.mb-2.bg-{tipo}-sk` con el ícono `text-{tipo}-sk`
+.icono {
+  display: inline-block;
+  margin-bottom: 8px;
+  border-radius: 60px;
+  padding: 20px;
+  font-size: 20px;
+  line-height: 1;
+}
+
+@each $tipo, $fondo in prod.$fondos-aviso {
+  .tipo-#{$tipo} {
+    background-color: $fondo;
+    color: map.get(prod.$textos-aviso, $tipo);
+  }
+}
+
+// `p.sk-h4.fw-bold.mt-2`
+.titulo {
+  @include prod.sk-h4;
+  font-weight: 700;
+  margin-top: 8px;
+  color: var(--sk-color-text);
+}
+
+// `p.text-body-2.mt-2`
+.descripcion {
+  @include prod.texto-cuerpo-2;
+  margin-top: 8px;
+  color: var(--sk-color-text);
+}
+
+.fila-accion {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+// `button.icon-adj.sk-btn.sk-primary-text.upload-attachment.d-flex.align-items-center.gap-2`
+.subir {
+  @include prod.sk-btn;
+  gap: 8px;
+  border: none;
+  background: transparent;
+  color: var(--sk-color-primary);
+  padding: 8px;
+
+  svg {
+    display: block;
+  }
+}
+
+// `h6` de Bootstrap
+.texto-subir {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.2;
+}

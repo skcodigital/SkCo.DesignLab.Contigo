@@ -1,0 +1,220 @@
+@let o = opciones();
+<div class="contenedor-tabla" [class.con-scroll]="!!o.altoMaximo" [style.max-height.px]="o.altoMaximo">
+  <div class="envoltura">
+    <table #tabla class="tabla">
+      <thead>
+        <tr>
+          @for (col of columnas().encabezado; track $index; let j = $index) {
+            @switch (col.tipo) {
+              @case ('indice') {
+                <th
+                  #encabezado
+                  class="th th-indice"
+                  [class.fija]="!!fija(j)"
+                  [style.left.px]="fija(j)?.left"
+                  [style.width.px]="fija(j)?.width"
+                  [attr.data-titulo]="textos.portafolio"
+                >
+                  @if (o.tipoColumnaIndice === 'numero') {
+                    <div class="contenido-encabezado"><span class="negrita">#</span></div>
+                  }
+                </th>
+              }
+              @case ('dato') {
+                @let estiloTh = estilo(o.estiloEncabezado, col.clave);
+                <th
+                  #encabezado
+                  scope="col"
+                  class="th ordenable"
+                  [class.fija]="!!fija(j)"
+                  [style]="estiloTh"
+                  [style.left.px]="fija(j)?.left"
+                  [style.width.px]="fija(j)?.width"
+                  (click)="ordenar(col.indice)"
+                >
+                  <div
+                    class="contenido-encabezado"
+                    [class.sin-fondo]="!!estiloTh"
+                    [class.oculto]="!!o.encabezadosOcultos?.includes(col.clave)"
+                    [ncMonTooltip]="tooltipEncabezado(col.indice)"
+                    [tooltipAncho]="vista() === 'cliente'"
+                  >
+                    @if (o.iconosEncabezado?.[col.indice]; as icono) {
+                      @if (o.posicionIconosEncabezado?.[col.indice] === 'inicio') {
+                        <span
+                          class="contenedor-icono"
+                          [class.con-tooltip]="!!o.tooltipsIconosEncabezado?.[col.indice]"
+                          [ncMonTooltip]="o.tooltipsIconosEncabezado?.[col.indice]"
+                          [tooltipAncho]="vista() === 'cliente'"
+                        >
+                          <nc-mon-tabla-icono [icono]="icono" />
+                        </span>
+                      }
+                    }
+                    <span
+                      class="etiqueta"
+                      [class]="'alinear-' + (alineacion(col.indice) ?? 'ninguna')"
+                      [class.con-tooltip-encabezado]="!!o.tooltipsEncabezado?.[col.indice]"
+                    >
+                      {{ o.etiquetas[col.indice] }}
+                    </span>
+                    @if (o.iconosEncabezado?.[col.indice]; as icono) {
+                      @if (o.posicionIconosEncabezado?.[col.indice] === 'fin') {
+                        <span
+                          class="contenedor-icono"
+                          [class.con-tooltip]="!!o.tooltipsIconosEncabezado?.[col.indice]"
+                          [ncMonTooltip]="o.tooltipsIconosEncabezado?.[col.indice]"
+                          [tooltipAncho]="vista() === 'cliente'"
+                        >
+                          <nc-mon-tabla-icono [icono]="icono" />
+                        </span>
+                      }
+                    }
+                    @if (o.ordenable) {
+                      <nc-mon-icono class="ordenar" nombre="ordenar" />
+                    }
+                  </div>
+                </th>
+              }
+              @case ('acciones') {
+                <th #encabezado #thAcciones class="th th-acciones" (click)="alClicAcciones($event)">
+                  <div class="contenido-encabezado">
+                    <nc-mon-icono class="filtro" nombre="filtro" />
+                  </div>
+                  <nc-mon-tabla-acciones
+                    [ancla]="thAcciones"
+                    [acciones]="acciones()"
+                    [deshabilitadas]="o.accionesDeshabilitadas ?? []"
+                    [casillas]="o.casillasPersonalizar ?? null"
+                    [columnasVisibles]="visibles() ?? {}"
+                    [(menuAbierto)]="menuAbierto"
+                    [(personalizarAbierto)]="personalizarAbierto"
+                    (ejecutar)="ejecutar($event)"
+                    (aplicarColumnas)="aplicarColumnas($event)"
+                  />
+                </th>
+              }
+              @default {
+                <th
+                  #encabezado
+                  class="th"
+                  [class.fija]="!!fija(j)"
+                  [style.left.px]="fija(j)?.left"
+                  [style.width.px]="fija(j)?.width"
+                ></th>
+              }
+            }
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (fv of filasVista(); track fv.indice) {
+          <tr [style]="o.estiloFila?.(fv.fila, fv.indice) ?? null">
+            @for (col of columnas().cuerpo; track $index; let j = $index) {
+              @switch (col.tipo) {
+                @case ('indice') {
+                  <td class="td" [class.fija]="!!fija(j)" [style.left.px]="fija(j)?.left" [style.width.px]="fija(j)?.width">
+                    <div class="centrado" [style]="estilo(o.estiloColumna, 'point')">
+                      <div class="punto" [style.background-color]="o.coloresPunto?.[fv.indice]"></div>
+                    </div>
+                  </td>
+                }
+                @case ('dato') {
+                  @let c = fv.celdas[col.posicion];
+                  @let alinear = alineacion(col.indice);
+                  <td
+                    class="td"
+                    [class.fija]="!!fija(j)"
+                    [style]="estilo(o.estiloCelda, col.clave)"
+                    [style.left.px]="fija(j)?.left"
+                    [style.width.px]="fija(j)?.width"
+                    [ncMonTooltip]="o.tooltipFila?.(fv.fila, fv.indice)"
+                  >
+                    <div
+                      class="contenido-celda"
+                      [class]="'justificar-' + (alinear ?? 'ninguna')"
+                      [style]="estilo(o.estiloColumna, col.clave)"
+                    >
+                      @if (c.icono && c.posicionIcono === 'inicio') {
+                        <span
+                          class="contenedor-icono"
+                          [style]="estilo(o.estiloContenedorIcono, col.clave)"
+                          [ncMonTooltip]="c.tooltipIcono"
+                        >
+                          <nc-mon-tabla-icono [icono]="c.icono" [estilo]="estilo(o.estiloIcono, col.clave)" />
+                        </span>
+                      }
+                      <p
+                        class="valor"
+                        [class]="'alinear-' + (alinear ?? 'ninguna')"
+                        [class.accion-celda]="tipo(col.indice) === 'accion'"
+                        [style]="estilo(o.estiloValor, col.clave)"
+                        [ncMonTooltip]="c.tooltip"
+                        (click)="celdaAccion(col.clave, col.indice, fv.fila)"
+                      >
+                        {{ c.texto }}
+                        @if (c.subtitulo) {
+                          <span class="subtitulo">{{ c.subtitulo }}</span>
+                        }
+                      </p>
+                      @if (c.icono && c.posicionIcono === 'fin') {
+                        <span class="contenedor-icono" [ncMonTooltip]="c.tooltipIcono">
+                          <nc-mon-tabla-icono [icono]="c.icono" />
+                        </span>
+                      }
+                    </div>
+                  </td>
+                }
+                @case ('acciones') {
+                  @let bloqueada = !!o.desactivarColumnaAcciones || !!fv.fila['disabled'];
+                  <td class="td columna-acciones">
+                    <div
+                      #ir="ncMonTooltip"
+                      class="centrado"
+                      [ncMonTooltip]="bloqueada ? textos.accionNoDisponible : (o.etiquetaColumnaAccion || textos.ir)"
+                      tooltipPosicion="start"
+                      (click)="ir.ocultar(); irAFila.emit(fv.fila)"
+                    >
+                      <button type="button" class="boton-ir" [disabled]="bloqueada">
+                        <nc-mon-icono nombre="chevron-derecha" />
+                      </button>
+                    </div>
+                  </td>
+                }
+                @default {
+                  <td class="td" [class.fija]="!!fija(j)" [style.left.px]="fija(j)?.left" [style.width.px]="fija(j)?.width">
+                    <div class="acciones-fila" [style]="estilo(o.estiloColumna, 'row-actions')">
+                      @for (a of o.accionesFila ?? []; track a.clave) {
+                        @if (!a.visible || a.visible(fv.fila)) {
+                          <button
+                            type="button"
+                            class="boton-fila"
+                            [ncMonTooltip]="a.nombre"
+                            (click)="accionFila.emit({ clave: a.clave, fila: fv.fila })"
+                          >
+                            <nc-mon-icono [nombre]="a.icono" />
+                          </button>
+                        }
+                      }
+                    </div>
+                  </td>
+                }
+              }
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  @if (o.conPaginador) {
+    <nc-mon-tabla-paginador
+      [pagina]="pagina()"
+      [totalPaginas]="totalPaginas()"
+      [tamano]="tamano()"
+      [tamanos]="tamanos()"
+      (irA)="irPagina($event)"
+      (cambiarTamano)="cambiarTamano($event)"
+    />
+  }
+</div>

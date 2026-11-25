@@ -1,0 +1,87 @@
+// `.popover` de Bootstrap 5.3 (lo que pintaba ngbPopover), con la sombra de las clases propias de producción.
+.popover {
+  position: fixed;
+  z-index: 1070;
+  display: block;
+  max-width: 100%;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', 'Liberation Sans', Arial,
+    sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+  white-space: normal;
+  word-wrap: break-word;
+  font-size: 0.875rem;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.175);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  // Separado del ancla lo que mide la flecha (0.5rem).
+  &.izquierda {
+    transform: translate(calc(-100% - 0.5rem), -50%);
+  }
+
+  &.abajo {
+    transform: translate(-50%, 0.5rem);
+  }
+}
+
+.cuerpo {
+  padding: 1rem;
+  color: #212529;
+}
+
+.flecha {
+  position: absolute;
+  width: 1rem;
+  height: 0.5rem;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    border: 0.5rem solid transparent;
+  }
+}
+
+.abajo .flecha {
+  top: calc(-0.5rem - 1px);
+  left: 50%;
+  transform: translateX(-50%);
+
+  &::before {
+    top: 0;
+    border-top-width: 0;
+    border-bottom-color: rgba(0, 0, 0, 0.175);
+  }
+
+  &::after {
+    top: 1px;
+    border-top-width: 0;
+    border-bottom-color: #fff;
+  }
+}
+
+.izquierda .flecha {
+  right: calc(-0.5rem - 1px);
+  top: 50%;
+  width: 0.5rem;
+  height: 1rem;
+  transform: translateY(-50%);
+
+  &::before {
+    right: 0;
+    border-right-width: 0;
+    border-left-color: rgba(0, 0, 0, 0.175);
+  }
+
+  &::after {
+    right: 1px;
+    border-right-width: 0;
+    border-left-color: #fff;
+  }
+}

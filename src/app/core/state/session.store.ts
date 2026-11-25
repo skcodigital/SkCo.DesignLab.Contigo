@@ -3,7 +3,7 @@ import { RUTAS, VistaGuardada } from '@core/constants/rutas';
 import { STORAGE_KEYS } from '@core/constants/storage-keys';
 import { guardarSesion, leerSesion } from '@core/utils/safe-storage';
 
-const VISTAS: readonly VistaGuardada[] = [RUTAS.inicio, RUTAS.ficha, RUTAS.radiografia];
+const VISTAS: readonly VistaGuardada[] = [RUTAS.inicio, RUTAS.ficha, RUTAS.radiografia, RUTAS.monitor];
 
 /** Sesión simulada del prototipo: no hay autenticación real, solo el flag de "ingresó". */
 @Injectable({ providedIn: 'root' })

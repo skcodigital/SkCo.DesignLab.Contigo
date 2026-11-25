@@ -1,0 +1,80 @@
+@use '../../comunes/estilos/produccion' as prod;
+
+// `table-container w-100 col-12 table-custom p-3 mt-2` (en Portafolios, sin `mt-2`)
+:host {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 16px;
+  border-radius: 16px;
+  background-color: var(--sk-color-surface-2);
+}
+
+:host(.portafolios) {
+  margin-top: 0;
+}
+
+// `sk-b2 p-0 m-0` en `#404040`
+.texto-aviso {
+  @include prod.sk-b2;
+  color: var(--sk-color-text);
+}
+
+// `d-flex gap-4 mb-4 ms-4`
+.grupos {
+  display: flex;
+  gap: 24px;
+  margin: 0 0 24px 24px;
+}
+
+// `d-flex align-items-center gap-2`
+.grupo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+// `.group-legend-icon`
+.marca {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.marca-posicion {
+  background-color: var(--sk-color-info-light);
+  border: 1px solid var(--sk-color-info);
+}
+
+.marca-rentabilidad {
+  background-color: #ecfdf3;
+  border: 1.5px solid #16d727;
+}
+
+// `mb-0 text-body-3 text-grey-sk-00`
+.texto-grupo {
+  @include prod.texto-cuerpo-3;
+  color: var(--sk-color-text);
+}
+
+// `d-flex align-items-center justify-content-center gap-1 mt-3 sk-body-small text-muted`
+.corte {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 16px;
+  color: #6c757d;
+}
+
+// `icon-clock-line1 text-info-sk`
+.reloj {
+  color: var(--sk-color-info);
+}
+
+// `text-body-3 text-grey-sk-00`
+.texto-corte {
+  @include prod.texto-cuerpo-3;
+  color: var(--sk-color-text);
+}

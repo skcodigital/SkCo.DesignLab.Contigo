@@ -1,0 +1,168 @@
+@use '../../comunes/estilos/produccion' as prod;
+@use '../estilos/listas';
+
+:host {
+  display: block;
+}
+
+// `content d-flex mt-3 mb-2`
+.contenido {
+  display: flex;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.tarjeta {
+  @include listas.tarjeta;
+}
+
+// `select d-flex gap-1 justify-content-between`
+.selectores {
+  display: flex;
+  gap: 4px;
+  justify-content: space-between;
+}
+
+.ancho {
+  width: 100%;
+}
+
+// `toggle-inactive d-flex align-items-center justify-content-between mt-2 px-2 py-1 rounded-2` (+ `gap-2` en el
+// exterior)
+.inactivos {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  padding: 4px 8px;
+  border-radius: 0.375rem;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+}
+
+:host(.vista-exterior) .inactivos {
+  gap: 8px;
+}
+
+// `d-flex align-items-center gap-1`
+.texto-inactivos {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+// `text-body-3 sk-gray`
+.texto {
+  @include prod.texto-cuerpo-3;
+  color: var(--sk-color-text);
+}
+
+// `icon-circle-exclamation-line text-info-sk toggle-info-icon`
+.icono-info {
+  font-size: 13px;
+  cursor: help;
+  color: var(--sk-color-info);
+}
+
+// `form-check form-switch mb-0 ms-2 d-flex align-items-center` (`m-0` en el exterior)
+.interruptor {
+  @include listas.interruptor;
+  margin-left: 8px;
+}
+
+:host(.vista-exterior) .interruptor {
+  margin: 0;
+}
+
+.buscador {
+  margin-top: 8px;
+}
+
+// `list-group mt-2`
+.lista {
+  @include listas.lista(25vh);
+  margin-top: 8px;
+}
+
+.item {
+  @include listas.item;
+}
+
+:host(:not(.vista-exterior)) .item.activo {
+  color: inherit;
+}
+
+// `d-flex gap-2 align-items-center justify-content-between w-100`
+.fila-item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+// `d-flex gap-2 align-items-center`
+.nombre-item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+// `.benchmark-img`
+.logo {
+  width: 20px;
+  object-fit: scale-down;
+  aspect-ratio: 1 / 1;
+}
+
+// `sk-b3 sk-gray m-0`
+.texto-item {
+  @include prod.sk-b3;
+  color: var(--sk-color-text);
+  text-align: left;
+}
+
+// `d-block d-sm-none`
+.compania-movil {
+  display: block;
+}
+
+@media (min-width: 576px) {
+  .compania-movil {
+    display: none;
+  }
+}
+
+.alerta {
+  display: flex;
+  align-items: center;
+}
+
+// `icon-circle-exclamation-line text-warning-sk`
+.icono-alerta {
+  color: var(--sk-color-warning-strong);
+}
+
+// `text-center text-muted mt-3` con `word-break: normal`
+.sin-resultados {
+  text-align: center;
+  color: rgba(33, 37, 41, 0.75);
+  margin-top: 16px;
+  word-break: normal;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+// `fw-bold text-body-2 sk-gray`
+.lo-sentimos {
+  @include prod.texto-cuerpo-2;
+  font-weight: 700;
+  color: var(--sk-color-text);
+}
+
+// `text-body-3 sk-gray`
+.no-coincide {
+  @include prod.texto-cuerpo-3;
+  color: var(--sk-color-text);
+}

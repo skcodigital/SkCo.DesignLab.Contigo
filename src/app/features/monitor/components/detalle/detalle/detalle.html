@@ -1,0 +1,109 @@
+@let a = activo();
+<nc-mon-modal
+  [variante]="variante()"
+  [completaEnMovil]="vista() === 'cliente'"
+  [etiqueta]="a.nombre"
+  (cerrar)="cerrar.emit()"
+>
+  <div class="cuerpo">
+    @if (esMovil()) {
+      <div class="movil">
+        <button type="button" class="volver" (click)="volver()">
+          <nc-mon-icono class="verde" nombre="flecha-izquierda" />
+          <span class="texto-volver">Volver</span>
+        </button>
+
+        @if (!enPestana()) {
+          <p class="titulo-movil">
+            @if (esMezcla()) {
+              {{ prefijoMezcla }}
+            }
+            {{ a.nombre }}
+          </p>
+          @if (a.descripcion) {
+            <p class="descripcion">{{ a.descripcion }}</p>
+          }
+
+          <div class="menu">
+            @for (p of pestanas(); track p.clave) {
+              <button type="button" class="opcion" [class.deshabilitada]="p.deshabilitada" (click)="elegirEnMovil(p)">
+                <nc-mon-icono class="icono-opcion" [nombre]="p.icono" />
+                <span class="texto-opcion">{{ p.clave }}</span>
+                <nc-mon-icono class="chevron" nombre="chevron-derecha" />
+              </button>
+            }
+          </div>
+        } @else {
+          <p class="titulo-pestana">{{ pestanaActiva() }}</p>
+          <p class="nombre-pestana">{{ a.nombre }}</p>
+          <nc-mon-seccion-detalle
+            [seccion]="seccionActiva()"
+            [activo]="a"
+            [vista]="vista()"
+            [ocultarTir]="ocultarTir()"
+            [periodo]="periodo()"
+            [rango]="rango()"
+            [hoy]="hoy()"
+            [esMovil]="true"
+          />
+        }
+      </div>
+    } @else {
+      <div class="escritorio">
+        <div class="encabezado">
+          @if (vista() === 'cliente') {
+            <div class="titulo-con-logo">
+              @if (a.imagenCompania) {
+                <img class="logo" [src]="a.imagenCompania" [alt]="a.nombre" [title]="a.nombre" />
+              }
+              <p class="titulo">
+                @if (esMezcla()) {
+                  {{ prefijoMezcla }}
+                }
+                {{ a.nombre }}
+              </p>
+            </div>
+          } @else {
+            <p class="titulo">
+              @if (esMezcla()) {
+                {{ prefijoMezcla }}
+              }
+              {{ a.nombre }}
+            </p>
+          }
+          <button type="button" class="cerrar" aria-label="Cerrar" (click)="cerrar.emit()">
+            <nc-mon-icono nombre="cerrar" />
+          </button>
+        </div>
+
+        <div class="pestanas">
+          @for (p of pestanas(); track p.clave) {
+            <button
+              type="button"
+              class="pestana"
+              [class.activa]="pestanaActiva() === p.clave"
+              [disabled]="p.deshabilitada"
+              [ncMonTooltip]="p.deshabilitada ? textoPronto : ''"
+              (click)="pestanaActiva.set(p.clave)"
+            >
+              <nc-mon-icono class="icono-pestana" [nombre]="p.icono" />
+              {{ p.clave }}
+            </button>
+          }
+        </div>
+
+        <div class="contenido-pestana">
+          <nc-mon-seccion-detalle
+            [seccion]="seccionActiva()"
+            [activo]="a"
+            [vista]="vista()"
+            [ocultarTir]="ocultarTir()"
+            [periodo]="periodo()"
+            [rango]="rango()"
+            [hoy]="hoy()"
+          />
+        </div>
+      </div>
+    }
+  </div>
+</nc-mon-modal>

@@ -1,0 +1,174 @@
+@use '../../comunes/estilos/produccion' as prod;
+
+:host {
+  display: block;
+}
+
+// `.offcanvas-backdrop.modal-contigo-backdrop`
+.fondo {
+  position: fixed;
+  inset: 0;
+  z-index: 1040;
+  background-color: var(--sk-color-surface);
+  opacity: 0.94;
+}
+
+// `.offcanvas.offcanvas-end` de Bootstrap 5.3 (400px a la derecha)
+.lienzo {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1045;
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  max-width: 100%;
+  background-color: var(--sk-color-surface);
+  background-clip: padding-box;
+  border-left: 1px solid rgba(0, 0, 0, 0.175);
+  outline: 0;
+  color: #212529;
+  animation: entrar 0.3s ease-in-out;
+}
+
+@keyframes entrar {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+// `d-flex gap-2 p-2 align-items-center bg-info-sk disclaimer-info`
+.aviso {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  align-items: center;
+  margin: 8px 8px 0;
+  background-color: var(--sk-color-info-light);
+  border: 1px solid #5cd5ff;
+  border-radius: 8px;
+  text-wrap: initial;
+}
+
+.icono-aviso {
+  flex-shrink: 0;
+  font-size: 24px;
+}
+
+.textos-aviso {
+  display: flex;
+  flex-direction: column;
+}
+
+// `text-body-2 bold`
+.titulo-aviso {
+  @include prod.texto-cuerpo-2;
+  font-weight: 700;
+}
+
+// `text-body-3`
+.texto-aviso {
+  @include prod.texto-cuerpo-3;
+}
+
+// `.offcanvas-header` (título a la izquierda y la «x» a la derecha)
+.cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+// `text-body-1` en negrita
+.titulo {
+  @include prod.texto-cuerpo-1;
+  font-weight: 700;
+}
+
+// `.btn-custom-close` (x-large)
+.cerrar {
+  @include prod.boton-icono;
+  display: inline-flex;
+  font-size: x-large;
+  color: inherit;
+}
+
+// `.offcanvas-body.pt-0.pb-0`
+.cuerpo {
+  flex-grow: 1;
+  padding: 0 1rem;
+  overflow-y: auto;
+}
+
+// `tabs-indicador d-flex mb-1`
+.pestanas {
+  display: flex;
+  margin-bottom: 4px;
+  border-bottom: 2px solid #e9ecef;
+}
+
+// `.tab-btn`
+.pestana {
+  width: 100%;
+  margin-bottom: -2px;
+  padding: 6px 12px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: #6c757d;
+  cursor: pointer;
+  transition:
+    color 0.15s,
+    border-color 0.15s;
+
+  &.activa {
+    color: var(--sk-color-primary);
+    border-bottom-color: var(--sk-color-primary);
+  }
+}
+
+.con-etiqueta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+// `text-info-sk bg-info-sk new-badge-btn p-1`
+.nuevo {
+  padding: 4px;
+  border-radius: 8px;
+  color: var(--sk-color-info);
+  background-color: var(--sk-color-info-light);
+}
+
+// `btn-actions sticky-actions p-3 pt-1`
+.acciones {
+  position: sticky;
+  bottom: 0;
+  padding: 4px 16px 16px;
+  background: var(--sk-color-surface);
+}
+
+// `sk-btn w-100 sk-btn-primary mt-2 mb-2 p-1`
+.aplicar {
+  @include prod.boton-primario;
+  width: 100%;
+  margin: 8px 0;
+  padding: 4px;
+}
+
+// `sk-btn w-100 sk-btn-outline-primary p-1`
+.borrar {
+  @include prod.boton-contorno;
+  width: 100%;
+  padding: 4px;
+}

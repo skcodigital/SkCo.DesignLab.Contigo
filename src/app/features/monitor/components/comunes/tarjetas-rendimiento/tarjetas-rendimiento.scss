@@ -1,0 +1,79 @@
+@use '../estilos/produccion' as prod;
+
+:host {
+  display: block;
+}
+
+// `text-end text-body-4 mb-2` color #666666
+.encabezado {
+  @include prod.texto-cuerpo-4;
+  text-align: right;
+  margin-bottom: 8px;
+  color: var(--sk-color-text-2);
+}
+
+// `.period-card.mb-4`
+.tarjeta {
+  box-shadow: var(--sk-shadow-card-2);
+  border-radius: 16px;
+  padding: 8px 12px;
+  background: var(--sk-color-surface);
+  margin-bottom: 24px;
+}
+
+.fila-periodo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.periodo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.reloj {
+  color: var(--sk-color-info);
+  font-size: 14px;
+}
+
+// `text-body-2 sk-gray`
+.texto {
+  @include prod.texto-cuerpo-2;
+  color: var(--sk-color-text);
+}
+
+.negrita {
+  font-weight: 700;
+}
+
+.medidas {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+}
+
+.medida {
+  display: flex;
+  flex-direction: column;
+}
+
+// `text-body-3` color #666666
+.etiqueta {
+  @include prod.texto-cuerpo-3;
+  color: var(--sk-color-text-2);
+}
+
+.flecha {
+  font-size: 10px;
+
+  &.sube {
+    color: var(--sk-color-primary);
+  }
+
+  &.baja {
+    color: #e03430;
+  }
+}

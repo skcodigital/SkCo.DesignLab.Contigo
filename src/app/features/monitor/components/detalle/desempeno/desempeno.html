@@ -1,0 +1,33 @@
+<div class="contenedor">
+  @if (!esMovil()) {
+    <div class="cabecera">
+      <div class="textos">
+        <p class="titulo" [class.negrita]="esMezcla()">Tabla de desempeño</p>
+        <p class="descripcion">
+          @if (esMezcla()) {
+            Desempeño de la <b>mezcla</b> en diferentes periodos.
+          } @else {
+            Desempeño del {{ etiquetaActivo() }} en diferentes periodos.
+          }
+        </p>
+      </div>
+      @if (mostrarCopiar()) {
+        <div>
+          <button type="button" class="copiar" title="Copiar tabla" (click)="copiar()">
+            <nc-mon-icono nombre="copiar" />
+          </button>
+        </div>
+      }
+    </div>
+  }
+
+  @if (esMovil()) {
+    <nc-mon-tarjetas-rendimiento [datos]="tarjetas()" [conError]="conError()" [vista]="vista()" />
+  } @else if (conError()) {
+    <nc-mon-error-servicio [vista]="vista()" />
+  } @else if (filas().length === 0) {
+    <nc-mon-sin-datos titulo="No hay datos" descripcion="No hay datos disponibles" />
+  } @else {
+    <nc-mon-tabla #tabla [opciones]="opciones()" [vista]="vista()" />
+  }
+</div>

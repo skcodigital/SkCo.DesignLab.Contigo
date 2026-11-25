@@ -1,0 +1,16 @@
+<div class="fila">
+  <h3 class="titulo">{{ titulo() }}</h3>
+  <div class="grupo">
+    <span class="lupa">
+      <nc-mon-icono nombre="buscar" />
+    </span>
+    <input
+      #campo
+      class="campo"
+      type="text"
+      autocomplete="off"
+      [placeholder]="placeholder()"
+      (keyup)="criterio.emit(campo.value)"
+    />
+  </div>
+</div>

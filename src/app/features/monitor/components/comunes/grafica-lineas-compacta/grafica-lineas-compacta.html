@@ -1,0 +1,11 @@
+<div class="contenido">
+  @if (series().length) {
+    <nc-mon-leyenda-grafica
+      [series]="leyenda()"
+      [activas]="activas()"
+      [vista]="vista()"
+      (alternar)="alternar($event)"
+    />
+  }
+  <nc-mon-grafica class="grafica" [opciones]="opciones()" (lista)="alIniciar($event)" />
+</div>

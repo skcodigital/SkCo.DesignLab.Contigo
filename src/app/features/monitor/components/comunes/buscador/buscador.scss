@@ -1,0 +1,80 @@
+@use '../estilos/produccion' as prod;
+
+:host {
+  display: block;
+}
+
+// `d-flex justify-content-between mb-2 align-items-center`
+.fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+// `h3.sk-b3.subtitle.m-0`
+.titulo {
+  @include prod.sk-b3;
+  font-weight: 700;
+  color: var(--sk-color-text);
+}
+
+// `.input-group` de Bootstrap
+.grupo {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 100%;
+}
+
+// `.icon-custom-search` (cliente)
+.lupa {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  border: 1px solid #ced4da;
+  border-radius: 5px 0 0 5px;
+  padding: 4px;
+  color: var(--sk-color-text);
+}
+
+// `.form-control` con los ajustes de producción
+.campo {
+  @include prod.campo-texto;
+  position: relative;
+  flex: 1 1 auto;
+  width: 1%;
+  min-width: 0;
+  height: 30px;
+  margin-left: -1px;
+  padding: 0.2rem 0.3rem;
+  font-size: 0.7rem;
+  border-left: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+// Monitor exterior: `.input-group-text` gris de Bootstrap y campo con borde azul claro.
+:host(.vista-exterior) {
+  .fila {
+    align-items: normal;
+  }
+
+  .lupa {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-right: none;
+    border-radius: 0.375rem 0 0 0.375rem;
+    white-space: nowrap;
+  }
+
+  .campo {
+    background-color: white;
+    border-color: #e8eff9;
+  }
+}

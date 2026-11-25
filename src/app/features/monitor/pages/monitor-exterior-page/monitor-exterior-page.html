@@ -1,0 +1,128 @@
+<div class="pagina">
+  <div class="principal">
+    <!-- Migas (escritorio) -->
+    <nav class="migas" aria-label="Migas">
+      <a class="volver" aria-label="Volver a Inicio" [routerLink]="inicio">
+        <nc-mon-icono nombre="flecha-izquierda" />
+      </a>
+      <a class="miga" [routerLink]="inicio">Inicio /</a>
+      <p class="miga actual">Monitor Contigo</p>
+    </nav>
+
+    <!-- Volver (móvil) -->
+    <div class="volver-movil">
+      <a class="boton-icono" aria-label="Volver a Inicio" [routerLink]="inicio">
+        <span class="circulo"><nc-mon-icono nombre="chevron-izquierda" /></span>
+      </a>
+    </div>
+
+    <div class="encabezado">
+      <div>
+        <p class="titulo">Monitor Contigo</p>
+        <p class="subtitulo">Análisis avanzado de portafolios y rendimiento.</p>
+      </div>
+
+      <div class="acciones">
+        <button type="button" class="monitor-antiguo" (click)="abrirMonitorAntiguo()">
+          <nc-mon-icono class="icono-antiguo" nombre="grafica-linea-sube" />
+          Monitor antiguo
+        </button>
+
+        <button
+          type="button"
+          class="asistente"
+          [class.oculto]="store.asistenteAbierto()"
+          (click)="store.abrirAsistente()"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#16a34a" aria-hidden="true">
+            <path d="M12 2L14.5 8.5L21 11L14.5 13.5L12 20L9.5 13.5L3 11L9.5 8.5L12 2Z" />
+            <path d="M18 2L19 5L22 6L19 7L18 10L17 7L14 6L17 5L18 2Z" />
+          </svg>
+          <p class="texto-asistente">Asistente</p>
+        </button>
+
+        <button
+          type="button"
+          class="pantallazo"
+          aria-label="Tomar pantallazo"
+          tooltipPosicion="bottom"
+          [ncMonTooltip]="tooltipPantallazo"
+          (click)="tomarPantallazo()"
+        >
+          <span class="icono-pantallazo"><nc-mon-icono nombre="camara" /></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="cuerpo">
+      <div class="lateral">
+        <nc-mon-panel-seleccion
+          [abierto]="store.panelAbierto()"
+          [seleccion]="store.seleccion()"
+          [conError]="store.conError()"
+          [hoy]="store.hoy"
+          (cambio)="store.elegir($event)"
+          (alternar)="store.alternarPanel()"
+          (restablecer)="store.restablecer()"
+        />
+      </div>
+
+      <div class="comparacion">
+        <nc-mon-comparacion
+          [activos]="store.activos()"
+          [periodo]="store.periodo()"
+          [rango]="store.rango()"
+          [hoy]="store.hoy"
+          [conError]="store.conError()"
+          (periodoChange)="store.cambiarPeriodo($event)"
+          (rangoChange)="store.cambiarRango($event)"
+          (quitar)="store.quitar($event)"
+          (abrirComparar)="store.abrirComparadorMovil()"
+        />
+      </div>
+    </div>
+  </div>
+
+  @if (store.asistenteAbierto()) {
+    <div class="barra-asistente">
+      <nc-mon-asistente
+        [mensajes]="store.mensajes()"
+        [escribiendo]="store.escribiendo()"
+        (enviar)="enviarAlAsistente($event)"
+        (cerrar)="store.cerrarAsistente()"
+      />
+    </div>
+  }
+</div>
+
+<div class="aviso-legal">
+  <p class="texto-legal">
+    La información de portafolios del mercado proviene de fuentes públicas disponibles. Las comparaciones se realizan
+    con base en valores de unidad publicados, los cuales pueden reflejar metodologías, comisiones, gastos y políticas de
+    inversión diferentes entre administradores. Esta información es descriptiva y no constituye una recomendación de
+    inversión.
+    <br />
+    <br />
+    El contenido de este mensaje no constituye una recomendación profesional para realizar inversiones, en los términos
+    del artículo 2.40.1.1.2 del Decreto 2555 de 2010. El contenido enviado es descriptivo del comportamiento histórico
+    de portafolios y/o índices y no es material promocional. La rentabilidad pasada no es indicativa de futuros
+    resultados. Recuerde que usted tiene el derecho a recibir una recomendación profesional que tenga en cuenta su
+    perfil de cliente y la conveniencia de los productos, previamente a la selección de productos de inversión simples
+    y complejos.
+  </p>
+</div>
+
+@if (store.comparadorMovil()) {
+  <nc-mon-modal variante="pantalla-completa" etiqueta="Selecciona y compara" (cerrar)="store.cerrarComparadorMovil()">
+    <nc-mon-panel-seleccion
+      [modal]="true"
+      [seleccion]="store.seleccion()"
+      [conError]="store.conError()"
+      [hoy]="store.hoy"
+      (cambio)="store.elegir($event, true)"
+      (restablecer)="store.restablecer()"
+      (graficar)="store.graficarSeleccion()"
+      (salir)="store.cerrarComparadorMovil()"
+    />
+  </nc-mon-modal>
+}

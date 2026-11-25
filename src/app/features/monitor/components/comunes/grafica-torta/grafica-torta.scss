@@ -1,0 +1,15 @@
+:host {
+  display: block;
+}
+
+// `.content-chart`
+.contenido {
+  background-color: var(--sk-color-surface-2);
+  border-radius: 16px;
+}
+
+// `#pie-chart-container`
+.grafica {
+  position: relative;
+  height: 52vh;
+}

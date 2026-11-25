@@ -1,0 +1,50 @@
+@use '../estilos/produccion' as prod;
+
+:host {
+  display: block;
+}
+
+// `.cards-container.p-1` (el `gap` solo afectaba al formulario, su único hijo)
+.tarjetas {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+  max-height: 25vh;
+  overflow-y: auto;
+  padding: 4px;
+}
+
+// `.card-option.mb-2.d-flex.align-items-center.justify-content-between`
+.tarjeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  box-shadow: prod.$sombra-caja;
+  padding: 6px;
+
+  &:hover {
+    background: #f9f9f9;
+  }
+
+  &.marcada {
+    border: 1px solid #22c55e;
+    background: #ffffff;
+  }
+}
+
+// `p.sk-b3.text-grey-sk-00.m-0`
+.nombre {
+  @include prod.sk-b3;
+  color: var(--sk-color-text);
+}
+
+// `icon-circle-exclamation-line text-warning-sk ms-2 flex-shrink-0`
+.alerta {
+  display: inline-flex;
+  margin-left: 8px;
+  flex-shrink: 0;
+  color: var(--sk-color-warning-strong);
+}

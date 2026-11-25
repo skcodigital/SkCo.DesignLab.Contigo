@@ -1,0 +1,83 @@
+@use '../../comunes/estilos/produccion' as prod;
+@use '../../detalle/estilos/listas';
+
+// `d-flex gap-2 align-items-center btn-table`
+:host {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+// `d-flex gap-1 align-items-center p-1 action-custom`
+.filtrar {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  height: 40px;
+  padding: 4px;
+  border: 1px solid var(--sk-color-border-3);
+  border-radius: 8px;
+  background-color: var(--sk-color-surface);
+  color: var(--sk-color-text-2);
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+// `sk-b2 p-0 m-1 d-none d-sm-block`
+.texto {
+  @include prod.sk-b2;
+  margin: 4px;
+}
+
+.contenido {
+  display: flex;
+  flex-direction: column;
+}
+
+// `w-100 mb-2 checkbox-input`
+.todos {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 8px;
+  border: 1px solid #dedede;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+// `p.m-2`
+.texto-todos {
+  margin: 8px;
+}
+
+// `form-check form-switch` con `form-check-input m-2`
+.interruptor {
+  @include listas.interruptor;
+
+  .casilla {
+    margin: 8px 8px 8px -2.5em;
+  }
+}
+
+// `sk-btn w-100 sk-btn-primary p-2`
+.aplicar {
+  @include prod.boton-primario;
+  width: 100%;
+  padding: 8px;
+}
+
+@media (max-width: 575.98px) {
+  .texto {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .filtrar {
+    border: none;
+    background-color: var(--sk-color-surface-2);
+    font-size: 22px;
+  }
+}

@@ -1,0 +1,12 @@
+<div class="contenido">
+  <div class="cabecera">
+    <p class="titulo">{{ titulo() }}</p>
+    <nc-mon-leyenda-grafica
+      [series]="series()"
+      [activas]="activas()"
+      (alternar)="alternar($event)"
+      (quitar)="quitarSerie.emit($event)"
+    />
+  </div>
+  <nc-mon-grafica class="grafica" [opciones]="opciones()" (lista)="alIniciar($event)" />
+</div>

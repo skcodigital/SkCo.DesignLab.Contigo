@@ -1,0 +1,57 @@
+@use '../../comunes/estilos/produccion' as prod;
+
+:host {
+  display: block;
+}
+
+// `content container-default p-16-24 gap-3 d-flex flex-column` (en móvil la tarjeta pierde fondo y borde,
+// pero `p-16-24` es !important y conserva el relleno)
+.contenedor {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 24px;
+  border-radius: 16px;
+  background: var(--sk-color-surface-2);
+}
+
+@media (max-width: 767px) {
+  .contenedor {
+    border-radius: 0;
+    background: transparent;
+  }
+}
+
+// `d-flex justify-content-between`
+.cabecera {
+  display: flex;
+  justify-content: space-between;
+}
+
+.textos {
+  color: var(--sk-color-text);
+}
+
+// `title-h4` (+ `bold` en la mezcla)
+.titulo {
+  font-family: var(--sk-font-heading);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 26px;
+
+  &.negrita {
+    font-weight: 700;
+  }
+}
+
+// `text-body-2`
+.descripcion {
+  @include prod.texto-cuerpo-2;
+}
+
+// `btn-icon-custom` con `icon-Copy`
+.copiar {
+  @include prod.boton-icono;
+  font-size: 16px;
+  color: var(--sk-color-text);
+}

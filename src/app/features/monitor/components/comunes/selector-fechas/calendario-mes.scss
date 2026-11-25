@@ -1,0 +1,82 @@
+// `ngb-datepicker-month` de ng-bootstrap con los ajustes de producción (fila de días en verde y blanco).
+:host {
+  display: block;
+  pointer-events: auto;
+}
+
+.semana {
+  white-space: nowrap;
+  display: flex;
+  padding-left: 1rem;
+
+  &:last-child {
+    padding-bottom: 0.25rem;
+  }
+}
+
+:host(.primero) .semana {
+  padding-left: 0.25rem;
+}
+
+:host(.ultimo) .semana {
+  padding-right: 0.25rem;
+}
+
+.dias-semana {
+  border-bottom: 1px solid #dee2e6;
+  border-radius: 0;
+  background-color: #5cb85c;
+  color: white;
+}
+
+.dia-semana {
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
+  text-align: center;
+  font-size: 0.875em;
+  font-style: italic;
+  color: white;
+  font-weight: bold;
+}
+
+.dia {
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+
+  &.deshabilitado {
+    color: #b0b0b0;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
+  &.oculto {
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+// `.custom-day` de la plantilla de día de producción
+.dia-propio {
+  text-align: center;
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
+  font-size: 12px;
+  border-radius: 50%;
+}
+
+.dia-propio.rango,
+.dia-propio:hover {
+  background-color: var(--sk-color-primary) !important;
+  color: #fff;
+  border-radius: 20px;
+}
+
+.dia-propio.atenuado {
+  background-color: rgba(205, 216, 217, 0.6) !important;
+  color: black;
+  border-radius: 0;
+}

@@ -1,0 +1,72 @@
+@use '../estilos/produccion' as prod;
+
+// `.actions-menu` dentro del popover (`actions-menu-popover`)
+.menu {
+  background-color: white;
+  border-radius: 4px;
+}
+
+// `.action-item`
+.accion {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 8px 4px;
+  height: 54px;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+
+  &.deshabilitada {
+    color: #ccc;
+
+    .icono-accion {
+      filter: grayscale(1);
+    }
+  }
+}
+
+// `.action-icon` (en producción imágenes de 20px)
+.icono-accion {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  margin-right: 5px;
+  color: var(--sk-color-primary);
+}
+
+.imagen {
+  object-fit: contain;
+}
+
+// `.disable-question`
+.pregunta {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 8px;
+  color: var(--sk-color-info);
+}
+
+.columnas {
+  display: flex;
+  flex-direction: column;
+}
+
+// `sk-btn w-100 sk-btn-primary mt-2 mb-2`
+.aplicar {
+  @include prod.boton-primario;
+  width: 100%;
+  margin: 8px 0;
+  padding: 8px;
+}
+
+@media (max-width: 767px) {
+  .menu {
+    width: 200px;
+  }
+}

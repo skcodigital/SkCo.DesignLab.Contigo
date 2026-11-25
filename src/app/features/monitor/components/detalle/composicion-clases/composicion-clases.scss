@@ -1,0 +1,43 @@
+@use '../../comunes/estilos/produccion' as prod;
+
+:host {
+  display: block;
+}
+
+// Móvil: `d-flex flex-column-reverse gap-3` (la lista sobre la torta)
+:host(.invertida) {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 16px;
+}
+
+// `.points.gap-2`: dos columnas
+.puntos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  text-align: left;
+}
+
+// `span.d-flex.justify-content-left.align-items-center`
+.punto-clase {
+  display: flex;
+  align-items: center;
+}
+
+// `.color-dot.mt-1.me-1`
+.punto {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 4px;
+  margin-right: 4px;
+}
+
+// `p.fw-bold.me-1.sk-b3`
+.porcentaje {
+  @include prod.sk-b3;
+  font-weight: 700;
+  margin-right: 4px;
+}

@@ -1,0 +1,226 @@
+@use '../../comunes/estilos/produccion' as prod;
+
+:host {
+  display: block;
+}
+
+// El host del detalle en la modal: un solo scroll, a 85vh (en el cliente, todo el alto en móvil).
+.cuerpo {
+  display: block;
+  overflow-y: auto;
+  max-height: 85vh;
+}
+
+@media (max-width: 767px) {
+  :host(.vista-cliente) .cuerpo {
+    max-height: 100%;
+    height: 100%;
+  }
+}
+
+// ── Escritorio: `content p-4 m-3` ──
+.escritorio {
+  padding: 24px;
+  margin: 16px;
+}
+
+// `header d-flex justify-content-between align-items-center mb-2`
+.encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+// `d-flex align-items-center gap-2`
+.titulo-con-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+// `.benchmark-img`
+.logo {
+  width: 28px;
+  object-fit: scale-down;
+  aspect-ratio: 1 / 1;
+}
+
+// `sk-h3 fw-bold sk-gray`
+.titulo {
+  @include prod.sk-h3;
+  font-weight: 700;
+  color: var(--sk-color-text);
+}
+
+// `btn-icon border-none` con `icon-material-symbols_close`
+.cerrar {
+  border: none;
+  outline: none;
+  background-color: white;
+  font-size: 25px;
+  cursor: pointer;
+  color: var(--sk-color-text);
+  display: inline-flex;
+}
+
+// `modal-tabs w-100 d-flex gap-2 sk-b2 sk-gray`
+.pestanas {
+  @include prod.sk-b2;
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  color: var(--sk-color-text);
+}
+
+// `btn-tabs w-100 btn-custom-tabs title-h6` (+ `active-custom`)
+.pestana {
+  width: 100%;
+  border: none;
+  padding: 10px;
+  border-radius: 16px 16px 0px 0px;
+  font-family: var(--sk-font-heading);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--sk-color-text-2);
+  background-color: var(--sk-color-surface-2);
+  cursor: pointer;
+
+  &:disabled {
+    color: var(--sk-color-placeholder);
+    cursor: default;
+  }
+
+  &.activa {
+    background-color: var(--sk-color-primary) !important;
+    color: white !important;
+  }
+}
+
+// `me-1`
+.icono-pestana {
+  margin-right: 4px;
+}
+
+// `.tab-content`
+.contenido-pestana {
+  box-shadow: var(--sk-shadow-card);
+  border-radius: 16px;
+  padding: 16px;
+  position: relative;
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+}
+
+// ── Móvil: `mobile-wrapper p-3` ──
+.movil {
+  padding: 16px;
+}
+
+// `mobile-back btn-icon border-none d-flex align-items-center gap-2 mb-3`
+.volver {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 0;
+  border: none;
+  outline: none;
+  background-color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.verde {
+  color: var(--sk-color-primary);
+}
+
+// `sk-b2 fw-bold sk-green`
+.texto-volver {
+  @include prod.sk-b2;
+  font-weight: 700;
+  color: var(--sk-color-primary);
+}
+
+// `sk-h3 fw-bold sk-gray text-center mb-2`
+.titulo-movil {
+  @include prod.sk-h3;
+  font-weight: 700;
+  color: var(--sk-color-text);
+  text-align: center;
+  margin-bottom: 8px !important;
+}
+
+// `text-body-2 sk-gray mb-3`
+.descripcion {
+  @include prod.texto-cuerpo-2;
+  color: var(--sk-color-text);
+  margin-bottom: 16px !important;
+}
+
+// `mobile-hub d-flex flex-column gap-3`
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+// `mobile-hub-row w-100 d-flex align-items-center gap-2`
+.opcion {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  box-shadow: var(--sk-shadow-card-2);
+  border-radius: 8px;
+  padding: 12px 8px;
+  background: white;
+  border: none;
+  font-weight: 600;
+  color: var(--sk-color-text-2);
+  min-height: 48px;
+  outline: none;
+  cursor: pointer;
+
+  &.deshabilitada {
+    opacity: 0.5;
+    pointer-events: none;
+
+    .chevron {
+      color: var(--sk-color-text-2);
+    }
+  }
+}
+
+.icono-opcion {
+  color: var(--sk-color-text);
+}
+
+// `flex-grow-1 text-start`
+.texto-opcion {
+  flex-grow: 1;
+  text-align: start;
+}
+
+// `icon-Chevron-right-solid sk-green`
+.chevron {
+  color: var(--sk-color-primary);
+}
+
+// `sk-h4 fw-bold sk-gray text-center mb-1`
+.titulo-pestana {
+  @include prod.sk-h4;
+  font-weight: 700;
+  color: var(--sk-color-text);
+  text-align: center;
+  margin-bottom: 4px !important;
+}
+
+// `text-body-2 sk-gray text-center mb-3`
+.nombre-pestana {
+  @include prod.texto-cuerpo-2;
+  color: var(--sk-color-text);
+  text-align: center;
+  margin-bottom: 16px !important;
+}

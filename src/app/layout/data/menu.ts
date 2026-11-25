@@ -1,5 +1,12 @@
+import { RUTAS } from '@core/constants/rutas';
+
 /** Secciones del submenú lateral (drawer en escritorio, acordeón en móvil). */
 export type SeccionMenu = 'f-afil' | 'f-com' | 'f-ope';
+
+/** Enlaces del submenú que ya tienen vista en el laboratorio; los demás no navegan. */
+export const RUTAS_MENU: Readonly<Partial<Record<string, string>>> = {
+  Monitor: `/${RUTAS.monitor}`,
+};
 
 export interface SubmenuMenu {
   id: SeccionMenu;

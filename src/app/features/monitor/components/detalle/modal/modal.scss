@@ -1,0 +1,114 @@
+// `.modal` / `.modal-dialog` / `.modal-content` de Bootstrap 5.3 con las clases de modal de producción.
+
+:host {
+  display: block;
+}
+
+// `.modal-backdrop.modal-contigo-backdrop`
+.fondo {
+  position: fixed;
+  inset: 0;
+  z-index: 1050;
+  background-color: var(--sk-color-surface);
+  opacity: 0.94;
+}
+
+// `.modal` (con `.modal-open .modal { overflow-y: hidden }`: el scroll va dentro del contenido)
+.ventana {
+  position: fixed;
+  inset: 0;
+  z-index: 1055;
+  overflow: hidden;
+  outline: 0;
+}
+
+// `.modal-dialog.modal-dialog-centered`
+.dialogo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: auto;
+  min-height: calc(100% - 1rem);
+  margin: 0.5rem;
+  pointer-events: none;
+}
+
+@media (min-width: 576px) {
+  .dialogo {
+    max-width: 500px;
+    min-height: calc(100% - 3.5rem);
+    margin: 1.75rem auto;
+  }
+}
+
+// `.modal-content`
+.contenido {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  pointer-events: auto;
+  color: #212529;
+  background-color: var(--sk-color-surface);
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.175);
+  border-radius: 0.5rem;
+  outline: 0;
+}
+
+// `size: 'lg'`
+@media (min-width: 992px) {
+  .variante-lg {
+    max-width: 800px;
+  }
+}
+
+// `modal-contigo-dialog modal-contigo-xl`
+.variante-contigo {
+  max-width: 1140px !important;
+  border-radius: 16px;
+
+  .contenido {
+    box-shadow: var(--sk-shadow-card);
+    border: none;
+    border-radius: 16px;
+  }
+}
+
+// `.modal-xl-custom .modal-dialog`
+.variante-xl {
+  max-width: 80%;
+  width: 80%;
+}
+
+// `.modal-fullscreen`
+.variante-pantalla-completa {
+  width: 100vw;
+  max-width: none;
+  height: 100%;
+  min-height: 0;
+  margin: 0;
+
+  .contenido {
+    height: 100%;
+    border: 0;
+    border-radius: 0;
+  }
+}
+
+// `modal-contigo-mobile-fullscreen`
+@media (max-width: 767px) {
+  .completa-en-movil {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+
+    .contenido {
+      height: 100%;
+      border-radius: 0 !important;
+    }
+  }
+}

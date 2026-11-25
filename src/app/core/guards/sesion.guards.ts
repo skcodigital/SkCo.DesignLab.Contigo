@@ -4,7 +4,7 @@ import { RUTAS, VistaGuardada } from '@core/constants/rutas';
 import { SessionStore } from '@core/state/session.store';
 import { UiStore } from '@core/state/ui.store';
 
-const VISTAS: readonly string[] = [RUTAS.inicio, RUTAS.ficha, RUTAS.radiografia];
+const VISTAS: readonly string[] = [RUTAS.inicio, RUTAS.ficha, RUTAS.radiografia, RUTAS.monitor];
 
 /**
  * Como en el prototipo, un enlace directo a una página entra sin pasar por el login

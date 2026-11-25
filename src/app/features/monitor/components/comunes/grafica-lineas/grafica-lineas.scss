@@ -1,0 +1,42 @@
+@use '../estilos/produccion' as prod;
+
+:host {
+  display: block;
+}
+
+// `.content-chart`: tarjeta gris del alto de la tarjeta de la página (por defecto 52vh).
+.contenido {
+  background-color: var(--sk-color-surface-2);
+  border-radius: 16px;
+  height: var(--chart-card-height, 52vh);
+  display: flex;
+  flex-direction: column;
+}
+
+.cabecera {
+  display: flex;
+  flex-direction: column;
+  padding-left: 8px;
+}
+
+// `p.sk-h3.text-grey-sk-00.p-2.pb-0` con `font-weight: 500 !important`
+.titulo {
+  @include prod.sk-h3;
+  font-weight: 500;
+  color: var(--sk-color-text);
+  padding: 8px 8px 0;
+}
+
+// `#line-chart-container`
+.grafica {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  height: 52vh;
+}
+
+@media (max-width: 576px) {
+  .titulo {
+    font-size: 16px;
+  }
+}

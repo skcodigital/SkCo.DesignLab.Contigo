@@ -1,0 +1,13 @@
+<div class="boton-tabla">
+  <button #ancla type="button" class="personalizar" (click)="abierto.set(!abierto())">
+    <p class="texto">Personaliza</p>
+    <nc-mon-icono class="lapiz" nombre="editar" />
+  </button>
+
+  <nc-mon-popover [ancla]="ancla" [(abierto)]="abierto" posicion="bottom" [conFlecha]="true">
+    <div class="columnas">
+      <nc-mon-casillas [grupos]="grupoVisible()" [(valores)]="borrador" />
+      <button type="button" class="aplicar" (click)="confirmar()">Aplicar</button>
+    </div>
+  </nc-mon-popover>
+</div>

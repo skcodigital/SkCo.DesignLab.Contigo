@@ -1,0 +1,67 @@
+@use '../../comunes/estilos/produccion' as prod;
+
+// `.isMobile` (110px de ancho, posición relativa)
+:host {
+  position: relative;
+  display: block;
+  width: 110px;
+}
+
+// `sk-btn-custom sk-b2 sk-gris d-flex btn-mobile`
+.comparar {
+  @include prod.sk-btn;
+  @include prod.sk-b2;
+  display: flex;
+  padding: 8px;
+  border: 1px solid var(--sk-color-border-3);
+  border-radius: 8px;
+  background-color: var(--sk-color-surface);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--sk-color-text);
+
+  // `disabled-custom`
+  &:disabled {
+    cursor: default;
+    opacity: 0.6;
+    color: #9e9e9e;
+  }
+}
+
+// `p.d-none.d-md-block`
+.texto {
+  display: none;
+}
+
+// `icon-Code-compare ms-1 d-flex align-items-center`
+.icono {
+  display: flex;
+  align-items: center;
+  margin-left: 4px;
+}
+
+@media (min-width: 768px) {
+  .texto {
+    display: block;
+  }
+}
+
+@media (max-width: 576px) {
+  :host {
+    width: 45px;
+    margin-left: 5px;
+  }
+
+  .comparar {
+    align-items: center;
+    justify-content: center;
+    width: 33px;
+    height: 33px;
+    border-color: var(--sk-color-primary);
+    border-radius: 50%;
+  }
+
+  .icono {
+    font-size: large;
+  }
+}

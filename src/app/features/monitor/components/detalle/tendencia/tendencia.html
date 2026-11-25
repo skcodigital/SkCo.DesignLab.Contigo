@@ -1,0 +1,90 @@
+@let d = datos();
+@if (conError()) {
+  <nc-mon-error-servicio [vista]="vista()" />
+} @else if (esMovil()) {
+  <div class="columna">
+    <div class="bloque">
+      <p class="titulo">Clase de activos</p>
+      <nc-mon-composicion-clases [porciones]="d.composicion" [vista]="vista()" [invertida]="true" />
+    </div>
+
+    <div class="bloque comportamiento">
+      <p class="titulo">Comportamiento</p>
+      <nc-mon-selector-periodo-movil
+        [seleccionado]="seleccionado()"
+        [rango]="rangoPersonalizado()"
+        [hoy]="hoy()"
+        [vista]="vista()"
+        (seleccion)="elegirPeriodo($event)"
+        (rangoCambio)="elegirRango($event)"
+      />
+      <nc-mon-grafica-lineas-compacta
+        [etiquetas]="d.etiquetas"
+        [series]="d.series"
+        [yMin]="d.yMin"
+        [yMax]="d.yMax"
+        [vista]="vista()"
+      />
+      <div class="rango-movil">
+        <span>{{ rangoMovil().inicio }}</span>
+        <span>{{ rangoMovil().fin }}</span>
+      </div>
+    </div>
+  </div>
+} @else {
+  <div class="columna">
+    <div class="fila">
+      <div class="tarjeta composicion">
+        <p class="titulo">Composición</p>
+        <nc-mon-composicion-clases [porciones]="d.composicion" [vista]="vista()" />
+      </div>
+
+      <div class="tarjeta tendencia">
+        <div class="cabecera-tendencia">
+          <p class="titulo">Tendencia</p>
+          <div class="selectores">
+            <nc-mon-seleccion
+              [opciones]="opcionesPeriodo"
+              [seleccionado]="seleccionado()"
+              [vista]="vista()"
+              (seleccion)="elegirPeriodo($event)"
+            />
+            <nc-mon-selector-fechas
+              [class.oculto]="seleccionado() !== personalizado"
+              [rangoInicial]="rangoPersonalizado()"
+              [hoy]="hoy()"
+              [vista]="vista()"
+              (rangoCambio)="elegirRango($event)"
+            />
+          </div>
+        </div>
+        <nc-mon-grafica-lineas-compacta
+          [etiquetas]="d.etiquetas"
+          [series]="d.series"
+          [yMin]="d.yMin"
+          [yMax]="d.yMax"
+          [vista]="vista()"
+        />
+      </div>
+    </div>
+
+    <div class="tarjeta tabla">
+      <div class="cabecera-tabla">
+        <div>
+          <p class="periodo">
+            <nc-mon-icono class="calendario" nombre="calendario" />
+            <span class="negrita">Periodo seleccionado: {{ encabezadoPeriodo().nombre }}</span>
+            <span class="fechas">{{ encabezadoPeriodo().inicio }} - {{ encabezadoPeriodo().fin }}</span>
+          </p>
+        </div>
+        <div class="acciones">
+          <nc-mon-personalizar-columnas [grupo]="casillas" [(columnasVisibles)]="columnas" />
+          <button type="button" class="copiar" [ncMonTooltip]="textoCopiar" (click)="copiar()">
+            <nc-mon-icono nombre="copiar" />
+          </button>
+        </div>
+      </div>
+      <nc-mon-tabla #tabla [opciones]="opcionesTabla()" [vista]="vista()" />
+    </div>
+  </div>
+}

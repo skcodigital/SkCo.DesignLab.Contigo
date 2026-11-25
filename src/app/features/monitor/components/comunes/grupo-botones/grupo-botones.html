@@ -1,0 +1,7 @@
+<div class="grilla">
+  @for (o of opciones(); track o.id) {
+    <button type="button" class="opcion" [class.activa]="seleccionados().includes(o.id)" (click)="alternar(o.id)">
+      <p class="texto">{{ o.etiqueta }}</p>
+    </button>
+  }
+</div>

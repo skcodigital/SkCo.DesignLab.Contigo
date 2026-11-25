@@ -1,0 +1,42 @@
+@if (conSeries()) {
+  <div class="envoltura">
+    @if (mostrarFlechas()) {
+      <button type="button" class="flecha izquierda" (click)="desplazar(-150)" aria-label="Anterior">
+        <nc-mon-icono nombre="circulo-chevron-izquierda" />
+      </button>
+    }
+
+    <div #contenedor class="leyenda" (scroll)="revisarDesborde()" (wheel)="rueda($event)">
+      @for (s of series(); track s.nombre) {
+        <div
+          class="chip"
+          [class.deshabilitado]="!activas()[s.nombre]"
+          [style.border-color]="s.color"
+          [ncMonTooltip]="tooltip(s)"
+          (click)="alternar.emit(s.nombre)"
+        >
+          @if (s.punteada && !s.imagen) {
+            <span class="guion" [style.border-top-color]="s.color"></span>
+          } @else {
+            <span class="punto" [style.background]="s.color"></span>
+          }
+          @if (s.imagen) {
+            <img class="imagen" [src]="s.imagen" [alt]="s.nombreVisible ?? s.nombre" [title]="s.nombreVisible ?? ''" />
+          }
+          <span class="texto">{{ texto(s) }}</span>
+          @if (s.removible) {
+            <span class="retirar" [title]="textoRetirar" (click)="retirar(s.nombre, $event)">
+              <nc-mon-icono nombre="circulo-x" />
+            </span>
+          }
+        </div>
+      }
+    </div>
+
+    @if (mostrarFlechas()) {
+      <button type="button" class="flecha derecha" (click)="desplazar(150)" aria-label="Siguiente">
+        <nc-mon-icono nombre="circulo-chevron-derecha" />
+      </button>
+    }
+  </div>
+}
